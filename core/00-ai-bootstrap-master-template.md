@@ -74,7 +74,8 @@ AI ต้องเตรียมอย่างน้อย:
 8. ถ้าเป็น game → วาง game skill templates เพิ่มเติมใน `doc/04-way-of-work/` และ `doc/08-design/`
 9. เติมข้อมูลเฉพาะโปรเจ็กต์ที่หาได้จริง ถ้าไม่พอใส่ placeholder ชัดเจน ห้ามเดา
 10. สร้าง work status และ task board ที่สะท้อนสถานะเริ่มต้นจริง
-11. บันทึกสิ่งที่ setup ไปใน log index
+11. จัดการ `.gitignore` — เพิ่ม `_template/` เข้าไปถ้ายังไม่มี (ป้องกัน commit template โดยไม่ตั้งใจ)
+12. บันทึกสิ่งที่ setup ไปใน log index
 
 ## Placeholder Policy
 

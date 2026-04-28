@@ -51,7 +51,13 @@ AI ใช้ checklist นี้ตรวจสอบก่อนประกา
 - [ ] `work-log-index.md` มี entry แรกบันทึกการ setup session นี้
 - [ ] `task-board.md` มี task เริ่มต้นอย่างน้อย 1 รายการ (หรือระบุว่ายังไม่มี task)
 
-## 7. Policy ที่ต้องตัดสินใจ
+## 7. Git & Template Cleanup
+
+- [ ] `.gitignore` มี `_template/` อยู่แล้ว (ถ้าไม่มี AI ต้องเพิ่มให้)
+- [ ] ไม่มีไฟล์ของ template ค้างอยู่นอก `_template/` โดยไม่ได้ตั้งใจ
+- [ ] `doc/` พร้อม commit เข้า project git แล้ว (ไม่ติด .gitignore)
+
+## 8. Policy ที่ต้องตัดสินใจ
 
 - [ ] ระบุแล้วว่า daily logs จะเก็บใน git หรือ local เท่านั้น
 - [ ] ภาษาเอกสารระบุแล้วใน `way-of-work.md` (`<PROJECT_LANGUAGE>`)

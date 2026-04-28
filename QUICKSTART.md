@@ -82,8 +82,6 @@ unzip _template.zip
 mv ai-project-template-main _template
 rm _template.zip
 
-# 3. เพิ่ม _template/ เข้า .gitignore ป้องกัน commit โดยไม่ตั้งใจ
-echo "_template/" >> .gitignore
 ```
 
 โครงสร้างตอนนี้:
@@ -118,10 +116,11 @@ Copy prompt นี้ให้ AI (เหมือน Use Case 1):
 ```
 
 ```bash
-# 4. หลัง AI ทำเสร็จ ลบ template ทิ้ง
+# 3. หลัง AI ทำเสร็จ ลบ template ทิ้ง
 rm -rf _template/
 
-# 5. Commit doc/ เข้า project git เดิม
+# 4. Commit doc/ เข้า project git เดิม
+# (.gitignore ถูก AI เพิ่ม _template/ ให้แล้วระหว่าง setup)
 git add doc/ .gitignore
 git commit -m "setup: add AI project documentation"
 ```
