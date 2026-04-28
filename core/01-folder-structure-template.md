@@ -44,6 +44,18 @@ doc/
   07-decisions/
     README.md
     ADR-001-<decision-title>.md
+  08-design/           ← game projects เท่านั้น
+    README.md
+    asset-registry.md
+    FDD-001-<feature-name>.md
+```
+
+## Tech Debt Folder (สร้างเมื่อมี REFACTOR-PENDING task แรก)
+
+```text
+doc/
+  05-tech-debt/
+    debt-register.md   ← ลงทะเบียน REFACTOR-PENDING ทั้งหมด (ดู core/15)
 ```
 
 ## Notes
@@ -53,5 +65,7 @@ doc/
 - `03-log/YYYY/MM/` สำหรับ daily logs
 - `05-summary/YYYY/MM/` สำหรับ daily summaries
 - ถ้า repo ไม่ควรเก็บ daily records ให้ ignore รายวันและเก็บเฉพาะ summary ระดับเดือนขึ้นไป
+- `05-tech-debt/` สร้างเมื่อมี REFACTOR-PENDING task แรก ไม่ต้องสร้างตั้งแต่ setup
 - `07-decisions/` เก็บ ADR (Architecture Decision Records) — ห้ามลบ ให้ deprecated/supersede แทน
+- `08-design/` สำหรับ game projects เท่านั้น เก็บ FDD และ asset registry
 - `04-way-of-work/ai-decision-protocol.md` กำหนดว่า AI ต้องทำอะไรเมื่อเจอสถานการณ์คลุมเครือ

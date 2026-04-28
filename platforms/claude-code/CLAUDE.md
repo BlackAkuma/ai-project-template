@@ -41,7 +41,7 @@
 
 ## Skill Pack Detection
 
-ถ้าโปรเจ็กต์มี `doc/08-design/` → โหลด game skill standards อัตโนมัติ:
+ถ้าโปรเจ็กต์มี `doc/08-design/` → โหลด game skill standards อัตโนมัติ (skills/game/ 00–06):
 - ทุก feature ใหม่ต้องมี FDD ก่อน implement
 - task lifecycle: todo → design_validate → in_progress → playtest → review → done
 - compliance rules G-01 ถึง G-07 และ A-01 ถึง A-04 บังคับใช้

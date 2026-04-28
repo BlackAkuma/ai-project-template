@@ -149,7 +149,7 @@ player.y -= 50; // hardcode ก็ได้ในขั้นนี้
 
 - ปฏิบัติตาม Config-Driven (ข้อ 1), Delta Time (ข้อ 2), Logic/Render Separation (ข้อ 3)
 - ไม่มี `// PROTOTYPE:` comment ค้างอยู่
-- ผ่าน compliance rules G-01 ถึง G-05
+- ผ่าน compliance rules G-01 ถึง G-06
 
 **กฎ compliance เพิ่ม:**
 

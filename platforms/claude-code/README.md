@@ -45,6 +45,13 @@ platforms/claude-code/
 
 ---
 
+## Template ที่ layer นี้อ้างอิง
+
+- **core/ 00–16** — universal templates (17 ไฟล์) — ทุกโปรเจ็กต์ใช้
+- **skills/game/ 00–06** — game skill pack (7 ไฟล์) — โหลดเมื่อ doc/08-design/ มีอยู่
+
+---
+
 ## วิธี Setup
 
 ### 1. Copy CLAUDE.md
