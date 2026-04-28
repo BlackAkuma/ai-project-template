@@ -144,12 +144,43 @@ git clone https://github.com/BlackAkuma/ai-project-template.git
 
 ---
 
+## การบริหาร Token ระยะยาว
+
+ไฟล์เอกสารโตขึ้นตามเวลา ถ้าไม่จัดการจะทำให้แต่ละ session ใช้ token มากขึ้นเรื่อย ๆ — ระบบนี้มีกลไกจัดการในตัว:
+
+### AI-CONTEXT Block — อ่านน้อย รู้มาก
+
+ไฟล์หลัก 3 ไฟล์ (work-status, task-board, work-log-index) มี compact English block ด้านบน AI อ่าน block เดียวได้ context ทันทีโดยไม่ต้องอ่าน body ทั้งไฟล์
+
+### Two-Tier Log System — ไม่ทำซ้ำ ไม่บวม
+
+```
+Tier 1: Milestone Summary  ← ถาวร ย่อเสมอ AI อ่านเพื่อรู้ว่าทำอะไรไปแล้ว
+Tier 2: Recent Sessions    ← เก็บแค่ 20 session ล่าสุด ที่เก่ากว่า archive ไป
+```
+
+session เก่าถูก compress เป็น monthly summary ใน `doc/03-log/archive/` — ยังอ่านได้ถ้าต้องการรายละเอียด แต่ไม่โหลดเข้า context ทุก session
+
+### Archive — AI แจ้ง ผู้ใช้ตัดสินใจ
+
+เมื่อไฟล์ถึง threshold (work-log-index > 300 บรรทัด หรือ done tasks > 15 รายการ) AI จะแจ้งเตือนก่อนทำงาน:
+
+```
+[INFO] C-12: work-log-index มี 340 บรรทัด
+       พิมพ์ "archive logs" หรือ /archive-logs เพื่อ compress session เก่า
+```
+
+AI ไม่ archive เองโดยไม่ถาม — ผู้ใช้ตัดสินใจเสมอ
+
+---
+
 ## แนวคิดหลัก
 
 | แนวคิด | ความหมาย |
 |--------|---------|
 | **Source docs = source of truth** | ห้ามแก้ requirement โดยตรง ต้อง version ใหม่เท่านั้น |
 | **AI-CONTEXT block** | compact English block ด้านบนไฟล์หลัก AI อ่านก่อนเสมอ ประหยัด token |
+| **Two-tier log** | Milestone Summary ถาวร + Recent Sessions หมุนเวียน ป้องกันทำซ้ำและไฟล์บวม |
 | **Do less, document more** | หยุดพร้อมบันทึกชัดเจน ดีกว่าตัดสินใจเงียบ ๆ แล้วผิด |
 | **Progressive enhancement** | core ใช้ได้กับทุก AI — ยิ่งใช้ platform ลึกขึ้น ยิ่งอัตโนมัติมากขึ้น |
 | **Template ใช้ครั้งเดียว** | AI อ่าน → สร้าง `doc/` → ลบโฟลเดอร์ template ทิ้ง |
@@ -292,12 +323,43 @@ Once AI confirms the checklist passes — delete this folder. The `doc/` directo
 
 ---
 
+## Token Management Over Time
+
+Documentation files grow with every session. Without management, each session consumes more tokens over time — this system has built-in mechanisms to prevent that.
+
+### AI-CONTEXT Block — Read less, know more
+
+The 3 key files (work-status, task-board, work-log-index) have a compact English block at the top. AI reads this block alone to get full context without reading the entire file body.
+
+### Two-Tier Log System — No repetition, no bloat
+
+```
+Tier 1: Milestone Summary  ← permanent, always compact — AI reads this to know what's been done
+Tier 2: Recent Sessions    ← keeps only last 20 sessions — older ones are archived
+```
+
+Old sessions are compressed into monthly summaries in `doc/03-log/archive/` — still readable if detail is needed, but not loaded into context every session.
+
+### Archive — AI alerts, user decides
+
+When files reach threshold (work-log-index > 300 lines or done tasks > 15 items), AI notifies before starting work:
+
+```
+[INFO] C-12: work-log-index has 340 lines
+       Type "archive logs" or /archive-logs to compress old sessions
+```
+
+AI never archives without being asked — the user always decides.
+
+---
+
 ## Key Concepts
 
 | Concept | Meaning |
 |---------|---------|
 | **Source docs = source of truth** | Requirements are never edited directly — changes create a new version |
 | **AI-CONTEXT block** | Compact English block at the top of key files — AI reads this first to minimize token usage |
+| **Two-tier log** | Permanent Milestone Summary + rotating Recent Sessions — prevents repetition and file bloat |
 | **Do less, document more** | A well-documented stop is better than a silent wrong decision |
 | **Progressive enhancement** | core works standalone — deeper platform layers add automation |
 | **One-time-use template** | AI reads → creates `doc/` → template folder is deleted |

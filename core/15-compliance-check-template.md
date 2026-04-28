@@ -44,6 +44,8 @@ Protocol สำหรับตรวจสอบ code quality และ document
 | C-09 | work-status ไม่ได้อัปเดตนานเกิน | มี task `in_progress` แต่ไม่อัปเดต > 3 วัน |
 | C-10 | Session ก่อนไม่มี log entry | work-log-index ไม่มีบันทึก session ล่าสุด |
 | C-11 | Security baseline ไม่ผ่าน | ดูรายการตรวจด้านล่าง |
+| C-12 | work-log-index ใหญ่เกิน | > 300 บรรทัด — แนะนำ archive |
+| C-13 | task-board done section ใหญ่เกิน | > 15 รายการ — แนะนำ archive |
 
 ---
 
@@ -127,6 +129,22 @@ Action required:
   - Create REFACTOR-PENDING tasks for Level 2 items
   - Note Level 3 items in work-log
 ```
+
+---
+
+### C-12 / C-13 — Archive Notification Format
+
+เมื่อพบ C-12 หรือ C-13 ให้แจ้งผู้ใช้ก่อนทำงานอื่น รูปแบบ:
+
+```
+[INFO] C-12: work-log-index มี 340 บรรทัด (threshold: 300)
+       ไฟล์กำลังโตขึ้นเรื่อย ๆ — อาจทำให้ session ถัดไปใช้ token มากขึ้น
+       ตัวเลือก:
+         "archive logs"  → AI compress session เก่าเป็น monthly summary
+         "ข้ามได้"       → ทำงานต่อ ไม่ archive ตอนนี้
+```
+
+**กฎ:** AI ไม่ archive โดยไม่ได้รับคำสั่ง — ผู้ใช้ตัดสินใจเสมอ
 
 ---
 
