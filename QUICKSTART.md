@@ -4,38 +4,36 @@
 
 ---
 
-## หลักการสำคัญก่อนอ่านต่อ
+## ทำไม template ต้องอยู่ในโปรเจ็กต์
 
-```
-Template folder  ←  อ่านครั้งเดียว แล้วลบทิ้ง
-    ↓ AI อ่านแล้วสร้าง
-doc/ folder      ←  อยู่ในโปรเจ็กต์ของคุณตลอดไป ต้อง commit ใน git ด้วย
-```
+AI tool ส่วนใหญ่ (Claude, ChatGPT, Gemini, Claude Code ฯลฯ) อ่านไฟล์ได้เฉพาะในโฟลเดอร์โปรเจ็กต์ที่เปิดอยู่ — ออกไปนอกไม่ได้
 
-**template folder และ project ต้องอยู่คนละที่** — ห้าม clone template ไว้ใน folder โปรเจ็กต์ เพราะ git จะชนกัน
+ดังนั้น template ต้องอยู่ **ใน** โปรเจ็กต์ก่อน แล้วค่อยลบทิ้งหลัง setup เสร็จ
+
+**ปัญหา:** ถ้า `git clone` ตรง ๆ ใน project ที่มี git อยู่แล้ว จะเกิด nested git repo → git พัง
+
+**วิธีแก้:** ดาวน์โหลดเป็น ZIP แทน — ไม่มี `.git` มาด้วย
 
 ---
 
 ## Use Case 1 — โปรเจ็กต์ใหม่ ยังไม่มี git
 
-```
-/home/you/
-  temp/
-    ai-project-template/   ← clone template ที่นี่ (นอก project)
-  projects/
-    my-new-game/           ← folder โปรเจ็กต์ใหม่
-```
-
-**ขั้นตอน:**
-
 ```bash
-# 1. Clone template ไว้ที่ temp (หรือที่ไหนก็ได้นอก project)
-git clone https://github.com/BlackAkuma/ai-project-template.git ~/temp/ai-project-template
-
-# 2. สร้าง folder โปรเจ็กต์
+# 1. สร้าง folder โปรเจ็กต์
 mkdir ~/projects/my-new-game
+cd ~/projects/my-new-game
 
-# 3. Copy prompt ด้านล่างให้ AI ระบุ path ทั้งสอง
+# 2. Download template เป็น ZIP แล้วแตกไฟล์
+curl -L https://github.com/BlackAkuma/ai-project-template/archive/main.zip -o _template.zip
+unzip _template.zip
+mv ai-project-template-main _template
+rm _template.zip
+```
+
+โครงสร้างตอนนี้:
+```
+my-new-game/
+  _template/    ← template อยู่นี่ ลบทิ้งหลัง setup
 ```
 
 Copy prompt นี้ให้ AI:
@@ -45,27 +43,26 @@ Copy prompt นี้ให้ AI:
 
 ข้อมูลโปรเจ็กต์:
 - ชื่อ: [PROJECT_NAME]
-- Path ที่จะสร้าง doc/: [/home/you/projects/my-new-game]
-- Template อยู่ที่: [/home/you/temp/ai-project-template]
+- Path ที่จะสร้าง doc/: [path โปรเจ็กต์นี้ / current directory]
+- Template อยู่ที่: _template/
 - ประเภท: [app / web / game / mobile]
 - Source docs: [แนบไฟล์มาด้วย / ยังไม่มี]
 - เป้าหมาย: [PROJECT_GOAL_SUMMARY]
 
 ขั้นตอน:
 1. ถามว่าจะสื่อสารกันเป็นภาษาอะไร รอคำตอบก่อน
-2. อ่านไฟล์ทุกไฟล์ใน core/ ตามลำดับ (00 → 16)
-3. ถ้าโปรเจ็กต์เป็น game หรือ web game ให้อ่าน skills/game/ ต่อด้วย (00 → 06)
-4. สร้างโครงสร้าง doc/ ที่ path ด้านบน
+2. อ่านไฟล์ทุกไฟล์ใน _template/core/ ตามลำดับ (00 → 16)
+3. ถ้าโปรเจ็กต์เป็น game หรือ web game ให้อ่าน _template/skills/game/ ต่อด้วย (00 → 06)
+4. สร้างโครงสร้าง doc/ ใน current directory
 5. กรอกข้อมูลโปรเจ็กต์ที่มี ถ้าไม่พอใส่ placeholder ห้ามเดา
-6. ตรวจสอบกับ core/10-bootstrap-checklist-template.md ก่อนประกาศว่าเสร็จ
+6. ตรวจสอบกับ _template/core/10-bootstrap-checklist-template.md ก่อนประกาศว่าเสร็จ
 ```
 
 ```bash
-# 4. หลัง AI ทำเสร็จ ลบ template ทิ้ง
-rm -rf ~/temp/ai-project-template
+# 3. หลัง AI ทำเสร็จ ลบ template ทิ้ง
+rm -rf _template/
 
-# 5. Init git ใน project แล้ว commit doc/ ด้วย
-cd ~/projects/my-new-game
+# 4. Init git แล้ว commit doc/
 git init
 git add doc/
 git commit -m "setup: add AI project documentation"
@@ -75,54 +72,57 @@ git commit -m "setup: add AI project documentation"
 
 ## Use Case 2 — โปรเจ็กต์เดิมที่มี git อยู่แล้ว
 
-```
-/home/you/
-  temp/
-    ai-project-template/   ← clone template ที่นี่ (นอก project!)
-  projects/
-    my-existing-game/      ← โปรเจ็กต์เดิม มี .git อยู่แล้ว
-      src/
-      .git/
-```
-
-**ขั้นตอน:**
-
 ```bash
-# 1. Clone template ไว้นอก project
-git clone https://github.com/BlackAkuma/ai-project-template.git ~/temp/ai-project-template
+# 1. เข้าไปใน project
+cd ~/projects/my-existing-game
 
-# 2. Copy prompt ด้านล่างให้ AI ชี้ไปที่ project เดิม
+# 2. Download template เป็น ZIP (ห้าม git clone — จะ nested git)
+curl -L https://github.com/BlackAkuma/ai-project-template/archive/main.zip -o _template.zip
+unzip _template.zip
+mv ai-project-template-main _template
+rm _template.zip
+
+# 3. เพิ่ม _template/ เข้า .gitignore ป้องกัน commit โดยไม่ตั้งใจ
+echo "_template/" >> .gitignore
 ```
 
-Copy prompt นี้ให้ AI (เหมือน Use Case 1 ต่างแค่ path):
+โครงสร้างตอนนี้:
+```
+my-existing-game/
+  src/          ← code เดิม
+  .git/         ← git เดิม (ยังอยู่ครบ)
+  _template/    ← template ที่ download มา (ไม่มี .git ซ้อน)
+  .gitignore
+```
+
+Copy prompt นี้ให้ AI (เหมือน Use Case 1):
 
 ```
 คุณกำลังจะ setup ระบบเอกสารสำหรับโปรเจ็กต์ที่มีอยู่แล้ว
 
 ข้อมูลโปรเจ็กต์:
 - ชื่อ: [PROJECT_NAME]
-- Path ที่จะสร้าง doc/: [/home/you/projects/my-existing-game]
-- Template อยู่ที่: [/home/you/temp/ai-project-template]
+- Path ที่จะสร้าง doc/: [path โปรเจ็กต์นี้ / current directory]
+- Template อยู่ที่: _template/
 - ประเภท: [app / web / game / mobile]
 - Source docs: [แนบไฟล์มาด้วย / ยังไม่มี]
 - เป้าหมาย: [PROJECT_GOAL_SUMMARY]
 
 ขั้นตอน:
 1. ถามว่าจะสื่อสารกันเป็นภาษาอะไร รอคำตอบก่อน
-2. อ่านไฟล์ทุกไฟล์ใน core/ ตามลำดับ (00 → 16)
-3. ถ้าโปรเจ็กต์เป็น game หรือ web game ให้อ่าน skills/game/ ต่อด้วย (00 → 06)
-4. สร้างโครงสร้าง doc/ ที่ path ด้านบน
+2. อ่านไฟล์ทุกไฟล์ใน _template/core/ ตามลำดับ (00 → 16)
+3. ถ้าโปรเจ็กต์เป็น game หรือ web game ให้อ่าน _template/skills/game/ ต่อด้วย (00 → 06)
+4. สร้างโครงสร้าง doc/ ใน current directory
 5. กรอกข้อมูลโปรเจ็กต์ที่มี ถ้าไม่พอใส่ placeholder ห้ามเดา
-6. ตรวจสอบกับ core/10-bootstrap-checklist-template.md ก่อนประกาศว่าเสร็จ
+6. ตรวจสอบกับ _template/core/10-bootstrap-checklist-template.md ก่อนประกาศว่าเสร็จ
 ```
 
 ```bash
-# 3. หลัง AI ทำเสร็จ ลบ template ทิ้ง
-rm -rf ~/temp/ai-project-template
+# 4. หลัง AI ทำเสร็จ ลบ template ทิ้ง
+rm -rf _template/
 
-# 4. Commit doc/ เข้า project git เดิม
-cd ~/projects/my-existing-game
-git add doc/
+# 5. Commit doc/ เข้า project git เดิม
+git add doc/ .gitignore
 git commit -m "setup: add AI project documentation"
 ```
 
@@ -130,31 +130,33 @@ git commit -m "setup: add AI project documentation"
 
 ## ถ้าใช้ Claude Code — setup เพิ่มเติม
 
-ทำหลังจาก `doc/` setup เสร็จแล้ว:
+ทำหลังจากขั้นตอนด้านบนเสร็จแล้ว (ก่อนลบ `_template/`):
 
 ```bash
-# 5. Copy CLAUDE.md ไปที่ root ของ project
-cp ~/temp/ai-project-template/platforms/claude-code/CLAUDE.md ~/projects/my-game/
+# Copy CLAUDE.md ไปที่ root
+cp _template/platforms/claude-code/CLAUDE.md ./
 
-# 6. Setup hooks
-mkdir -p ~/projects/my-game/.claude/hooks
-cp ~/temp/ai-project-template/platforms/claude-code/hooks/*.sh ~/projects/my-game/.claude/hooks/
-chmod +x ~/projects/my-game/.claude/hooks/*.sh
+# Setup hooks
+mkdir -p .claude/hooks
+cp _template/platforms/claude-code/hooks/*.sh .claude/hooks/
+chmod +x .claude/hooks/*.sh
 
-# 7. Setup rules
-mkdir -p ~/projects/my-game/.claude/rules
-cp ~/temp/ai-project-template/platforms/claude-code/rules/*.md ~/projects/my-game/.claude/rules/
+# Setup rules (ปรับ glob paths ให้ตรงกับโครงสร้าง project)
+mkdir -p .claude/rules
+cp _template/platforms/claude-code/rules/core-standards.md .claude/rules/
+cp _template/platforms/claude-code/rules/design-docs.md .claude/rules/
+cp _template/platforms/claude-code/rules/test-standards.md .claude/rules/
+# game projects เท่านั้น:
+# cp _template/platforms/claude-code/rules/gameplay-code.md .claude/rules/
 
-# game projects เท่านั้น — ลบ gameplay-code.md ออกถ้าไม่ใช่ game
+# Setup slash commands
+mkdir -p .claude/skills
+cp _template/platforms/claude-code/skills/*.md .claude/skills/
 
-# 8. Setup slash commands
-mkdir -p ~/projects/my-game/.claude/skills
-cp ~/temp/ai-project-template/platforms/claude-code/skills/*.md ~/projects/my-game/.claude/skills/
-
-# 9. Commit ทั้งหมด
-cd ~/projects/my-game
-git add CLAUDE.md .claude/
-git commit -m "setup: add Claude Code platform layer"
+# ลบ template แล้ว commit ทั้งหมด
+rm -rf _template/
+git add doc/ CLAUDE.md .claude/ .gitignore
+git commit -m "setup: add AI project documentation and Claude Code layer"
 ```
 
 ดูรายละเอียดเพิ่มเติมที่ [`platforms/claude-code/README.md`](platforms/claude-code/README.md)
@@ -165,18 +167,17 @@ git commit -m "setup: add Claude Code platform layer"
 
 **ใช่ — ต้อง commit เสมอ**
 
-`doc/` ไม่ใช่แค่เอกสาร มันคือ **memory ของโปรเจ็กต์**:
+`doc/` คือ memory ของโปรเจ็กต์ที่ทีมและ AI ทุก session ต้องอ่าน:
 
 | ไฟล์ | ทำไมต้อง commit |
 |------|----------------|
-| `doc/01-plan/work-status.md` | AI session ใหม่อ่านตรงนี้เพื่อรู้ว่าต้องทำอะไรต่อ |
-| `doc/02-task/task-board.md` | track งานที่ค้าง ประวัติการตัดสินใจ |
-| `doc/03-log/` | บันทึก session — ทีมรู้ว่าใครทำอะไรไปแล้ว |
+| `work-status.md` | AI session ใหม่อ่านตรงนี้เพื่อรู้ว่าต้องทำอะไรต่อ |
+| `task-board.md` | track งานที่ค้าง ประวัติการตัดสินใจ |
+| `work-log-index.md` | บันทึก session — ทีมรู้ว่าใครทำอะไรไปแล้ว |
 | `doc/07-decisions/` | ADR — ป้องกัน AI session ใหม่ reverse decision เดิม |
 
-**แนะนำ:** commit `doc/` พร้อมกับ code ทุกครั้ง หรืออย่างน้อย end of day
-
 ```bash
+# Commit doc/ พร้อมกับ code หรืออย่างน้อย end of day
 git add doc/ && git commit -m "docs: update work status and session log"
 ```
 
@@ -185,12 +186,12 @@ git add doc/ && git commit -m "docs: update work status and session log"
 ## สรุปภาพรวม
 
 ```
-ครั้งเดียว (setup):
-  Clone template → AI อ่าน → สร้าง doc/ → ลบ template → commit doc/
+Setup (ครั้งเดียว):
+  Download ZIP → แตกเป็น _template/ → AI อ่าน → สร้าง doc/ → ลบ _template/ → commit doc/
 
 ทุก session หลังจากนั้น:
   AI อ่าน doc/ → ทำงาน → อัพเดต doc/ → commit
 
-ทีม:
-  ทุกคน pull ล่าสุด → AI อ่าน doc/ → รู้ทันทีว่าโปรเจ็กต์อยู่ตรงไหน
+ทีมหลายคน:
+  git pull → AI อ่าน doc/ → รู้ทันทีว่าโปรเจ็กต์อยู่ตรงไหน ใครทำอะไรไปแล้ว
 ```
