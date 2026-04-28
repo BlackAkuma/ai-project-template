@@ -3,125 +3,123 @@
 ใช้ก่อนเริ่ม implement game feature ใหม่ทุกครั้ง
 เก็บใน `doc/08-design/[feature-name].md`
 
-FDD ต้องอยู่ใน `design_validate` และได้รับ approve ก่อน task จะไป `in_progress`
+FDD ต้องได้รับ approve ก่อน task จะออกจาก `design_validate` ไป `in_progress`
 
 ---
 
-## กฎ Incremental Approval
+## กฎการเขียนทีละส่วน
 
-เมื่อ AI เขียน FDD ให้เขียนและบันทึกทีละ section แล้วรอ approve ก่อนเขียน section ถัดไป
-ห้ามเขียนทั้ง 8 section แล้วค่อย approve ทีเดียว — ป้องกันงานหายเมื่อ context เต็ม
+AI ต้องเขียน FDD ทีละ section บันทึกไฟล์ แล้วรอคนยืนยันก่อนเขียน section ถัดไป
+ห้ามเขียนครบทุก section แล้วค่อยรอ approve ทีเดียว — ป้องกันงานสูญหายเมื่อ context เต็ม
+
+เมื่อเขียน section เสร็จ AI ต้องพูดว่า: **"Section [N] เสร็จแล้ว ยืนยันได้เลยหรือแก้ไขก่อน?"**
 
 ---
 
 ## Template
 
 ```md
-# FDD: [ชื่อ Feature]
+# FDD-[NNN]: [ชื่อ Feature]
 
-**วันที่:** YYYY-MM-DD
-**สถานะ:** Draft / Approved / Superseded
-**ผู้เขียน:** [ชื่อ หรือ "AI session — YYYY-MM-DD"]
-**Task Reference:** T-XXX
-**Source Reference:** doc/00-source/versions/vX.X/...
-**Platform:** [Unity / Godot / Phaser / HTML5 / ฯลฯ]
-
----
-
-## 1. Overview
-
-อธิบายสั้น ๆ ว่า feature นี้คืออะไร และทำไมต้องมี
-ใครใช้ feature นี้? ใช้ตอนไหนในเกม?
-
-<!-- APPROVE SECTION 1 BEFORE CONTINUING -->
+อัปเดตล่าสุด: YYYY-MM-DD
+สถานะ: Draft / Approved / Superseded
+ผู้เขียน: [ชื่อ หรือ "AI session — YYYY-MM-DD"]
+Task: T-XXX
+Source: doc/00-source/versions/vX.X/...
+Platform: [Unity / Godot / Phaser / HTML5 / ฯลฯ]
 
 ---
 
-## 2. Player / User Experience
+## ส่วนที่ 1 — ภาพรวมและเหตุผล
 
-อธิบาย feel และ flow จากมุมมองผู้เล่น:
-- ผู้เล่นเห็น/ได้ยิน/รู้สึกอะไร?
-- ขั้นตอนที่ผู้เล่นทำ (input → feedback → outcome)
-- ความรู้สึกที่ต้องการ (satisfying, tense, calm ฯลฯ)
+feature นี้คืออะไร ทำไมต้องมี ใครใช้ ใช้ตอนไหนในเกม
 
-<!-- APPROVE SECTION 2 BEFORE CONTINUING -->
+<!-- [AI] เขียน section นี้เสร็จแล้ว รอ approve ก่อนไปส่วนถัดไป -->
 
 ---
 
-## 3. Mechanics & Rules
+## ส่วนที่ 2 — ประสบการณ์ผู้เล่น
 
-กฎและกลไกที่แน่นอน:
-- อธิบายทุก state ที่เป็นไปได้
-- อธิบาย transitions ระหว่าง state
-- กฎที่ชัดเจน (ถ้า X แล้ว Y)
+อธิบายจากมุมมองผู้เล่น ไม่ใช่มุมมอง developer:
+- ผู้เล่นเห็น / ได้ยิน / รู้สึกอะไร?
+- ลำดับการกระทำ: กดอะไร → เกิดอะไร → ได้อะไร
+- ความรู้สึกที่ต้องการ (เช่น: ตื่นเต้น, ผ่อนคลาย, กดดัน)
 
-<!-- APPROVE SECTION 3 BEFORE CONTINUING -->
+<!-- [AI] เขียน section นี้เสร็จแล้ว รอ approve ก่อนไปส่วนถัดไป -->
 
 ---
 
-## 4. Formulas & Parameters
+## ส่วนที่ 3 — กลไกและเงื่อนไข
 
-ค่าตัวเลขและสูตรทั้งหมด — ต้องมาจาก config ห้าม hardcode:
+กฎที่แน่นอนและครบถ้วน ไม่คลุมเครือ:
+- state ทั้งหมดที่เป็นไปได้
+- เงื่อนไขการเปลี่ยน state (ถ้า X → เปลี่ยนเป็น Y)
+- สิ่งที่ทำได้ / ทำไม่ได้ในแต่ละ state
+
+<!-- [AI] เขียน section นี้เสร็จแล้ว รอ approve ก่อนไปส่วนถัดไป -->
+
+---
+
+## ส่วนที่ 4 — สูตรและค่าตัวแปร
+
+ค่าตัวเลขและสูตรทั้งหมด — ทุกค่าต้องอ้างอิง config key ห้าม hardcode:
 
 ```
-// ตัวอย่าง
-player_speed: 5.0          // units/second (config: gameplay.json)
-jump_force: 10.0           // units (config: gameplay.json)
-damage_formula: base * (1 + level * 0.1)
+player_speed: 5.0    // config: gameplay.json → player.speed | range: 1.0–20.0
+jump_force: 10.0     // config: gameplay.json → player.jumpForce | range: 5.0–25.0
+damage: base * (1 + level * multiplier)  // multiplier: config: balance.json → levelScale
 ```
 
-Parameter ทุกตัวต้องระบุ:
-- ชื่อ config key
-- ไฟล์ config ที่อยู่
-- ค่า default และ range ที่ยอมรับได้
+ทุกค่าต้องระบุ: config key, ไฟล์ที่อยู่, ค่า default, range ที่ยอมรับได้
 
-<!-- APPROVE SECTION 4 BEFORE CONTINUING -->
+<!-- [AI] เขียน section นี้เสร็จแล้ว รอ approve ก่อนไปส่วนถัดไป -->
 
 ---
 
-## 5. Edge Cases & Failure States
+## ส่วนที่ 5 — กรณีพิเศษและการจัดการข้อผิดพลาด
 
-สิ่งที่อาจผิดพลาดและวิธีจัดการ:
-- ถ้าผู้เล่นทำ X ในสถานะ Y → เกิดอะไร?
-- ค่า boundary ที่ต้องระวัง (min, max, overflow)
-- Network/async edge cases (ถ้าเกี่ยวข้อง)
+สิ่งที่อาจเกิดนอกเหนือจาก happy path:
+- ถ้าผู้เล่นทำ X ระหว่าง state Y → ต้องเกิดอะไร?
+- ค่าที่อยู่ที่ขอบเขต (min, max, zero, overflow)
+- กรณี async หรือ network (ถ้าเกี่ยวข้อง)
+- สิ่งที่ต้อง guard ไว้ไม่ให้พัง
 
-<!-- APPROVE SECTION 5 BEFORE CONTINUING -->
-
----
-
-## 6. Dependencies
-
-- Feature อื่นที่ feature นี้ต้องอาศัย
-- System ที่ feature นี้ส่งผลกระทบ
-- ลำดับ implementation ที่แนะนำ
-
-<!-- APPROVE SECTION 6 BEFORE CONTINUING -->
+<!-- [AI] เขียน section นี้เสร็จแล้ว รอ approve ก่อนไปส่วนถัดไป -->
 
 ---
 
-## 7. Performance Considerations
+## ส่วนที่ 6 — ความสัมพันธ์กับระบบอื่น
+
+- feature อื่นที่ feature นี้ต้องพึ่ง
+- system ที่จะได้รับผลกระทบเมื่อ feature นี้เปลี่ยน
+- ลำดับที่แนะนำในการ implement
+
+<!-- [AI] เขียน section นี้เสร็จแล้ว รอ approve ก่อนไปส่วนถัดไป -->
+
+---
+
+## ส่วนที่ 7 — ข้อกำหนดด้านประสิทธิภาพ
 
 - Target FPS: [60 / 30 / ฯลฯ]
-- Budget สำหรับ feature นี้: < X ms per frame
+- Budget ของ feature นี้: ไม่เกิน X ms per frame
 - Memory: [ถ้าเกี่ยวข้อง]
-- ข้อควรระวังเฉพาะ platform: [mobile / web / desktop]
-- สิ่งที่ต้อง profile หลัง implement
+- ข้อระวังเฉพาะ platform: [mobile / web / desktop]
+- จุดที่ต้อง profile หลัง implement
 
-<!-- APPROVE SECTION 7 BEFORE CONTINUING -->
+<!-- [AI] เขียน section นี้เสร็จแล้ว รอ approve ก่อนไปส่วนถัดไป -->
 
 ---
 
-## 8. Acceptance Criteria
+## ส่วนที่ 8 — เกณฑ์การยืนยันว่าเสร็จ
 
-เกณฑ์ที่บอกว่า feature นี้ "เสร็จ":
+feature นี้ถือว่าเสร็จเมื่อ:
 - [ ] [พฤติกรรมที่ต้องเกิดขึ้น]
-- [ ] [ค่าที่ต้องวัดได้]
-- [ ] [edge case ที่ต้องผ่าน]
-- [ ] Performance อยู่ใน budget ที่กำหนด
+- [ ] [ค่าที่วัดได้และผ่านเกณฑ์]
+- [ ] [กรณีพิเศษที่ต้องผ่าน]
+- [ ] ประสิทธิภาพอยู่ใน budget ที่กำหนด
 - [ ] ทดสอบบน platform เป้าหมายแล้ว
 
-<!-- ALL 8 SECTIONS APPROVED — FDD COMPLETE -->
+<!-- [AI] FDD ครบทุกส่วน รอ approve ขั้นสุดท้ายก่อนเปลี่ยนสถานะเป็น Approved -->
 ```
 
 ---
@@ -129,9 +127,16 @@ Parameter ทุกตัวต้องระบุ:
 ## FDD Index (สำหรับ `doc/08-design/README.md`)
 
 ```md
-# Design Documents Index — <PROJECT_NAME>
+<!-- AI-CONTEXT
+fdd_count: <จำนวน FDD ทั้งหมด>
+pending_approve: <FDD-NNN> | none
+latest: FDD-<NNN>
+updated: <CURRENT_DATE>
+-->
 
-| Feature | File | Status | Task | Updated |
-|---------|------|--------|------|---------|
-| [ชื่อ feature] | [feature-name.md] | Draft/Approved | T-XXX | YYYY-MM-DD |
+# Design Documents — <PROJECT_NAME>
+
+| FDD | Feature | สถานะ | Task | อัปเดตล่าสุด |
+|-----|---------|-------|------|------------|
+| FDD-001 | [ชื่อ feature] | Draft / Approved | T-XXX | YYYY-MM-DD |
 ```
