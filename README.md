@@ -68,7 +68,46 @@ git clone https://github.com/BlackAkuma/ai-project-template.git
 | ประเภทโปรเจ็กต์ | app / web / game / mobile |
 | source docs | ไฟล์ PRD / spec (ถ้ายังไม่มีพิมพ์ว่า "ยังไม่มี") |
 
-### 3. Copy prompt นี้ให้ AI
+### 3. เริ่ม Setup
+
+เลือกตามเครื่องมือที่ใช้:
+
+#### 🤖 ใช้ Claude Code (แนะนำ)
+
+Claude Code โหลด `CLAUDE.md` อัตโนมัติทุก session — ไม่ต้อง copy-paste prompt
+
+```bash
+# 1. copy CLAUDE.md ไปที่ root ของโปรเจ็กต์
+cp platforms/claude-code/CLAUDE.md /path/to/your-project/CLAUDE.md
+
+# 2. ติดตั้ง hooks + rules + skills (optional แต่แนะนำ)
+mkdir -p /path/to/your-project/.claude/{hooks,rules,skills}
+cp platforms/claude-code/hooks/*.sh /path/to/your-project/.claude/hooks/
+cp platforms/claude-code/rules/*.md /path/to/your-project/.claude/rules/
+cp platforms/claude-code/skills/*.md /path/to/your-project/.claude/skills/
+chmod +x /path/to/your-project/.claude/hooks/*.sh
+
+# 3. เปิด Claude Code ในโปรเจ็กต์ แล้วพิมพ์ prompt ด้านล่างครั้งเดียว
+```
+
+จากนั้นพิมพ์ใน Claude Code:
+
+```
+Setup doc/ system for this project.
+- Name: [PROJECT_NAME]
+- Type: [app / web / game / mobile]
+- Source docs: [แนบไฟล์ / none yet]
+- Goal: [PROJECT_GOAL_SUMMARY]
+```
+
+Claude Code จะอ่าน `CLAUDE.md` + `core/` + `skills/game/` (ถ้าเป็น game) แล้วสร้าง `doc/` ให้อัตโนมัติ
+**Session ถัดไปไม่ต้องส่ง prompt อีก** — `CLAUDE.md` โหลดเองทุกครั้ง
+
+---
+
+#### 🛠️ ใช้ AI tool อื่น (ChatGPT, Gemini, Cursor ฯลฯ)
+
+Copy prompt นี้แล้วส่งให้ AI:
 
 ```
 คุณกำลังจะ setup ระบบเอกสารสำหรับโปรเจ็กต์ใหม่
@@ -89,11 +128,14 @@ git clone https://github.com/BlackAkuma/ai-project-template.git
 6. ตรวจสอบกับ core/10-bootstrap-checklist-template.md ก่อนประกาศว่าเสร็จ
 ```
 
-### 4. รอ AI ทำงาน แล้วลบโฟลเดอร์ template นี้ทิ้ง
+**Session ถัดไป** ต้อง copy prompt จาก `core/03-way-of-work-template.md` มาส่งทุกครั้งเพื่อ orient AI
 
-เมื่อ AI รายงานว่าผ่าน checklist แล้ว โฟลเดอร์นี้ลบทิ้งได้เลย
+---
 
-**ถ้าใช้ Claude Code:** setup เพิ่มได้จาก `platforms/claude-code/README.md`
+### 4. ลบโฟลเดอร์ template นี้ทิ้ง
+
+เมื่อ AI รายงานว่าผ่าน checklist แล้ว โฟลเดอร์ template นี้ลบทิ้งได้เลย
+สิ่งที่เหลือคือ `doc/` ในโปรเจ็กต์ของคุณ และ `.claude/` (ถ้าใช้ Claude Code)
 
 > ดูรายละเอียดเพิ่มเติมใน [QUICKSTART.md](QUICKSTART.md)
 
@@ -269,7 +311,55 @@ platforms/
 git clone https://github.com/BlackAkuma/ai-project-template.git
 ```
 
-### 2. Copy this prompt to your AI
+### 2. Prepare your project info
+
+| Info | Example |
+|------|---------|
+| Project name | `my-game` |
+| Path to create `doc/` | `/projects/my-game` |
+| Project type | app / web / game / mobile |
+| Source docs | PRD / spec files (or "none yet") |
+
+### 3. Run Setup
+
+Pick based on your tool:
+
+#### 🤖 Using Claude Code (recommended)
+
+Claude Code auto-loads `CLAUDE.md` every session — no prompt copy-paste needed.
+
+```bash
+# 1. Copy CLAUDE.md to your project root
+cp platforms/claude-code/CLAUDE.md /path/to/your-project/CLAUDE.md
+
+# 2. Install hooks + rules + skills (optional but recommended)
+mkdir -p /path/to/your-project/.claude/{hooks,rules,skills}
+cp platforms/claude-code/hooks/*.sh /path/to/your-project/.claude/hooks/
+cp platforms/claude-code/rules/*.md /path/to/your-project/.claude/rules/
+cp platforms/claude-code/skills/*.md /path/to/your-project/.claude/skills/
+chmod +x /path/to/your-project/.claude/hooks/*.sh
+
+# 3. Open Claude Code in your project, then send the prompt below — once only
+```
+
+Then type in Claude Code:
+
+```
+Setup doc/ system for this project.
+- Name: [PROJECT_NAME]
+- Type: [app / web / game / mobile]
+- Source docs: [attach files / none yet]
+- Goal: [PROJECT_GOAL_SUMMARY]
+```
+
+Claude Code reads `CLAUDE.md` + `core/` + `skills/game/` (if game project) and builds `doc/` automatically.
+**Future sessions need no prompt** — `CLAUDE.md` loads itself every time.
+
+---
+
+#### 🛠️ Using another AI tool (ChatGPT, Gemini, Cursor, etc.)
+
+Copy this prompt and send to your AI:
 
 ```
 You are about to set up a documentation system for a new software project.
@@ -290,11 +380,15 @@ Steps:
 6. Verify against core/10-bootstrap-checklist-template.md before declaring setup complete
 ```
 
-### 3. Wait for AI to finish, then delete this template folder
+**Future sessions:** copy the session-start prompt from `core/03-way-of-work-template.md` each time to orient the AI.
 
-Once AI confirms the checklist passes — delete this folder. The `doc/` directory in your project is what remains.
+---
 
-**If using Claude Code:** see `platforms/claude-code/README.md` for additional setup.
+### 4. Delete this template folder
+
+Once AI confirms the checklist passes — delete this folder. What remains is `doc/` in your project and `.claude/` (if using Claude Code).
+
+> See [QUICKSTART.md](QUICKSTART.md) for detailed walkthroughs including the "existing project with git" use case.
 
 ---
 
