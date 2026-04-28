@@ -43,6 +43,49 @@ Protocol สำหรับตรวจสอบ code quality และ document
 |------|-----------|-------|
 | C-09 | work-status ไม่ได้อัปเดตนานเกิน | มี task `in_progress` แต่ไม่อัปเดต > 3 วัน |
 | C-10 | Session ก่อนไม่มี log entry | work-log-index ไม่มีบันทึก session ล่าสุด |
+| C-11 | Security baseline ไม่ผ่าน | ดูรายการตรวจด้านล่าง |
+
+---
+
+---
+
+## Security Baseline (C-11)
+
+ตรวจทุก session เมื่อมีการแก้ไข code — แจ้งเตือนทันทีถ้าพบ:
+
+| ประเด็น | สิ่งที่ตรวจ |
+|--------|-----------|
+| Hardcoded secrets | API key, password, token ใน code หรือ config ที่ไม่ได้ encrypt |
+| SQL injection | query ที่ต่อ string ตรงโดยไม่ใช้ parameterized query |
+| XSS | render HTML จาก user input โดยไม่ sanitize |
+| Insecure direct object reference | ใช้ user-supplied ID โดยไม่ตรวจ ownership |
+| Sensitive data ใน log | log ที่มี password, token, PII |
+| Dependency ที่รู้ว่ามี vulnerability | package version ที่มี CVE ที่ทราบ |
+
+ถ้าพบ C-11 → **Fix ทันที** ก่อนดำเนินงานต่อ ไม่ defer
+
+---
+
+## Tech Debt Register
+
+ใช้ติดตาม REFACTOR-PENDING ทั้งหมดในโปรเจ็กต์
+เก็บไว้ใน `doc/05-tech-debt/debt-register.md`
+
+```md
+# Tech Debt Register
+
+| ID | Code | ไฟล์ | คำอธิบาย | Task | Priority | เพิ่มเมื่อ |
+|----|------|------|---------|------|----------|-----------|
+| TD-001 | C-01 | src/game/player.ts | file too long (820 lines) | T-042 | Medium | 2026-04-28 |
+| TD-002 | G-01 | src/enemy/ai.ts | hardcoded speed value 3.5 | T-043 | High | 2026-04-28 |
+```
+
+**Priority:**
+- High — กระทบ behavior หรือ maintainability อย่างชัดเจน
+- Medium — ควรแก้ใน milestone ถัดไป
+- Low — แก้เมื่อผ่านมา ไม่เร่งด่วน
+
+**กฎ:** task ทุก task ที่ `done` ต้องตรวจก่อนว่ามี REFACTOR-PENDING ค้างอยู่ไหม ถ้ามีต้องมี entry ใน debt register
 
 ---
 

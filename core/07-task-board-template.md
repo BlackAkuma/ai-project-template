@@ -35,6 +35,31 @@ Status ที่ใช้ได้: `todo` `design_validate` `in_progress` `revi
 
 ---
 
+## Definition of Ready (ก่อนย้ายเข้า `in_progress`)
+
+task พร้อม implement เมื่อผ่านทุกข้อ:
+
+- [ ] มี source reference ที่ชัดเจน (doc/00-source/...)
+- [ ] scope ระบุชัดว่าทำอะไร ไม่ทำอะไร
+- [ ] ไม่มี dependency ที่ยังค้างอยู่
+- [ ] ถ้าเป็น game feature: มี FDD ที่ approved แล้ว
+
+ถ้าไม่ผ่านข้อใดข้อหนึ่ง → ให้อยู่ที่ `design_validate` และระบุสิ่งที่ขาดใน column หมายเหตุ
+
+## Definition of Done (ก่อนย้ายเข้า `review`)
+
+task เสร็จเมื่อผ่านทุกข้อ:
+
+- [ ] งานตรงกับ scope ที่กำหนดใน design_validate
+- [ ] compliance scan ผ่าน (ไม่มี Level 1 violation ค้าง)
+- [ ] มีหลักฐาน validation (test pass / manual check / screenshot)
+- [ ] อัปเดต work-status และ work-log แล้ว
+- [ ] ถ้ามี REFACTOR-PENDING: สร้าง task ใน board แล้ว
+
+ถ้าไม่ผ่านข้อใดข้อหนึ่ง → task ยังอยู่ที่ `in_progress` พร้อมบันทึกสิ่งที่ขาด
+
+---
+
 ## Template ไฟล์จริง
 
 ```md

@@ -88,6 +88,28 @@
 → Session ถัดไปอ่าน work-status เพื่อ resume
 ```
 
+### Scenario H — พบ gap ระหว่าง task board กับ source docs
+
+เกิดเมื่อ: task ใน board อ้างอิง source version เก่า / task ที่ in_progress ไม่มี source reference / source doc ถูกอัปเดตแต่ task board ยังไม่สะท้อน
+
+```
+→ ห้ามเริ่ม implement จนกว่าจะระบุ gap ชัดเจน
+→ รายการ gap ทั้งหมดที่พบ: task ID + สิ่งที่ขาด/ไม่ตรง
+→ ถ้า gap เล็ก (task ขาด reference): อัปเดต task ได้เลย บันทึกใน work-log
+→ ถ้า gap ใหญ่ (source เปลี่ยนแต่หลาย task ได้รับผล): เปลี่ยน work-status เป็น
+   [NEEDS HUMAN DECISION: source/task gap detected — <รายการ task ที่ได้รับผล>]
+→ รอ human ยืนยันก่อนดำเนินต่อ
+```
+
+### Scenario I — พบ code ที่ไม่มี documentation รองรับ
+
+```
+→ ห้ามแก้ไข code นั้นทันที
+→ ทำ reverse-document ตาม protocol ใน extension-doc-template.md
+→ สร้าง task [REVERSE-DOC] ใน task-board
+→ รอ human review ก่อนแก้ไข
+```
+
 ---
 
 ## 3. Escalation Levels
@@ -141,4 +163,5 @@
 | `[NEEDS SOURCE VALIDATION]` | งานนี้ไม่มี source doc รองรับ ต้องตรวจสอบก่อน |
 | `[FOUND-IN-PASSING]` | พบระหว่างทำงานอื่น ยังไม่ได้รับ assign |
 | `[IN_PROGRESS: checkpoint saved]` | ทำไปบ้างแล้ว บันทึก checkpoint ไว้แล้ว |
+| `[REVERSE-DOC]` | พบ undocumented code รอ human review |
 | `<NEEDS_CLARIFICATION: ...>` | placeholder แทนข้อมูลที่ยังไม่มี |
