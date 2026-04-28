@@ -57,17 +57,31 @@
 
 ก่อนประกาศว่า milestone เสร็จ ต้องผ่านเช็คลิสต์ต่อไปนี้:
 
+**Verdict ที่ใช้:**
+- `PASS` — ผ่านทุกข้อ ดำเนินต่อได้
+- `CONCERNS` — มีข้อที่น่าเป็นห่วงแต่ไม่ blocking ให้บันทึกและระวัง
+- `FAIL` — มีข้อที่ blocking ห้ามดำเนินต่อจนกว่าจะแก้ไข
+
 ### Gate ก่อนเริ่ม Milestone (Entry Gate)
+
 - [ ] Source docs version ที่ใช้ระบุชัดเจนใน project-plan
 - [ ] ทุก task ใน milestone นี้มี source reference
-- [ ] ไม่มี task ใดที่สถานะ `[BLOCKED]` ที่ยังไม่มี resolution plan
+- [ ] ไม่มี task `blocked` ที่ยังไม่มี resolution plan
 - [ ] ADR index ถูกอ่านและไม่มี decision ที่ขัดกับงานที่จะทำ
 
+**Verdict Entry Gate:** `PASS` / `CONCERNS` / `FAIL`
+ถ้า FAIL → ห้ามเริ่ม milestone จนกว่าจะแก้ข้อที่ fail
+
 ### Gate ก่อนปิด Milestone (Exit Gate)
-- [ ] ทุก task ที่อยู่ใน milestone เป็น `done` หรือมีเหตุผลชัดเจนว่าทำไมไม่ได้ทำ
-- [ ] แต่ละ task ที่ `done` ผ่าน validation อย่างน้อย 1 อย่าง
-- [ ] `work-status.md` สะท้อนสถานะปัจจุบันหลัง milestone
+
+- [ ] ทุก task ใน milestone เป็น `done` หรือมีเหตุผลชัดเจนว่าทำไมไม่ได้ทำ
+- [ ] แต่ละ task ที่ `done` ผ่าน review และมี validation evidence
+- [ ] ไม่มี task ค้างอยู่ที่ `design_validate` หรือ `in_progress`
+- [ ] `work-status.md` สะท้อนสถานะหลัง milestone
 - [ ] `work-log-index.md` มี entry ของ milestone นี้
-- [ ] ถ้ามีการตัดสินใจ architecture ในช่วงนี้ — มี ADR รองรับ
-- [ ] ไม่มี scope ที่เพิ่มเข้ามาโดยไม่มี source reference หรือ extension doc
+- [ ] ถ้ามีการตัดสินใจ architecture — มี ADR รองรับ
+- [ ] ไม่มี scope ที่เพิ่มโดยไม่มี source reference หรือ extension doc
+
+**Verdict Exit Gate:** `PASS` / `CONCERNS` / `FAIL`
+ถ้า FAIL → milestone ยังไม่ปิด ต้องแก้ก่อน
 ```

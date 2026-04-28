@@ -59,15 +59,22 @@ AI ต้องเตรียมอย่างน้อย:
 
 ## AI Execution Steps
 
-1. **ถามผู้ใช้ก่อนเลย:** "เราจะสื่อสารกันเป็นภาษาอะไร? (ไทย / English / อื่น ๆ)" — รอคำตอบก่อนดำเนินต่อ ใช้ภาษานั้นตลอด session และบันทึกลง `way-of-work.md`
-2. อ่าน source docs ที่มีอยู่
-3. สร้าง `doc/` ตาม template folder structure
-3. สร้าง source docs index และ version folders
-4. วางเอกสารปฏิบัติงานตั้งต้นจาก template ชุดนี้
-5. เติมข้อมูลเฉพาะโปรเจ็กต์เท่าที่หาได้จริง
-6. ถ้าข้อมูลไม่พอ ให้ใส่ placeholder ที่ชัดเจนแทนการเดา
-7. สร้าง work status และ task board ที่สะท้อนสถานะเริ่มต้นจริง
-8. บันทึกสิ่งที่ setup ไปใน log index หรือ session record ที่เหมาะสม
+1. **ถามภาษา:** "เราจะสื่อสารกันเป็นภาษาอะไร?" — รอคำตอบก่อน บันทึกลง `way-of-work.md`
+2. **ถามประเภทโปรเจ็กต์:** "โปรเจ็กต์นี้เป็นประเภทอะไร?" พร้อมตัวเลือก:
+   - Software ทั่วไป (web app, API, tool, mobile app)
+   - Game / Web Game (มีกลไก gameplay, physics, scoring)
+   - อื่น ๆ (ระบุ)
+3. **โหลด skill pack** ตามคำตอบ:
+   - Game / Web Game → อ่าน `skills/game/` ทั้งหมดเพิ่มเติมจาก core
+   - อื่น ๆ → ใช้ core เท่านั้น
+4. อ่าน source docs ที่มีอยู่
+5. สร้าง `doc/` ตาม template folder structure (เพิ่ม `doc/08-design/` ถ้าเป็น game)
+6. สร้าง source docs index และ version folders
+7. วางเอกสารปฏิบัติงานตั้งต้นจาก core templates
+8. ถ้าเป็น game → วาง game skill templates เพิ่มเติมใน `doc/04-way-of-work/` และ `doc/08-design/`
+9. เติมข้อมูลเฉพาะโปรเจ็กต์ที่หาได้จริง ถ้าไม่พอใส่ placeholder ชัดเจน ห้ามเดา
+10. สร้าง work status และ task board ที่สะท้อนสถานะเริ่มต้นจริง
+11. บันทึกสิ่งที่ setup ไปใน log index
 
 ## Placeholder Policy
 

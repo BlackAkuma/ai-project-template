@@ -79,18 +79,26 @@ git clone https://github.com/BlackAkuma/ai-project-template.git
 
 ---
 
-## Template ที่มีในชุดนี้
+## โครงสร้าง Template
+
+```
+core/        ← ทุกโปรเจ็กต์ใช้
+skills/
+  game/      ← โปรเจ็กต์เกมและ web game
+```
+
+### core/ — Universal Templates
 
 | ไฟล์ | หน้าที่ |
 |------|--------|
-| `00` Bootstrap Master | ภาพรวม rules และขั้นตอน setup |
+| `00` Bootstrap Master | ภาพรวม rules ขั้นตอน setup และ skill detection |
 | `01` Folder Structure | โครงสร้างโฟลเดอร์มาตรฐาน |
 | `02` Source Doc Versioning | การจัดการ requirements แบบ versioned |
 | `03` Way of Work | กติกา session protocol และ language policy |
 | `04` Coding Standards | มาตรฐาน code และ workflow |
-| `05` Project Plan | template แผนโปรเจ็กต์ + quality gates |
+| `05` Project Plan | template แผนโปรเจ็กต์ + quality gates (PASS/CONCERNS/FAIL) |
 | `06` Work Status | สถานะโปรเจ็กต์ พร้อม AI-CONTEXT block |
-| `07` Task Board | จัดการ task พร้อม AI-CONTEXT block |
+| `07` Task Board | จัดการ task lifecycle (design_validate → in_progress → review → done) |
 | `08` Log & Summary | บันทึก session และ summary รายวัน/เดือน |
 | `09` Extension Doc | เอกสารขยายที่ไม่ใช่ source doc |
 | `10` Bootstrap Checklist | ตรวจสอบว่า setup ครบก่อน deploy |
@@ -99,6 +107,17 @@ git clone https://github.com/BlackAkuma/ai-project-template.git
 | `13` Retrospective | ทบทวนการทำงานรายช่วง |
 | `14` Anti-Patterns | สิ่งที่ไม่ควรทำ |
 | `15` Compliance Check | ตรวจ code quality อัตโนมัติทุก session |
+
+### skills/game/ — Game Development Skill Pack
+
+เปิดใช้งานอัตโนมัติเมื่อโปรเจ็กต์เป็น game หรือ web game
+
+| ไฟล์ | หน้าที่ |
+|------|--------|
+| `00` Game Skill Overview | ภาพรวม เมื่อไหร่ใช้ และสิ่งที่เพิ่มจาก core |
+| `01` FDD Template | Feature Design Document — ออกแบบก่อนโค้ด |
+| `02` Game Coding Standards | Config-driven, delta time, logic/render separation |
+| `03` Asset Protocol | Naming convention, folder structure, registry |
 
 ---
 
@@ -195,18 +214,26 @@ Once AI confirms the checklist passes — delete this folder. The `doc/` directo
 
 ---
 
-## What's Included
+## Structure
+
+```
+core/        ← used by every project
+skills/
+  game/      ← activated for game and web game projects
+```
+
+### core/ — Universal Templates
 
 | File | Purpose |
 |------|---------|
-| `00` Bootstrap Master | Overview of rules and setup steps |
+| `00` Bootstrap Master | Rules overview, setup steps, and skill detection |
 | `01` Folder Structure | Standard directory layout |
 | `02` Source Doc Versioning | Versioned requirements management |
 | `03` Way of Work | Session protocol and language policy |
 | `04` Coding Standards | Code and workflow standards |
-| `05` Project Plan | Project plan template + quality gates |
+| `05` Project Plan | Project plan template + quality gates (PASS/CONCERNS/FAIL) |
 | `06` Work Status | Project status with AI-CONTEXT block |
-| `07` Task Board | Task management with AI-CONTEXT block |
+| `07` Task Board | Task lifecycle (design_validate → in_progress → review → done) |
 | `08` Log & Summary | Session logs and daily/monthly summaries |
 | `09` Extension Doc | Non-source supplemental documents |
 | `10` Bootstrap Checklist | Verify setup is complete before starting |
@@ -215,6 +242,17 @@ Once AI confirms the checklist passes — delete this folder. The `doc/` directo
 | `13` Retrospective | Periodic collaboration review |
 | `14` Anti-Patterns | What not to do |
 | `15` Compliance Check | Automatic code quality scan every session |
+
+### skills/game/ — Game Development Skill Pack
+
+Auto-activated when the project is a game or web game.
+
+| File | Purpose |
+|------|---------|
+| `00` Game Skill Overview | When to use and what it adds on top of core |
+| `01` FDD Template | Feature Design Document — design before code |
+| `02` Game Coding Standards | Config-driven values, delta time, logic/render separation |
+| `03` Asset Protocol | Naming convention, folder structure, asset registry |
 
 ---
 

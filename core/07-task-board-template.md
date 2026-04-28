@@ -19,7 +19,19 @@
 | `src` | source doc version | `v0.2` |
 | `updated` | วันที่อัปเดตล่าสุด | `2026-04-28` |
 
-Status ที่ใช้ได้: `todo` `in_progress` `blocked` `review` `done`
+Status ที่ใช้ได้: `todo` `design_validate` `in_progress` `review` `done` `blocked`
+
+| Status | ความหมาย |
+|--------|----------|
+| `todo` | รอ pick up |
+| `design_validate` | กำลังตรวจว่า scope/design ชัดพอก่อนเริ่มเขียนโค้ด |
+| `in_progress` | ผ่าน design validate แล้ว กำลัง implement |
+| `review` | implement เสร็จ รอตรวจสอบก่อนปิด |
+| `done` | ผ่าน review แล้ว ปิดสมบูรณ์ |
+| `blocked` | ติดขัด รอ input ภายนอก |
+
+**กฎ lifecycle:** `todo → design_validate → in_progress → review → done`
+ห้ามข้าม `design_validate` — ถ้า scope ชัดอยู่แล้วให้ผ่านทันทีและบันทึกว่า "scope clear, no changes needed"
 
 ---
 
@@ -44,7 +56,7 @@ updated: <CURRENT_DATE>
 ## กฎการใช้งาน
 
 - ทุก task ต้องมี source reference
-- สถานะที่ใช้: `todo` `in_progress` `blocked` `review` `done`
+- สถานะที่ใช้: `todo` `design_validate` `in_progress` `review` `done` `blocked`
 - ถ้า task ทำให้ scope เปลี่ยน ต้องสร้าง extension doc หรือ source version ใหม่
 - task ที่พบโดยไม่ได้วางแผน ให้แท็ก `[FOUND-IN-PASSING]`
 
