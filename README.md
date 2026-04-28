@@ -31,13 +31,13 @@ Template ชุดนี้แก้ปัญหาเหล่านั้น�
 
 ## วิธีใช้งานเบื้องต้น
 
-### 1. Clone หรือ Download โฟลเดอร์นี้
+### 1. Clone โฟลเดอร์นี้
 
 ```bash
 git clone https://github.com/BlackAkuma/ai-project-template.git
 ```
 
-### 2. เตรียมข้อมูลโปรเจ็กต์ใหม่ของคุณ
+### 2. เตรียมข้อมูลโปรเจ็กต์ใหม่
 
 | ข้อมูล | ตัวอย่าง |
 |--------|---------|
@@ -109,6 +109,122 @@ git clone https://github.com/BlackAkuma/ai-project-template.git
 - **ทุก task มี traceability** — trace กลับถึง requirement ได้ทุก task
 - **Do less, document more** — AI หยุดพร้อมบันทึกชัดเจน ดีกว่าตัดสินใจเงียบ ๆ แล้วผิด
 - **ใช้ได้กับทุก AI tool** — Claude, ChatGPT, Gemini หรือ tool ใดก็ตามที่ทีมใช้
+
+---
+
+---
+
+# AI Project Template
+
+A template pack for structuring collaboration between **developers** and **AI** on software projects.
+
+---
+
+## Why This Exists
+
+Working with AI across multiple sessions on the same project often leads to these problems:
+
+- **AI doesn't know what was already done** — every session starts from scratch, repeating work or skipping important steps
+- **Requirements change without a trace** — no record of when, why, or who decided
+- **AI makes decisions it shouldn't** — or stalls on decisions it should handle independently
+- **Team members work in different directions** — each person uses AI differently, producing inconsistent results
+
+This template pack solves these problems with a clear structure and a protocol that any AI tool can follow.
+
+---
+
+## Benefits
+
+- **Seamless session continuity** — a new AI session reads the status and immediately knows what to do next
+- **Requirements never get lost** — source docs are versioned, immutable records
+- **Every task is traceable** — every task traces back to a real requirement
+- **AI knows its boundaries** — clear protocol for what it can decide independently vs. what requires human input
+- **Teams stay aligned** — everyone follows the same template; every AI tool follows the same standards
+- **Automatic code quality checks** — compliance checks run every session, catching violations before they accumulate
+- **Works for any project type** — app, web, game, mobile — not tied to any specific stack
+
+---
+
+## Quick Start
+
+### 1. Clone this repository
+
+```bash
+git clone https://github.com/BlackAkuma/ai-project-template.git
+```
+
+### 2. Prepare your project details
+
+| Info | Example |
+|------|---------|
+| Project name | `my-app` |
+| Path to create `doc/` | `/projects/my-app` |
+| Source docs | PRD / spec files (type "none yet" if unavailable) |
+| Short goal | "Online queue booking app for restaurants" |
+
+### 3. Copy this prompt to your AI
+
+```
+You are about to set up a documentation system for a new software project.
+
+Project details:
+- Name: [PROJECT_NAME]
+- Path to create doc/ at: [PROJECT_ROOT_PATH]
+- Source docs: [attach files / none yet]
+- Goal: [PROJECT_GOAL_SUMMARY]
+
+Requirements:
+- First ask what language we should communicate in
+- Internal reasoning: use English to save tokens
+- AI-CONTEXT blocks in files: always English
+- Output and documents: use the agreed language
+
+Steps:
+1. Ask what language to use for communication — wait for answer before proceeding
+2. Read all files in this template folder in the order listed in README.md
+3. Create the doc/ structure at the path above
+4. Fill in available project info — use clear placeholders where info is missing, never guess
+5. Verify against 10-bootstrap-checklist-template.md before declaring setup complete
+```
+
+### 4. Wait for AI to finish, then delete this template folder
+
+Once AI confirms the checklist passes — delete this folder. The `doc/` directory in your project is what remains.
+
+> See [QUICKSTART.md](QUICKSTART.md) for a step-by-step walkthrough.
+
+---
+
+## What's Included
+
+| File | Purpose |
+|------|---------|
+| `00` Bootstrap Master | Overview of rules and setup steps |
+| `01` Folder Structure | Standard directory layout |
+| `02` Source Doc Versioning | Versioned requirements management |
+| `03` Way of Work | Session protocol and language policy |
+| `04` Coding Standards | Code and workflow standards |
+| `05` Project Plan | Project plan template + quality gates |
+| `06` Work Status | Project status with AI-CONTEXT block |
+| `07` Task Board | Task management with AI-CONTEXT block |
+| `08` Log & Summary | Session logs and daily/monthly summaries |
+| `09` Extension Doc | Non-source supplemental documents |
+| `10` Bootstrap Checklist | Verify setup is complete before starting |
+| `11` AI Decision Protocol | Rules for what AI decides vs. escalates |
+| `12` ADR | Architecture Decision Records |
+| `13` Retrospective | Periodic collaboration review |
+| `14` Anti-Patterns | What not to do |
+| `15` Compliance Check | Automatic code quality scan every session |
+
+---
+
+## Design Principles
+
+- **Source docs are the source of truth** — requirements are never edited directly; changes create a new version
+- **AI reads AI-CONTEXT blocks first** — 3 key files have compact blocks at the top to minimize token usage
+- **Every task has traceability** — every task can be traced back to a requirement
+- **Do less, document more** — a well-documented stop is better than a silent wrong decision
+- **Works with any AI tool** — Claude, ChatGPT, Gemini, or whatever tool your team uses
 
 ---
 
