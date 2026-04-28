@@ -1,0 +1,116 @@
+# Way of Work Template
+
+คัดลอกและปรับไฟล์นี้เป็น `doc/04-way-of-work/way-of-work.md`
+
+## Purpose
+
+เอกสารนี้กำหนดวิธีทำงานร่วมกันของโปรเจ็กต์ `<PROJECT_NAME>` เพื่อให้ทุก session รู้ว่า:
+
+- ต้องเริ่มอ่านจากไหน
+- งานล่าสุดไปถึงไหน
+- อะไรเสร็จ อะไรค้าง
+- ต้องอัปเดต status, log, summary อย่างไร
+- ต้องอ้างอิง source docs เวอร์ชันใด
+
+## Files That Must Be Read First
+
+อ่านตามลำดับนี้ทุก session — 3 ไฟล์แรกมี `AI-CONTEXT` block ด้านบน อ่าน block นั้นก่อนเพื่อ orient อย่างรวดเร็ว จากนั้นอ่าน body เฉพาะส่วนที่ต้องการรายละเอียดเพิ่ม
+
+1. `doc/01-plan/work-status.md` — อ่าน AI-CONTEXT block ก่อน
+2. `doc/03-log/work-log-index.md` — อ่าน AI-CONTEXT block ก่อน
+3. `doc/02-task/task-board.md` — อ่าน AI-CONTEXT block ก่อน
+4. `doc/01-plan/project-plan.md`
+5. `doc/04-way-of-work/coding-standards.md`
+6. source doc index ใน `doc/00-source/`
+7. source docs เวอร์ชันปัจจุบันใน `doc/00-source/versions/`
+
+## AI-CONTEXT Block Format
+
+ไฟล์ operating 3 ไฟล์ข้างต้นมี block นี้อยู่ด้านบนสุด:
+
+```
+<!-- AI-CONTEXT
+key: value
+...
+-->
+```
+
+Block นี้คือ snapshot ที่อัปเดตทุก session — AI อ่าน block เดียวได้ context ทันทีโดยไม่ต้องอ่าน body ทั้งไฟล์
+หลังอ่าน block ครบทั้ง 3 ไฟล์ ถ้าต้องการรายละเอียดค่อยอ่าน body เพิ่ม
+
+## Source of Truth by Purpose
+
+- business/product source docs: `doc/00-source/versions/<CURRENT_SOURCE_VERSION>/...`
+- แผนหลัก: `doc/01-plan/project-plan.md`
+- สถานะล่าสุด: `doc/01-plan/work-status.md`
+- งานและ ticket: `doc/02-task/task-board.md`
+- handoff summary: `doc/03-log/work-log-index.md`
+
+## Language Policy
+
+| บริบท | ภาษาที่ใช้ | เหตุผล |
+|-------|-----------|--------|
+| กระบวนการคิด / reasoning ภายใน | English | token-efficient, AI ประมวลผลได้เร็วกว่า |
+| output ที่สื่อสารกับผู้ใช้ | `<PROJECT_LANGUAGE>` | ผู้ใช้อ่านได้สะดวก |
+| เนื้อหาในไฟล์เอกสาร (work-status, task-board, log ฯลฯ) | `<PROJECT_LANGUAGE>` | มนุษย์ต้องอ่านและ maintain |
+| AI-CONTEXT block | English | AI อ่าน ไม่ใช่มนุษย์ |
+| code, variable names, technical identifiers | English | convention สากล |
+
+`<PROJECT_LANGUAGE>` = ภาษาที่ตกลงกับผู้ใช้ตอน setup (เช่น ไทย หรือ English)
+
+**กฎ:** AI ห้าม output ภาษาอื่นกับผู้ใช้โดยไม่ได้รับอนุญาต แม้จะคิดภายในเป็นภาษาอะไรก็ตาม
+
+## Core Working Rules
+
+- ห้ามเริ่ม implement โดยไม่รู้ source docs ที่ใช้อ้างอิง
+- ห้ามเขียนทับ source docs revision เดิม
+- ถ้ามี scope ใหม่เกินต้นฉบับ ให้สร้าง extension doc หรือ source version ใหม่
+- ทุก session ต้องอัปเดต status และ log index
+
+## Logging Rule
+
+- daily log ใช้เก็บรายละเอียดรายวัน
+- work-log-index ใช้เป็น summary สำหรับ handoff
+- ถ้า repo ต้องเบา ให้เก็บเฉพาะ summary ระดับเดือนขึ้นไปใน git
+
+## End-of-Session Rule
+
+ก่อนจบงานทุกครั้งอย่างน้อยต้องอัปเดต:
+
+1. `work-status` — body **และ** AI-CONTEXT block
+2. `work-log-index` — เพิ่ม entry ใหม่ **และ** อัปเดต AI-CONTEXT block ให้สะท้อน session นี้
+3. `task-board` — เปลี่ยน status **และ** AI-CONTEXT block ถ้ามี task เปลี่ยน
+4. daily log / daily summary ใน local workspace
+
+**กฎ sync:** AI-CONTEXT block และ body ต้องสะท้อนข้อมูลเดียวกันเสมอ ถ้า block กับ body ไม่ตรงกัน ให้เชื่อ body และอัปเดต block ทันที
+
+## Context Window Management
+
+เมื่อ context ใกล้เต็มกลางคัน (สังเกตจากการตอบสนองช้าลง หรือ AI ขอสรุป context ใหม่):
+
+**Minimal Context Set** — 4 ไฟล์ที่ให้ข้อมูลมากที่สุดในเวลาน้อยที่สุด:
+1. `doc/01-plan/work-status.md` — สถานะปัจจุบัน
+2. `doc/02-task/task-board.md` — งานที่กำลังทำ
+3. `doc/03-log/work-log-index.md` — สิ่งที่ทำไปแล้ว (entry ล่าสุด)
+4. `doc/07-decisions/README.md` — ADR index (ป้องกัน reverse decisions)
+
+ถ้า context เต็มกลางคัน session:
+- บันทึก checkpoint ใน work-log ทันที
+- อัปเดต work-status ว่าหยุดตรงไหน
+- mark task เป็น `[IN_PROGRESS: checkpoint saved]`
+- session ใหม่เริ่มจาก minimal context set
+
+## Multi-AI / Multi-Tool Coordination
+
+เมื่อใช้หลาย AI tool บนโปรเจ็กต์เดียวกัน (เช่น Claude Code สำหรับ implementation, Claude.ai สำหรับ design review):
+
+**กฎเดียวกันใช้กับทุก AI tool:**
+- ทุก session ไม่ว่าจะเป็น tool ใด ต้องอ่าน startup files และอัปเดต log ตาม protocol นี้
+- ระบุ tool identity ใน work-log entry: `[Claude Code]`, `[Claude.ai]`, `[ChatGPT]` เป็นต้น
+- ห้ามให้ AI tool ใด overwrite งานของ AI tool อื่นโดยไม่อ่าน log ก่อน
+
+**Source of truth ไม่เปลี่ยน:**
+- tool ที่ใช้อยู่ไม่มีผลต่อ hierarchy — source docs ยังคงเป็น source of truth เสมอ
+- ถ้า AI tool ต่างกันให้ output ที่ขัดแย้งกัน ให้ทำตาม Scenario E ใน `ai-decision-protocol.md`
+
+**แนะนำ:** ถ้าใช้หลาย tool ให้ระบุไว้ใน `way-of-work.md` ของโปรเจ็กต์ว่า tool ไหนรับผิดชอบส่วนใด

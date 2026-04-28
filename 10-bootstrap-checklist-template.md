@@ -1,0 +1,66 @@
+# Bootstrap Checklist Template
+
+AI ใช้ checklist นี้ตรวจสอบก่อนประกาศว่า setup เสร็จ
+ห้ามถือว่าเสร็จจนกว่าจะผ่านทุกข้อ
+
+---
+
+## 1. โครงสร้างโฟลเดอร์
+
+- [ ] `doc/` และโฟลเดอร์หลักทั้งหมดสร้างแล้ว
+- [ ] `doc/00-source/versions/<CURRENT_SOURCE_VERSION>/` มีอยู่
+- [ ] `doc/07-decisions/` มีอยู่
+
+## 2. ไฟล์ที่ต้องมี
+
+- [ ] `doc/README.md`
+- [ ] `doc/00-source/README.md` (source index)
+- [ ] `doc/01-plan/project-plan.md`
+- [ ] `doc/01-plan/work-status.md`
+- [ ] `doc/02-task/task-board.md`
+- [ ] `doc/03-log/work-log-index.md`
+- [ ] `doc/04-way-of-work/way-of-work.md`
+- [ ] `doc/04-way-of-work/coding-standards.md`
+- [ ] `doc/04-way-of-work/ai-decision-protocol.md`
+- [ ] `doc/07-decisions/README.md` (ADR index)
+
+## 3. AI-CONTEXT Blocks
+
+- [ ] `work-status.md` มี `<!-- AI-CONTEXT ... -->` block ด้านบนสุด และ field ครบ
+- [ ] `task-board.md` มี `<!-- AI-CONTEXT ... -->` block ด้านบนสุด และ field ครบ
+- [ ] `work-log-index.md` มี `<!-- AI-CONTEXT ... -->` block ด้านบนสุด และ field ครบ
+- [ ] ค่าใน block สะท้อนสถานะจริง ณ ตอน setup (ไม่ใช่ template placeholder ว่าง)
+
+## 4. เนื้อหาต้องมี placeholder หรือข้อมูลจริง
+
+- [ ] `<PROJECT_NAME>` ถูกแทนด้วยชื่อจริงหรือ placeholder ที่ชัดเจน
+- [ ] `<CURRENT_SOURCE_VERSION>` ระบุแล้ว (เช่น `v0.1`)
+- [ ] `<PROJECT_PHASE>` ระบุแล้ว
+- [ ] `<NEXT_REQUIRED_WORK>` ระบุแล้ว
+- [ ] ไม่มีการ invent requirement เชิงธุรกิจที่ไม่มีใน source docs
+
+## 5. Source Docs
+
+- [ ] ถ้ามี source docs: วางไว้ใน `doc/00-source/versions/<VERSION>/` แล้ว
+- [ ] ถ้ายังไม่มี source docs: ระบุชัดใน work-status ว่า "source docs ยังไม่ได้นำเข้า"
+- [ ] source version policy ระบุแล้วว่าจะ versioning อย่างไร
+
+## 6. Work Status & Log
+
+- [ ] `work-status.md` บันทึกสถานะเริ่มต้นจริง ไม่ใช่ template เปล่า
+- [ ] `work-log-index.md` มี entry แรกบันทึกการ setup session นี้
+- [ ] `task-board.md` มี task เริ่มต้นอย่างน้อย 1 รายการ (หรือระบุว่ายังไม่มี task)
+
+## 7. Policy ที่ต้องตัดสินใจ
+
+- [ ] ระบุแล้วว่า daily logs จะเก็บใน git หรือ local เท่านั้น
+- [ ] ภาษาเอกสารระบุแล้วใน `way-of-work.md` (`<PROJECT_LANGUAGE>`)
+- [ ] Language policy บันทึกแล้วใน `way-of-work.md`: reasoning=English, output=`<PROJECT_LANGUAGE>`, AI-CONTEXT block=English
+
+---
+
+## Completion Rule
+
+ถ้า checklist ผ่านครบ → setup เสร็จ โฟลเดอร์ template ลบทิ้งได้เลย
+
+ถ้ายังมีข้อที่ไม่ผ่าน → แก้ให้ครบก่อน ห้ามประกาศว่าเสร็จ

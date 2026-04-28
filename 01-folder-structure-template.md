@@ -1,0 +1,57 @@
+# Folder Structure Template
+
+ใช้ template นี้เพื่อสร้างโครงสร้างเอกสารตั้งต้นของโปรเจ็กต์ใหม่
+
+## Recommended Structure
+
+```text
+doc/
+  README.md
+  00-source/
+    README.md
+    01-<SOURCE-DOC-NAME>.md
+    02-<SOURCE-DOC-NAME>.md
+    versions/
+      v0.1/
+        01-<SOURCE-DOC-NAME>.md
+        02-<SOURCE-DOC-NAME>.md
+  01-plan/
+    project-plan.md
+    work-status.md
+  02-task/
+    task-board.md
+  03-log/
+    README.md
+    work-log-index.md
+    templates/
+      daily-log-template.md
+    YYYY/
+      MM/
+        YYYY-MM-DD-log.md
+  04-way-of-work/
+    way-of-work.md
+    coding-standards.md
+  05-summary/
+    README.md
+    templates.md
+    YYYY/
+      YYYY-MM-summary.md
+      MM/
+        YYYY-MM-DD-summary.md
+  06-extensions/
+    README.md
+    extension-template.md
+  07-decisions/
+    README.md
+    ADR-001-<decision-title>.md
+```
+
+## Notes
+
+- `00-source/` ไฟล์ชื่อหลักเป็น index/pointer
+- source revision จริงเก็บใน `00-source/versions/`
+- `03-log/YYYY/MM/` สำหรับ daily logs
+- `05-summary/YYYY/MM/` สำหรับ daily summaries
+- ถ้า repo ไม่ควรเก็บ daily records ให้ ignore รายวันและเก็บเฉพาะ summary ระดับเดือนขึ้นไป
+- `07-decisions/` เก็บ ADR (Architecture Decision Records) — ห้ามลบ ให้ deprecated/supersede แทน
+- `04-way-of-work/ai-decision-protocol.md` กำหนดว่า AI ต้องทำอะไรเมื่อเจอสถานการณ์คลุมเครือ
