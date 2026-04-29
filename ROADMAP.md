@@ -154,7 +154,7 @@ read_more:
 
 **สิ่งที่ต้องสร้าง**
 - ~~อัปเดต core/06 (work-status template) เพิ่ม `read_more` field~~ ✅
-- อัปเดต core/08 (log template) ให้ AI-CONTEXT ของ work-log-index มี `deep_context` hint ด้วย
+- ~~อัปเดต core/08 (log template) ให้ AI-CONTEXT ของ work-log-index มี `deep_context` hint ด้วย~~ ✅
 - ~~อัปเดต CLAUDE.md ให้ Session Start Protocol อ่าน `read_more` แล้ว suggest ว่าควรอ่านอะไรเพิ่ม~~ ✅
 
 ---
