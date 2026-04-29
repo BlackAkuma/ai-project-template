@@ -17,13 +17,26 @@ tests/
 
 ## Feature ที่ทดสอบ
 
-| Feature | Test Type | ไฟล์ |
-|---------|-----------|------|
-| F3: Entity Lifecycle Tags | Hook test | hooks/test-validate-commit.sh |
-| F3: Entity Lifecycle Tags | Reader test | reader/test-scenario-j.md |
-| F1: Project Entity Register | Reader test | reader/test-entity-register.md |
-| F1: Project Entity Register | Bootstrap sim | mock-project/ |
-| F2: Scoped Memory Map | Reader test | reader/test-scoped-memory.md |
+### Phase 1
+
+| Feature | Test Type | ไฟล์ | ผล |
+|---------|-----------|------|----|
+| F3: Entity Lifecycle Tags | Hook test | hooks/test-validate-commit.sh | ✅ 5/5 |
+| F3: Entity Lifecycle Tags | Reader test | reader/test-scenario-j.md | ✅ |
+| F1: Project Entity Register | Reader test | reader/test-entity-register.md | ✅ |
+| F1: Project Entity Register | Bootstrap sim | mock-project/ | ✅ |
+| F2: Scoped Memory Map | Reader test | reader/test-scoped-memory.md | ✅ |
+
+### Phase 2
+
+| Feature | Test Type | ไฟล์ | ผล |
+|---------|-----------|------|----|
+| F4: Agent Diary Protocol | Reader test (session start) | reader/test-agent-diary.md — Scenario L | ✅ |
+| F4: Agent Diary Protocol | Integration test (session end) | reader/test-agent-diary.md — Scenario M | ✅ |
+| F5: Cross-Project Memory Bridge | Reader test (bootstrap) | reader/test-cross-project-memory.md — Scenario N | ✅ |
+| F5: Cross-Project Memory Bridge | Reader test (session end) | reader/test-cross-project-memory.md — Scenario O | ✅ |
+| F6: Memory Scope Protocol | Reader test (5 items) | reader/test-memory-scope.md — Scenario P | ✅ |
+| F6: Memory Scope Protocol | Reader test (edge case) | reader/test-memory-scope.md — Scenario P2 | ✅ |
 
 ## วิธีรัน
 
@@ -32,4 +45,5 @@ tests/
 bash tests/hooks/test-validate-commit.sh
 
 # Reader tests — ใช้ AI agent อ่าน prompt แล้วประเมินผล
+# ดู tests/reader/ สำหรับ prompt files แต่ละ scenario
 ```
