@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Project Template — วิธีการทำงาน</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --border: #2e3347;
+    --text: #e2e8f0;
+    --muted: #8892a4;
+    --blue: #60a5fa;
+    --indigo: #818cf8;
+    --violet: #a78bfa;
+    --green: #4ade80;
+    --amber: #fbbf24;
+    --rose: #f87171;
+    --cyan: #22d3ee;
+    --pink: #f472b6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; line-height: 1.6; overflow-x: hidden; }
+
+  /* ── Typography ── */
+  h1 { font-size: 2.8rem; font-weight: 800; line-height: 1.2; }
+  h2 { font-size: 1.9rem; font-weight: 700; }
+  h3 { font-size: 1.25rem; font-weight: 600; }
+  .muted { color: var(--muted); }
+  .tag { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+
+  /* ── Layout ── */
+  section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
+  .full-width { max-width: 100%; background: var(--surface); padding: 80px 24px; }
+  .full-width > * { max-width: 1100px; margin: 0 auto; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  @media(max-width: 768px) { .grid-2,.grid-3 { grid-template-columns: 1fr; } h1 { font-size: 2rem; } }
+
+  /* ── Cards ── */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
+  .card-sm { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+
+  /* ── Hero ── */
+  .hero { text-align: center; padding: 100px 24px 80px; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(99,102,241,.15) 0%, transparent 70%); pointer-events: none; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(99,102,241,.15); border: 1px solid rgba(99,102,241,.3); border-radius: 999px; padding: 6px 16px; margin-bottom: 24px; font-size: .85rem; color: var(--indigo); }
+  .gradient-text { background: linear-gradient(135deg, #818cf8 0%, #60a5fa 40%, #4ade80 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+  /* ── Problem cards ── */
+  .problem-card { background: rgba(248,113,113,.06); border: 1px solid rgba(248,113,113,.2); border-radius: 12px; padding: 20px; }
+  .solution-card { background: rgba(74,222,128,.06); border: 1px solid rgba(74,222,128,.2); border-radius: 12px; padding: 20px; }
+
+  /* ── Tier pills ── */
+  .tier-core { background: rgba(129,140,248,.12); border: 1px solid rgba(129,140,248,.3); border-radius: 12px; padding: 20px; }
+  .tier-game { background: rgba(74,222,128,.08); border: 1px solid rgba(74,222,128,.25); border-radius: 12px; padding: 20px; }
+  .tier-claude { background: rgba(96,165,250,.08); border: 1px solid rgba(96,165,250,.25); border-radius: 12px; padding: 20px; }
+
+  /* ── Step Flow ── */
+  .step-flow { display: flex; flex-direction: column; gap: 0; }
+  .step { display: grid; grid-template-columns: 56px 1fr; gap: 20px; position: relative; padding-bottom: 40px; }
+  .step:last-child { padding-bottom: 0; }
+  .step-left { display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .step-num { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem; flex-shrink: 0; }
+  .step-line { width: 2px; flex: 1; min-height: 20px; margin-top: 8px; }
+  .step-content { padding-top: 8px; }
+  .step-content h3 { margin-bottom: 8px; }
+  .step-content p { color: var(--muted); font-size: .95rem; }
+
+  /* ── File Tree ── */
+  .file-tree { background: #0d1117; border: 1px solid var(--border); border-radius: 10px; padding: 16px; font-family: 'Cascadia Code', 'Consolas', monospace; font-size: .82rem; line-height: 1.8; }
+  .ft-folder { color: var(--amber); }
+  .ft-file { color: var(--text); }
+  .ft-new { color: var(--green); }
+  .ft-comment { color: var(--muted); }
+  .ft-indent { padding-left: 20px; }
+  .ft-indent2 { padding-left: 40px; }
+  .ft-indent3 { padding-left: 60px; }
+
+  /* ── Code block ── */
+  .code-block { background: #0d1117; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .code-header { background: var(--surface2); border-bottom: 1px solid var(--border); padding: 8px 16px; font-size: .78rem; color: var(--muted); font-family: monospace; display: flex; align-items: center; gap: 8px; }
+  .code-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .code-body { padding: 16px; font-family: 'Cascadia Code', 'Consolas', monospace; font-size: .82rem; line-height: 1.7; overflow-x: auto; }
+  .c-key { color: var(--indigo); }
+  .c-val { color: var(--green); }
+  .c-comment { color: var(--muted); }
+  .c-tag { color: var(--amber); }
+  .c-str { color: var(--cyan); }
+  .c-warn { color: var(--rose); }
+  .c-ok { color: var(--green); }
+
+  /* ── Scenario badge ── */
+  .scenario { display: inline-flex; align-items: center; gap: 6px; background: rgba(251,191,36,.1); border: 1px solid rgba(251,191,36,.3); border-radius: 8px; padding: 4px 10px; font-size: .8rem; color: var(--amber); font-weight: 600; }
+
+  /* ── Timeline ── */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--indigo), var(--blue), var(--green)); border-radius: 2px; }
+  .tl-item { position: relative; padding: 0 0 32px 28px; }
+  .tl-item::before { content: ''; position: absolute; left: -6px; top: 6px; width: 14px; height: 14px; border-radius: 50%; background: var(--bg); border: 2px solid var(--indigo); }
+  .tl-time { font-size: .75rem; color: var(--indigo); font-weight: 600; margin-bottom: 4px; }
+
+  /* ── Comparison ── */
+  .compare { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: start; }
+  .compare-vs { display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--muted); padding-top: 24px; }
+
+  /* ── Divider ── */
+  .divider { height: 1px; background: linear-gradient(to right, transparent, var(--border), transparent); margin: 0 24px; }
+
+  /* ── Notification ── */
+  .notif { background: var(--surface2); border-left: 3px solid var(--amber); border-radius: 0 8px 8px 0; padding: 12px 16px; font-size: .85rem; font-family: monospace; margin: 12px 0; }
+  .notif-green { border-color: var(--green); }
+  .notif-blue { border-color: var(--blue); }
+  .notif-red { border-color: var(--rose); }
+
+  /* ── Checklist ── */
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .checklist li { display: flex; align-items: flex-start; gap: 10px; font-size: .9rem; }
+  .check-icon { flex-shrink: 0; margin-top: 2px; }
+
+  /* ── Result stat ── */
+  .stat { text-align: center; padding: 24px; }
+  .stat-num { font-size: 2.5rem; font-weight: 800; line-height: 1; }
+  .stat-label { color: var(--muted); font-size: .85rem; margin-top: 4px; }
+
+  /* ── Scroll reveal ── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── Nav dot ── */
+  .nav { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 8px; z-index: 100; }
+  .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); cursor: pointer; transition: all .3s; }
+  .nav-dot.active { background: var(--indigo); transform: scale(1.5); }
+
+  /* ── Tooltip ── */
+  abbr { text-decoration: underline dotted; cursor: help; }
+
+  /* ── Flow arrow ── */
+  .flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+  .flow-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; font-size: .82rem; white-space: nowrap; }
+  .flow-arrow { color: var(--muted); font-size: 1.2rem; }
+
+  /* ── Highlight box ── */
+  .highlight { background: rgba(129,140,248,.08); border: 1px solid rgba(129,140,248,.2); border-radius: 10px; padding: 16px 20px; font-size: .9rem; }
+
+  /* ── Footer ── */
+  footer { text-align: center; padding: 60px 24px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--border); }
+
+  /* ── Bilingual ── */
+  .en { display: none; }
+  html[lang="en"] .en { display: inline; }
+  html[lang="en"] .en-block { display: block; }
+  html[lang="en"] .en-flex { display: flex; }
+  html[lang="en"] .th { display: none; }
+  .lang-btn { position:absolute; top:24px; left:28px; background:rgba(255,255,255,.06); border:1px solid var(--border); color:var(--muted); padding:6px 16px; border-radius:999px; font-size:.85rem; cursor:pointer; transition:all .2s; font-family:inherit; z-index:10; }
+  .lang-btn:hover { color:var(--text); border-color:rgba(255,255,255,.2); background:rgba(255,255,255,.1); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════════════════ -->
+<div class="hero reveal">
+  <div class="hero-bg"></div>
+  <button class="lang-btn" onclick="toggleLang()">
+    <span class="th">EN</span><span class="en">TH</span>
+  </button>
+  <!-- GitHub link top-right -->
+  <a href="https://github.com/BlackAkuma/ai-project-template" target="_blank" rel="noopener"
+     style="position:absolute;top:24px;right:28px;display:flex;align-items:center;gap:8px;color:var(--muted);text-decoration:none;font-size:.85rem;padding:6px 14px;border:1px solid var(--border);border-radius:999px;background:rgba(255,255,255,.04);transition:all .2s"
+     onmouseover="this.style.color='#e2e8f0';this.style.borderColor='rgba(255,255,255,.2)'"
+     onmouseout="this.style.color='';this.style.borderColor=''">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+    </svg>
+    <span>GitHub</span>
+  </a>
+  <div class="hero-badge">
+    <span>📖</span>
+    <span><span class="th">User Guide — วิธีการทำงานของระบบ</span><span class="en">User Guide — How the System Works</span></span>
+  </div>
+  <h1 class="gradient-text" style="margin-bottom:16px"><span class="th">ทำงานกับ AI อย่างเป็นระบบ<br>ไม่หลุด ไม่ซ้ำ ไม่สูญหาย</span><span class="en">Work with AI. Systematically.<br>Never Lost. Never Repeated.</span></h1>
+  <p style="font-size:1.15rem;color:var(--muted);max-width:600px;margin:0 auto 40px">
+    <span class="th">AI Project Template ช่วยให้ทุก session ต่อกันได้ราบรื่น</span><span class="en">AI Project Template keeps every session seamlessly connected</span>
+  </p>
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <span class="tag" style="background:rgba(129,140,248,.15);color:var(--indigo)">🧩 core/ — <span class="th">ทุก AI tool</span><span class="en">Any AI Tool</span></span>
+    <span class="tag" style="background:rgba(74,222,128,.1);color:var(--green)">🎮 +game/ — <span class="th">นักพัฒนาเกม</span><span class="en">Game Devs</span></span>
+    <span class="tag" style="background:rgba(96,165,250,.1);color:var(--blue)">⚡ +claude-code/ — <span class="th">อัตโนมัติเต็ม</span><span class="en">Full Automation</span></span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ปัญหาที่แก้
+═══════════════════════════════════════════════════════════ -->
+<div class="divider"></div>
+<section class="reveal">
+  <div style="text-align:center;margin-bottom:48px">
+    <p class="muted tag" style="margin-bottom:12px"><span class="th">ก่อนใช้ระบบนี้</span><span class="en">Without this system</span></p>
+    <h2><span class="th">ปัญหาที่ทีมเจอทุกวัน</span><span class="en">Problems teams face every day</span></h2>
+  </div>
+  <div class="compare">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="problem-card">
+        <div style="font-size:1.4rem;margin-bottom:8px">😵</div>
+        <h3 style="color:var(--rose);margin-bottom:6px"><span class="th">AI เริ่มจากศูนย์ทุก session</span><span class="en">AI starts from zero every session</span></h3>
+        <p class="muted" style="font-size:.9rem"><span class="th">"เราทำถึงไหนแล้วนะ? ฟีเจอร์ปุ่ม CE ทำเสร็จรึยัง?" — AI ไม่รู้</span><span class="en">"Where were we? Is the CE button done?" — AI has no idea</span></p>
+      </div>
+      <div class="problem-card">
+        <div style="font-size:1.4rem;margin-bottom:8px">🔁</div>
+        <h3 style="color:var(--rose);margin-bottom:6px"><span class="th">ทำงานซ้ำ / ย้อนเส้นทาง</span><span class="en">Repeated work / Reversed decisions</span></h3>
+        <p class="muted" style="font-size:.9rem"><span class="th">สัปดาห์ที่แล้วตัดสินใจใช้ TypeScript แต่ session ใหม่ AI เสนอ JavaScript อีกครั้ง</span><span class="en">Last week we chose TypeScript. New session — AI suggests JavaScript again.</span></p>
+      </div>
+      <div class="problem-card">
+        <div style="font-size:1.4rem;margin-bottom:8px">❓</div>
+        <h3 style="color:var(--rose);margin-bottom:6px"><span class="th">AI ตัดสินใจเองโดยไม่แจ้ง</span><span class="en">AI decides silently without asking</span></h3>
+        <p class="muted" style="font-size:.9rem"><span class="th">เปลี่ยน architecture ไปเงียบ ๆ รู้อีกทีก็ผิดทิศไปแล้ว</span><span class="en">Architecture changed silently — by the time you notice, it's too late.</span></p>
+      </div>
+    </div>
+    <div class="compare-vs">→</div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="solution-card">
+        <div style="font-size:1.4rem;margin-bottom:8px">🎯</div>
+        <h3 style="color:var(--green);margin-bottom:6px"><span class="th">AI รู้ทุก session ว่าต้องทำอะไร</span><span class="en">AI knows exactly what to do every session</span></h3>
+        <p class="muted" style="font-size:.9rem"><span class="th">อ่าน 3 ไฟล์ (3 วินาที) → รู้ phase, task, checkpoint ทันที ไม่ต้องอธิบายซ้ำ</span><span class="en">Reads 3 files (3 seconds) → knows phase, task, checkpoint instantly. No re-explaining.</span></p>
+      </div>
+      <div class="solution-card">
+        <div style="font-size:1.4rem;margin-bottom:8px">📋</div>
+        <h3 style="color:var(--green);margin-bottom:6px"><span class="th">ทุก decision มีร่องรอย</span><span class="en">Every decision is traceable</span></h3>
+        <p class="muted" style="font-size:.9rem"><span class="th">ใช้ TypeScript เพราะ ADR-001 — AI session ใหม่อ่านแล้วรู้ทันที ไม่ถามซ้ำ</span><span class="en">Using TypeScript because ADR-001 — new AI session reads it and never asks again.</span></p>
+      </div>
+      <div class="solution-card">
+        <div style="font-size:1.4rem;margin-bottom:8px">🛡️</div>
+        <h3 style="color:var(--green);margin-bottom:6px"><span class="th">AI รู้ขอบเขตตัวเอง</span><span class="en">AI knows its own boundaries</span></h3>
+        <p class="muted" style="font-size:.9rem"><span class="th">Protocol ชัดว่าตัดสินใจอะไรได้เอง อะไรต้องถามก่อน — ไม่ guess ไม่ freeze</span><span class="en">Clear protocol: what AI can decide alone, what needs human approval — no guessing, no freezing.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     3 ระดับการใช้งาน
+═══════════════════════════════════════════════════════════ -->
+<div class="full-width reveal">
+  <div>
+    <div style="text-align:center;margin-bottom:48px">
+      <p class="muted tag" style="margin-bottom:12px"><span class="th">ระดับการใช้งาน</span><span class="en">Usage Tiers</span></p>
+      <h2><span class="th">เลือกระดับที่เหมาะกับคุณ</span><span class="en">Choose Your Level</span></h2>
+      <p class="muted" style="margin-top:8px"><span class="th">ทุกระดับต่อยอดกัน — ใช้เพิ่มเมื่อพร้อม ไม่บังคับ</span><span class="en">Each tier builds on the previous — add more when you're ready, nothing forced.</span></p>
+    </div>
+    <div class="grid-3">
+      <div class="tier-core">
+        <div style="font-size:2rem;margin-bottom:12px">🧩</div>
+        <h3 style="color:var(--indigo);margin-bottom:6px"><span class="th">core/ — ทุกคน</span><span class="en">core/ — Everyone</span></h3>
+        <p class="muted" style="font-size:.85rem;margin-bottom:16px"><span class="th">ใช้กับ Claude, ChatGPT, Gemini — AI tool ใดก็ได้</span><span class="en">Works with Claude, ChatGPT, Gemini — any AI tool</span></p>
+        <ul class="checklist">
+          <li><span class="check-icon" style="color:var(--green)">✓</span> <span class="th">Session ต่อกันได้ ไม่หลุด</span><span class="en">Sessions connect seamlessly</span></li>
+          <li><span class="check-icon" style="color:var(--green)">✓</span> <span class="th">Requirements ไม่สูญหาย</span><span class="en">Requirements never lost</span></li>
+          <li><span class="check-icon" style="color:var(--green)">✓</span> <span class="th">ทุก task มีที่มา traceable</span><span class="en">Every task is traceable</span></li>
+          <li><span class="check-icon" style="color:var(--green)">✓</span> <span class="th">AI รู้ว่าทำอะไรได้เอง</span><span class="en">AI knows its decision scope</span></li>
+          <li><span class="check-icon" style="color:var(--green)">✓</span> <span class="th">Architecture decisions บันทึกไว้</span><span class="en">Architecture decisions recorded</span></li>
+        </ul>
+        <div style="margin-top:16px;font-size:.8rem;color:var(--muted)">
+          <span class="th">19 template files · copy ครั้งเดียว</span><span class="en">19 template files · copy once</span>
+        </div>
+      </div>
+      <div class="tier-game">
+        <div style="font-size:2rem;margin-bottom:12px">🎮</div>
+        <h3 style="color:var(--green);margin-bottom:6px"><span class="th">+ skills/game/ — นักพัฒนาเกม</span><span class="en">+ skills/game/ — Game Devs</span></h3>
+        <p class="muted" style="font-size:.85rem;margin-bottom:16px"><span class="th">เปิดอัตโนมัติเมื่อโปรเจ็กต์มี <code>doc/08-design/</code></span><span class="en">Auto-activated when project has <code>doc/08-design/</code></span></p>
+        <ul class="checklist">
+          <li><span class="check-icon" style="color:var(--green)">✓</span> <span class="th">FDD — design ก่อน code ทุกครั้ง</span><span class="en">FDD — design before code, every time</span></li>
+          <li><span class="check-icon" style="color:var(--green)">✓</span> <span class="th">Balance check อัตโนมัติ</span><span class="en">Automatic balance checks</span></li>
+          <li><span class="check-icon" style="color:var(--green)">✓</span> Asset registry + naming</li>
+          <li><span class="check-icon" style="color:var(--green)">✓</span> Playtest report template</li>
+          <li><span class="check-icon" style="color:var(--green)">✓</span> Narrative standards</li>
+        </ul>
+        <div style="margin-top:16px;font-size:.8rem;color:var(--muted)">
+          + 7 template files
+        </div>
+      </div>
+      <div class="tier-claude">
+        <div style="font-size:2rem;margin-bottom:12px">⚡</div>
+        <h3 style="color:var(--blue);margin-bottom:6px"><span class="th">+ platforms/claude-code/ — อัตโนมัติเต็ม</span><span class="en">+ platforms/claude-code/ — Full Automation</span></h3>
+        <p class="muted" style="font-size:.85rem;margin-bottom:16px"><span class="th">สำหรับ Claude Code CLI users</span><span class="en">For Claude Code CLI users</span></p>
+        <ul class="checklist">
+          <li><span class="check-icon" style="color:var(--blue)">✓</span> <span class="th">CLAUDE.md โหลดอัตโนมัติ</span><span class="en">CLAUDE.md auto-loaded every session</span></li>
+          <li><span class="check-icon" style="color:var(--blue)">✓</span> <span class="th">Hooks ตรวจ commit อัตโนมัติ</span><span class="en">Hooks auto-check every commit</span></li>
+          <li><span class="check-icon" style="color:var(--blue)">✓</span> <span class="th">Rules scope ตาม path ไฟล์</span><span class="en">Rules scoped by file path</span></li>
+          <li><span class="check-icon" style="color:var(--blue)">✓</span> /session-end · /adr-create ฯลฯ</li>
+          <li><span class="check-icon" style="color:var(--blue)">✓</span> <span class="th">Gap detection อัตโนมัติ</span><span class="en">Automatic gap detection</span></li>
+        </ul>
+        <div style="margin-top:16px;font-size:.8rem;color:var(--muted)">
+          CLAUDE.md + 5 hooks + 4 rules + 6 skills
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PART 1 — SETUP (ครั้งแรก)
+═══════════════════════════════════════════════════════════ -->
+<section class="reveal">
+  <div style="text-align:center;margin-bottom:48px">
+    <p class="muted tag" style="margin-bottom:12px"><span class="th">ขั้นตอนที่ 1</span><span class="en">Step 1</span></p>
+    <h2><span class="th">เริ่มต้น — ครั้งแรกครั้งเดียว</span><span class="en">Setup — One Time Only</span></h2>
+    <p class="muted" style="margin-top:8px"><span class="th">ทีม 2 คน สร้าง <strong style="color:var(--text)">เว็บแอปเครื่องคิดเลข</strong> โดยใช้ Claude</span><span class="en">A 2-person team builds a <strong style="color:var(--text)">web calculator</strong> using Claude</span></p>
+  </div>
+
+  <div class="grid-2" style="gap:32px">
+    <div>
+      <div class="step-flow">
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num" style="background:rgba(129,140,248,.2);color:var(--indigo)">1</div>
+            <div class="step-line" style="background:linear-gradient(var(--indigo),var(--blue))"></div>
+          </div>
+          <div class="step-content">
+            <h3><span class="th">Clone template + copy ไปโปรเจ็กต์</span><span class="en">Clone template + copy to your project</span></h3>
+            <p><span class="th">copy <code>core/</code> ไปไว้ใน project root — ใช้ครั้งเดียว ลบทิ้งหลัง setup</span><span class="en">copy <code>core/</code> to project root — used once, delete after setup</span></p>
+            <div class="code-block" style="margin-top:12px">
+              <div class="code-header"><span class="code-dot" style="background:#ff5f57"></span><span class="code-dot" style="background:#febc2e"></span><span class="code-dot" style="background:#28c840"></span> Terminal</div>
+              <div class="code-body" style="color:var(--green)">git clone ai-project-template.git<br>cp -r ai-project-template/core/ ./my-calculator/</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num" style="background:rgba(96,165,250,.2);color:var(--blue)">2</div>
+            <div class="step-line" style="background:linear-gradient(var(--blue),var(--green))"></div>
+          </div>
+          <div class="step-content">
+            <h3><span class="th">AI ถามภาษาและประเภทโปรเจ็กต์</span><span class="en">AI asks language and project type</span></h3>
+            <p><span class="th">ก่อนทำอะไรทั้งนั้น AI ถาม 2 คำถามก่อน</span><span class="en">Before anything, AI asks 2 questions</span></p>
+            <div class="card-sm" style="margin-top:12px;border-color:rgba(96,165,250,.3)">
+              <p style="font-size:.85rem;color:var(--blue)">🤖 AI:</p>
+              <p style="font-size:.9rem;margin-top:4px">"เราจะสื่อสารกันเป็นภาษาอะไร?"</p>
+              <p style="font-size:.85rem;color:var(--muted);margin-top:8px">👤 คุณ: "ภาษาไทย"</p>
+              <p style="font-size:.9rem;margin-top:8px">"โปรเจ็กต์นี้เป็นประเภทอะไร?"</p>
+              <p style="font-size:.85rem;color:var(--muted);margin-top:4px">👤 คุณ: "Web App — เครื่องคิดเลข"</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num" style="background:rgba(74,222,128,.15);color:var(--green)">3</div>
+            <div class="step-line" style="background:linear-gradient(var(--green),var(--amber))"></div>
+          </div>
+          <div class="step-content">
+            <h3><span class="th">AI อ่าน core/ ทั้งหมด + สร้าง doc/</span><span class="en">AI reads all core/ + creates doc/</span></h3>
+            <p><span class="th">อ่าน 19 template files → เข้าใจระบบทั้งหมด → สร้างโครงสร้างให้</span><span class="en">Reads 19 template files → understands the full system → creates structure for you</span></p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num" style="background:rgba(251,191,36,.15);color:var(--amber)">4</div>
+            <div class="step-line" style="background:linear-gradient(var(--amber),transparent)"></div>
+          </div>
+          <div class="step-content">
+            <h3><span class="th">ตรวจ Bootstrap Checklist แล้วประกาศเสร็จ</span><span class="en">Run Bootstrap Checklist + declare done</span></h3>
+            <p><span class="th">AI รัน checklist ใน core/10 — ถ้าผ่านครบ setup เสร็จ ลบ core/ ทิ้งได้</span><span class="en">AI runs core/10 checklist — if all pass, setup is done and core/ can be deleted</span></p>
+            <div class="notif notif-green" style="margin-top:12px">
+              <span class="th">✅ Bootstrap checklist ผ่านครบ 8 หัวข้อ</span><span class="en">✅ Bootstrap checklist passed — all 8 items</span><br>
+              <span style="color:var(--muted)"><span class="th">doc/ พร้อมใช้งาน · ลบ core/ ออกจาก git ได้แล้ว</span><span class="en">doc/ ready · core/ can be removed from git</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="muted" style="font-size:.8rem;margin-bottom:8px"><span class="th">📁 โครงสร้างที่ AI สร้างให้ — ครั้งเดียวจบ</span><span class="en">📁 Structure AI creates for you — once and done</span></p>
+      <div class="file-tree">
+        <div><span class="ft-folder">doc/</span></div>
+        <div class="ft-indent"><span class="ft-new">README.md</span></div>
+        <div class="ft-indent"><span class="ft-folder">00-source/</span> <span class="ft-comment"><span class="th">← PRD ของคุณ</span><span class="en">← your PRD</span></span></div>
+        <div class="ft-indent2"><span class="ft-new">versions/v0.1/prd.md</span></div>
+        <div class="ft-indent"><span class="ft-folder">01-plan/</span></div>
+        <div class="ft-indent2"><span class="ft-new">project-plan.md</span></div>
+        <div class="ft-indent2"><span class="ft-new">work-status.md</span> <span class="ft-comment"><span class="th">← AI อ่านทุก session</span><span class="en">← AI reads every session</span></span></div>
+        <div class="ft-indent"><span class="ft-folder">02-task/</span></div>
+        <div class="ft-indent2"><span class="ft-new">task-board.md</span> <span class="ft-comment"><span class="th">← งานทั้งหมด</span><span class="en">← all tasks</span></span></div>
+        <div class="ft-indent"><span class="ft-folder">03-log/</span></div>
+        <div class="ft-indent2"><span class="ft-new">work-log-index.md</span> <span class="ft-comment"><span class="th">← ประวัติ session</span><span class="en">← session history</span></span></div>
+        <div class="ft-indent"><span class="ft-folder">04-way-of-work/</span></div>
+        <div class="ft-indent2"><span class="ft-new">way-of-work.md</span></div>
+        <div class="ft-indent2"><span class="ft-new">ai-decision-protocol.md</span></div>
+        <div class="ft-indent2"><span class="ft-new">compliance.md</span></div>
+        <div class="ft-indent"><span class="ft-folder">07-decisions/</span></div>
+        <div class="ft-indent2"><span class="ft-new">README.md</span> <span class="ft-comment">← ADR index</span></div>
+        <div class="ft-indent2"><span class="ft-new">entity-register.md</span></div>
+      </div>
+
+      <div style="margin-top:16px">
+        <p class="muted" style="font-size:.8rem;margin-bottom:8px"><span class="th">🔑 หัวใจของระบบ — AI-CONTEXT block</span><span class="en">🔑 Heart of the system — AI-CONTEXT block</span></p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-dot" style="background:#ff5f57"></span><span class="code-dot" style="background:#febc2e"></span><span class="code-dot" style="background:#28c840"></span> doc/01-plan/work-status.md</div>
+          <div class="code-body">
+            <span class="c-comment">&lt;!-- AI-CONTEXT</span><br>
+            <span class="c-key">phase:</span> <span class="c-val">setup</span><br>
+            <span class="c-key">focus:</span> <span class="c-val">T-001 basic UI</span><br>
+            <span class="c-key">blocked:</span> <span class="c-val">none</span><br>
+            <span class="c-key">next:</span> <span class="c-val">implement +/- buttons</span><br>
+            <span class="c-key">read_more:</span><br>
+            &nbsp; <span class="c-key">architecture:</span> <span class="c-val">doc/07-decisions/README.md</span><br>
+            &nbsp; <span class="c-key">entities:</span> <span class="c-val">doc/07-decisions/entity-register.md</span><br>
+            <span class="c-comment">--&gt;</span><br>
+            <br>
+            <span class="c-comment"><span class="th"># AI อ่าน block นี้ก่อนเสมอ</span><span class="en"># AI reads this block first, always</span></span><br>
+            <span class="c-comment"><span class="th"># ใช้ &lt;500 tokens รู้ context ทันที</span><span class="en"># Under 500 tokens → full context instantly</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PART 2 — SESSION ปกติ
+═══════════════════════════════════════════════════════════ -->
+<div class="full-width reveal">
+  <div>
+    <div style="text-align:center;margin-bottom:48px">
+      <p class="muted tag" style="margin-bottom:12px"><span class="th">ขั้นตอนที่ 2</span><span class="en">Step 2</span></p>
+      <h2><span class="th">ทุก session — อ่าน 3 ไฟล์ รู้ทันที</span><span class="en">Every Session — Read 3 Files, Know Instantly</span></h2>
+      <p class="muted" style="margin-top:8px"><span class="th">ไม่ว่าจะ AI ใหม่ เครื่องใหม่ หรือห่างไป 2 สัปดาห์</span><span class="en">Whether new AI, new machine, or 2 weeks away</span></p>
+    </div>
+
+    <div class="grid-2" style="gap:40px">
+      <div>
+        <h3 style="color:var(--indigo);margin-bottom:20px">⏱️ Session Start Protocol — &lt;2 นาที</h3>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-time">Step 1-3 · อ่าน 3 ไฟล์หลัก</div>
+            <div class="card-sm">
+              <div class="flow">
+                <div class="flow-box" style="border-color:rgba(129,140,248,.4)">work-status.md</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box" style="border-color:rgba(96,165,250,.4)">work-log-index.md</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box" style="border-color:rgba(74,222,128,.4)">task-board.md</div>
+              </div>
+              <p style="font-size:.82rem;color:var(--muted);margin-top:8px">แต่ละไฟล์มี AI-CONTEXT block ด้านบน อ่าน block เดียวพอ ไม่ต้องอ่าน body ทั้งไฟล์</p>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-time">Step 4 · ตรวจ agent diary (ถ้ามี)</div>
+            <div class="card-sm">
+              <p style="font-size:.85rem">ถ้าโปรเจ็กต์ใช้หลาย AI tool → อ่าน <code>doc/03-log/agents/claude-code.md</code> เพื่อรับ checkpoint จาก session ก่อน</p>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-time">Step 5 · Scoped Memory Map</div>
+            <div class="card-sm">
+              <p style="font-size:.85rem">ถ้า work-status มี <code>read_more</code> → แสดง context เพิ่มเติมที่อาจต้องอ่าน ขึ้นอยู่กับ task ที่ทำ</p>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-time">Step 8 · รายงานสถานะ</div>
+            <div class="card-sm" style="border-color:rgba(96,165,250,.3)">
+              <p style="font-size:.85rem;color:var(--blue)">🤖 AI รายงาน:</p>
+              <p style="font-size:.85rem;margin-top:4px">"Phase: Implementation · Task ที่ active: T-003 (ปุ่ม CE) · Checkpoint: logic เสร็จ รอ test · Next: เขียน unit test 3 กรณี"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="color:var(--blue);margin-bottom:20px">📊 สิ่งที่ AI รู้หลังอ่าน 3 ไฟล์</h3>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="card-sm" style="display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start">
+            <div style="width:28px;height:28px;border-radius:6px;background:rgba(129,140,248,.2);display:flex;align-items:center;justify-content:center;font-size:.8rem">📍</div>
+            <div>
+              <div style="font-size:.82rem;color:var(--muted)">Phase ปัจจุบัน</div>
+              <div style="font-size:.9rem">Implementation — v0.1 basic calculator</div>
+            </div>
+          </div>
+          <div class="card-sm" style="display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start">
+            <div style="width:28px;height:28px;border-radius:6px;background:rgba(74,222,128,.15);display:flex;align-items:center;justify-content:center;font-size:.8rem">✅</div>
+            <div>
+              <div style="font-size:.82rem;color:var(--muted)">เสร็จแล้ว (session ก่อน)</div>
+              <div style="font-size:.9rem">T-001 UI layout · T-002 ปุ่ม 0-9</div>
+            </div>
+          </div>
+          <div class="card-sm" style="display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;border-color:rgba(251,191,36,.3)">
+            <div style="width:28px;height:28px;border-radius:6px;background:rgba(251,191,36,.15);display:flex;align-items:center;justify-content:center;font-size:.8rem">⚡</div>
+            <div>
+              <div style="font-size:.82rem;color:var(--muted)">กำลังทำ</div>
+              <div style="font-size:.9rem">T-003 ปุ่ม CE — logic เสร็จ รอ unit test</div>
+            </div>
+          </div>
+          <div class="card-sm" style="display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start">
+            <div style="width:28px;height:28px;border-radius:6px;background:rgba(96,165,250,.15);display:flex;align-items:center;justify-content:center;font-size:.8rem">📌</div>
+            <div>
+              <div style="font-size:.82rem;color:var(--muted)">ถัดไป</div>
+              <div style="font-size:.9rem">T-004 ปุ่ม = (evaluate) · T-005 decimal</div>
+            </div>
+          </div>
+          <div class="card-sm" style="display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start">
+            <div style="width:28px;height:28px;border-radius:6px;background:rgba(167,139,250,.15);display:flex;align-items:center;justify-content:center;font-size:.8rem">🏗️</div>
+            <div>
+              <div style="font-size:.82rem;color:var(--muted)">Decisions ที่ทำไปแล้ว (ADR)</div>
+              <div style="font-size:.9rem">ADR-001: TypeScript · ADR-002: Tailwind CSS</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="highlight" style="margin-top:20px">
+          <strong>🎯 ผล:</strong> AI ใหม่ที่ไม่รู้เรื่องเลย อ่าน 3 ไฟล์ 2 นาที → พร้อมทำงานต่อได้ทันที โดยไม่ต้องให้คุณอธิบายซ้ำ
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PART 3 — MID SESSION — สถานการณ์จริง
+═══════════════════════════════════════════════════════════ -->
+<section class="reveal">
+  <div style="text-align:center;margin-bottom:48px">
+    <p class="muted tag" style="margin-bottom:12px"><span class="th">ขั้นตอนที่ 3</span><span class="en">Step 3</span></p>
+    <h2><span class="th">ระหว่าง session — AI จัดการเองอย่างเป็นระบบ</span><span class="en">During Session — AI handles issues systematically</span></h2>
+    <p class="muted" style="margin-top:8px">AI เจอสถานการณ์แปลก ๆ ระหว่าง session — ทำอย่างไร?</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:24px">
+
+    <!-- Scenario D -->
+    <div class="card" style="border-color:rgba(251,191,36,.2)">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <span class="scenario">Scenario D</span>
+        <h3><span class="th">พบ Bug ที่ไม่เกี่ยวกับงานปัจจุบัน</span><span class="en">Bug found outside current task</span></h3>
+      </div>
+      <div class="grid-2" style="gap:20px">
+        <div>
+          <p class="muted" style="font-size:.85rem;margin-bottom:12px">⚙️ สถานการณ์: กำลังทำ T-003 (ปุ่ม CE) เจอ division by zero bug ใน T-002</p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-dot" style="background:#ff5f57"></span> ❌ ก่อนมีระบบ (AI ทำผิด)</div>
+            <div class="code-body">
+              <span class="c-comment">// AI แก้ bug เงียบ ๆ ไม่แจ้งใคร</span><br>
+              <span class="c-warn">// ออกนอก scope โดยไม่รู้ตัว</span><br>
+              <span class="c-warn">// ไม่มีร่องรอยว่าแก้อะไรไปเมื่อไหร่</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p class="muted" style="font-size:.85rem;margin-bottom:12px">✅ ด้วยระบบนี้ AI ทำตาม protocol:</p>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div class="card-sm" style="display:flex;gap:10px;align-items:flex-start">
+              <span style="color:var(--rose);font-size:1rem">🚫</span>
+              <p style="font-size:.85rem">ไม่แก้ bug เงียบ ๆ — รักษา scope เดิม</p>
+            </div>
+            <div class="card-sm" style="display:flex;gap:10px;align-items:flex-start">
+              <span style="color:var(--blue);font-size:1rem">📋</span>
+              <p style="font-size:.85rem">สร้าง task ใหม่ใน task-board: <code>T-006 [FOUND-IN-PASSING] division by zero bug</code></p>
+            </div>
+            <div class="card-sm" style="display:flex;gap:10px;align-items:flex-start">
+              <span style="color:var(--green);font-size:1rem">↩️</span>
+              <p style="font-size:.85rem">กลับมาทำ T-003 ต่อ — ไม่สะดุด</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scenario A -->
+    <div class="card" style="border-color:rgba(96,165,250,.2)">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <span class="scenario" style="background:rgba(96,165,250,.1);border-color:rgba(96,165,250,.3);color:var(--blue)">Scenario A</span>
+        <h3><span class="th">Task คลุมเครือ</span><span class="en">Vague task</span> — ไม่รู้จะทำอะไร</h3>
+      </div>
+      <div class="grid-2" style="gap:20px">
+        <div>
+          <p class="muted" style="font-size:.85rem;margin-bottom:12px">⚙️ สถานการณ์: Task T-005 บอกแค่ "เพิ่ม decimal" — ไม่ชัดว่าหมายถึงอะไร</p>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div class="card-sm" style="font-size:.85rem">
+              <span style="color:var(--indigo)">1.</span> มี task คล้ายที่เสร็จแล้วไหม? → T-002 (ปุ่ม 0-9) — ดูรูปแบบ
+            </div>
+            <div class="card-sm" style="font-size:.85rem">
+              <span style="color:var(--indigo)">2.</span> มีใน PRD ไหม? → อ่าน <code>doc/00-source/versions/v0.1/prd.md</code>
+            </div>
+            <div class="card-sm" style="font-size:.85rem;border-color:rgba(251,191,36,.3)">
+              <span style="color:var(--amber)">3.</span> ยังไม่ชัด? → mark <code>[BLOCKED: ต้องการ spec ว่า "1.5" หรือ "1.50"?]</code> อัปเดต work-status รอมนุษย์
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="notif" style="margin-bottom:0">
+            🤖 AI รายงาน:<br>
+            "T-005 ยังไม่ชัดพอ — ต้องการ clarification:<br>
+            • Decimal ต้องการความแม่นยำกี่ตำแหน่ง?<br>
+            • แสดง trailing zeros ไหม? (1.5 vs 1.50)<br>
+            <br>
+            Mark [BLOCKED] ไว้แล้ว เริ่ม T-004 แทน"
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Architecture decision -->
+    <div class="card" style="border-color:rgba(167,139,250,.2)">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <span class="scenario" style="background:rgba(167,139,250,.1);border-color:rgba(167,139,250,.3);color:var(--violet)">ADR</span>
+        <h3><span class="th">ตัดสินใจ Architecture</span><span class="en">Architecture decision</span> — ต้องบันทึก</h3>
+      </div>
+      <div class="grid-2" style="gap:20px">
+        <div>
+          <p class="muted" style="font-size:.85rem;margin-bottom:12px">⚙️ สถานการณ์: ต้องเลือก state management — ใช้ Redux หรือ Zustand?</p>
+          <div class="flow" style="flex-direction:column;align-items:flex-start">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div class="flow-box">AI พบ decision point</div>
+              <span class="flow-arrow">→</span>
+              <div class="flow-box" style="color:var(--violet)">สร้าง ADR-003 (Proposed)</div>
+            </div>
+            <div style="font-size:.8rem;color:var(--muted);padding-left:12px">↳ Context + Options + Tradeoffs</div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div class="flow-box">คุณ review</div>
+              <span class="flow-arrow">→</span>
+              <div class="flow-box" style="color:var(--green)">เปลี่ยนเป็น Accepted</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div class="flow-box">AI อัปเดต entity-register</div>
+              <span class="flow-arrow">→</span>
+              <div class="flow-box" style="color:var(--green)">Zustand: active ✓</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="code-block">
+            <div class="code-header"><span class="code-dot" style="background:#ff5f57"></span> doc/07-decisions/ADR-003-state-management.md</div>
+            <div class="code-body" style="font-size:.78rem">
+              <span class="c-key">Status:</span> <span class="c-val">Accepted</span><br>
+              <span class="c-key">Options:</span><br>
+              &nbsp; <span class="c-comment">A. Redux — ดี: เป็น standard</span><br>
+              &nbsp; <span class="c-comment">   เสีย: boilerplate มาก</span><br>
+              &nbsp; <span class="c-comment">B. Zustand — ดี: เบา minimal</span><br>
+              &nbsp; <span class="c-comment">   เสีย: ecosystem เล็กกว่า</span><br>
+              <span class="c-key">Decision:</span> <span class="c-val">Zustand</span><br>
+              <span class="c-comment">← calculator ขนาดเล็ก</span><br>
+              <span class="c-comment">   Redux overhead ไม่คุ้ม</span>
+            </div>
+          </div>
+          <div style="margin-top:8px;font-size:.8rem;color:var(--muted)">Session ถัดไปอ่าน ADR นี้ → ไม่เสนอ Redux อีก</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PART 4 — SESSION END
+═══════════════════════════════════════════════════════════ -->
+<div class="full-width reveal">
+  <div>
+    <div style="text-align:center;margin-bottom:48px">
+      <p class="muted tag" style="margin-bottom:12px"><span class="th">ขั้นตอนที่ 4</span><span class="en">Step 4</span></p>
+      <h2><span class="th">จบ session — /session-end ครั้งเดียว</span><span class="en">End Session — /session-end once</span></h2>
+      <p class="muted" style="margin-top:8px">พิมพ์ <code style="background:var(--surface2);padding:2px 8px;border-radius:4px">/session-end</code> คำสั่งเดียว — AI จัดการให้ครบ 9 ขั้น</p>
+    </div>
+
+    <div class="grid-2" style="gap:40px">
+      <div>
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:8px 16px;align-items:start">
+          <div class="step-num" style="background:rgba(96,165,250,.15);color:var(--blue);width:32px;height:32px;font-size:.8rem">1-2</div>
+          <div class="card-sm">
+            <div style="font-size:.82rem;color:var(--blue);margin-bottom:4px">work-status.md</div>
+            <p style="font-size:.82rem;color:var(--muted)">อัปเดต body + AI-CONTEXT block</p>
+          </div>
+          <div class="step-num" style="background:rgba(129,140,248,.15);color:var(--indigo);width:32px;height:32px;font-size:.8rem">3-4</div>
+          <div class="card-sm">
+            <div style="font-size:.82rem;color:var(--indigo);margin-bottom:4px">work-log-index.md</div>
+            <p style="font-size:.82rem;color:var(--muted)">เพิ่ม session entry ใหม่ + sync block</p>
+          </div>
+          <div class="step-num" style="background:rgba(74,222,128,.12);color:var(--green);width:32px;height:32px;font-size:.8rem">5-6</div>
+          <div class="card-sm">
+            <div style="font-size:.82rem;color:var(--green);margin-bottom:4px">task-board.md</div>
+            <p style="font-size:.82rem;color:var(--muted)">อัปเดต status task ที่เปลี่ยน + sync block</p>
+          </div>
+          <div class="step-num" style="background:rgba(34,211,238,.1);color:var(--cyan);width:32px;height:32px;font-size:.8rem">7</div>
+          <div class="card-sm">
+            <div style="font-size:.82rem;color:var(--cyan);margin-bottom:4px">Agent Diary (ถ้ามี)</div>
+            <p style="font-size:.82rem;color:var(--muted)">บันทึก decisions + checkpoint ต่อ tool</p>
+          </div>
+          <div class="step-num" style="background:rgba(244,114,182,.1);color:var(--pink);width:32px;height:32px;font-size:.8rem">8</div>
+          <div class="card-sm">
+            <div style="font-size:.82rem;color:var(--pink);margin-bottom:4px">Daily Log</div>
+            <p style="font-size:.82rem;color:var(--muted)">รายละเอียดรายวัน (optional)</p>
+          </div>
+          <div class="step-num" style="background:rgba(251,191,36,.12);color:var(--amber);width:32px;height:32px;font-size:.8rem">9+</div>
+          <div class="card-sm" style="border-color:rgba(251,191,36,.2)">
+            <div style="font-size:.82rem;color:var(--amber);margin-bottom:4px">Cross-Project Memory (ถามก่อน)</div>
+            <p style="font-size:.82rem;color:var(--muted)">"มี pattern ที่ควรบันทึกข้ามโปรเจ็กต์ไหม?"</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p class="muted" style="font-size:.8rem;margin-bottom:8px">📄 work-log-index.md — หลัง session end</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-dot" style="background:#ff5f57"></span><span class="code-dot" style="background:#febc2e"></span><span class="code-dot" style="background:#28c840"></span> work-log-index.md (AI-CONTEXT)</div>
+          <div class="code-body" style="font-size:.78rem">
+            <span class="c-comment">&lt;!-- AI-CONTEXT</span><br>
+            <span class="c-key">last_session:</span> <span class="c-val">2026-04-29</span><br>
+            <span class="c-key">tool:</span> <span class="c-val">Claude Code</span><br>
+            <span class="c-key">completed:</span> <span class="c-val">[T-003]</span><br>
+            <span class="c-key">checkpoint:</span> <span class="c-val">T-003 done · T-006 bug found</span><br>
+            <span class="c-key">next_from_last:</span> <span class="c-val">T-004 T-005 T-006</span><br>
+            <span class="c-key">notes:</span> <span class="c-val">ADR-003 Zustand accepted</span><br>
+            <span class="c-comment">--&gt;</span><br>
+            <br>
+            <span class="c-comment">## Recent Sessions</span><br>
+            <span class="c-comment">### 2026-04-29 — [Claude Code]</span><br>
+            <span class="c-ok">- T-003 CE button: ✅ done</span><br>
+            <span class="c-warn">- T-006 bug: ⚠️ [FOUND-IN-PASSING]</span><br>
+            <span class="c-val">- ADR-003: Zustand accepted</span>
+          </div>
+        </div>
+
+        <div class="notif notif-green" style="margin-top:12px">
+          ✅ /session-end เสร็จ — sync 3 ไฟล์หลักแล้ว<br>
+          <span style="color:var(--muted)">Session ถัดไปอ่าน block นี้ → รู้ทุกอย่างทันที</span>
+        </div>
+
+        <div class="highlight" style="margin-top:12px">
+          <strong>🔐 Claude Code Hook:</strong> ถ้าใช้ Claude Code — hook <code>validate-commit.sh</code> ตรวจอัตโนมัติก่อน commit ทุกครั้ง: secrets, placeholders ค้าง, deprecated entities
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     WALKTHROUGH — CALCULATOR STORY
+═══════════════════════════════════════════════════════════ -->
+<div class="full-width reveal" style="background:var(--surface)">
+  <div>
+    <div style="text-align:center;margin-bottom:56px">
+      <p class="muted tag" style="margin-bottom:12px"><span class="th">กรณีศึกษา</span><span class="en">Case Study</span></p>
+      <h2><span class="th">สมมุติว่าจะสร้าง Web Calculator</span><span class="en">Building a Web Calculator</span></h2>
+      <p class="muted" style="margin-top:12px;max-width:600px;margin-left:auto;margin-right:auto"><span class="th">ไม่ต้องนั่งทำต่อเนื่อง — ทำ session นึง หยุดไปก็ได้ กลับมาอีก 2 สัปดาห์ AI ก็รู้ว่าหยุดอยู่ตรงไหน แสดงการทำงานแบบ on-off ตามชีวิตจริง</span><span class="en">No need to work continuously — work a session, take a break, come back in 2 weeks. AI always knows where you left off.</span></p>
+    </div>
+
+    <!-- ── STEP 1 ── -->
+    <div class="story-step reveal" style="margin-bottom:48px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+        <div class="tag" style="background:rgba(129,140,248,.18);color:var(--indigo);font-size:.8rem">Session 1</div>
+        <div class="muted" style="font-size:.85rem">🚀 <span class="th">วันแรก — เริ่มโปรเจ็กต์</span><span class="en">Day 1 — Start Project</span></div>
+      </div>
+      <div class="grid-2" style="gap:20px;align-items:start">
+        <div>
+          <div style="margin-bottom:14px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <span style="background:rgba(74,222,128,.15);color:var(--green);padding:2px 10px;border-radius:999px;font-size:.72rem;font-weight:600">👤 คุณพิมพ์</span>
+            </div>
+            <div class="card-sm" style="border-left:3px solid var(--green);font-size:.85rem;line-height:1.7">
+              "ฉันอยากสร้าง Web Calculator — TypeScript + React<br>ช่วย setup โปรเจ็กต์ให้หน่อย"
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <span style="background:rgba(96,165,250,.15);color:var(--blue);padding:2px 10px;border-radius:999px;font-size:.72rem;font-weight:600">🤖 AI ทำ</span>
+            </div>
+            <div class="card-sm" style="font-size:.82rem;line-height:1.9">
+              <div>📖 อ่าน CLAUDE.md → โหลด core/ 19 templates</div>
+              <div>❓ ถาม: "จะสื่อสารภาษาอะไร?"</div>
+              <div>📁 สร้าง <code style="color:var(--cyan)">doc/</code> ทั้งโครงสร้าง</div>
+              <div>✍️ draft PRD v0.1 ใส่ใน <code style="color:var(--cyan)">doc/00-source/</code></div>
+              <div>📋 สร้าง task board: T-001, T-002, T-003</div>
+              <div>✅ รายงาน: "Bootstrap เสร็จ พร้อมทำงาน"</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:.75rem;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">ไฟล์ที่สร้าง</div>
+          <div class="card-sm" style="font-family:monospace;font-size:.78rem;line-height:2">
+            <div style="color:var(--indigo)">📁 doc/</div>
+            <div style="padding-left:16px;color:var(--muted)">📁 00-source/versions/v0.1/</div>
+            <div style="padding-left:32px;color:var(--cyan)">PRD.md <span style="color:var(--green);font-size:.7rem">← requirement ทั้งหมด</span></div>
+            <div style="padding-left:16px;color:var(--muted)">📁 01-plan/</div>
+            <div style="padding-left:32px;color:var(--cyan)">work-status.md</div>
+            <div style="padding-left:16px;color:var(--muted)">📁 02-task/</div>
+            <div style="padding-left:32px;color:var(--cyan)">task-board.md</div>
+            <div style="padding-left:16px;color:var(--muted)">📁 03-log/</div>
+            <div style="padding-left:32px;color:var(--cyan)">work-log-index.md</div>
+            <div style="padding-left:16px;color:var(--muted)">📁 04-way-of-work/</div>
+            <div style="padding-left:32px;color:var(--cyan)">way-of-work.md</div>
+          </div>
+          <div class="card-sm" style="margin-top:12px;font-size:.8rem">
+            <div style="color:var(--green);font-weight:600;margin-bottom:6px">work-status.md (ตอนนี้)</div>
+            <div style="font-family:monospace;font-size:.75rem;line-height:1.8;color:var(--muted)">
+              phase: Setup<br>
+              current_task: —<br>
+              status: <span style="color:var(--green)">Ready to start</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- divider -->
+    <div style="border-top:1px dashed var(--border);margin:32px 0;opacity:.4"></div>
+
+    <!-- ── STEP 2 ── -->
+    <div class="story-step reveal" style="margin-bottom:48px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+        <div class="tag" style="background:rgba(96,165,250,.15);color:var(--blue);font-size:.8rem">Session 3</div>
+        <div class="muted" style="font-size:.85rem">⚡ <span class="th">สองสามวันต่อมา — เริ่ม implement</span><span class="en">A few days later — Start implementing</span></div>
+      </div>
+      <div class="grid-2" style="gap:20px;align-items:start">
+        <div>
+          <div style="margin-bottom:14px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <span style="background:rgba(74,222,128,.15);color:var(--green);padding:2px 10px;border-radius:999px;font-size:.72rem;font-weight:600">👤 คุณพิมพ์</span>
+            </div>
+            <div class="card-sm" style="border-left:3px solid var(--green);font-size:.85rem;line-height:1.7">
+              "ทำปุ่มกดตัวเลขบน calculator ได้เลย"
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <span style="background:rgba(96,165,250,.15);color:var(--blue);padding:2px 10px;border-radius:999px;font-size:.72rem;font-weight:600">🤖 AI ทำ (Session Start Protocol)</span>
+            </div>
+            <div class="card-sm" style="font-size:.82rem;line-height:1.9">
+              <div>📖 อ่าน work-status → <span style="color:var(--cyan)">T-001 in_progress</span></div>
+              <div>📋 อ่าน task-board → T-001: "สร้าง Keypad component"</div>
+              <div>📄 อ่าน PRD v0.1 → ดู spec ปุ่มที่ต้องการ</div>
+              <div>💻 implement <code style="color:var(--cyan)">Keypad.tsx</code></div>
+              <div style="color:var(--amber)">⚠️ พบว่า layout logic เกิน scope T-001</div>
+              <div style="color:var(--muted);padding-left:16px;font-size:.78rem">→ สร้าง T-004 [NEEDS SOURCE VALIDATION]</div>
+              <div style="color:var(--muted);padding-left:16px;font-size:.78rem">→ ทำแค่ T-001 ก่อน ตาม scope เดิม</div>
+              <div>✅ T-001 เสร็จ — อัปเดต task-board, work-log</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:.75rem;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">task-board.md หลัง session</div>
+          <div class="card-sm" style="font-family:monospace;font-size:.78rem;line-height:2">
+            <div style="color:var(--green)">✅ T-001 · Keypad component <span style="font-size:.7rem;color:var(--muted)">[done]</span></div>
+            <div style="color:var(--cyan)">⏳ T-002 · Display component <span style="font-size:.7rem;color:var(--muted)">[todo]</span></div>
+            <div style="color:var(--cyan)">⏳ T-003 · App layout <span style="font-size:.7rem;color:var(--muted)">[todo]</span></div>
+            <div style="color:var(--amber)">🔖 T-004 · Layout logic <span style="font-size:.7rem">[NEEDS SOURCE VALIDATION]</span></div>
+          </div>
+          <div class="card-sm" style="margin-top:12px;font-size:.78rem;border-left:3px solid var(--amber)">
+            <div style="color:var(--amber);font-weight:600;margin-bottom:4px">ทำไม T-004 ถึงสำคัญ?</div>
+            <div style="color:var(--muted);line-height:1.7">AI ไม่แก้เงียบ ๆ — ถ้าทำ layout logic ไปด้วยโดยไม่บอก คุณจะไม่รู้ว่า scope ขยาย ไม่มี source doc รองรับ และถ้า refactor ทีหลังก็ไม่รู้ว่า code ส่วนนั้นมาจากไหน</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- divider -->
+    <div style="border-top:1px dashed var(--border);margin:32px 0;opacity:.4"></div>
+
+    <!-- ── STEP 3 ── -->
+    <div class="story-step reveal" style="margin-bottom:48px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap">
+        <div class="tag" style="background:rgba(74,222,128,.12);color:var(--green);font-size:.8rem">Session 5</div>
+        <div class="muted" style="font-size:.85rem">🧮 <span class="th">กลับมาหลังหยุดไป 2 สัปดาห์ — ทำ logic</span><span class="en">Back after 2-week break — Implement logic</span></div>
+        <div style="background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);color:var(--rose);padding:3px 10px;border-radius:999px;font-size:.72rem;font-weight:600">⏸ ห่างหายไป 2 สัปดาห์</div>
+      </div>
+      <!-- comeback callout -->
+      <div style="background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.2);border-radius:12px;padding:14px 18px;margin-bottom:20px;display:flex;gap:12px;align-items:flex-start">
+        <div style="font-size:1.2rem;margin-top:2px">💡</div>
+        <div style="font-size:.83rem;line-height:1.8">
+          <span style="color:var(--blue);font-weight:600"><span class="th">นี่คือจุดที่ระบบนี้ต่างจากการทำงานปกติ</span><span class="en">This is where this system differs from normal</span></span><br>
+          <span class="muted"><span class="th">เปิด Claude ขึ้นมา — AI อ่าน work-status 3 วินาที → รู้ทันทีว่าหยุดตรงไหน ทำอะไรไปแล้ว task ไหนค้างอยู่ ไม่ต้องอธิบายอะไรใหม่เลย</span><span class="en">Open Claude — AI reads work-status in 3 seconds → instantly knows where you stopped, what's done, what's pending. No re-explaining needed.</span></span>
+        </div>
+      </div>
+      <div class="grid-2" style="gap:20px;align-items:start">
+        <div>
+          <div style="margin-bottom:14px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <span style="background:rgba(96,165,250,.15);color:var(--blue);padding:2px 10px;border-radius:999px;font-size:.72rem;font-weight:600">🤖 AI เปิดมา — รายงานทันที</span>
+            </div>
+            <div class="card-sm" style="font-size:.82rem;line-height:1.9;border-left:3px solid var(--blue)">
+              <div style="color:var(--blue)">📋 สถานะล่าสุด (จาก work-status):</div>
+              <div style="padding-left:16px">T-003 ✅ done · T-004 ✅ done</div>
+              <div style="padding-left:16px">T-005 ⏳ todo — "implement calculate()"</div>
+              <div style="color:var(--amber);padding-left:16px">⚠️ T-004 มี note: ต้องตัดสินใจ layout approach</div>
+              <div style="color:var(--muted);font-size:.78rem;margin-top:6px">→ "จะเริ่ม T-005 ได้เลยไหม หรือจัดการ T-004 note ก่อน?"</div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <span style="background:rgba(74,222,128,.15);color:var(--green);padding:2px 10px;border-radius:999px;font-size:.72rem;font-weight:600">👤 คุณพิมพ์</span>
+            </div>
+            <div class="card-sm" style="border-left:3px solid var(--green);font-size:.85rem;line-height:1.7">
+              "ทำ T-005 ก่อนเลย — logic บวกลบคูณหาร"
+            </div>
+          </div>
+          <div style="margin-top:14px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <span style="background:rgba(74,222,128,.12);color:var(--green);padding:2px 10px;border-radius:999px;font-size:.72rem;font-weight:600">🤖 AI ทำ</span>
+            </div>
+            <div class="card-sm" style="font-size:.82rem;line-height:1.9">
+              <div>💻 implement <code style="color:var(--cyan)">calculate(a, op, b)</code></div>
+              <div>🧪 เทสเองระหว่างทำ — พบ:</div>
+              <div style="padding-left:16px;color:var(--rose);font-family:monospace;font-size:.8rem">0.1 + 0.2 = 0.30000000000000004</div>
+              <div style="color:var(--amber)">⚠️ floating-point bug — ไม่ใช่ scope T-005</div>
+              <div style="color:var(--muted);padding-left:16px;font-size:.78rem">→ ห้ามแก้เงียบ ๆ → สร้าง T-007 [FOUND-IN-PASSING]</div>
+              <div>✅ T-005 เสร็จ · T-007 log ไว้รอ</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:.75rem;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">work-log entry ที่ AI เขียน</div>
+          <div class="card-sm" style="font-family:monospace;font-size:.76rem;line-height:1.9;color:var(--muted)">
+            <div style="color:var(--text)">## Session 5 — กลับมาหลัง 2 สัปดาห์</div>
+            <div>- resume จาก checkpoint T-005</div>
+            <div>- T-005 done: calculate() ครบ 4 ops</div>
+            <div style="color:var(--amber)">- [FOUND-IN-PASSING] T-007:</div>
+            <div style="padding-left:16px">floating-point precision</div>
+            <div style="padding-left:16px">0.1+0.2 ≠ 0.3 → รอ human decide</div>
+          </div>
+          <div class="card-sm" style="margin-top:12px;font-size:.78rem;border-left:3px solid var(--cyan)">
+            <div style="color:var(--cyan);font-weight:600;margin-bottom:4px">ถ้าหยุดไปอีก 1 เดือน?</div>
+            <div style="color:var(--muted);line-height:1.7">ก็ยังได้ผลเดิม — เปิดมา AI อ่าน work-status → รู้ทันที ไม่ว่าจะห่างกี่วันก็ตาม</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- divider -->
+    <div style="border-top:1px dashed var(--border);margin:32px 0;opacity:.4"></div>
+
+    <!-- ── STEP 4 ── -->
+    <div class="story-step reveal" style="margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+        <div class="tag" style="background:rgba(251,191,36,.1);color:var(--amber);font-size:.8rem">Session 8</div>
+        <div class="muted" style="font-size:.85rem">🤔 <span class="th">ทำต่ออีกไม่กี่วัน — อยาก add feature</span><span class="en">A few days later — Adding a feature</span></div>
+      </div>
+      <div class="grid-2" style="gap:20px;align-items:start">
+        <div>
+          <div style="margin-bottom:14px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <span style="background:rgba(74,222,128,.15);color:var(--green);padding:2px 10px;border-radius:999px;font-size:.72rem;font-weight:600">👤 คุณพิมพ์</span>
+            </div>
+            <div class="card-sm" style="border-left:3px solid var(--green);font-size:.85rem;line-height:1.7">
+              "อยากเพิ่ม calculation history ด้วย — เก็บไว้ใน localStorage"
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <span style="background:rgba(251,191,36,.12);color:var(--amber);padding:2px 10px;border-radius:999px;font-size:.72rem;font-weight:600">🤖 AI ตอบ</span>
+            </div>
+            <div class="card-sm" style="font-size:.82rem;line-height:1.9">
+              <div style="color:var(--amber)">⚠️ feature นี้ = architecture decision ใหม่</div>
+              <div style="color:var(--muted);padding-left:16px;font-size:.78rem">localStorage vs Redux vs Zustand?</div>
+              <div style="color:var(--muted);padding-left:16px;font-size:.78rem">แต่ละทางมี trade-off ต่างกัน</div>
+              <div style="color:var(--cyan)">→ ต้องสร้าง ADR ก่อน implement</div>
+              <div>📄 draft <code style="color:var(--cyan)">ADR-003-history-storage.md</code></div>
+              <div style="color:var(--muted);font-size:.78rem">status: <span style="color:var(--amber)">Proposed</span> — รอคุณ approve</div>
+              <div>✋ หยุดรอ — ไม่ implement จนกว่าจะตัดสินใจ</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:.75rem;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">ADR-003 draft ที่ AI เขียน</div>
+          <div class="card-sm" style="font-family:monospace;font-size:.76rem;line-height:1.9">
+            <div style="color:var(--indigo);font-weight:600">ADR-003: History Storage</div>
+            <div style="color:var(--amber)">Status: Proposed</div>
+            <div style="color:var(--muted);margin-top:6px">Options considered:</div>
+            <div style="color:var(--cyan)">1. localStorage</div>
+            <div style="padding-left:16px;color:var(--muted)">Pro: ง่าย, ไม่ต้อง library</div>
+            <div style="padding-left:16px;color:var(--muted)">Con: ไม่ sync cross-tab</div>
+            <div style="color:var(--cyan)">2. Zustand persist</div>
+            <div style="padding-left:16px;color:var(--muted)">Pro: consistent กับ state อื่น</div>
+            <div style="padding-left:16px;color:var(--muted)">Con: เพิ่ม dependency</div>
+            <div style="color:var(--muted);margin-top:6px">Decision: <span style="color:var(--rose)">&lt;รอ human&gt;</span></div>
+          </div>
+          <div style="margin-top:12px;font-size:.8rem;color:var(--muted)">
+            → คุณอ่าน ADR แล้วพิมพ์ "เลือก localStorage" → AI อัปเดต status เป็น <span style="color:var(--green)">Accepted</span> แล้วเริ่ม implement
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- bottom summary bar -->
+    <div style="margin-top:48px;padding:20px 24px;background:var(--surface2);border-radius:12px;border:1px solid var(--border)">
+      <div style="text-align:center;margin-bottom:14px;font-size:.83rem;color:var(--muted)">ทำงานแบบ on-off ตามชีวิตจริง — ระบบรองรับทุก pattern</div>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center">
+        <span class="tag" style="background:rgba(74,222,128,.1);color:var(--green)">✓ หยุดไปกี่วันก็ได้ — AI resume ได้ทันที</span>
+        <span class="tag" style="background:rgba(96,165,250,.1);color:var(--blue)">✓ 0 bug หายเงียบ — ทุก issue มี task</span>
+        <span class="tag" style="background:rgba(129,140,248,.1);color:var(--indigo)">✓ decisions บันทึกไว้ — ไม่เถียงซ้ำ</span>
+        <span class="tag" style="background:rgba(251,191,36,.1);color:var(--amber)">✓ เปลี่ยน AI tool ได้ตลอด ไม่ต้อง setup ใหม่</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     RESULTS
+═══════════════════════════════════════════════════════════ -->
+<div class="full-width reveal" style="background:linear-gradient(135deg,rgba(99,102,241,.06) 0%,rgba(16,17,23,.0) 50%,rgba(74,222,128,.04) 100%)">
+  <div>
+    <div style="text-align:center;margin-bottom:48px">
+      <p class="muted tag" style="margin-bottom:12px"><span class="th">ผลลัพธ์</span><span class="en">Results</span></p>
+      <h2><span class="th">สิ่งที่ได้จากการใช้ระบบนี้</span><span class="en">What You Get</span></h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:48px">
+      <div class="stat">
+        <div class="stat-num gradient-text">&lt;2 min</div>
+        <div class="stat-label"><span class="th">เวลา AI ใช้อ่านเข้าใจ project state ต่อ session</span><span class="en">Time for AI to understand project state per session</span></div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="color:var(--green)">0</div>
+        <div class="stat-label"><span class="th">ครั้งที่ต้องอธิบาย context ซ้ำกับ AI</span><span class="en">Times you had to re-explain context to AI</span></div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="color:var(--blue)">100%</div>
+        <div class="stat-label"><span class="th">decisions มีบันทึก — ไม่ถามซ้ำว่า "ทำไมถึงเลือก X"</span><span class="en">decisions recorded — never asked "why did we choose X?" again</span></div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="color:var(--amber)">∞</div>
+        <div class="stat-label"><span class="th">AI tool ที่ใช้ได้ — ไม่ lock-in platform ใด</span><span class="en">AI tools supported — no platform lock-in</span></div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="gap:24px">
+      <div class="card" style="border-color:rgba(74,222,128,.2)">
+        <h3 style="color:var(--green);margin-bottom:16px"><span class="th">✅ สำหรับ Developer คนเดียว</span><span class="en">✅ Solo Developer</span></h3>
+        <ul class="checklist">
+          <li><span class="check-icon" style="color:var(--green)">→</span> <span class="th">ทำงานได้แบบ "ต่อจากตรงนี้" ทุก session ไม่ต้องเริ่มใหม่</span><span class="en">"Continue from here" every session — never start over</span></li>
+          <li><span class="check-icon" style="color:var(--green)">→</span> <span class="th">AI ช่วย track งานแทน — ไม่ต้องจำเอง</span><span class="en">AI tracks work for you — no need to remember</span></li>
+          <li><span class="check-icon" style="color:var(--green)">→</span> <span class="th">เปลี่ยน AI tool ได้ตลอด ไม่ต้อง setup ใหม่</span><span class="en">Switch AI tools anytime — no re-setup needed</span></li>
+          <li><span class="check-icon" style="color:var(--green)">→</span> <span class="th">Bug และ technical debt ไม่หายไปไหน</span><span class="en">Bugs and tech debt never disappear silently</span></li>
+        </ul>
+      </div>
+      <div class="card" style="border-color:rgba(96,165,250,.2)">
+        <h3 style="color:var(--blue);margin-bottom:16px"><span class="th">✅ สำหรับทีม 2-5 คน</span><span class="en">✅ Team of 2-5</span></h3>
+        <ul class="checklist">
+          <li><span class="check-icon" style="color:var(--blue)">→</span> <span class="th">ทุกคนเห็น state เดียวกัน ไม่ทำงานซ้อนกัน</span><span class="en">Everyone sees the same state — no duplicate work</span></li>
+          <li><span class="check-icon" style="color:var(--blue)">→</span> <span class="th">AI tool ต่างคน ต่าง tool ทำงานบน doc เดียวกัน</span><span class="en">Different people, different tools — same doc foundation</span></li>
+          <li><span class="check-icon" style="color:var(--blue)">→</span> <span class="th">Handoff ไม่เสีย context — อ่าน work-log แล้วรู้เลย</span><span class="en">Handoff without losing context — read work-log and know</span></li>
+          <li><span class="check-icon" style="color:var(--blue)">→</span> <span class="th">Architecture decisions บันทึกไว้ ไม่เถียงซ้ำ</span><span class="en">Architecture decisions recorded — never debated twice</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     QUICK START CTA
+═══════════════════════════════════════════════════════════ -->
+<section class="reveal" style="text-align:center">
+  <h2 style="margin-bottom:16px"><span class="th">พร้อมเริ่มใช้?</span><span class="en">Ready to Start?</span></h2>
+  <p class="muted" style="margin-bottom:32px;font-size:1rem"><span class="th">เลือกระดับที่เหมาะ เริ่มได้ทันที</span><span class="en">Pick your level, start immediately</span></p>
+  <div style="display:flex;flex-direction:column;gap:20px;max-width:700px;margin:0 auto">
+    <div class="card" style="text-align:left;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;border-color:rgba(129,140,248,.3)">
+      <div style="font-size:2rem">🧩</div>
+      <div>
+        <h3 style="color:var(--indigo)"><span class="th">ใช้ AI ทั่วไป (Claude.ai, ChatGPT ฯลฯ)</span><span class="en">Use any AI (Claude.ai, ChatGPT, etc.)</span></h3>
+        <p class="muted" style="font-size:.85rem"><span class="th">Clone → copy core/ ไปโปรเจ็กต์ → paste <code>00-ai-bootstrap-master-template.md</code> ให้ AI → Setup เสร็จ</span><span class="en">Clone → copy core/ to project → paste <code>00-ai-bootstrap-master-template.md</code> to AI → Setup done</span></p>
+      </div>
+    </div>
+    <div class="card" style="text-align:left;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;border-color:rgba(96,165,250,.3)">
+      <div style="font-size:2rem">⚡</div>
+      <div>
+        <h3 style="color:var(--blue)"><span class="th">ใช้ Claude Code (แนะนำ)</span><span class="en">Use Claude Code (Recommended)</span></h3>
+        <p class="muted" style="font-size:.85rem"><span class="th">Clone → copy CLAUDE.md ไป root → Claude Code โหลดอัตโนมัติทุก session ไม่ต้อง paste อะไรอีก</span><span class="en">Clone → copy CLAUDE.md to root → Claude Code auto-loads every session, no more pasting</span></p>
+      </div>
+    </div>
+  </div>
+  <p style="margin-top:32px;color:var(--muted);font-size:.85rem">
+    ดูรายละเอียดเพิ่มเติม: <code style="background:var(--surface2);padding:2px 8px;border-radius:4px">README.md</code> · <code style="background:var(--surface2);padding:2px 8px;border-radius:4px">QUICKSTART.md</code>
+  </p>
+</section>
+
+<!-- donate -->
+<div style="text-align:center;padding:48px 24px 32px;border-top:1px solid var(--border)">
+  <p style="color:var(--muted);font-size:.85rem;margin-bottom:20px"><span class="th">ถ้าระบบนี้มีประโยชน์กับคุณ ☕</span><span class="en">If this helped you ☕</span></p>
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <a href="https://github.com/sponsors/BlackAkuma" target="_blank" rel="noopener"
+       style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#ea4aaa,#a855f7);color:#fff;text-decoration:none;padding:10px 22px;border-radius:999px;font-size:.9rem;font-weight:600;transition:opacity .2s"
+       onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/>
+      </svg>
+      <span class="th">❤️ สนับสนุนด้วย GitHub Sponsors</span><span class="en">❤️ Sponsor on GitHub</span>
+    </a>
+    <a href="https://github.com/BlackAkuma/ai-project-template" target="_blank" rel="noopener"
+       style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text);text-decoration:none;padding:10px 22px;border-radius:999px;font-size:.9rem;font-weight:600;transition:all .2s"
+       onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='rgba(255,255,255,.06)'">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+      </svg>
+      ⭐ Star on GitHub
+    </a>
+  </div>
+</div>
+
+<footer>
+  <p><span class="th">AI Project Template — ระบบทำงานร่วมกันระหว่างมนุษย์และ AI</span><span class="en">AI Project Template — Human-AI Collaboration System</span></p>
+  <p style="margin-top:4px"><span class="th">core/ ทุก AI tool · +game/ นักพัฒนาเกม · +claude-code/ อัตโนมัติเต็ม</span><span class="en">core/ any AI tool · +game/ game devs · +claude-code/ full automation</span></p>
+  <p style="margin-top:12px;font-size:.78rem">
+    <a href="https://github.com/BlackAkuma/ai-project-template" target="_blank" rel="noopener"
+       style="color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:6px"
+       onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color=''">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+      </svg>
+      github.com/BlackAkuma/ai-project-template
+    </a>
+  </p>
+</footer>
+
+<script>
+  // Language toggle
+  function toggleLang() {
+    const html = document.documentElement;
+    html.lang = html.lang === 'en' ? 'th' : 'en';
+    localStorage.setItem('lang', html.lang);
+    document.title = html.lang === 'en' ?
+      'AI Project Template — How It Works' :
+      'AI Project Template — วิธีการทำงาน';
+  }
+  const _savedLang = localStorage.getItem('lang');
+  if (_savedLang) {
+    document.documentElement.lang = _savedLang;
+    if (_savedLang === 'en') document.title = 'AI Project Template — How It Works';
+  }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Trigger hero immediately
+  document.querySelector('.hero').classList.add('visible');
+</script>
+</body>
+</html>
