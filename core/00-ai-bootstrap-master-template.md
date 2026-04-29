@@ -43,6 +43,7 @@ AI ต้องเตรียมอย่างน้อย:
 - `doc/04-way-of-work/way-of-work.md`
 - `doc/04-way-of-work/coding-standards.md`
 - `doc/04-way-of-work/ai-decision-protocol.md` (จาก `11-ai-decision-protocol-template.md`)
+- `doc/04-way-of-work/compliance.md` (จาก `15-compliance-check-template.md`)
 - `doc/05-summary/`
 - `doc/06-extensions/`
 - `doc/07-decisions/README.md` (ADR index จาก `12-adr-template.md`)
@@ -65,8 +66,9 @@ AI ต้องเตรียมอย่างน้อย:
    - Game / Web Game (มีกลไก gameplay, physics, scoring)
    - อื่น ๆ (ระบุ)
 3. **โหลด skill pack** ตามคำตอบ:
-   - Game / Web Game → อ่าน `skills/game/` ทั้งหมดเพิ่มเติมจาก core
+   - Game / Web Game → อ่าน `skills/game/` ทั้งหมดเพิ่มเติมจาก core → สร้าง `doc/08-design/` ด้วย
    - อื่น ๆ → ใช้ core เท่านั้น
+   - **การตรวจสอบ session ถัดไป:** ถ้าโปรเจ็กต์มี `doc/08-design/` แปลว่าเป็น game project — โหลด game skill standards อัตโนมัติ
 4. อ่าน source docs ที่มีอยู่
 5. สร้าง `doc/` ตาม template folder structure (เพิ่ม `doc/08-design/` ถ้าเป็น game)
 6. สร้าง source docs index และ version folders

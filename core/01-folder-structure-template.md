@@ -25,12 +25,17 @@ doc/
     work-log-index.md
     templates/
       daily-log-template.md
+    agents/               ← multi-AI projects เท่านั้น
+      claude-code.md
+      [tool-name].md
     YYYY/
       MM/
         YYYY-MM-DD-log.md
   04-way-of-work/
     way-of-work.md
     coding-standards.md
+    ai-decision-protocol.md
+    compliance.md
   05-summary/
     README.md
     templates.md
@@ -48,6 +53,7 @@ doc/
   08-design/           ← game projects เท่านั้น
     README.md
     asset-registry.md
+    character-registry.md
     FDD-001-<feature-name>.md
 ```
 
@@ -69,4 +75,7 @@ doc/
 - `05-tech-debt/` สร้างเมื่อมี REFACTOR-PENDING task แรก ไม่ต้องสร้างตั้งแต่ setup
 - `07-decisions/` เก็บ ADR (Architecture Decision Records) และ `entity-register.md` — ห้ามลบ ให้ deprecated/supersede แทน
 - `08-design/` สำหรับ game projects เท่านั้น เก็บ FDD และ asset registry
-- `04-way-of-work/ai-decision-protocol.md` กำหนดว่า AI ต้องทำอะไรเมื่อเจอสถานการณ์คลุมเครือ
+- `04-way-of-work/ai-decision-protocol.md` กำหนดว่า AI ต้องทำอะไรเมื่อเจอสถานการณ์คลุมเครือ (จาก `core/11`)
+- `04-way-of-work/compliance.md` รวม compliance rules ทั้งหมดของโปรเจ็กต์ (จาก `core/15`)
+- `03-log/agents/` สร้างเฉพาะเมื่อโปรเจ็กต์ใช้ AI tool มากกว่า 1 ตัว
+- `08-design/character-registry.md` ใช้กับ game projects ที่มี narrative (จาก `skills/game/06`)
