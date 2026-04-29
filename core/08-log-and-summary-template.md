@@ -251,3 +251,53 @@ next_from_last: T-003 T-004
 notes: ADR-001 created for auth approach
 -->
 ```
+
+---
+
+## Agent Diary Template
+
+ใช้เมื่อโปรเจ็กต์มี AI tool มากกว่า 1 ตัว เพื่อแยก log ต่อ tool ไม่ให้ปนกัน
+สร้างไฟล์ `doc/03-log/agents/<tool-name>.md` ต่อ tool ที่ใช้
+
+**กฎ:**
+- ไฟล์นี้ AI tool นั้น ๆ เป็นผู้เขียนเอง — ไม่ cross-write ระหว่าง tool
+- work-log-index ยังคงเป็น master index รวมทุก tool
+- ถ้าใช้ tool เดียว ไม่ต้องสร้าง agents/ folder
+
+```md
+<!-- AI-CONTEXT
+agent: <AI_TOOL_NAME>
+last_session: <CURRENT_DATE>
+focus: <TASK_ID_OR_TOPIC>
+checkpoint: <สิ่งที่ทำค้างไว้> | none
+-->
+
+---
+
+# Agent Diary — <AI_TOOL_NAME>
+
+## <CURRENT_DATE>
+
+- **งานที่ทำ:** <สิ่งที่ทำใน session นี้>
+- **decisions:** <การตัดสินใจที่ทำเอง พร้อมเหตุผลสั้น>
+- **blocked:** <สิ่งที่ติดขัด> | none
+- **next:** <สิ่งที่ต้องทำต่อใน session ถัดไป>
+```
+
+**ตัวอย่างที่กรอกแล้ว:**
+
+```md
+<!-- AI-CONTEXT
+agent: Claude Code
+last_session: 2026-04-29
+focus: T-018
+checkpoint: webhook handler done, pending idempotency test
+-->
+
+## 2026-04-29
+
+- **งานที่ทำ:** implement Stripe webhook handler (T-018)
+- **decisions:** ใช้ idempotency key แทน deduplication table — เบากว่า ไม่ต้อง migrate schema
+- **blocked:** none
+- **next:** เขียน test กับ Stripe sandbox ก่อน mark done
+```
