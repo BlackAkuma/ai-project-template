@@ -15,6 +15,19 @@ Protocol สำหรับตรวจสอบ code quality และ document
 | `scan` | scan ทันที ออก report ทั้งหมด |
 | `scan refactor` | เฉพาะ REFACTOR-PENDING ทั้งโปรเจ็กต์ |
 
+## การบันทึก Compliance Status
+
+เพิ่มบรรทัดนี้ใน `doc/04-way-of-work/way-of-work.md` ของโปรเจ็กต์ เพื่อให้ AI ทุก session รู้สถานะปัจจุบัน:
+
+```
+## Compliance Status
+
+สถานะ: active | paused
+เหตุผล (ถ้า paused): <เหตุผล เช่น "spike session — ทดลอง approach ใหม่">
+```
+
+**กฎ:** ถ้า compliance ถูก pause ไว้ → AI session ถัดไปต้องเห็นสถานะนี้ก่อนเริ่มทำงาน และถามผู้ใช้ว่าจะ resume หรือยัง
+
 ---
 
 ## สิ่งที่ตรวจ
@@ -46,6 +59,7 @@ Protocol สำหรับตรวจสอบ code quality และ document
 | C-11 | Security baseline ไม่ผ่าน | ดูรายการตรวจด้านล่าง |
 | C-12 | work-log-index ใหญ่เกิน | > 300 บรรทัด — แนะนำ archive |
 | C-13 | task-board done section ใหญ่เกิน | > 15 รายการ — แนะนำ archive |
+| C-14 | entity-register ไม่ได้อัปเดตเมื่อ tech เปลี่ยน | task ที่ deprecated/เพิ่ม tech ใหม่ แต่ entity-register ไม่เปลี่ยน |
 
 ---
 

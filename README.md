@@ -156,12 +156,14 @@ Copy prompt นี้แล้วส่งให้ AI:
 | `08` Log & Summary | บันทึก session และ summary รายวัน/เดือน |
 | `09` Extension Doc | extension doc + reverse-document protocol |
 | `10` Bootstrap Checklist | ตรวจสอบว่า setup ครบก่อนเริ่มทำงาน |
-| `11` AI Decision Protocol | 9 scenarios + responsibility matrix |
+| `11` AI Decision Protocol | 11 scenarios (A–K) + responsibility matrix |
 | `12` ADR | Architecture Decision Records |
 | `13` Retrospective | ทบทวนการทำงานรายช่วง |
 | `14` Anti-Patterns | สิ่งที่ไม่ควรทำและเหตุผล |
-| `15` Compliance Check | C-01–C-11 + tech debt register |
+| `15` Compliance Check | C-01–C-14 + tech debt register |
 | `16` Launch Checklist | Pre-release checklist ก่อน deploy จริง |
+| `17` Entity Register | template สำหรับ `doc/07-decisions/entity-register.md` |
+| `18` Cross-Project Memory | template สำหรับ `~/ai-workspace/cross-project-memory.md` |
 
 ## skills/game/ — Game Development Skill Pack
 
@@ -192,7 +194,7 @@ Copy prompt นี้แล้วส่งให้ AI:
 
 | สถานการณ์ | Input tokens | Output tokens | รวม |
 |----------|-------------|--------------|-----|
-| **Setup ครั้งแรก** (core 17 ไฟล์ + สร้าง doc/) | ~12,000 | ~6,000 | **~18,000** |
+| **Setup ครั้งแรก** (core 19 ไฟล์ + สร้าง doc/) | ~12,000 | ~6,000 | **~18,000** |
 | **Setup + game skill pack** (+ อีก 7 ไฟล์) | ~15,000 | ~8,000 | **~23,000** |
 | **Session ปกติ** (อ่าน AI-CONTEXT + ทำงาน) | ~2,000–5,000 | ~2,000–5,000 | **~4,000–10,000** |
 | **Session เบา** (อ่าน block อย่างเดียว orient) | ~500–1,000 | ~500 | **~1,000–1,500** |
@@ -407,12 +409,14 @@ Once AI confirms the checklist passes — delete this folder. What remains is `d
 | `08` Log & Summary | Session logs and daily/monthly summaries |
 | `09` Extension Doc | Extension docs + reverse-document protocol |
 | `10` Bootstrap Checklist | Verify setup is complete before starting work |
-| `11` AI Decision Protocol | 9 ambiguous scenarios with explicit if/then guidance |
+| `11` AI Decision Protocol | 11 scenarios (A–K) with explicit if/then guidance + responsibility matrix |
 | `12` ADR | Architecture Decision Records — never deleted, only superseded |
 | `13` Retrospective | Periodic collaboration review |
 | `14` Anti-Patterns | What not to do, and why |
-| `15` Compliance Check | C-01–C-11 + tech debt register |
+| `15` Compliance Check | C-01–C-14 + tech debt register |
 | `16` Launch Checklist | Pre-release checklist before deploying |
+| `17` Entity Register | Template for `doc/07-decisions/entity-register.md` |
+| `18` Cross-Project Memory | Template for `~/ai-workspace/cross-project-memory.md` |
 
 ## skills/game/ — Game Development Skill Pack
 

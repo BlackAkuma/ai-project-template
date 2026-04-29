@@ -110,17 +110,65 @@
 → รอ human review ก่อนแก้ไข
 ```
 
+### Scenario J — พบ `[ENTITY:deprecated]` หรือ `[ENTITY:superseded]` tag
+
+เกิดเมื่อ: อ่าน code, ADR, หรือ task แล้วพบ tag ระบุว่า entity นั้นเปลี่ยนสถานะแล้ว
+
+```
+→ ห้ามใช้ entity นั้นต่อโดยไม่ตรวจสอบก่อน
+→ เปิด doc/07-decisions/entity-register.md
+→ ตรวจสอบ status ปัจจุบัน, replaced_by (ถ้ามี), และ ADR ที่เกี่ยวข้อง
+→ ถ้า entity ถูกแทนที่: ใช้ entity ใหม่แทน และบันทึกใน work-log
+→ ถ้าไม่แน่ใจ: mark task เป็น [BLOCKED: deprecated entity] รอ human decision
+```
+
+**Entity Tag Format:**
+
+| Tag | ความหมาย |
+|-----|----------|
+| `[ENTITY:deprecated:X]` | entity X เลิกใช้แล้ว ตรวจ entity-register |
+| `[ENTITY:superseded:X→Y]` | entity X ถูกแทนด้วย Y |
+| `[ENTITY:proposed:X]` | entity X ยังไม่ได้ตัดสินใจ รอ ADR |
+| `[ENTITY:active:X]` | ยืนยันว่า X ยังใช้งานอยู่ (optional ใช้เมื่ออยากชัดเจน) |
+
+### Scenario K — ไม่รู้ว่าควรเก็บข้อมูลที่ไหน
+
+เกิดเมื่อ: พบข้อมูลใหม่ระหว่าง session แต่ไม่แน่ใจว่าควร log ลง work-log, สร้าง ADR, อัปเดต entity-register, หรือเขียนลง cross-project memory
+
+```
+ข้อมูลใหม่ที่ต้องเก็บ — ถามตามลำดับ:
+
+1. เป็น architectural decision?
+   → ADR (doc/07-decisions/ADR-NNN-*.md + README.md)
+
+2. เป็น entity ใหม่ หรือ status ของ entity เปลี่ยน?
+   → Entity Register (doc/07-decisions/entity-register.md)
+
+3. เป็น pattern หรือ lesson ที่น่าจะใช้ได้กับโปรเจ็กต์อื่น?
+   → Cross-Project Memory (~/ai-workspace/cross-project-memory.md)
+   [ถามผู้ใช้ก่อนเสมอ — ไม่เขียนลง cross-project memory โดยไม่ได้รับอนุญาต]
+
+4. เป็น progress, detail, หรือ decision ที่ทำเองในระหว่าง session?
+   → Agent Diary + work-log-index (doc/03-log/)
+
+5. เป็น task ใหม่ หรือ status เปลี่ยน?
+   → Task Board (doc/02-task/task-board.md)
+
+ถ้าตอบ "ใช่" หลายข้อ: เก็บในทุกที่ที่เกี่ยวข้อง — ไม่ mutual exclusive
+ถ้าไม่ตรงกับข้อใดเลย: บันทึกไว้ใน work-log ก่อน แล้วระบุว่า "ยังไม่แน่ใจว่าควรอยู่ที่ไหน"
+```
+
 ---
 
 ## 3. Escalation Levels
 
-| Level | สถานการณ์ | การกระทำ |
-|-------|-----------|----------|
-| **Level 1 — Log & Continue** | ผลกระทบต่ำ ย้อนกลับได้ | บันทึกการตัดสินใจใน work-log แล้วดำเนินต่อ |
-| **Level 2 — Block & Flag** | ผลกระทบปานกลาง ไม่แน่ใจ | mark task blocked, อัปเดต work-status, รอมนุษย์ |
-| **Level 3 — Stop Session** | ผลกระทบสูง ย้อนไม่ได้ หรือมีความเสี่ยง | หยุดทันที, บันทึกชัดเจนว่าทำไม, ไม่ดำเนินการต่อ |
+| Level | สถานการณ์ | การกระทำ | Scenarios |
+|-------|-----------|----------|-----------|
+| **Level 1 — Log & Continue** | ผลกระทบต่ำ ย้อนกลับได้ | บันทึกการตัดสินใจใน work-log แล้วดำเนินต่อ | C, D, G, I, K |
+| **Level 2 — Block & Flag** | ผลกระทบปานกลาง ไม่แน่ใจ | mark task blocked, อัปเดต work-status, รอมนุษย์ | A, B, E, F, H, J |
+| **Level 3 — Stop Session** | ผลกระทบสูง ย้อนไม่ได้ หรือมีความเสี่ยง | หยุดทันที, บันทึกชัดเจนว่าทำไม, ไม่ดำเนินการต่อ | — (ดูเงื่อนไขด้านล่าง) |
 
-สถานการณ์ที่ต้อง Level 3 เสมอ:
+สถานการณ์ที่ต้อง Level 3 เสมอ — ไม่ว่า scenario ใด:
 - อาจทำให้ข้อมูลสูญหาย
 - เกี่ยวข้องกับ security หรือ credentials
 - ส่งผลต่อ production environment
@@ -164,4 +212,7 @@
 | `[FOUND-IN-PASSING]` | พบระหว่างทำงานอื่น ยังไม่ได้รับ assign |
 | `[IN_PROGRESS: checkpoint saved]` | ทำไปบ้างแล้ว บันทึก checkpoint ไว้แล้ว |
 | `[REVERSE-DOC]` | พบ undocumented code รอ human review |
+| `[ENTITY:deprecated:X]` | entity X เลิกใช้แล้ว — ตรวจ entity-register ก่อนใช้ |
+| `[ENTITY:superseded:X→Y]` | entity X ถูกแทนด้วย Y |
+| `[ENTITY:proposed:X]` | entity X ยังรอ ADR |
 | `<NEEDS_CLARIFICATION: ...>` | placeholder แทนข้อมูลที่ยังไม่มี |

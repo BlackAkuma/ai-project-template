@@ -22,11 +22,14 @@ AI ใช้ checklist นี้ตรวจสอบก่อนประกา
 - [ ] `doc/04-way-of-work/way-of-work.md`
 - [ ] `doc/04-way-of-work/coding-standards.md`
 - [ ] `doc/04-way-of-work/ai-decision-protocol.md`
+- [ ] `doc/04-way-of-work/compliance.md`
 - [ ] `doc/07-decisions/README.md` (ADR index)
+- [ ] `doc/07-decisions/entity-register.md` (ถ้าโปรเจ็กต์มี tech decisions แล้ว)
 
 ## 3. AI-CONTEXT Blocks
 
 - [ ] `work-status.md` มี `<!-- AI-CONTEXT ... -->` block ด้านบนสุด และ field ครบ
+- [ ] `work-status.md` มี `read_more` field ชี้ไปที่ path ที่ถูกต้อง
 - [ ] `task-board.md` มี `<!-- AI-CONTEXT ... -->` block ด้านบนสุด และ field ครบ
 - [ ] `work-log-index.md` มี `<!-- AI-CONTEXT ... -->` block ด้านบนสุด และ field ครบ
 - [ ] ค่าใน block สะท้อนสถานะจริง ณ ตอน setup (ไม่ใช่ template placeholder ว่าง)
