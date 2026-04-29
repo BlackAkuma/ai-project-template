@@ -47,7 +47,7 @@ platforms/claude-code/
 
 ## Template ที่ layer นี้อ้างอิง
 
-- **core/ 00–16** — universal templates (17 ไฟล์) — ทุกโปรเจ็กต์ใช้
+- **core/ 00–18** — universal templates (19 ไฟล์) — ทุกโปรเจ็กต์ใช้
 - **skills/game/ 00–06** — game skill pack (7 ไฟล์) — โหลดเมื่อ doc/08-design/ มีอยู่
 
 ---
@@ -80,12 +80,14 @@ chmod +x .claude/hooks/*.sh
 
 ```bash
 mkdir -p .claude/rules
+
+# ทุกโปรเจ็กต์:
 cp platforms/claude-code/rules/core-standards.md .claude/rules/
 cp platforms/claude-code/rules/design-docs.md .claude/rules/
+cp platforms/claude-code/rules/test-standards.md .claude/rules/
 
 # game projects เท่านั้น:
 cp platforms/claude-code/rules/gameplay-code.md .claude/rules/
-cp platforms/claude-code/rules/test-standards.md .claude/rules/
 ```
 
 ### 4. Setup Skills
