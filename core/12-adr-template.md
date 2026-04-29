@@ -107,4 +107,8 @@ ADR ที่ถูก accept แล้วถือเป็น source of truth 
 2. เพิ่มรายการใน `doc/07-decisions/README.md`
 3. บันทึกใน work-log ว่าสร้าง ADR-NNN
 4. มนุษย์ review → เปลี่ยนสถานะเป็น Accepted หรือปรับ
-5. Session ถัดไป: อ่าน ADR index ก่อนตัดสินใจ architecture
+5. **เมื่อ ADR ถูก Accept** → อัปเดต `doc/07-decisions/entity-register.md` ทันที
+   - ถ้าเป็น tech/integration ใหม่: เพิ่ม row ใน Active Entities พร้อม ADR reference
+   - ถ้าเป็นการ deprecate tech เก่า: ย้าย row ไป Deprecated พร้อม `until` date
+   - อัปเดต AI-CONTEXT block ของ entity-register ด้วย
+6. Session ถัดไป: อ่าน ADR index ก่อนตัดสินใจ architecture
