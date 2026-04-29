@@ -110,6 +110,27 @@
 → รอ human review ก่อนแก้ไข
 ```
 
+### Scenario J — พบ `[ENTITY:deprecated]` หรือ `[ENTITY:superseded]` tag
+
+เกิดเมื่อ: อ่าน code, ADR, หรือ task แล้วพบ tag ระบุว่า entity นั้นเปลี่ยนสถานะแล้ว
+
+```
+→ ห้ามใช้ entity นั้นต่อโดยไม่ตรวจสอบก่อน
+→ เปิด doc/07-decisions/entity-register.md
+→ ตรวจสอบ status ปัจจุบัน, replaced_by (ถ้ามี), และ ADR ที่เกี่ยวข้อง
+→ ถ้า entity ถูกแทนที่: ใช้ entity ใหม่แทน และบันทึกใน work-log
+→ ถ้าไม่แน่ใจ: mark task เป็น [BLOCKED: deprecated entity] รอ human decision
+```
+
+**Entity Tag Format:**
+
+| Tag | ความหมาย |
+|-----|----------|
+| `[ENTITY:deprecated:X]` | entity X เลิกใช้แล้ว ตรวจ entity-register |
+| `[ENTITY:superseded:X→Y]` | entity X ถูกแทนด้วย Y |
+| `[ENTITY:proposed:X]` | entity X ยังไม่ได้ตัดสินใจ รอ ADR |
+| `[ENTITY:active:X]` | ยืนยันว่า X ยังใช้งานอยู่ (optional ใช้เมื่ออยากชัดเจน) |
+
 ### Scenario K — ไม่รู้ว่าควรเก็บข้อมูลที่ไหน
 
 เกิดเมื่อ: พบข้อมูลใหม่ระหว่าง session แต่ไม่แน่ใจว่าควร log ลง work-log, สร้าง ADR, อัปเดต entity-register, หรือเขียนลง cross-project memory
@@ -136,27 +157,6 @@
 ถ้าตอบ "ใช่" หลายข้อ: เก็บในทุกที่ที่เกี่ยวข้อง — ไม่ mutual exclusive
 ถ้าไม่ตรงกับข้อใดเลย: บันทึกไว้ใน work-log ก่อน แล้วระบุว่า "ยังไม่แน่ใจว่าควรอยู่ที่ไหน"
 ```
-
-### Scenario J — พบ `[ENTITY:deprecated]` หรือ `[ENTITY:superseded]` tag
-
-เกิดเมื่อ: อ่าน code, ADR, หรือ task แล้วพบ tag ระบุว่า entity นั้นเปลี่ยนสถานะแล้ว
-
-```
-→ ห้ามใช้ entity นั้นต่อโดยไม่ตรวจสอบก่อน
-→ เปิด doc/07-decisions/entity-register.md
-→ ตรวจสอบ status ปัจจุบัน, replaced_by (ถ้ามี), และ ADR ที่เกี่ยวข้อง
-→ ถ้า entity ถูกแทนที่: ใช้ entity ใหม่แทน และบันทึกใน work-log
-→ ถ้าไม่แน่ใจ: mark task เป็น [BLOCKED: deprecated entity] รอ human decision
-```
-
-**Entity Tag Format:**
-
-| Tag | ความหมาย |
-|-----|----------|
-| `[ENTITY:deprecated:X]` | entity X เลิกใช้แล้ว ตรวจ entity-register |
-| `[ENTITY:superseded:X→Y]` | entity X ถูกแทนด้วย Y |
-| `[ENTITY:proposed:X]` | entity X ยังไม่ได้ตัดสินใจ รอ ADR |
-| `[ENTITY:active:X]` | ยืนยันว่า X ยังใช้งานอยู่ (optional ใช้เมื่ออยากชัดเจน) |
 
 ---
 

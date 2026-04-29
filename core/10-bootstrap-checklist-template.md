@@ -22,6 +22,7 @@ AI ใช้ checklist นี้ตรวจสอบก่อนประกา
 - [ ] `doc/04-way-of-work/way-of-work.md`
 - [ ] `doc/04-way-of-work/coding-standards.md`
 - [ ] `doc/04-way-of-work/ai-decision-protocol.md`
+- [ ] `doc/04-way-of-work/compliance.md`
 - [ ] `doc/07-decisions/README.md` (ADR index)
 - [ ] `doc/07-decisions/entity-register.md` (ถ้าโปรเจ็กต์มี tech decisions แล้ว)
 
