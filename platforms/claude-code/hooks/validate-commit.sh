@@ -24,6 +24,14 @@ if git diff --cached | grep -E '<NEEDS_CLARIFICATION|<PROJECT_NAME>|<CURRENT_DAT
   echo "[WARN] Unresolved placeholders in staged changes — review before commit"
 fi
 
+# C-14 — warn เมื่อ commit มี reference ถึง deprecated entity
+echo "Checking for deprecated entity references..."
+if git diff --cached | grep -E '\[ENTITY:deprecated:' > /dev/null 2>&1; then
+  echo "[WARN] Deprecated entity tag found in staged changes"
+  echo "       ตรวจ doc/07-decisions/entity-register.md ว่าใช้ entity ที่ถูกต้องหรือไม่"
+  git diff --cached | grep -E '\[ENTITY:deprecated:'
+fi
+
 # G-06 — ห้าม commit prototype code เข้า main
 CURRENT_BRANCH=$(git branch --show-current 2>/dev/null || echo "unknown")
 if [[ "$CURRENT_BRANCH" == "main" || "$CURRENT_BRANCH" == "master" ]]; then

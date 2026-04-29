@@ -43,9 +43,9 @@ AI ที่ทำงานถูกต้อง (workflow) AND จำได้ 
 
 | Phase | Feature | สถานะ |
 |-------|---------|--------|
-| **Phase 1** | Project Entity Register | planned |
-| **Phase 1** | Scoped Memory Map | planned |
-| **Phase 1** | Entity Lifecycle Tags | planned |
+| **Phase 1** | Project Entity Register | ✅ done |
+| **Phase 1** | Scoped Memory Map | ✅ done |
+| **Phase 1** | Entity Lifecycle Tags | ✅ done |
 | **Phase 2** | Agent Diary Protocol | planned |
 | **Phase 2** | Cross-Project Memory Bridge | planned |
 | **Phase 2** | Memory Scope Protocol | planned |
@@ -104,7 +104,7 @@ AI ที่ทำงานถูกต้อง (workflow) AND จำได้ 
 แรงบันดาลใจจาก MemPalace Knowledge Graph แต่เป็น markdown ไม่ต้องมี vector DB
 
 **ที่อยู่ในโปรเจ็กต์**
-`doc/06-entities/entity-register.md`
+`doc/07-decisions/entity-register.md`
 
 **โครงสร้างตัวอย่าง**
 ```markdown
@@ -122,9 +122,9 @@ AI ที่ทำงานถูกต้อง (workflow) AND จำได้ 
 - `ADR` — link ไปที่เหตุผลการตัดสินใจ
 
 **สิ่งที่ต้องสร้าง**
-- template ไฟล์ใน `core/` สำหรับ entity-register.md
-- เพิ่มใน core/01 folder structure
-- เพิ่ม C-XX compliance rule: task ที่ deprecated tech ต้องอัปเดต entity-register
+- ~~template ไฟล์ใน `core/` สำหรับ entity-register.md~~ ✅ core/17
+- ~~เพิ่มใน core/01 folder structure~~ ✅ doc/07-decisions/entity-register.md
+- ~~เพิ่ม C-XX compliance rule: task ที่ deprecated tech ต้องอัปเดต entity-register~~ ✅ C-14
 
 ---
 
@@ -153,9 +153,9 @@ read_more:
 ```
 
 **สิ่งที่ต้องสร้าง**
-- อัปเดต core/06 (work-status template) เพิ่ม `read_more` field
+- ~~อัปเดต core/06 (work-status template) เพิ่ม `read_more` field~~ ✅
 - อัปเดต core/08 (log template) ให้ AI-CONTEXT ของ work-log-index มี `deep_context` hint ด้วย
-- อัปเดต CLAUDE.md ให้ Session Start Protocol อ่าน `read_more` แล้ว suggest ว่าควรอ่านอะไรเพิ่ม
+- ~~อัปเดต CLAUDE.md ให้ Session Start Protocol อ่าน `read_more` แล้ว suggest ว่าควรอ่านอะไรเพิ่ม~~ ✅
 
 ---
 
@@ -177,9 +177,9 @@ AI ที่อ่านเจอ tag นี้ต้องตรวจ entity-r
 ```
 
 **สิ่งที่ต้องสร้าง**
-- เพิ่ม tag format ใน core/11 (ai-decision-protocol) เป็น Scenario ใหม่
-- เพิ่ม compliance rule: AI เจอ `[ENTITY:deprecated]` ต้องตรวจ entity-register ก่อนใช้
-- เพิ่ม validate-commit.sh hook ให้ warn เมื่อ commit มี reference ถึง deprecated entity
+- ~~เพิ่ม tag format ใน core/11 (ai-decision-protocol) เป็น Scenario ใหม่~~ ✅ Scenario J
+- ~~เพิ่ม compliance rule: AI เจอ `[ENTITY:deprecated]` ต้องตรวจ entity-register ก่อนใช้~~ ✅ C-14
+- ~~เพิ่ม validate-commit.sh hook ให้ warn เมื่อ commit มี reference ถึง deprecated entity~~ ✅
 
 ---
 

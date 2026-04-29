@@ -36,9 +36,10 @@
 1. อ่าน AI-CONTEXT block ของ `doc/01-plan/work-status.md`
 2. อ่าน AI-CONTEXT block ของ `doc/03-log/work-log-index.md`
 3. อ่าน AI-CONTEXT block ของ `doc/02-task/task-board.md`
-4. ตรวจ gap ระหว่าง task board และ source docs (Scenario H ใน `doc/04-way-of-work/ai-decision-protocol.md`)
-5. รัน compliance scan อัตโนมัติ (ดู `doc/04-way-of-work/compliance.md`)
-6. รายงานสถานะ: phase ปัจจุบัน, task ที่ active, สิ่งที่ต้องทำก่อน
+4. ถ้า work-status มี `read_more` field → แสดงให้ผู้ใช้เห็นว่าอ่านเพิ่มได้ที่ไหนถ้าต้องการ context เจาะจง
+5. ตรวจ gap ระหว่าง task board และ source docs (Scenario H ใน `doc/04-way-of-work/ai-decision-protocol.md`)
+6. รัน compliance scan อัตโนมัติ (ดู `doc/04-way-of-work/compliance.md`)
+7. รายงานสถานะ: phase ปัจจุบัน, task ที่ active, สิ่งที่ต้องทำก่อน
 
 ---
 

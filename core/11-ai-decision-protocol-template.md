@@ -110,6 +110,27 @@
 → รอ human review ก่อนแก้ไข
 ```
 
+### Scenario J — พบ `[ENTITY:deprecated]` หรือ `[ENTITY:superseded]` tag
+
+เกิดเมื่อ: อ่าน code, ADR, หรือ task แล้วพบ tag ระบุว่า entity นั้นเปลี่ยนสถานะแล้ว
+
+```
+→ ห้ามใช้ entity นั้นต่อโดยไม่ตรวจสอบก่อน
+→ เปิด doc/07-decisions/entity-register.md
+→ ตรวจสอบ status ปัจจุบัน, replaced_by (ถ้ามี), และ ADR ที่เกี่ยวข้อง
+→ ถ้า entity ถูกแทนที่: ใช้ entity ใหม่แทน และบันทึกใน work-log
+→ ถ้าไม่แน่ใจ: mark task เป็น [BLOCKED: deprecated entity] รอ human decision
+```
+
+**Entity Tag Format:**
+
+| Tag | ความหมาย |
+|-----|----------|
+| `[ENTITY:deprecated:X]` | entity X เลิกใช้แล้ว ตรวจ entity-register |
+| `[ENTITY:superseded:X→Y]` | entity X ถูกแทนด้วย Y |
+| `[ENTITY:proposed:X]` | entity X ยังไม่ได้ตัดสินใจ รอ ADR |
+| `[ENTITY:active:X]` | ยืนยันว่า X ยังใช้งานอยู่ (optional ใช้เมื่ออยากชัดเจน) |
+
 ---
 
 ## 3. Escalation Levels
@@ -164,4 +185,7 @@
 | `[FOUND-IN-PASSING]` | พบระหว่างทำงานอื่น ยังไม่ได้รับ assign |
 | `[IN_PROGRESS: checkpoint saved]` | ทำไปบ้างแล้ว บันทึก checkpoint ไว้แล้ว |
 | `[REVERSE-DOC]` | พบ undocumented code รอ human review |
+| `[ENTITY:deprecated:X]` | entity X เลิกใช้แล้ว — ตรวจ entity-register ก่อนใช้ |
+| `[ENTITY:superseded:X→Y]` | entity X ถูกแทนด้วย Y |
+| `[ENTITY:proposed:X]` | entity X ยังรอ ADR |
 | `<NEEDS_CLARIFICATION: ...>` | placeholder แทนข้อมูลที่ยังไม่มี |

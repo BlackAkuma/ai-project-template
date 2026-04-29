@@ -46,6 +46,7 @@ Protocol สำหรับตรวจสอบ code quality และ document
 | C-11 | Security baseline ไม่ผ่าน | ดูรายการตรวจด้านล่าง |
 | C-12 | work-log-index ใหญ่เกิน | > 300 บรรทัด — แนะนำ archive |
 | C-13 | task-board done section ใหญ่เกิน | > 15 รายการ — แนะนำ archive |
+| C-14 | entity-register ไม่ได้อัปเดตเมื่อ tech เปลี่ยน | task ที่ deprecated/เพิ่ม tech ใหม่ แต่ entity-register ไม่เปลี่ยน |
 
 ---
 
