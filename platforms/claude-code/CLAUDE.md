@@ -19,11 +19,13 @@
 ทำครั้งเดียวตอนสร้างโปรเจ็กต์ใหม่:
 
 1. ถามผู้ใช้ว่าจะสื่อสารกันเป็นภาษาอะไร รอคำตอบก่อน
-2. อ่านไฟล์ใน `core/` ทั้งหมดตามลำดับ (00 → 16)
-3. ถ้าโปรเจ็กต์เป็น game หรือ web game → อ่าน `skills/game/` ต่อด้วย (00 → 06)
-4. สร้างโครงสร้าง `doc/` ตาม core/01 template
-5. กรอกข้อมูลโปรเจ็กต์จาก context ที่มี — ใส่ placeholder ชัดเจนถ้าไม่พอ ห้ามเดา
-6. ตรวจสอบกับ `core/10-bootstrap-checklist-template.md` ก่อนประกาศว่าเสร็จ
+2. ตรวจว่ามี `~/ai-workspace/cross-project-memory.md` ไหม — ถ้ามีให้อ่านก่อน เพื่อดู pattern และ lesson จากโปรเจ็กต์เก่า
+3. อ่านไฟล์ใน `core/` ทั้งหมดตามลำดับ (00 → 18)
+4. ถ้าโปรเจ็กต์เป็น game หรือ web game → อ่าน `skills/game/` ต่อด้วย (00 → 06)
+5. สร้างโครงสร้าง `doc/` ตาม core/01 template
+6. กรอกข้อมูลโปรเจ็กต์จาก context ที่มี — ใส่ placeholder ชัดเจนถ้าไม่พอ ห้ามเดา
+7. เพิ่มโปรเจ็กต์นี้ลงใน Project Registry ของ `~/ai-workspace/cross-project-memory.md` (ถ้ามีไฟล์นั้นอยู่)
+8. ตรวจสอบกับ `core/10-bootstrap-checklist-template.md` ก่อนประกาศว่าเสร็จ
 
 จากนั้น → ทำ Session Start Protocol ต่อ
 
@@ -36,10 +38,11 @@
 1. อ่าน AI-CONTEXT block ของ `doc/01-plan/work-status.md`
 2. อ่าน AI-CONTEXT block ของ `doc/03-log/work-log-index.md`
 3. อ่าน AI-CONTEXT block ของ `doc/02-task/task-board.md`
-4. ถ้า work-status มี `read_more` field → แสดงให้ผู้ใช้เห็นว่าอ่านเพิ่มได้ที่ไหนถ้าต้องการ context เจาะจง
-5. ตรวจ gap ระหว่าง task board และ source docs (Scenario H ใน `doc/04-way-of-work/ai-decision-protocol.md`)
-6. รัน compliance scan อัตโนมัติ (ดู `doc/04-way-of-work/compliance.md`)
-7. รายงานสถานะ: phase ปัจจุบัน, task ที่ active, สิ่งที่ต้องทำก่อน
+4. ถ้า `doc/03-log/agents/claude-code.md` มีอยู่ → อ่าน AI-CONTEXT block ของไฟล์นั้นด้วย เพื่อรับ checkpoint ที่ Claude Code session ก่อนหน้าบันทึกไว้
+5. ถ้า work-status มี `read_more` field → แสดงให้ผู้ใช้เห็นว่าอ่านเพิ่มได้ที่ไหนถ้าต้องการ context เจาะจง
+6. ตรวจ gap ระหว่าง task board และ source docs (Scenario H ใน `doc/04-way-of-work/ai-decision-protocol.md`)
+7. รัน compliance scan อัตโนมัติ (ดู `doc/04-way-of-work/compliance.md`)
+8. รายงานสถานะ: phase ปัจจุบัน, task ที่ active, สิ่งที่ต้องทำก่อน
 
 ---
 
@@ -101,6 +104,8 @@
 - ห้ามตัดสินใจเรื่อง architecture โดยไม่สร้าง ADR draft
 - ทุก session ต้องทำ Session End Protocol ก่อนจบ
 - ถ้าไม่แน่ใจ: Do less, document more
+- เมื่อพบข้อมูลใหม่ที่ต้องเก็บ → ใช้ Memory Scope decision tree (Scenario K ใน `ai-decision-protocol.md`) ตัดสินว่าเก็บที่ไหน
+- ห้ามเขียนลง `~/ai-workspace/cross-project-memory.md` โดยไม่ถามผู้ใช้ก่อน
 
 ---
 

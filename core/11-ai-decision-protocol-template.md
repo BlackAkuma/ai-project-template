@@ -110,6 +110,33 @@
 → รอ human review ก่อนแก้ไข
 ```
 
+### Scenario K — ไม่รู้ว่าควรเก็บข้อมูลที่ไหน
+
+เกิดเมื่อ: พบข้อมูลใหม่ระหว่าง session แต่ไม่แน่ใจว่าควร log ลง work-log, สร้าง ADR, อัปเดต entity-register, หรือเขียนลง cross-project memory
+
+```
+ข้อมูลใหม่ที่ต้องเก็บ — ถามตามลำดับ:
+
+1. เป็น architectural decision?
+   → ADR (doc/07-decisions/ADR-NNN-*.md + README.md)
+
+2. เป็น entity ใหม่ หรือ status ของ entity เปลี่ยน?
+   → Entity Register (doc/07-decisions/entity-register.md)
+
+3. เป็น pattern หรือ lesson ที่น่าจะใช้ได้กับโปรเจ็กต์อื่น?
+   → Cross-Project Memory (~/ai-workspace/cross-project-memory.md)
+   [ถามผู้ใช้ก่อนเสมอ — ไม่เขียนลง cross-project memory โดยไม่ได้รับอนุญาต]
+
+4. เป็น progress, detail, หรือ decision ที่ทำเองในระหว่าง session?
+   → Agent Diary + work-log-index (doc/03-log/)
+
+5. เป็น task ใหม่ หรือ status เปลี่ยน?
+   → Task Board (doc/02-task/task-board.md)
+
+ถ้าตอบ "ใช่" หลายข้อ: เก็บในทุกที่ที่เกี่ยวข้อง — ไม่ mutual exclusive
+ถ้าไม่ตรงกับข้อใดเลย: บันทึกไว้ใน work-log ก่อน แล้วระบุว่า "ยังไม่แน่ใจว่าควรอยู่ที่ไหน"
+```
+
 ### Scenario J — พบ `[ENTITY:deprecated]` หรือ `[ENTITY:superseded]` tag
 
 เกิดเมื่อ: อ่าน code, ADR, หรือ task แล้วพบ tag ระบุว่า entity นั้นเปลี่ยนสถานะแล้ว

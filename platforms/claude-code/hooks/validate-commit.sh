@@ -9,7 +9,7 @@ FAIL=0
 
 # C-11 Security — ห้าม commit secrets
 echo "Checking for hardcoded secrets..."
-SECRET_PATTERNS='(password|secret|api_key|apikey|token|private_key)\s*=\s*["\x27][^"\x27]{8,}'
+SECRET_PATTERNS="(password|secret|api_key|apikey|token|private_key)[[:space:]]*=[[:space:]]*[\"'][^\"']{8,}"
 if git diff --cached | grep -iE "$SECRET_PATTERNS" > /dev/null 2>&1; then
   echo "[FAIL] Possible hardcoded secret detected in staged changes"
   git diff --cached | grep -iE "$SECRET_PATTERNS"

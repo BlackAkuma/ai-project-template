@@ -46,9 +46,9 @@ AI ที่ทำงานถูกต้อง (workflow) AND จำได้ 
 | **Phase 1** | Project Entity Register | ✅ done |
 | **Phase 1** | Scoped Memory Map | ✅ done |
 | **Phase 1** | Entity Lifecycle Tags | ✅ done |
-| **Phase 2** | Agent Diary Protocol | planned |
-| **Phase 2** | Cross-Project Memory Bridge | planned |
-| **Phase 2** | Memory Scope Protocol | planned |
+| **Phase 2** | Agent Diary Protocol | ✅ done |
+| **Phase 2** | Cross-Project Memory Bridge | ✅ done |
+| **Phase 2** | Memory Scope Protocol | ✅ done |
 | **Phase 3** | Semantic Search Layer | planned |
 | **Phase 3** | Cross-Project Learning Engine | planned |
 
@@ -226,10 +226,10 @@ checkpoint: finished payment hook, pending webhook test
 ```
 
 **สิ่งที่ต้องสร้าง**
-- template ไฟล์ `doc/03-log/agents/[tool].md` ใน core/08
-- อัปเดต core/03 way-of-work ให้ระบุว่า tool ไหนรับผิดชอบ section ไหน
-- อัปเดต CLAUDE.md Session Start Protocol: ถ้ามี agents/ folder ให้อ่าน diary ของ tool นั้นก่อน
-- อัปเดต /session-end skill ให้ write ลง agent diary ด้วย
+- ~~template ไฟล์ `doc/03-log/agents/[tool].md` ใน core/08~~ ✅
+- ~~อัปเดต core/03 way-of-work ให้ระบุว่า tool ไหนรับผิดชอบ section ไหน~~ ✅
+- ~~อัปเดต CLAUDE.md Session Start Protocol: ถ้ามี agents/ folder ให้อ่าน diary ของ tool นั้นก่อน~~ ✅
+- ~~อัปเดต /session-end skill ให้ write ลง agent diary ด้วย~~ ✅
 
 ---
 
@@ -265,9 +265,9 @@ AI อ่านไฟล์นี้ตอน bootstrap ใหม่แทนก
 ```
 
 **สิ่งที่ต้องสร้าง**
-- template ไฟล์ cross-project-memory.md ใน core/ หรือ platforms/claude-code/
-- อัปเดต CLAUDE.md First Run Bootstrap: ถ้ามี `~/ai-workspace/cross-project-memory.md` ให้อ่านก่อน bootstrap
-- /session-end skill เพิ่ม optional step: "มี pattern ที่ควรบันทึกข้ามโปรเจ็กต์ไหม?"
+- ~~template ไฟล์ cross-project-memory.md ใน core/ หรือ platforms/claude-code/~~ ✅ core/18
+- ~~อัปเดต CLAUDE.md First Run Bootstrap: ถ้ามี `~/ai-workspace/cross-project-memory.md` ให้อ่านก่อน bootstrap~~ ✅
+- ~~/session-end skill เพิ่ม optional step: "มี pattern ที่ควรบันทึกข้ามโปรเจ็กต์ไหม?"~~ ✅
 
 ---
 
@@ -296,9 +296,9 @@ AI อ่านไฟล์นี้ตอน bootstrap ใหม่แทนก
 ```
 
 **สิ่งที่ต้องสร้าง**
-- เพิ่ม Memory Scope section ใน core/03 way-of-work template
-- เพิ่ม Scenario J ใน core/11 ai-decision-protocol: "ไม่รู้ว่าควรเก็บข้อมูลที่ไหน → ใช้ decision tree"
-- อัปเดต CLAUDE.md Key Rules ให้ reference memory scope protocol
+- ~~เพิ่ม Memory Scope section ใน core/03 way-of-work template~~ ✅
+- ~~เพิ่ม Scenario K ใน core/11 ai-decision-protocol: "ไม่รู้ว่าควรเก็บข้อมูลที่ไหน → ใช้ decision tree"~~ ✅
+- ~~อัปเดต CLAUDE.md Key Rules ให้ reference memory scope protocol~~ ✅
 
 ---
 
