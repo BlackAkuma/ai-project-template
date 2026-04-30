@@ -4,6 +4,8 @@
 เก็บใน `doc/08-design/[feature-name].md`
 
 FDD ต้องได้รับ approve ก่อน task จะออกจาก `design_validate` ไป `in_progress`
+task lifecycle: `todo → design_validate → in_progress → playtest → review → done`
+ส่วนที่ 8 ของ FDD กำหนดเกณฑ์ที่ต้องผ่านในขั้น playtest ก่อน task จะออกจาก `playtest` ไป `review`
 
 ---
 

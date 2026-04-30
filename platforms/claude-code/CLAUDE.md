@@ -106,6 +106,7 @@
 - ถ้าไม่แน่ใจ: Do less, document more
 - เมื่อพบข้อมูลใหม่ที่ต้องเก็บ → ใช้ Memory Scope decision tree (Scenario K ใน `ai-decision-protocol.md`) ตัดสินว่าเก็บที่ไหน
 - ห้ามเขียนลง `~/ai-workspace/cross-project-memory.md` โดยไม่ถามผู้ใช้ก่อน
+- เมื่อพบ `[ENTITY:deprecated]` หรือ `[ENTITY:superseded]` ในโค้ด task หรือ ADR → ตรวจ entity-register ก่อนเสมอ (Scenario J ใน `ai-decision-protocol.md`)
 
 ---
 
