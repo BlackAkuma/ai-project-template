@@ -6,6 +6,4 @@
       "runtimeExecutable": "python",
       "runtimeArgs": ["-m", "http.server", "5555", "--directory", "docs"],
       "port": 5555
-    }
-  ]
-}
+    

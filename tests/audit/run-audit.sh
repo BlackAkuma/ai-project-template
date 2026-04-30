@@ -241,6 +241,13 @@ assert_dir "F-4: tests/mock-project/doc exists" "tests/mock-project/doc"
 assert_file "F-5: tests/mock-project/doc/01-plan/work-status.md" "tests/mock-project/doc/01-plan/work-status.md"
 assert_file "F-6: tests/mock-project/doc/02-task/task-board.md" "tests/mock-project/doc/02-task/task-board.md"
 
+# functional test projects
+assert_file "F-7: tests/functional/run-functional-test.sh" "tests/functional/run-functional-test.sh"
+assert_dir  "F-8: tests/functional/shopflow exists" "tests/functional/shopflow"
+assert_dir  "F-9: tests/functional/hexgame exists"  "tests/functional/hexgame"
+assert_file "F-10: shopflow/doc/07-decisions/entity-register.md" "tests/functional/shopflow/doc/07-decisions/entity-register.md"
+assert_file "F-11: hexgame/doc/08-design/movement-system.md (FDD)" "tests/functional/hexgame/doc/08-design/movement-system.md"
+
 # =============================================================================
 header "G: docs/ GitHub Pages"
 # =============================================================================
