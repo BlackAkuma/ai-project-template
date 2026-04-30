@@ -24,9 +24,9 @@ mkdir ~/projects/my-new-game
 cd ~/projects/my-new-game
 
 # 2. Download template เป็น ZIP แล้วแตกไฟล์
-curl -L https://github.com/BlackAkuma/ai-project-template/archive/main.zip -o _template.zip
+curl -L https://github.com/BlackAkuma/ai-project-template/archive/master.zip -o _template.zip
 unzip _template.zip
-mv ai-project-template-main _template
+mv ai-project-template-master _template
 rm _template.zip
 ```
 
@@ -51,7 +51,7 @@ Copy prompt นี้ให้ AI:
 
 ขั้นตอน:
 1. ถามว่าจะสื่อสารกันเป็นภาษาอะไร รอคำตอบก่อน
-2. อ่านไฟล์ทุกไฟล์ใน _template/core/ ตามลำดับ (00 → 16)
+2. อ่านไฟล์ทุกไฟล์ใน _template/core/ ตามลำดับ (00 → 18)
 3. ถ้าโปรเจ็กต์เป็น game หรือ web game ให้อ่าน _template/skills/game/ ต่อด้วย (00 → 06)
 4. สร้างโครงสร้าง doc/ ใน current directory
 5. กรอกข้อมูลโปรเจ็กต์ที่มี ถ้าไม่พอใส่ placeholder ห้ามเดา
@@ -77,9 +77,9 @@ git commit -m "setup: add AI project documentation"
 cd ~/projects/my-existing-game
 
 # 2. Download template เป็น ZIP (ห้าม git clone — จะ nested git)
-curl -L https://github.com/BlackAkuma/ai-project-template/archive/main.zip -o _template.zip
+curl -L https://github.com/BlackAkuma/ai-project-template/archive/master.zip -o _template.zip
 unzip _template.zip
-mv ai-project-template-main _template
+mv ai-project-template-master _template
 rm _template.zip
 
 ```
@@ -108,7 +108,7 @@ Copy prompt นี้ให้ AI (เหมือน Use Case 1):
 
 ขั้นตอน:
 1. ถามว่าจะสื่อสารกันเป็นภาษาอะไร รอคำตอบก่อน
-2. อ่านไฟล์ทุกไฟล์ใน _template/core/ ตามลำดับ (00 → 16)
+2. อ่านไฟล์ทุกไฟล์ใน _template/core/ ตามลำดับ (00 → 18)
 3. ถ้าโปรเจ็กต์เป็น game หรือ web game ให้อ่าน _template/skills/game/ ต่อด้วย (00 → 06)
 4. สร้างโครงสร้าง doc/ ใน current directory
 5. กรอกข้อมูลโปรเจ็กต์ที่มี ถ้าไม่พอใส่ placeholder ห้ามเดา
