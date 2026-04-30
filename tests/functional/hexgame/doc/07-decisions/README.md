@@ -5,7 +5,7 @@ proposed: []
 last_updated: 2026-04-30
 -->
 
-# Decision Log — ShopFlow
+# Decision Log — HexGame
 
 บันทึก architectural decisions ทั้งหมดของโปรเจ็กต์
 ADR ที่ถูก accept แล้วถือเป็น source of truth สำหรับทิศทาง technical

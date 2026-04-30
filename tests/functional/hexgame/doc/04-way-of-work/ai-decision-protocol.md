@@ -1,4 +1,4 @@
-# AI Decision Protocol — ShopFlow
+# AI Decision Protocol — HexGame
 
 
 ---

@@ -1,5 +1,5 @@
 <!-- AI-CONTEXT
-entities_active: [Next.js, Supabase, Vercel]
+entities_active: []
 entities_deprecated: []
 last_updated: 2026-04-30
 -->
@@ -12,11 +12,10 @@ last_updated: 2026-04-30
 
 | Entity | Type | Status | Since | ADR | Notes |
 |--------|------|--------|-------|-----|-------|
-| Next.js 14 | tech | active | 2026-04 | ADR-001 | frontend framework + API routes |
-| Supabase | tech | active | 2026-04 | ADR-002 | database (PostgreSQL) + auth |
-| Vercel | integration | active | 2026-04 | — | deployment platform |
-| Stripe | integration | active | 2026-04 | — | payment — phase 2, not yet integrated |
+| *(เพิ่มเมื่อมี tech/integration ใหม่ — รัน /adr-create แล้วอัปเดตที่นี่)* | | | | | |
 
 ## Deprecated / Removed Entities
 
-*(ยังไม่มี)*
+| Entity | Type | Status | Since | Until | ADR | Replaced By |
+|--------|------|--------|-------|-------|-----|-------------|
+| *(ยังไม่มี)* | | | | | | |

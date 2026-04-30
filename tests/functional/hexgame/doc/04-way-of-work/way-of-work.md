@@ -1,4 +1,4 @@
-# Way of Work — ShopFlow
+# Way of Work — HexGame
 
 ## ภาษา
 
@@ -7,7 +7,7 @@
 
 ## Project Type
 
-software
+game
 
 ## Session Protocol
 

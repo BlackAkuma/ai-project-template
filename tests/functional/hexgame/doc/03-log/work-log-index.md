@@ -8,7 +8,7 @@ notes: bootstrap session
 deep_context: none
 -->
 
-# Work Log Index — ShopFlow
+# Work Log Index — HexGame
 
 ## Milestone Summary
 

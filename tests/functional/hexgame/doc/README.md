@@ -1,8 +1,8 @@
-# doc/ — ShopFlow
+# doc/ — HexGame
 
-โครงสร้างเอกสารโปรเจ็กต์ ShopFlow (software)
+โครงสร้างเอกสารโปรเจ็กต์ HexGame (game)
 Bootstrap date: 2026-04-30
-Template version: ai-project-template (core 00–18)
+Template version: ai-project-template (core 00–18 + skills/game 00–06)
 
 | โฟลเดอร์ | เนื้อหา |
 |----------|--------|
@@ -14,4 +14,4 @@ Template version: ai-project-template (core 00–18)
 | `05-summary/` | Monthly summaries |
 | `06-extensions/` | Extension docs |
 | `07-decisions/` | ADR index + entity register |
-
+| `08-design/` | Feature Design Documents (FDD) — game-only |

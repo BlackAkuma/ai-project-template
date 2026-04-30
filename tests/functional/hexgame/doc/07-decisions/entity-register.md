@@ -1,5 +1,5 @@
 <!-- AI-CONTEXT
-entities_active: [Phaser3, HexGrid]
+entities_active: []
 entities_deprecated: []
 last_updated: 2026-04-30
 -->
@@ -12,9 +12,10 @@ last_updated: 2026-04-30
 
 | Entity | Type | Status | Since | ADR | Notes |
 |--------|------|--------|-------|-----|-------|
-| Phaser 3 | tech | active | 2026-04 | ADR-001 | game framework |
-| HexGrid lib | dependency | active | 2026-04 | — | hex coordinate math |
+| *(เพิ่มเมื่อมี tech/integration ใหม่ — รัน /adr-create แล้วอัปเดตที่นี่)* | | | | | |
 
 ## Deprecated / Removed Entities
 
-*(ยังไม่มี)*
+| Entity | Type | Status | Since | Until | ADR | Replaced By |
+|--------|------|--------|-------|-------|-----|-------------|
+| *(ยังไม่มี)* | | | | | | |

@@ -241,12 +241,19 @@ assert_dir "F-4: tests/mock-project/doc exists" "tests/mock-project/doc"
 assert_file "F-5: tests/mock-project/doc/01-plan/work-status.md" "tests/mock-project/doc/01-plan/work-status.md"
 assert_file "F-6: tests/mock-project/doc/02-task/task-board.md" "tests/mock-project/doc/02-task/task-board.md"
 
-# functional test projects
-assert_file "F-7: tests/functional/run-functional-test.sh" "tests/functional/run-functional-test.sh"
-assert_dir  "F-8: tests/functional/shopflow exists" "tests/functional/shopflow"
-assert_dir  "F-9: tests/functional/hexgame exists"  "tests/functional/hexgame"
-assert_file "F-10: shopflow/doc/07-decisions/entity-register.md" "tests/functional/shopflow/doc/07-decisions/entity-register.md"
-assert_file "F-11: hexgame/doc/08-design/movement-system.md (FDD)" "tests/functional/hexgame/doc/08-design/movement-system.md"
+# bootstrap script + functional test output
+assert_file "F-7: scripts/new-project.sh" "scripts/new-project.sh"
+assert_bash_syntax "scripts/new-project.sh"
+assert_dir  "F-8: tests/functional/shopflow (software bootstrap output)" "tests/functional/shopflow"
+assert_dir  "F-9: tests/functional/hexgame (game bootstrap output)"      "tests/functional/hexgame"
+assert_file "F-10: shopflow — doc/07-decisions/entity-register.md"  "tests/functional/shopflow/doc/07-decisions/entity-register.md"
+assert_file "F-11: shopflow — doc/04-way-of-work/ai-decision-protocol.md" "tests/functional/shopflow/doc/04-way-of-work/ai-decision-protocol.md"
+assert_file "F-12: hexgame  — doc/08-design/README.md"              "tests/functional/hexgame/doc/08-design/README.md"
+assert_file "F-13: hexgame  — doc/08-design/asset-registry.md"      "tests/functional/hexgame/doc/08-design/asset-registry.md"
+assert_no_grep "F-14: entity-register has no example entity data" "my-app|PostgreSQL|MongoDB|Redux" "tests/functional/shopflow/doc/07-decisions/entity-register.md"
+assert_no_grep "F-15: compliance has no fictional example paths"  "src/game/player" "tests/functional/shopflow/doc/04-way-of-work/compliance.md"
+assert_grep "F-16: ai-decision-protocol has project title (not template title)" "AI Decision Protocol — ShopFlow" "tests/functional/shopflow/doc/04-way-of-work/ai-decision-protocol.md"
+assert_grep "F-17: hexgame ai-decision-protocol has project title" "AI Decision Protocol — HexGame" "tests/functional/hexgame/doc/04-way-of-work/ai-decision-protocol.md"
 
 # =============================================================================
 header "G: docs/ GitHub Pages"
