@@ -1,0 +1,10 @@
+# Bootstrap script output — generated projects (not part of template)
+tests/functional/shopflow/
+tests/functional/hexgame/
+
+# Template working copies (prevent accidental commit)
+_template/
+
+# OS
+.DS_Store
+Thumbs.db

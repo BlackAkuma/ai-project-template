@@ -241,19 +241,41 @@ assert_dir "F-4: tests/mock-project/doc exists" "tests/mock-project/doc"
 assert_file "F-5: tests/mock-project/doc/01-plan/work-status.md" "tests/mock-project/doc/01-plan/work-status.md"
 assert_file "F-6: tests/mock-project/doc/02-task/task-board.md" "tests/mock-project/doc/02-task/task-board.md"
 
-# bootstrap script + functional test output
+# bootstrap script — verify script exists and is valid
 assert_file "F-7: scripts/new-project.sh" "scripts/new-project.sh"
 assert_bash_syntax "scripts/new-project.sh"
-assert_dir  "F-8: tests/functional/shopflow (software bootstrap output)" "tests/functional/shopflow"
-assert_dir  "F-9: tests/functional/hexgame (game bootstrap output)"      "tests/functional/hexgame"
-assert_file "F-10: shopflow — doc/07-decisions/entity-register.md"  "tests/functional/shopflow/doc/07-decisions/entity-register.md"
-assert_file "F-11: shopflow — doc/04-way-of-work/ai-decision-protocol.md" "tests/functional/shopflow/doc/04-way-of-work/ai-decision-protocol.md"
-assert_file "F-12: hexgame  — doc/08-design/README.md"              "tests/functional/hexgame/doc/08-design/README.md"
-assert_file "F-13: hexgame  — doc/08-design/asset-registry.md"      "tests/functional/hexgame/doc/08-design/asset-registry.md"
-assert_no_grep "F-14: entity-register has no example entity data" "my-app|PostgreSQL|MongoDB|Redux" "tests/functional/shopflow/doc/07-decisions/entity-register.md"
-assert_no_grep "F-15: compliance has no fictional example paths"  "src/game/player" "tests/functional/shopflow/doc/04-way-of-work/compliance.md"
-assert_grep "F-16: ai-decision-protocol has project title (not template title)" "AI Decision Protocol — ShopFlow" "tests/functional/shopflow/doc/04-way-of-work/ai-decision-protocol.md"
-assert_grep "F-17: hexgame ai-decision-protocol has project title" "AI Decision Protocol — HexGame" "tests/functional/hexgame/doc/04-way-of-work/ai-decision-protocol.md"
+
+# functional bootstrap test — generate projects at runtime, verify output, then clean up
+FUNC_SHOPFLOW="tests/functional/shopflow"
+FUNC_HEXGAME="tests/functional/hexgame"
+
+echo ""
+echo "  [F-bootstrap] Running scripts/new-project.sh ShopFlow..."
+if bash scripts/new-project.sh "ShopFlow" "$FUNC_SHOPFLOW" > /dev/null 2>&1; then
+  pass "F-8: scripts/new-project.sh ShopFlow — bootstrap succeeded"
+else
+  fail "F-8: scripts/new-project.sh ShopFlow — bootstrap failed"
+fi
+
+echo "  [F-bootstrap] Running scripts/new-project.sh HexGame --game..."
+if bash scripts/new-project.sh "HexGame" "$FUNC_HEXGAME" --game > /dev/null 2>&1; then
+  pass "F-9: scripts/new-project.sh HexGame --game — bootstrap succeeded"
+else
+  fail "F-9: scripts/new-project.sh HexGame --game — bootstrap failed"
+fi
+
+assert_file "F-10: shopflow — doc/07-decisions/entity-register.md"  "$FUNC_SHOPFLOW/doc/07-decisions/entity-register.md"
+assert_file "F-11: shopflow — doc/04-way-of-work/ai-decision-protocol.md" "$FUNC_SHOPFLOW/doc/04-way-of-work/ai-decision-protocol.md"
+assert_file "F-12: hexgame  — doc/08-design/README.md"              "$FUNC_HEXGAME/doc/08-design/README.md"
+assert_file "F-13: hexgame  — doc/08-design/asset-registry.md"      "$FUNC_HEXGAME/doc/08-design/asset-registry.md"
+assert_no_grep "F-14: entity-register has no example entity data" "my-app|PostgreSQL|MongoDB|Redux" "$FUNC_SHOPFLOW/doc/07-decisions/entity-register.md"
+assert_no_grep "F-15: compliance has no fictional example paths"  "src/game/player" "$FUNC_SHOPFLOW/doc/04-way-of-work/compliance.md"
+assert_grep "F-16: ai-decision-protocol has project title (not template title)" "AI Decision Protocol — ShopFlow" "$FUNC_SHOPFLOW/doc/04-way-of-work/ai-decision-protocol.md"
+assert_grep "F-17: hexgame ai-decision-protocol has project title" "AI Decision Protocol — HexGame" "$FUNC_HEXGAME/doc/04-way-of-work/ai-decision-protocol.md"
+
+# clean up generated test projects — never commit bootstrap output
+rm -rf "$FUNC_SHOPFLOW" "$FUNC_HEXGAME"
+echo "  [F-bootstrap] Cleaned up generated test projects"
 
 # =============================================================================
 header "G: docs/ GitHub Pages"
