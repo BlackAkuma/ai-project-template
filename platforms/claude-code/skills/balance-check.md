@@ -34,7 +34,7 @@ Summary: X PASS | Y FAIL | Z WARN
 
 ## Compliance Rule
 
-ตรวจสอบตาม **G-07** (balance check ก่อน playtest) จาก `skills/game/02-game-coding-standards.md`
+ตรวจสอบตาม **G-07** (balance check ก่อน playtest) จาก `skills/game/05-balance-check-template.md`
 
 ถ้ามี FAIL → อัปเดต work-status เป็น `[BLOCKED: balance out of range]` และอย่าเปลี่ยน task จาก `in_progress` ไป `playtest` จนกว่าจะแก้ไขค่าให้อยู่ใน range
 

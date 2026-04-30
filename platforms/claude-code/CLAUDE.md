@@ -74,6 +74,8 @@
 2. ยืนยันว่า task ที่กำลังทำตรงกับ checkpoint ที่บันทึกไว้
 3. ถ้าพบความไม่สอดคล้อง → ทำตาม Scenario B ใน `ai-decision-protocol.md`
 
+**หมายเหตุสำคัญ:** AI-CONTEXT block ใช้สำหรับ orient เท่านั้น — งานละเอียดอ่อน (เช่น architecture, security, requirement conflict) ให้อ่าน **body ของไฟล์ต้นฉบับเสมอ** อย่าตัดสินใจจาก AI-CONTEXT block เพียงอย่างเดียว
+
 ---
 
 ## Project Context
@@ -100,6 +102,7 @@
 ## Key Rules
 
 - ห้าม implement โดยไม่รู้ source reference
+- **บอก plan ก่อนเขียน code เสมอ** — อธิบายว่าจะทำอะไร ทำไม แล้วรอยืนยันก่อน implement
 - ห้ามแก้ requirement โดยตรง — ต้อง version ใหม่หรือ extension doc
 - ห้ามตัดสินใจเรื่อง architecture โดยไม่สร้าง ADR draft
 - ทุก session ต้องทำ Session End Protocol ก่อนจบ
