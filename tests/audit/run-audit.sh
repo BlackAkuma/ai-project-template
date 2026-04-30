@@ -249,6 +249,9 @@ assert_bash_syntax "scripts/new-project.sh"
 FUNC_SHOPFLOW="tests/functional/shopflow"
 FUNC_HEXGAME="tests/functional/hexgame"
 
+# ensure clean state before bootstrapping (leftover dirs would trip the guard in new-project.sh)
+rm -rf "$FUNC_SHOPFLOW" "$FUNC_HEXGAME"
+
 echo ""
 echo "  [F-bootstrap] Running scripts/new-project.sh ShopFlow..."
 if bash scripts/new-project.sh "ShopFlow" "$FUNC_SHOPFLOW" > /dev/null 2>&1; then
