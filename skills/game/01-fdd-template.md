@@ -123,30 +123,4 @@ damage: base * (1 + level * multiplier)  // multiplier: config: balance.json →
 ## ส่วนที่ 8 — เกณฑ์การยืนยันว่าเสร็จ
 
 feature นี้ถือว่าเสร็จเมื่อ:
-- [ ] [พฤติกรรมที่ต้องเกิดขึ้น]
-- [ ] [ค่าที่วัดได้และผ่านเกณฑ์]
-- [ ] [กรณีพิเศษที่ต้องผ่าน]
-- [ ] ประสิทธิภาพอยู่ใน budget ที่กำหนด
-- [ ] ทดสอบบน platform เป้าหมายแล้ว
-
-<!-- [AI] FDD ครบทุกส่วน รอ approve ขั้นสุดท้ายก่อนเปลี่ยนสถานะเป็น Approved -->
-```
-
----
-
-## FDD Index (สำหรับ `doc/08-design/README.md`)
-
-```md
-<!-- AI-CONTEXT
-fdd_count: <จำนวน FDD ทั้งหมด>
-pending_approve: <FDD-NNN> | none
-latest: FDD-<NNN>
-updated: <CURRENT_DATE>
--->
-
-# Design Documents — <PROJECT_NAME>
-
-| FDD | Feature | สถานะ | Task | อัปเดตล่าสุด |
-|-----|---------|-------|------|------------|
-| FDD-001 | [ชื่อ feature] | Draft / Approved | T-XXX | YYYY-MM-DD |
-```
+- [ ] [พฤติ

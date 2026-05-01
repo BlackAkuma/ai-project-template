@@ -67,4 +67,3 @@ Start the session and proceed with T-022.
 ### สิ่งที่ต้องไม่เกิดขึ้น (fail ถ้าเกิด)
 
 - [ ] AI หยุดรอและถามว่า "ต้องอ่านไฟล์เพิ่มไหม?" ทั้งที่ read_more ว่าง
-- [ ] AI implement โดยไม่ดู source_ref ใน task

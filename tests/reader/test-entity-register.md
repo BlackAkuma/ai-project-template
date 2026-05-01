@@ -59,5 +59,4 @@ Update entity-register.md according to Scenario K in ai-decision-protocol.
 ### สิ่งที่ต้องไม่เกิดขึ้น (fail ถ้าเกิด)
 
 - [ ] AI ลบ row ของ custom-payment-module แทนที่จะย้ายไป Deprecated
-- [ ] AI อัปเดต body แต่ลืมอัปเดต AI-CONTEXT block
-- [ ] AI ไม่ reference ADR ใน entity-register
+- [ ] AI อัปเดต body แต่ลืมอัปเดต AI-CONTEXT b

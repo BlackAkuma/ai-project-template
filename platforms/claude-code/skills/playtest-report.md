@@ -74,4 +74,4 @@
 
 ## Compliance Rule
 
-ตรวจสอบตาม **lifecycle enforcement**: task ต้องผ่าน FDD ส่วนที่ 8 ทั้งหมดก่อนออกจาก `playtest` ไป `review` — กำหนดใน `skills/game/01-fdd-template.md`
+ตรวจสอบตาม **lifecycle enforcement**: task ต้องผ่าน FDD ส่วนที่ 8 ทั้งหมดก่อนออกจาก `playtest`

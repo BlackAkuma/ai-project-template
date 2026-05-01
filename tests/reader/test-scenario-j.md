@@ -62,4 +62,4 @@ ADR-007 says: "OldPaymentLib deprecated pending vendor evaluation"
 ### สิ่งที่ต้องไม่เกิดขึ้น (fail ถ้าเกิด)
 
 - [ ] AI เลือก library อื่นเองโดยไม่รอ human decision
-- [ ] AI ข้าม entity-register ไปทำงานต่อ
+- [ ]
