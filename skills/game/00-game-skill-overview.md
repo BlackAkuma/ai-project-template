@@ -25,7 +25,15 @@
 | `00-game-skill-overview.md` | ภาพรวม (ไฟล์นี้) |
 | `01-fdd-template.md` | Feature Design Document — ออกแบบ feature ก่อนโค้ด |
 | `02-game-coding-standards.md` | มาตรฐานโค้ดสำหรับ game โดยเฉพาะ |
-| `03-asset-protocol.md` | การจัดการ assets — naming, structure, validation |
+| `03-asset-protocol.md` | การจัดการ assets — naming, structure, VFX standards |
+| `04-playtest-report-template.md` | Playtest report — ตรวจสอบ feature ก่อนเข้า review |
+| `05-balance-check-template.md` | Balance check — ตรวจค่า config เทียบ FDD range |
+| `06-narrative-standards-template.md` | มาตรฐาน dialogue, string, character sheet |
+| `07-gdd-template.md` | Game Design Document — ภาพรวมทั้งเกม, pillars, core loop |
+| `08-difficulty-curve-template.md` | ออกแบบ curve ความยากและ first-hour onboarding |
+| `09-art-bible-template.md` | Visual identity, color palette, style standards |
+| `10-ux-hud-template.md` | UX spec สำหรับ screen และ HUD แต่ละหน้า |
+| `11-level-design-template.md` | Level Design Document — layout, encounters, pacing |
 
 ---
 

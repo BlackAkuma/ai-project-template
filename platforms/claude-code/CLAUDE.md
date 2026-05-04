@@ -118,4 +118,20 @@
 ถ้าโปรเจ็กต์มี `doc/08-design/` → โหลด game skill standards อัตโนมัติ (skills/game/ 00–06):
 - ทุก feature ใหม่ต้องมี FDD ก่อน implement
 - task lifecycle: todo → design_validate → in_progress → playtest → review → done
-- compliance rules G-01 ถึง G-0
+- compliance rules G-01 ถึง G-07 และ A-01 ถึง A-04 บังคับใช้
+
+---
+
+## Available Slash Commands
+
+```
+/compliance-check   รัน compliance scan ทันที
+/fdd-create         สร้าง FDD template สำหรับ feature ใหม่
+/adr-create         สร้าง ADR สำหรับ architectural decision
+/session-end        sync work-status + log + task-board ครบในคำสั่งเดียว
+/scope-check        ตรวจ scope ของ task ปัจจุบัน
+/launch-check       รัน launch checklist ก่อน deploy
+/archive-logs       compress session เก่าเป็น monthly archive
+/balance-check      รัน balance check สำหรับ game config (game projects)
+/playtest-report    สร้าง playtest report template (game projects)
+```

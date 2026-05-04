@@ -122,13 +122,13 @@ header "B: skills/game/ (00–06)"
 # =============================================================================
 
 GAME_COUNT=$(ls skills/game/*.md 2>/dev/null | wc -l | tr -d ' ')
-assert_count "B-1: skills/game/ has exactly 7 files" 7 "$GAME_COUNT"
+assert_count "B-1: skills/game/ has exactly 12 files" 12 "$GAME_COUNT"
 
 GAME_UNIQUE=$(ls skills/game/*.md 2>/dev/null | grep -oE "/[0-9]{2}-" | grep -oE "[0-9]{2}" | sort -nu | wc -l | tr -d ' ')
-if [ "$GAME_UNIQUE" -eq 7 ]; then
-  pass "B-2: skills/game/ numbering 00–06, no gaps"
+if [ "$GAME_UNIQUE" -eq 12 ]; then
+  pass "B-2: skills/game/ numbering 00–11, no gaps"
 else
-  fail "B-2: skills/game/ numbering gaps detected (unique numbers=$GAME_UNIQUE, expected 7)"
+  fail "B-2: skills/game/ numbering gaps detected (unique numbers=$GAME_UNIQUE, expected 12)"
 fi
 
 EMPTY_GAME=0
@@ -267,4 +267,51 @@ else
   fail "F-9: scripts/new-project.sh HexGame --game — bootstrap failed"
 fi
 
-assert_file "F-10: shopflow — doc/07-decisions
+assert_file "F-10: shopflow — doc/07-decisions/entity-register.md"  "$FUNC_SHOPFLOW/doc/07-decisions/entity-register.md"
+assert_file "F-11: shopflow — doc/04-way-of-work/ai-decision-protocol.md" "$FUNC_SHOPFLOW/doc/04-way-of-work/ai-decision-protocol.md"
+assert_file "F-12: hexgame  — doc/08-design/README.md"              "$FUNC_HEXGAME/doc/08-design/README.md"
+assert_file "F-13: hexgame  — doc/08-design/asset-registry.md"      "$FUNC_HEXGAME/doc/08-design/asset-registry.md"
+assert_no_grep "F-14: entity-register has no example entity data" "my-app|PostgreSQL|MongoDB|Redux" "$FUNC_SHOPFLOW/doc/07-decisions/entity-register.md"
+assert_no_grep "F-15: compliance has no fictional example paths"  "src/game/player" "$FUNC_SHOPFLOW/doc/04-way-of-work/compliance.md"
+assert_grep "F-16: ai-decision-protocol has project title (not template title)" "AI Decision Protocol — ShopFlow" "$FUNC_SHOPFLOW/doc/04-way-of-work/ai-decision-protocol.md"
+assert_grep "F-17: hexgame ai-decision-protocol has project title" "AI Decision Protocol — HexGame" "$FUNC_HEXGAME/doc/04-way-of-work/ai-decision-protocol.md"
+
+# clean up generated test projects — never commit bootstrap output
+rm -rf "$FUNC_SHOPFLOW" "$FUNC_HEXGAME"
+echo "  [F-bootstrap] Cleaned up generated test projects"
+
+# =============================================================================
+header "G: docs/ GitHub Pages"
+# =============================================================================
+
+assert_file "G-1: docs/how-it-works.html" "docs/how-it-works.html"
+assert_grep "G-2: how-it-works.html has 19" "19" "docs/how-it-works.html"
+assert_grep "G-3: how-it-works.html has GitHub Sponsors link" "sponsors/BlackAkuma" "docs/how-it-works.html"
+assert_grep "G-4: how-it-works.html has bilingual TH/EN" 'html\[lang|lang="en"' "docs/how-it-works.html"
+assert_grep "G-5: how-it-works.html has GitHub repo link" "BlackAkuma/ai-project-template" "docs/how-it-works.html"
+
+# =============================================================================
+header "FINAL RESULTS"
+# =============================================================================
+
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  PASS : $PASS"
+echo "  FAIL : $FAIL"
+echo "  WARN : $WARN"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+if [ $FAIL -gt 0 ]; then
+  echo ""
+  echo "Failed checks:"
+  for item in "${FAIL_LIST[@]}"; do
+    echo "  ✗ $item"
+  done
+  echo ""
+  exit 1
+else
+  echo ""
+  echo "  ALL CHECKS PASSED ✓"
+  echo ""
+  exit 0
+fi

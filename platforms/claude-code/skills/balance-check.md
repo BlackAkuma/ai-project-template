@@ -44,4 +44,4 @@ Summary: X PASS | Y FAIL | Z WARN
 
 - ไม่มี `doc/08-design/` → แจ้งว่า project นี้ไม่ใช่ game project
 - FDD ทั้งหมดเป็น Draft → แจ้งว่าไม่มี Approved FDD ให้ตรวจ
-- Config file ไม่มีอยู่ → แจ้ง path ที่หา แล้ว
+- Config file ไม่มีอยู่ → แจ้ง path ที่หา แล้ว mark เป็น `[WARN: config not found]`

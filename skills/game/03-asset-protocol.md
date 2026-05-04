@@ -98,7 +98,24 @@ assets/
 
 ---
 
-## 5. Compliance Rules สำหรับ Assets
+## 5. VFX Standards
+
+เพิ่มเติมจาก art bible — กฎสำหรับ visual effects โดยเฉพาะ
+
+| ประเภท VFX | Guideline | เหตุผล |
+|-----------|----------|-------|
+| Particle budget | ≤ 50 particles ต่อ 1 effect (mobile: ≤ 25) | performance |
+| Duration | จบใน 0.2–0.5 วินาที | ไม่บังหน้าจอนาน |
+| Hit freeze | 2–4 frames สำหรับ heavy impact, 0 สำหรับ light | game feel |
+| Screen shake | amplitude ≤ 8px, duration ≤ 200ms | อย่าให้คลื่นไส้ |
+| VFX สี | ต้องใช้สีจาก art bible emotional mapping | visual consistency |
+| Pooling | VFX object ทุกชิ้นต้องใช้ object pool | prevent GC spike |
+
+**กฎ:** VFX ต้องเสริม gameplay — ถ้า player ไม่เห็น hitbox เพราะ VFX = ต้องแก้
+
+---
+
+## 6. Compliance Rules สำหรับ Assets
 
 | Code | สิ่งที่ตรวจ | เกณฑ์ |
 |------|-----------|-------|
@@ -106,5 +123,7 @@ assets/
 | A-02 | Naming ไม่ตรง convention | ไม่มี type prefix หรือใช้ space/capital |
 | A-03 | Asset ใหญ่เกิน guideline | เกินขนาดที่กำหนด |
 | A-04 | Raw files ใน git | ไฟล์ .psd, .ai, .fla ใน main repo |
+| A-05 | Asset ใช้สีนอก palette | สีที่ไม่มีใน art bible โดยไม่มีเหตุผล |
+| A-06 | VFX เกิน particle budget | particle count เกิน limit ที่กำหนด |
 
 Violation tag: `// REFACTOR-PENDING[A-01]: asset not in registry — T-XXX`
