@@ -115,10 +115,28 @@
 
 ## Skill Pack Detection
 
-ถ้าโปรเจ็กต์มี `doc/08-design/` → โหลด game skill standards อัตโนมัติ (skills/game/ 00–06):
+ถ้าโปรเจ็กต์มี `doc/08-design/` → โหลด game skill standards อัตโนมัติ (skills/game/ 00–11):
 - ทุก feature ใหม่ต้องมี FDD ก่อน implement
 - task lifecycle: todo → design_validate → in_progress → playtest → review → done
-- compliance rules G-01 ถึง G-07 และ A-01 ถึง A-04 บังคับใช้
+- compliance rules G-01 ถึง G-10, A-01 ถึง A-07, N-01 ถึง N-04, U-01 ถึง U-03, L-01 ถึง L-02 บังคับใช้
+
+---
+
+## Game Specialist Agents (Claude Code เท่านั้น)
+
+สำหรับ game project สามารถ invoke specialist agents เพื่อ review เชิงลึก:
+
+| Agent | ใช้เมื่อ |
+|-------|---------|
+| `game-designer` | ออกแบบ mechanic ใหม่, review FDD vs GDD, วิเคราะห์ degenerate strategies |
+| `game-art-director` | review asset, ตรวจ color palette, gate review ด้าน visual |
+| `game-narrative-director` | review dialogue, character voice, ludonarrative conflicts |
+| `game-ux-designer` | ออกแบบ screen flow, review HUD, ตรวจ input mapping |
+| `game-performance-analyst` | วิเคราะห์ bottleneck, review performance budget, frame timing |
+
+ไฟล์ agent อยู่ที่ `platforms/claude-code/agents/` — Claude Code โหลดอัตโนมัติ
+
+**Invoke ด้วย `/game-review`** เพื่อรัน gate review จาก agent ที่เกี่ยวข้องทั้งหมด
 
 ---
 
@@ -134,4 +152,5 @@
 /archive-logs       compress session เก่าเป็น monthly archive
 /balance-check      รัน balance check สำหรับ game config (game projects)
 /playtest-report    สร้าง playtest report template (game projects)
+/game-review        รัน milestone gate review โดย specialist agents (game projects)
 ```

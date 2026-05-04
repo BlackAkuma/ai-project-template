@@ -122,13 +122,13 @@ header "B: skills/game/ (00–06)"
 # =============================================================================
 
 GAME_COUNT=$(ls skills/game/*.md 2>/dev/null | wc -l | tr -d ' ')
-assert_count "B-1: skills/game/ has exactly 7 files" 7 "$GAME_COUNT"
+assert_count "B-1: skills/game/ has exactly 12 files" 12 "$GAME_COUNT"
 
 GAME_UNIQUE=$(ls skills/game/*.md 2>/dev/null | grep -oE "/[0-9]{2}-" | grep -oE "[0-9]{2}" | sort -nu | wc -l | tr -d ' ')
-if [ "$GAME_UNIQUE" -eq 7 ]; then
-  pass "B-2: skills/game/ numbering 00–06, no gaps"
+if [ "$GAME_UNIQUE" -eq 12 ]; then
+  pass "B-2: skills/game/ numbering 00–11, no gaps"
 else
-  fail "B-2: skills/game/ numbering gaps detected (unique numbers=$GAME_UNIQUE, expected 7)"
+  fail "B-2: skills/game/ numbering gaps detected (unique numbers=$GAME_UNIQUE, expected 12)"
 fi
 
 EMPTY_GAME=0
@@ -156,7 +156,7 @@ assert_grep "C-4: CLAUDE.md references Scenario B" "Scenario B" "platforms/claud
 assert_grep "C-5: CLAUDE.md references Scenario J" "Scenario J" "platforms/claude-code/CLAUDE.md"
 assert_grep "C-6: CLAUDE.md has doc/08-design game detection" "doc/08-design" "platforms/claude-code/CLAUDE.md"
 assert_grep "C-7: CLAUDE.md has 00 → 18 range" "00 → 18" "platforms/claude-code/CLAUDE.md"
-assert_grep "C-8: CLAUDE.md has 00 → 06 game range" "00 → 06" "platforms/claude-code/CLAUDE.md"
+assert_grep "C-8: CLAUDE.md game section includes expanded compliance (G-10, N-01, L-01)" "G-10" "platforms/claude-code/CLAUDE.md"
 assert_grep "C-9: CLAUDE.md has Memory Scope reference" "cross-project-memory" "platforms/claude-code/CLAUDE.md"
 
 # Hooks
@@ -184,6 +184,27 @@ done
 # Skills (game-only — documented as game-only in CLAUDE.md)
 assert_file "C-17: skills/balance-check.md (game-only)" "platforms/claude-code/skills/balance-check.md"
 assert_file "C-18: skills/playtest-report.md (game-only)" "platforms/claude-code/skills/playtest-report.md"
+assert_file "C-19: skills/game-review.md (game-only)" "platforms/claude-code/skills/game-review.md"
+
+# Game specialist agents
+AGENT_COUNT=$(ls platforms/claude-code/agents/*.md 2>/dev/null | wc -l | tr -d ' ')
+assert_count "C-20: agents/ has exactly 5 game specialist files" 5 "$AGENT_COUNT"
+
+assert_file "C-21: agents/game-designer.md" "platforms/claude-code/agents/game-designer.md"
+assert_file "C-22: agents/game-art-director.md" "platforms/claude-code/agents/game-art-director.md"
+assert_file "C-23: agents/game-narrative-director.md" "platforms/claude-code/agents/game-narrative-director.md"
+assert_file "C-24: agents/game-ux-designer.md" "platforms/claude-code/agents/game-ux-designer.md"
+assert_file "C-25: agents/game-performance-analyst.md" "platforms/claude-code/agents/game-performance-analyst.md"
+
+# Agent YAML frontmatter validation
+for agent in game-designer game-art-director game-narrative-director game-ux-designer game-performance-analyst; do
+  assert_grep "C-26: agents/$agent.md has YAML name" "^name:" "platforms/claude-code/agents/$agent.md"
+  assert_grep "C-26: agents/$agent.md has YAML model" "^model:" "platforms/claude-code/agents/$agent.md"
+  assert_grep "C-26: agents/$agent.md has out-of-scope section" "[Oo]ut of [Ss]cope" "platforms/claude-code/agents/$agent.md"
+done
+
+assert_grep "C-27: game-review skill references all 5 agents" "game-designer" "platforms/claude-code/skills/game-review.md"
+assert_grep "C-28: CLAUDE.md references /game-review command" "game-review" "platforms/claude-code/CLAUDE.md"
 
 # =============================================================================
 header "D: README.md & QUICKSTART.md — Claims Verification"
