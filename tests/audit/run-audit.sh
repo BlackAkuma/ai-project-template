@@ -188,7 +188,7 @@ assert_file "C-19: skills/game-review.md (game-only)" "platforms/claude-code/ski
 
 # Game specialist agents
 AGENT_COUNT=$(ls platforms/claude-code/agents/*.md 2>/dev/null | wc -l | tr -d ' ')
-assert_count "C-20: agents/ has exactly 5 game specialist files" 5 "$AGENT_COUNT"
+assert_count "C-20: agents/ has exactly 49 game specialist files" 49 "$AGENT_COUNT"
 
 assert_file "C-21: agents/game-designer.md" "platforms/claude-code/agents/game-designer.md"
 assert_file "C-22: agents/game-art-director.md" "platforms/claude-code/agents/game-art-director.md"
