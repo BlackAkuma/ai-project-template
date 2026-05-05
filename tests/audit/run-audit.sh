@@ -206,6 +206,46 @@ done
 assert_grep "C-27: game-review skill references all 5 agents" "game-designer" "platforms/claude-code/skills/game-review.md"
 assert_grep "C-28: CLAUDE.md references /game-review command" "game-review" "platforms/claude-code/CLAUDE.md"
 
+# Full YAML validation for all 49 agents (not just the 5 originals)
+for agent_file in platforms/claude-code/agents/*.md; do
+  agent_name=$(basename "$agent_file" .md)
+  assert_grep "C-29: $agent_name has YAML name"          "^name:"          "$agent_file"
+  assert_grep "C-29: $agent_name has YAML model"         "^model:"         "$agent_file"
+  assert_grep "C-29: $agent_name has out-of-scope section" "[Oo]ut of [Ss]cope" "$agent_file"
+done
+
+# Cross-agent boundary references — ensure agents redirect correctly
+assert_grep "C-30: gas-specialist → replication-specialist"    "replication-specialist" "platforms/claude-code/agents/game-unreal-gas-specialist.md"
+assert_grep "C-31: umg-specialist → art-director"              "art-director"           "platforms/claude-code/agents/game-unreal-umg-specialist.md"
+assert_grep "C-32: umg-specialist → ux-designer"               "ux-designer"            "platforms/claude-code/agents/game-unreal-umg-specialist.md"
+assert_grep "C-33: gdscript-specialist → godot-specialist"     "game-godot-specialist"  "platforms/claude-code/agents/game-godot-gdscript-specialist.md"
+assert_grep "C-34: dots-specialist → game-gameplay-programmer" "game-gameplay-programmer" "platforms/claude-code/agents/game-unity-dots-specialist.md"
+assert_grep "C-35: godot-csharp-specialist → godot-specialist" "game-godot-specialist"  "platforms/claude-code/agents/game-godot-csharp-specialist.md"
+assert_grep "C-36: blueprint-specialist → unreal-specialist"   "game-unreal-specialist" "platforms/claude-code/agents/game-unreal-blueprint-specialist.md"
+
+# Compliance / flag format checks — core behavioral markers
+assert_grep "C-37: gas-specialist has GAS VIOLATION flag"      "GAS VIOLATION"          "platforms/claude-code/agents/game-unreal-gas-specialist.md"
+assert_grep "C-38: umg-specialist has U-02 compliance code"    "U-02"                   "platforms/claude-code/agents/game-unreal-umg-specialist.md"
+assert_grep "C-39: replication-specialist has SECURITY flag"   "SECURITY"               "platforms/claude-code/agents/game-unreal-replication-specialist.md"
+assert_grep "C-40: gdscript-specialist has TYPING VIOLATION"   "TYPING VIOLATION"       "platforms/claude-code/agents/game-godot-gdscript-specialist.md"
+assert_grep "C-41: dots-specialist has BURST INCOMPATIBLE"     "BURST INCOMPATIBLE"     "platforms/claude-code/agents/game-unity-dots-specialist.md"
+assert_grep "C-42: narrative-director has N-01 compliance"     "N-01"                   "platforms/claude-code/agents/game-narrative-director.md"
+assert_grep "C-43: narrative-director has gate verdict format" "GATE-NARRATIVE"         "platforms/claude-code/agents/game-narrative-director.md"
+assert_grep "C-44: gas-specialist has EndAbility memory leak"  "MEMORY LEAK"            "platforms/claude-code/agents/game-unreal-gas-specialist.md"
+
+# Reader test files for game agents and workflow
+assert_file "C-45: tests/reader/test-game-agents.md"    "tests/reader/test-game-agents.md"
+assert_file "C-46: tests/reader/test-game-workflow.md"  "tests/reader/test-game-workflow.md"
+
+# Thinking frames — verify key frames present in 00-game-skill-overview.md
+assert_grep "C-47: skill overview has Creative Direction Frame"  "Creative Direction Frame" "skills/game/00-game-skill-overview.md"
+assert_grep "C-48: skill overview has Unreal Frame"             "Unreal Frame"             "skills/game/00-game-skill-overview.md"
+assert_grep "C-49: skill overview has Unity Frame"              "Unity Frame"              "skills/game/00-game-skill-overview.md"
+assert_grep "C-50: skill overview has Godot Frame"              "Godot Frame"              "skills/game/00-game-skill-overview.md"
+assert_grep "C-51: skill overview has Accessibility Frame"      "Accessibility Frame"      "skills/game/00-game-skill-overview.md"
+assert_grep "C-52: skill overview has QA Strategy Frame"        "QA Strategy Frame"        "skills/game/00-game-skill-overview.md"
+assert_grep "C-53: skill overview shows 12-file table (11-level)" "11-level-design-template" "skills/game/00-game-skill-overview.md"
+
 # =============================================================================
 header "D: README.md & QUICKSTART.md — Claims Verification"
 # =============================================================================
@@ -253,7 +293,7 @@ assert_file "F-2: tests/hooks/test-validate-commit.sh" "tests/hooks/test-validat
 assert_bash_syntax "tests/hooks/test-validate-commit.sh"
 
 # Reader test files
-for tf in test-agent-diary test-cross-project-memory test-memory-scope test-scenario-j test-entity-register test-scoped-memory; do
+for tf in test-agent-diary test-cross-project-memory test-memory-scope test-scenario-j test-entity-register test-scoped-memory test-game-agents test-game-workflow; do
   assert_file "F-3: tests/reader/$tf.md" "tests/reader/$tf.md"
 done
 
