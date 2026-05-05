@@ -38,6 +38,25 @@ tests/
 | F6: Memory Scope Protocol | Reader test (5 items) | reader/test-memory-scope.md — Scenario P | ✅ |
 | F6: Memory Scope Protocol | Reader test (edge case) | reader/test-memory-scope.md — Scenario P2 | ✅ |
 
+### Phase 3 — Game Specialist Agent Behavioral Tests
+
+| Feature | Test Type | ไฟล์ | ผล |
+|---------|-----------|------|----|
+| GAS specialist: [GAS VIOLATION] flag | Sub-agent simulation | reader/test-game-agents.md — GA-1 | ✅ |
+| UMG specialist: [U-02] flag + unidirectional flow | Sub-agent simulation | reader/test-game-agents.md — GA-2 | ✅ |
+| Replication specialist: [SECURITY] flag + validation | Sub-agent simulation | reader/test-game-agents.md — GA-3 | ✅ |
+| GDScript specialist: [TYPING VIOLATION] flag | Sub-agent simulation | reader/test-game-agents.md — GA-4 | ✅ |
+| Narrative director: Dialogue Function Test | Sub-agent simulation | reader/test-game-agents.md — GA-5 | ✅ |
+| DOTS specialist: [BURST INCOMPATIBLE] flag | Sub-agent simulation | reader/test-game-agents.md — GA-6 | ✅ |
+| UMG specialist: cross-agent boundary redirect | Sub-agent simulation | reader/test-game-agents.md — GA-7 | ✅ |
+| Gameplay programmer: blocks without FDD | Sub-agent simulation | reader/test-game-workflow.md — GW-1 | ✅ |
+| Bug found mid-task: [FOUND-IN-PASSING] protocol | Sub-agent simulation | reader/test-game-workflow.md — GW-2 | ✅ |
+| Creative director: conflict resolution | Sub-agent simulation | reader/test-game-workflow.md — GW-4 | ✅ |
+| Systems designer: scope creep detection | Sub-agent simulation | reader/test-game-workflow.md — GW-6 | ✅ |
+| Thinking frames: non-Claude Code AI (Layer 1) | Sub-agent simulation | reader/test-game-workflow.md — GW-7 | ✅ |
+
+ผลฉบับเต็ม: `results/phase-3-game-agent-test-results.md`
+
 ## วิธีรัน
 
 ```bash
