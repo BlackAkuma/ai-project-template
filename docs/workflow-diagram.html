@@ -378,7 +378,7 @@ section{padding:80px 32px}
     <h2 class="sec-h" data-i18n="prob.h">AI ทำงานกับโปรเจ็กต์ได้ดี — แต่ไม่ได้ตลอด</h2>
     <p class="sec-sub" data-i18n="prob.sub">ทุกครั้งที่เปิด session ใหม่ AI เริ่มจากศูนย์ ไม่รู้ว่าเคยตัดสินใจอะไรไว้ ไม่รู้ว่างานอยู่จุดไหน ไม่รู้กฎที่ทีมตกลงกันไว้ ปัญหานี้ระบบนี้แก้ได้</p>
 
-    <div class="problem-grid">
+    <div class="problem-grid" id="prob-grid">
       <div class="problem-card bad">
         <div class="pc-label bad-l">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zM6.75 5.25a1.25 1.25 0 112.5 0 1.25 1.25 0 01-2.5 0zM7 8h2v4H7V8z"/></svg>
@@ -522,7 +522,7 @@ section{padding:80px 32px}
     <h2 class="sec-h" data-i18n="tiers.h">3 ชั้น — ใช้เท่าที่ต้องการ</h2>
     <p class="sec-sub" data-i18n="tiers.sub">ระบบออกแบบแบบ progressive — ชั้นล่างทำงานได้คนเดียว เพิ่มชั้นบนเมื่อโปรเจ็กต์ต้องการ ไม่มี overhead โดยไม่จำเป็น</p>
 
-    <div class="tiers-stack">
+    <div class="tiers-stack" id="tiers-stack">
 
       <!-- CORE -->
       <div class="tier-card tier-core">
@@ -621,7 +621,7 @@ section{padding:80px 32px}
     <h2 class="sec-h" data-i18n="session.h">Session Loop — ตั้งแต่เปิดจนปิด</h2>
     <p class="sec-sub" data-i18n="session.sub">ทุก session มีโครงสร้างเดียวกันเสมอ ไม่ว่าจะเป็นวันแรกหรือ session ที่ 200 AI รู้ว่าต้องทำอะไรก่อนและหลัง ไม่ต้อง guide ทุกครั้ง</p>
 
-    <div class="flow-phases" style="margin-top:48px">
+    <div class="flow-phases" id="flow-phases" style="margin-top:48px">
 
       <!-- BOOTSTRAP -->
       <div class="flow-phase phase-boot">
@@ -766,7 +766,7 @@ section{padding:80px 32px}
     <p class="sec-sub" data-i18n="dec.sub">ระบบมี 11 scenario สำหรับทุกสถานการณ์ที่ AI อาจเจอ แต่ละ scenario บอกชัดว่าต้องทำอะไร ผลที่ได้คือ AI ที่หยุดอย่างมีระเบียบแทนการเดาผิด</p>
 
     <!-- 3 Questions -->
-    <div class="decision-intro">
+    <div class="decision-intro" id="dec-intro">
       <div class="q-card" style="border-color:var(--blue-bd);background:var(--blue-bg)">
         <div class="q-num" style="color:var(--blue)">01</div>
         <div class="q-text">รู้ผลลัพธ์ที่คาดหวังไหม?</div>
@@ -784,8 +784,8 @@ section{padding:80px 32px}
       </div>
     </div>
 
-    <div class="scenarios-title">ถ้าผ่าน 3 คำถาม → ดำเนินการต่อ / ถ้าไม่ → ดูสถานการณ์ที่ตรงกัน</div>
-    <div class="scenarios">
+    <div class="scenarios-title" data-i18n="dec.scenarios-title">ถ้าผ่าน 3 คำถาม → ดำเนินการต่อ / ถ้าไม่ → ดูสถานการณ์ที่ตรงกัน</div>
+    <div class="scenarios" id="dec-scenarios">
 
       <div class="sc open" onclick="toggleSc(this)">
         <div class="sc-head">
@@ -902,7 +902,7 @@ section{padding:80px 32px}
     </div><!-- /scenarios -->
 
     <!-- Escalation levels -->
-    <div style="margin-top:40px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+    <div id="dec-escalation" style="margin-top:40px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
       <div style="background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:var(--r);padding:20px 22px">
         <div style="font-size:12px;font-weight:700;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px">Level 1 — Log and Continue</div>
         <div style="font-size:14px;font-weight:600;color:var(--t1);margin-bottom:6px">Stake ต่ำ · Reversible</div>
@@ -934,7 +934,7 @@ section{padding:80px 32px}
     <h2 class="sec-h" data-i18n="mem.h">Memory System — 3 ชั้น ไม่ขึ้นกับ context window</h2>
     <p class="sec-sub" data-i18n="mem.sub">ปัญหาของ AI คือ memory หายเมื่อ session จบ ระบบนี้แก้ด้วย 3 ชั้น: entity ที่ track สถานะ, context routing ที่โหลดเฉพาะสิ่งที่ต้องการ, และ memory ที่ข้ามโปรเจ็กต์ได้</p>
 
-    <div class="mem-layers">
+    <div class="mem-layers" id="mem-layers">
 
       <div class="mem-layer ml1">
         <div class="mem-head" onclick="toggleMem(this)">
@@ -1014,7 +1014,7 @@ section{padding:80px 32px}
     </div><!-- /mem-layers -->
 
     <!-- Memory routing decision tree -->
-    <div style="margin-top:40px">
+    <div id="mem-routing" style="margin-top:40px">
       <div style="font-size:18px;font-weight:700;margin-bottom:6px">ข้อมูลใหม่เก็บที่ไหน?</div>
       <div style="font-size:14px;color:var(--t2);margin-bottom:24px">Decision tree สำหรับทุกข้อมูลที่ค้นพบระหว่าง session</div>
       <div style="display:flex;flex-direction:column;gap:8px">
@@ -1057,7 +1057,7 @@ section{padding:80px 32px}
   <div class="inner">
     <div class="sec-kicker" style="color:var(--t3)">Reference</div>
     <h2 class="sec-h">Flow Diagrams</h2>
-    <p class="ref-note">Flowchart สำหรับ reference — ภาพรวมทางเทคนิคที่เห็นได้ในไฟล์เดียว สำหรับผู้ที่เข้าใจระบบแล้วและต้องการ reference ด่วน</p>
+    <p class="ref-note" data-i18n="ref.note">Flowchart สำหรับ reference — ภาพรวมทางเทคนิคที่เห็นได้ในไฟล์เดียว สำหรับผู้ที่เข้าใจระบบแล้วและต้องการ reference ด่วน</p>
 
     <div class="ref-tabs">
       <button class="rtab on" onclick="showRef('r-overview',this)">🗺 System Overview</button>
@@ -1622,33 +1622,33 @@ let simTimer = null;
 
 // ── Flow track phase config ──────────────────────────────
 const FLOW_PHASES = [
-  { label: 'Bootstrap', color: '#4f8ef7', rgb: '79,142,247',
+  { label: 'Bootstrap', labelEn: 'Bootstrap', color: '#4f8ef7', rgb: '79,142,247',
     nodes: [
-      { icon: '🚀', label: 'เปิด\nSession',   idx: 0 },
+      { icon: '🚀', label: 'เปิด\nSession',    labelEn: 'Open\nSession',    idx: 0 },
     ]
   },
-  { label: 'Session Start', color: '#34d399', rgb: '52,211,153',
+  { label: 'Session Start', labelEn: 'Session Start', color: '#34d399', rgb: '52,211,153',
     nodes: [
-      { icon: '📖', label: 'อ่าน\nwork-status', idx: 1 },
-      { icon: '📋', label: 'อ่าน\nwork-log',    idx: 2 },
-      { icon: '✅', label: 'อ่าน\ntask-board',  idx: 3 },
+      { icon: '📖', label: 'อ่าน\nwork-status', labelEn: 'Read\nwork-status', idx: 1 },
+      { icon: '📋', label: 'อ่าน\nwork-log',    labelEn: 'Read\nwork-log',    idx: 2 },
+      { icon: '✅', label: 'อ่าน\ntask-board',  labelEn: 'Read\ntask-board',  idx: 3 },
     ]
   },
-  { label: 'Work', color: '#a78bfa', rgb: '167,139,250',
+  { label: 'Work', labelEn: 'Work', color: '#a78bfa', rgb: '167,139,250',
     nodes: [
-      { icon: '⚙️', label: 'ทำงาน\nT-023',     idx: 4 },
-      { icon: '⚠️', label: 'Scope\nCreep',      idx: 5 },
+      { icon: '⚙️', label: 'ทำงาน\nT-023',     labelEn: 'Work\nT-023',       idx: 4 },
+      { icon: '⚠️', label: 'Scope\nCreep',      labelEn: 'Scope\nCreep',      idx: 5 },
     ]
   },
-  { label: 'Session End', color: '#fbbf24', rgb: '251,191,36',
+  { label: 'Session End', labelEn: 'Session End', color: '#fbbf24', rgb: '251,191,36',
     nodes: [
-      { icon: '📝', label: 'อัปเดต\n3 ไฟล์',   idx: 6 },
-      { icon: '📓', label: 'เขียน\nWork Log',   idx: 7 },
+      { icon: '📝', label: 'อัปเดต\n3 ไฟล์',   labelEn: 'Update\n3 Files',   idx: 6 },
+      { icon: '📓', label: 'เขียน\nWork Log',   labelEn: 'Write\nWork Log',   idx: 7 },
     ]
   },
-  { label: 'ต่อเนื่อง', color: '#34d399', rgb: '52,211,153',
+  { label: 'ต่อเนื่อง', labelEn: 'Continue', color: '#34d399', rgb: '52,211,153',
     nodes: [
-      { icon: '🔄', label: 'Session\nถัดไป',    idx: 8 },
+      { icon: '🔄', label: 'Session\nถัดไป',    labelEn: 'Next\nSession',     idx: 8 },
     ]
   },
 ];
@@ -1661,7 +1661,8 @@ function simBuildFlowTrack(activeIdx) {
     if (pi > 0) {
       const sep = document.createElement('div');
       sep.className = 'sim-phase-wrap';
-      sep.innerHTML = `<div class="sim-phase-line"></div><div class="sim-phase-name">${phase.label}</div>`;
+      const phLabel = currentLang === 'en' ? (phase.labelEn || phase.label) : phase.label;
+      sep.innerHTML = `<div class="sim-phase-line"></div><div class="sim-phase-name">${phLabel}</div>`;
       inner.appendChild(sep);
     }
     phase.nodes.forEach((node, ni) => {
@@ -1679,9 +1680,10 @@ function simBuildFlowTrack(activeIdx) {
       const circleStyle = isActive
         ? `border-color:${phase.color};background:rgba(${phase.rgb},.15);box-shadow:0 0 0 5px rgba(${phase.rgb},.12),0 0 20px rgba(${phase.rgb},.3);animation:nodeGlow 2s infinite`
         : '';
+      const nodeLabel = currentLang === 'en' ? (node.labelEn || node.label) : node.label;
       el.innerHTML = `
         <div class="sim-flow-circle" style="${circleStyle}">${node.icon}</div>
-        <div class="sim-flow-label">${node.label.replace('\n','<br>')}</div>
+        <div class="sim-flow-label">${nodeLabel.replace('\n','<br>')}</div>
       `;
       // connecting line color if this is just-before-active
       if (isPast && node.idx === activeIdx - 1) {
@@ -1809,6 +1811,10 @@ const T = {
     'mem.kicker':'จำข้ามเวลา ข้ามโปรเจ็กต์',
     'mem.h':'Memory System — 3 ชั้น ไม่ขึ้นกับ context window',
     'mem.sub':'ปัญหาของ AI คือ memory หายเมื่อ session จบ ระบบนี้แก้ด้วย 3 ชั้น: entity ที่ track สถานะ, context routing ที่โหลดเฉพาะสิ่งที่ต้องการ, และ memory ที่ข้ามโปรเจ็กต์ได้',
+    // Decision scenarios title
+    'dec.scenarios-title':'ถ้าผ่าน 3 คำถาม → ดำเนินการต่อ / ถ้าไม่ → ดูสถานการณ์ที่ตรงกัน',
+    // Reference note
+    'ref.note':'Flowchart สำหรับ reference — ภาพรวมทางเทคนิคที่เห็นได้ในไฟล์เดียว สำหรับผู้ที่เข้าใจระบบแล้วและต้องการ reference ด่วน',
   },
   en: {
     // Nav
@@ -1839,6 +1845,10 @@ const T = {
     'mem.kicker':'Remember Across Time & Projects',
     'mem.h':'Memory System — 3 Layers, Independent of Context Window',
     'mem.sub':'AI\'s core problem: memory disappears when a session ends. This system solves it with 3 layers: entity status tracking, context routing that loads only what\'s needed, and cross-project memory.',
+    // Decision scenarios title
+    'dec.scenarios-title':'If all 3 questions pass → proceed / If any fails → find the matching scenario',
+    // Reference note
+    'ref.note':'Flowcharts for reference — a technical overview in a single view, for those who already understand the system and need a quick reference.',
   }
 };
 
@@ -1870,6 +1880,477 @@ const SIM_LANG = {
   ]
 };
 
+// ══════════════════════════════════════════════════════════
+//  Section-level innerHTML bilingual swap
+// ══════════════════════════════════════════════════════════
+const SECTION_IDS = ['prob-grid','tiers-stack','flow-phases','dec-intro','dec-scenarios','dec-escalation','mem-layers','mem-routing'];
+const TH_SEC = {};
+
+const _SVG_X    = `<svg width="16" height="16" viewBox="0 0 20 20" fill="var(--red)" style="flex-shrink:0;margin-top:2px"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>`;
+const _SVG_OK   = `<svg width="16" height="16" viewBox="0 0 20 20" fill="var(--green)" style="flex-shrink:0;margin-top:2px"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg>`;
+const _SVG_INFO = `<svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zM6.75 5.25a1.25 1.25 0 112.5 0 1.25 1.25 0 01-2.5 0zM7 8h2v4H7V8z"/></svg>`;
+const _SVG_CHK  = `<svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm3.78 5.22a.75.75 0 00-1.06-1.06L7 8.88 5.28 7.16a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.06 0l4.25-4.25z"/></svg>`;
+
+const EN_SEC = {
+'prob-grid': `
+<div class="problem-card bad">
+  <div class="pc-label bad-l">${_SVG_INFO} ❌ Without a System — Problems Every Day</div>
+  <div class="pc-item">${_SVG_X}<span>Every new session requires <strong>re-explaining the entire project</strong> from scratch</span></div>
+  <div class="pc-item">${_SVG_X}<span>AI <strong>reverses tech stack decisions</strong> without knowing they were already made</span></div>
+  <div class="pc-item">${_SVG_X}<span>AI <strong>guesses when information is missing</strong> instead of stopping to ask</span></div>
+  <div class="pc-item">${_SVG_X}<span>No way to know <strong>which tasks are done</strong> vs. in-progress between sessions</span></div>
+  <div class="pc-item">${_SVG_X}<span>Switch AI tools once — and you have to <strong>start over completely</strong></span></div>
+</div>
+<div class="problem-card good">
+  <div class="pc-label good-l">${_SVG_CHK} ✅ With This System — What Changes</div>
+  <div class="pc-item">${_SVG_OK}<span>AI reads <strong>3 files in 2 minutes</strong> and knows everything it needs immediately</span></div>
+  <div class="pc-item">${_SVG_OK}<span><strong>Decision log</strong> records every architectural choice permanently</span></div>
+  <div class="pc-item">${_SVG_OK}<span>AI follows the protocol — <strong>stops and flags</strong> instead of guessing when uncertain</span></div>
+  <div class="pc-item">${_SVG_OK}<span><strong>Task board</strong> + <strong>work-log</strong> track status across sessions automatically</span></div>
+  <div class="pc-item">${_SVG_OK}<span><strong>Switch AI tools anytime</strong> — doc/ stays, the system never stops</span></div>
+</div>`,
+
+'tiers-stack': `
+<div class="tier-card tier-core">
+  <div class="tier-head">
+    <div class="tier-icon">📁</div>
+    <div class="tier-meta">
+      <div class="tier-name">core/ — Foundation, works with every project</div>
+      <div class="tier-for">All AI tools · Any language · Any team size · No dependencies</div>
+      <div class="tier-tags">
+        <span class="ttag" style="background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)">ChatGPT</span>
+        <span class="ttag" style="background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)">Claude</span>
+        <span class="ttag" style="background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)">Gemini</span>
+        <span class="ttag" style="background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)">Cursor</span>
+        <span class="ttag" style="background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)">Solo Dev</span>
+        <span class="ttag" style="background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)">Team 2–10</span>
+      </div>
+    </div>
+  </div>
+  <div class="tier-body"><div class="tier-files">
+    <div class="tfile"><span class="tfile-num">00</span><div><div class="tfile-name">Bootstrap Master</div><div class="tfile-desc">All setup rules and procedures</div></div></div>
+    <div class="tfile"><span class="tfile-num">01</span><div><div class="tfile-name">Folder Structure</div><div class="tfile-desc">Standard doc/ folder layout</div></div></div>
+    <div class="tfile"><span class="tfile-num">02</span><div><div class="tfile-name">Source Doc Versioning</div><div class="tfile-desc">Requirements that can't be edited directly</div></div></div>
+    <div class="tfile"><span class="tfile-num">03</span><div><div class="tfile-name">Way of Work</div><div class="tfile-desc">Session protocol · start/end checklist</div></div></div>
+    <div class="tfile"><span class="tfile-num">06</span><div><div class="tfile-name">Work Status</div><div class="tfile-desc">Project status + AI-CONTEXT block</div></div></div>
+    <div class="tfile"><span class="tfile-num">07</span><div><div class="tfile-name">Task Board</div><div class="tfile-desc">Lifecycle + Definition of Done</div></div></div>
+    <div class="tfile"><span class="tfile-num">11</span><div><div class="tfile-name">AI Decision Protocol</div><div class="tfile-desc">11 scenarios for every ambiguous situation</div></div></div>
+    <div class="tfile"><span class="tfile-num">12</span><div><div class="tfile-name">ADR Template</div><div class="tfile-desc">Architecture Decision Records</div></div></div>
+    <div class="tfile"><span class="tfile-num">17</span><div><div class="tfile-name">Entity Register</div><div class="tfile-desc">Track active/deprecated tech</div></div></div>
+    <div class="tfile"><span class="tfile-num">18–19</span><div><div class="tfile-name">Cross-Project Memory</div><div class="tfile-desc">Cross-project patterns · 3-layer memory</div></div></div>
+  </div></div>
+</div>
+<div class="tier-card tier-game">
+  <div class="tier-head">
+    <div class="tier-icon">🎮</div>
+    <div class="tier-meta">
+      <div class="tier-name">+ skills/game/ — For Game Developers</div>
+      <div class="tier-for">Adds on top of core/ when the project is a game or web game</div>
+      <div class="tier-tags">
+        <span class="ttag" style="background:var(--purple-bg);color:var(--purple);border-color:var(--purple-bd)">Web Game</span>
+        <span class="ttag" style="background:var(--purple-bg);color:var(--purple);border-color:var(--purple-bd)">Mobile Game</span>
+        <span class="ttag" style="background:var(--purple-bg);color:var(--purple);border-color:var(--purple-bd)">Game Jam</span>
+      </div>
+    </div>
+  </div>
+  <div class="tier-body"><div class="tier-files">
+    <div class="tfile"><div><div class="tfile-name">Feature Design Doc (FDD)</div><div class="tfile-desc">Design every feature before coding</div></div></div>
+    <div class="tfile"><div><div class="tfile-name">Game Design Document (GDD)</div><div class="tfile-desc">Vision · mechanics · narrative all in one place</div></div></div>
+    <div class="tfile"><div><div class="tfile-name">Balance Sheet Template</div><div class="tfile-desc">Balance numbers that have passed review</div></div></div>
+    <div class="tfile"><div><div class="tfile-name">Playtest Report</div><div class="tfile-desc">Log every playtest round</div></div></div>
+    <div class="tfile"><div><div class="tfile-name">Narrative Standards</div><div class="tfile-desc">Tone · voice · story consistency</div></div></div>
+    <div class="tfile"><div><div class="tfile-name">Art &amp; UX Standards</div><div class="tfile-desc">Visual language · UI guidelines</div></div></div>
+  </div></div>
+</div>
+<div class="tier-card tier-platform">
+  <div class="tier-head">
+    <div class="tier-icon">💻</div>
+    <div class="tier-meta">
+      <div class="tier-name">+ platforms/claude-code/ — Deep Integration</div>
+      <div class="tier-for">Exclusively for Claude Code CLI users</div>
+      <div class="tier-tags">
+        <span class="ttag" style="background:var(--teal-bg);color:var(--teal);border-color:var(--teal-bd)">Claude Code CLI</span>
+      </div>
+    </div>
+  </div>
+  <div class="tier-body"><div class="tier-files">
+    <div class="tfile"><div><div class="tfile-name">CLAUDE.md auto-load</div><div class="tfile-desc">AI auto-reads context before every session</div></div></div>
+    <div class="tfile"><div><div class="tfile-name">49 Specialist Agents</div><div class="tfile-desc">Specialist agents for every type of task</div></div></div>
+    <div class="tfile"><div><div class="tfile-name">33 Thinking Frames</div><div class="tfile-desc">Thinking frameworks suited to different situations</div></div></div>
+    <div class="tfile"><div><div class="tfile-name">Session / Commit / Compact Hooks</div><div class="tfile-desc">Automation for every lifecycle event</div></div></div>
+    <div class="tfile"><div><div class="tfile-name">Skills: /compliance /session-end /adr-create</div><div class="tfile-desc">Most-used slash commands</div></div></div>
+  </div></div>
+</div>`,
+
+'flow-phases': `
+<div class="flow-phase phase-boot">
+  <div class="flow-phase-label">
+    <div class="phase-name">Bootstrap</div>
+    <div class="phase-hint">First run only</div>
+  </div>
+  <div class="flow-spine"><div class="flow-spine-dot"></div></div>
+  <div class="flow-steps-col">
+    <div class="step-card">
+      <div class="step-n">1</div>
+      <div class="step-content">
+        <div class="step-title">Read Cross-Project Memory First</div>
+        <div class="step-body">If <code>~/ai-workspace/cross-project-memory.md</code> exists, AI reads it before anything else — checking for <strong>patterns proven in past projects</strong> that can be applied immediately, like "always use JWT + refresh token rotation for auth."</div>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-n">2</div>
+      <div class="step-content">
+        <div class="step-title">Ask Language + Ask Project Type</div>
+        <div class="step-body">AI asks 2 questions before creating anything: <strong>(1) What language do we communicate in?</strong> — saved permanently to way-of-work.md. <strong>(2) What type of project is this?</strong> — Software / Game / Other. If Game → auto-loads skills/game/. If not → core/ only.</div>
+        <div class="step-aside">Never asked again — the answer is saved in way-of-work.md for the entire project lifetime.</div>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-n">3</div>
+      <div class="step-content">
+        <div class="step-title">Create Full doc/ Structure</div>
+        <div class="step-body">AI creates folders and files from the template: <code>doc/01-plan/work-status.md</code> · <code>doc/02-task/task-board.md</code> · <code>doc/03-log/work-log-index.md</code> · <code>doc/07-decisions/entity-register.md</code> + ADR index, with AI-CONTEXT blocks at the top of every file.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="flow-phase phase-start">
+  <div class="flow-phase-label">
+    <div class="phase-name">Session Start</div>
+    <div class="phase-hint">Every session</div>
+  </div>
+  <div class="flow-spine"><div class="flow-spine-dot"></div></div>
+  <div class="flow-steps-col">
+    <div class="step-card">
+      <div class="step-n">4</div>
+      <div class="step-content">
+        <div class="step-title">Read 3 Core Files — Takes ~2 Minutes</div>
+        <div class="step-body">Every session begins by reading only <strong>these 3 files</strong>:<br><br><strong>① work-status.md</strong> — current phase, active task, and any blockers<br><strong>② work-log-index.md</strong> — what the last session accomplished and where it stopped<br><strong>③ task-board.md</strong> — all tasks with status: todo / in_progress / done</div>
+        <div class="step-aside">Each file has an <strong>AI-CONTEXT block</strong> at the top — a compressed summary that uses few tokens but delivers complete information.</div>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-n">5</div>
+      <div class="step-content">
+        <div class="step-title">Follow read-more Hints — Load Only What's Needed</div>
+        <div class="step-body">The AI-CONTEXT in work-status contains <code>read_more</code> hints: if the current task is about architecture → read <code>doc/07-decisions/README.md</code>. If about entities → read <code>entity-register.md</code>. <strong>No full-project scanning</strong> — load only what this task actually needs.</div>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-n">6</div>
+      <div class="step-content">
+        <div class="step-title">Run Compliance Scan</div>
+        <div class="step-body">Verify that rules C-01 through C-14 are still being followed. Examples: C-01 prohibits work without a source doc reference · C-09 every bug fix needs a regression note · C-14 requires checking entity-register before using anything tagged <code>[ENTITY:deprecated]</code>.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="flow-phase phase-work">
+  <div class="flow-phase-label">
+    <div class="phase-name">Work</div>
+    <div class="phase-hint">Under Protocol</div>
+  </div>
+  <div class="flow-spine"><div class="flow-spine-dot"></div></div>
+  <div class="flow-steps-col">
+    <div class="step-card">
+      <div class="step-n">7</div>
+      <div class="step-content">
+        <div class="step-title">Work Under Decision Protocol</div>
+        <div class="step-body">Every decision passes through 3 questions: <strong>Is the outcome known? Does it align with source docs? Is it reversible if wrong?</strong> All yes → proceed. Any no → use the scenario protocol (see Chapter 04). AI never guesses or decides on architecture unilaterally.</div>
+        <div class="step-aside">Every time AI completes a task → update task-board to reflect the new status.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="flow-phase phase-end">
+  <div class="flow-phase-label">
+    <div class="phase-name">Session End</div>
+    <div class="phase-hint">Never Skip</div>
+  </div>
+  <div class="flow-spine" style="background:transparent"><div class="flow-spine-dot"></div></div>
+  <div class="flow-steps-col">
+    <div class="step-card">
+      <div class="step-n">8</div>
+      <div class="step-content">
+        <div class="step-title">Update 3 Files — Every Time, Never Skip</div>
+        <div class="step-body">Before ending the session, update: <strong>work-status.md</strong> to reflect current state · <strong>work-log-index.md</strong> to add a log of what was done this session · <strong>task-board.md</strong> if any task status changed.<br><br>If any entity status changed (deprecated / added) → update entity-register immediately.</div>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-n">9</div>
+      <div class="step-content">
+        <div class="step-title">Write Agent Diary (If Using Multiple AI Tools)</div>
+        <div class="step-body">If multiple AI tools are working on the same project, each tool writes its own diary in <code>doc/03-log/agents/[tool-name].md</code>. Each tool writes only to its own file — no cross-writing. Keeps logs cleanly separated.</div>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-n">10</div>
+      <div class="step-content">
+        <div class="step-title">Evaluate Cross-Project Patterns</div>
+        <div class="step-body">If this session discovered a pattern that could benefit other projects, AI <strong>always asks the user first</strong> before writing to cross-project-memory. Never writes autonomously without permission.</div>
+        <div class="step-aside">The next session picks up immediately from this checkpoint — no re-explaining needed.</div>
+      </div>
+    </div>
+  </div>
+</div>`,
+
+'dec-intro': `
+<div class="q-card" style="border-color:var(--blue-bd);background:var(--blue-bg)">
+  <div class="q-num" style="color:var(--blue)">01</div>
+  <div class="q-text">Is the expected outcome known?</div>
+  <div class="q-sub">What will the result be after this action — is it clear enough to verify afterward?</div>
+</div>
+<div class="q-card" style="border-color:var(--green-bd);background:var(--green-bg)">
+  <div class="q-num" style="color:var(--green)">02</div>
+  <div class="q-text">Does it align with source docs?</div>
+  <div class="q-sub">Is what's about to be done backed by a requirement in the source document or an accepted ADR?</div>
+</div>
+<div class="q-card" style="border-color:var(--amber-bd);background:var(--amber-bg)">
+  <div class="q-num" style="color:var(--amber)">03</div>
+  <div class="q-text">Is it reversible if wrong?</div>
+  <div class="q-sub">If the decision turns out wrong, can it be undone — or does it have impacts that can't be reversed?</div>
+</div>`,
+
+'dec-scenarios': `
+<div class="sc open" onclick="toggleSc(this)">
+  <div class="sc-head">
+    <div class="sc-letter lv2-l">A</div>
+    <div class="sc-summary">
+      <div class="sc-situation">Task description is vague — unclear where to begin</div>
+      <div class="sc-trigger">When: a task on the task-board lacks acceptance criteria or has unclear scope</div>
+    </div>
+    <span class="sc-level lv2">L2 — Block</span><span class="sc-toggle">▼</span>
+  </div>
+  <div class="sc-body">
+    <div class="sc-what"><strong>What AI does:</strong> First, look for a similar completed task and follow its pattern. If none → mark the task <strong>[BLOCKED]</strong> and specify exactly what's missing — e.g., "Need: does the payment flow scope include refund handling?" Then update work-status.</div>
+    <span class="sc-result lv2">📋 mark BLOCKED + explain → wait for human response</span>
+  </div>
+</div>
+<div class="sc" onclick="toggleSc(this)">
+  <div class="sc-head">
+    <div class="sc-letter lv2-l">B</div>
+    <div class="sc-summary">
+      <div class="sc-situation">Current code conflicts with source doc</div>
+      <div class="sc-trigger">When: reading the source doc reveals a requirement differs from what was already implemented</div>
+    </div>
+    <span class="sc-level lv2">L2 — Block</span><span class="sc-toggle">▼</span>
+  </div>
+  <div class="sc-body">
+    <div class="sc-what"><strong>What AI does:</strong> Do NOT silently resolve by picking a side. Create an extension doc recording the conflict clearly: "source doc v1.2 says X but code does Y." Mark the task <strong>[NEEDS HUMAN DECISION]</strong> and update work-status.</div>
+    <span class="sc-result lv2">📄 extension doc + NEEDS HUMAN → wait for human decision</span>
+  </div>
+</div>
+<div class="sc" onclick="toggleSc(this)">
+  <div class="sc-head">
+    <div class="sc-letter lv1-l">C</div>
+    <div class="sc-summary">
+      <div class="sc-situation">Scope Creep — found something "worth doing" outside scope</div>
+      <div class="sc-trigger">When: while working on task A, you notice "it'd be nice to also fix B now"</div>
+    </div>
+    <span class="sc-level lv1">L1 — Log</span><span class="sc-toggle">▼</span>
+  </div>
+  <div class="sc-body">
+    <div class="sc-what"><strong>What AI does:</strong> Continue the original task as scoped. Do NOT expand scope. Create a new task-board entry for B with tag <strong>[NEEDS SOURCE VALIDATION]</strong> if it lacks a source reference. Log what was found in work-log.</div>
+    <span class="sc-result lv1">📋 log new task → continue original work</span>
+  </div>
+</div>
+<div class="sc" onclick="toggleSc(this)">
+  <div class="sc-head">
+    <div class="sc-letter lv1-l">D</div>
+    <div class="sc-summary">
+      <div class="sc-situation">Bug found outside scope while working</div>
+      <div class="sc-trigger">When: a bug is spotted that has nothing to do with the current task, but is clearly a problem</div>
+    </div>
+    <span class="sc-level lv1">L1 — Log</span><span class="sc-toggle">▼</span>
+  </div>
+  <div class="sc-body">
+    <div class="sc-what"><strong>What AI does:</strong> Do NOT fix it now. Log it as a new task-board entry with tag <strong>[FOUND-IN-PASSING]</strong>. Note: "Found while working on T-023, not yet affecting production but should be fixed next sprint." Then return to the original task.</div>
+    <span class="sc-result lv1">📋 log FOUND-IN-PASSING → return to original task</span>
+  </div>
+</div>
+<div class="sc" onclick="toggleSc(this)">
+  <div class="sc-head">
+    <div class="sc-letter lv3-l">E</div>
+    <div class="sc-summary">
+      <div class="sc-situation">Two requirements conflict with each other</div>
+      <div class="sc-trigger">When: source doc A says do X but source doc B (or an ADR) says do Y</div>
+    </div>
+    <span class="sc-level lv3">L3 — Stop</span><span class="sc-toggle">▼</span>
+  </div>
+  <div class="sc-body">
+    <div class="sc-what"><strong>What AI does:</strong> Stop immediately. Do NOT pick a side — not even one. Create an extension doc recording the conflict with references to both sides. Mark the task <strong>[BLOCKED: CONFLICT]</strong>. Update work-status to make the escalation visible. Only a human can decide.</div>
+    <span class="sc-result lv3">🛑 BLOCKED CONFLICT → human decision required</span>
+  </div>
+</div>
+<div class="sc" onclick="toggleSc(this)">
+  <div class="sc-head">
+    <div class="sc-letter lv3-l">F</div>
+    <div class="sc-summary">
+      <div class="sc-situation">No relevant information anywhere in the documents</div>
+      <div class="sc-trigger">When: a decision is needed but nothing in source docs, ADRs, or way-of-work covers it</div>
+    </div>
+    <span class="sc-level lv2">L2 — Block</span><span class="sc-toggle">▼</span>
+  </div>
+  <div class="sc-body">
+    <div class="sc-what"><strong>What AI does:</strong> Insert a clear placeholder at the gap: <code>&lt;NEEDS_CLARIFICATION: need timeout policy for payment session&gt;</code>. Do NOT guess or silently insert a default. Log what's missing in work-status.</div>
+    <span class="sc-result lv2">📌 placeholder + log gap → wait for human to provide info</span>
+  </div>
+</div>
+<div class="sc" onclick="toggleSc(this)">
+  <div class="sc-head">
+    <div class="sc-letter lv1-l">G</div>
+    <div class="sc-summary">
+      <div class="sc-situation">Context window is running out</div>
+      <div class="sc-trigger">When: after a long session, context is nearly full but work isn't done yet</div>
+    </div>
+    <span class="sc-level lv1">L1 — Log</span><span class="sc-toggle">▼</span>
+  </div>
+  <div class="sc-body">
+    <div class="sc-what"><strong>What AI does:</strong> Save a checkpoint before context runs out. Write a progress note in work-log showing where work stopped. Mark the task <strong>[IN_PROGRESS: checkpoint saved]</strong>. Note clearly: "Stopped here due to full context, next step is X." Next session continues immediately.</div>
+    <span class="sc-result lv1">📍 checkpoint saved → next session continues from here</span>
+  </div>
+</div>`,
+
+'dec-escalation': `
+<div style="background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:var(--r);padding:20px 22px">
+  <div style="font-size:12px;font-weight:700;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px">Level 1 — Log and Continue</div>
+  <div style="font-size:14px;font-weight:600;color:var(--t1);margin-bottom:6px">Low stakes · Reversible</div>
+  <div style="font-size:13px;color:var(--t2);line-height:1.5">Log what was found and continue working. Low impact, fixable later.</div>
+</div>
+<div style="background:var(--amber-bg);border:1px solid var(--amber-bd);border-radius:var(--r);padding:20px 22px">
+  <div style="font-size:12px;font-weight:700;color:var(--amber);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px">Level 2 — Block and Flag</div>
+  <div style="font-size:14px;font-weight:600;color:var(--t1);margin-bottom:6px">Medium stakes · Requires human</div>
+  <div style="font-size:13px;color:var(--t2);line-height:1.5">Mark BLOCKED, update work-status, wait for human decision before continuing.</div>
+</div>
+<div style="background:var(--red-bg);border:1px solid var(--red-bd);border-radius:var(--r);padding:20px 22px">
+  <div style="font-size:12px;font-weight:700;color:var(--red);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px">Level 3 — Stop Session</div>
+  <div style="font-size:14px;font-weight:600;color:var(--t1);margin-bottom:6px">High stakes · Irreversible</div>
+  <div style="font-size:13px;color:var(--t2);line-height:1.5">Stop immediately, log clearly, wait for human to authorize resuming. Used for data / security / production risks.</div>
+</div>`,
+
+'mem-layers': `
+<div class="mem-layer ml1">
+  <div class="mem-head" onclick="toggleMem(this)">
+    <div class="mem-icon">🏷</div>
+    <div>
+      <div class="mem-label">Layer 1 — Phase 1</div>
+      <div class="mem-title">Entity Memory</div>
+      <div class="mem-tagline">AI knows which tech choices are still active and which are deprecated</div>
+    </div>
+    <span class="mem-badge">entity-register.md</span>
+  </div>
+  <div class="mem-body" style="display:block">
+    <div class="mem-content">
+      <div class="mem-block">
+        <div class="mb-title">📋 entity-register.md</div>
+        <div class="mb-body">The single file that tracks every tech decision with status <strong>active / deprecated / superseded / proposed</strong>, including start date, end date, and ADR reference.<br><br>Example: <code>JWT · auth · active · 2026-01 · ADR-001</code> and <code>Redux · state · deprecated · until 2026-03 · ADR-005</code></div>
+        <span class="rule-pill">Rule C-14: Encounter [ENTITY:deprecated] → always check register before using</span>
+      </div>
+      <div class="mem-block">
+        <div class="mb-title">🔖 Entity Lifecycle Tags</div>
+        <div class="mb-body">Add tags in ADRs and tasks that reference the entity:<br><br><code>[ENTITY:deprecated:Redux]</code> — must check register when encountered<br><code>[ENTITY:superseded:JWT→OAuth2]</code> — replaced by something<br><code>[ENTITY:proposed:GraphQL]</code> — not yet decided<br><br>validate-commit.sh hook auto-warns if a commit references a deprecated entity.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mem-layer ml2">
+  <div class="mem-head" onclick="toggleMem(this)">
+    <div class="mem-icon">🗺</div>
+    <div>
+      <div class="mem-label">Layer 2 — Phase 1</div>
+      <div class="mem-title">Context Routing</div>
+      <div class="mem-tagline">Load only the context the current task needs — no full-project scanning</div>
+    </div>
+    <span class="mem-badge">read_more hints</span>
+  </div>
+  <div class="mem-body" style="display:block">
+    <div class="mem-content">
+      <div class="mem-block">
+        <div class="mb-title">📍 read_more in AI-CONTEXT</div>
+        <div class="mb-body">work-status.md contains hints telling AI where to load context based on the current task:<br><br><code>architecture: doc/07-decisions/README.md</code><br><code>entities: doc/07-decisions/entity-register.md</code><br><code>source: doc/00-source/versions/v1.2/</code></div>
+        <span class="rule-pill">Read only what the task needs — saves a lot of tokens</span>
+      </div>
+      <div class="mem-block">
+        <div class="mb-title">⚡ Why This Matters</div>
+        <div class="mb-body">A large project can have dozens of doc files. If AI scans everything every time, tokens are wasted needlessly. read_more hints let AI <strong>load only what this specific task actually needs</strong> — saving the rest of the context window for real work.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mem-layer ml3">
+  <div class="mem-head" onclick="toggleMem(this)">
+    <div class="mem-icon">🧠</div>
+    <div>
+      <div class="mem-label">Layer 3 — Phase 2</div>
+      <div class="mem-title">Agent Isolation + Cross-Project</div>
+      <div class="mem-tagline">Separate log per tool · Remember patterns across projects</div>
+    </div>
+    <span class="mem-badge">agents/ + ai-workspace/</span>
+  </div>
+  <div class="mem-body" style="display:block">
+    <div class="mem-content">
+      <div class="mem-block">
+        <div class="mb-title">📓 Agent Diary</div>
+        <div class="mb-body">Using multiple AI tools on one project makes work-logs mix together. Fix this with the <code>doc/03-log/agents/</code> folder:<br><br><code>agents/claude-code.md</code> — Claude Code's diary<br><code>agents/claude-ai.md</code> — Claude.ai's diary<br><br><strong>Rule: each tool writes only its own diary. No cross-writing.</strong></div>
+        <span class="rule-pill">Single tool? No need to create agents/ folder</span>
+      </div>
+      <div class="mem-block">
+        <div class="mb-title">🌐 Cross-Project Memory</div>
+        <div class="mb-body"><code>~/ai-workspace/cross-project-memory.md</code> lives outside git at the user level. Stores proven patterns across projects:<br><br>• Patterns That Worked<br>• Lessons Learned<br>• Reusable ADR Cross-References<br><br>AI reads this when bootstrapping a new project. Can only write to it after <strong>always asking the user's permission first.</strong></div>
+      </div>
+    </div>
+  </div>
+</div>`,
+
+'mem-routing': `
+<div style="font-size:18px;font-weight:700;margin-bottom:6px">Where Does New Information Go?</div>
+<div style="font-size:14px;color:var(--t2);margin-bottom:24px">Decision tree for every piece of information discovered during a session</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+  <div style="display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 20px">
+    <div style="font-size:11px;font-weight:700;background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd);padding:3px 10px;border-radius:20px;white-space:nowrap">Architectural decision?</div>
+    <div style="color:var(--t3);font-size:18px">→</div>
+    <div style="font-size:14px;font-weight:600;color:var(--t1)">ADR file in <code style="font-size:12px;color:#c4b5fd;background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px">doc/07-decisions/</code></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 20px">
+    <div style="font-size:11px;font-weight:700;background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd);padding:3px 10px;border-radius:20px;white-space:nowrap">New entity / status changed?</div>
+    <div style="color:var(--t3);font-size:18px">→</div>
+    <div style="font-size:14px;font-weight:600;color:var(--t1)">Update <code style="font-size:12px;color:#c4b5fd;background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px">entity-register.md</code> immediately</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 20px">
+    <div style="font-size:11px;font-weight:700;background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bd);padding:3px 10px;border-radius:20px;white-space:nowrap">Cross-project pattern?</div>
+    <div style="color:var(--t3);font-size:18px">→</div>
+    <div style="font-size:14px;font-weight:600;color:var(--t1)"><code style="font-size:12px;color:#c4b5fd;background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px">cross-project-memory.md</code> <span style="font-size:13px;color:var(--t2);font-weight:400">(must ask user's permission first)</span></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 20px">
+    <div style="font-size:11px;font-weight:700;background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd);padding:3px 10px;border-radius:20px;white-space:nowrap">Progress / session detail?</div>
+    <div style="color:var(--t3);font-size:18px">→</div>
+    <div style="font-size:14px;font-weight:600;color:var(--t1)">Agent diary + <code style="font-size:12px;color:#c4b5fd;background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px">work-log-index.md</code></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 20px">
+    <div style="font-size:11px;font-weight:700;background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-bd);padding:3px 10px;border-radius:20px;white-space:nowrap">Task or status changed?</div>
+    <div style="color:var(--t3);font-size:18px">→</div>
+    <div style="font-size:14px;font-weight:600;color:var(--t1)">Update <code style="font-size:12px;color:#c4b5fd;background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px">task-board.md</code></div>
+  </div>
+</div>`
+};
+
+function swapSections(lang) {
+  SECTION_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (lang === 'en') {
+      if (!TH_SEC[id]) TH_SEC[id] = el.innerHTML; // capture Thai on first EN swap
+      if (EN_SEC[id] !== undefined) el.innerHTML = EN_SEC[id];
+    } else {
+      if (TH_SEC[id] !== undefined) el.innerHTML = TH_SEC[id];
+    }
+    // Re-open mem-body after swap
+    if (id === 'mem-layers') {
+      el.querySelectorAll('.mem-body').forEach(b => b.style.display = 'block');
+    }
+  });
+}
+
 function applyLang(lang) {
   currentLang = lang;
   localStorage.setItem('lang', lang);
@@ -1880,8 +2361,10 @@ function applyLang(lang) {
     const k = el.dataset.i18n;
     if (T[lang] && T[lang][k] !== undefined) el.textContent = T[lang][k];
   });
+  // Swap section HTML
+  swapSections(lang);
   // Re-render simulation with new lang
-  simRender(simIdx);
+  window.simRender(simIdx);
 }
 
 function toggleLang() {
