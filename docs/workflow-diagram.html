@@ -330,11 +330,12 @@ section{padding:80px 32px}
 <div class="chapter-bar">
   <div class="chapters">
     <button class="ch on" onclick="scrollTo('sec-problem')"><span class="ch-n">01</span>ปัญหาที่แก้</button>
-    <button class="ch" onclick="scrollTo('sec-tiers')"><span class="ch-n">02</span>3 ชั้นของระบบ</button>
-    <button class="ch" onclick="scrollTo('sec-session')"><span class="ch-n">03</span>Session Loop</button>
-    <button class="ch" onclick="scrollTo('sec-decision')"><span class="ch-n">04</span>Decision Protocol</button>
-    <button class="ch" onclick="scrollTo('sec-memory')"><span class="ch-n">05</span>Memory System</button>
-    <button class="ch" onclick="scrollTo('sec-ref')"><span class="ch-n">06</span>Reference Diagrams</button>
+    <button class="ch" onclick="scrollTo('sec-sim')"><span class="ch-n">02</span>▶ Live Simulation</button>
+    <button class="ch" onclick="scrollTo('sec-tiers')"><span class="ch-n">03</span>3 ชั้นของระบบ</button>
+    <button class="ch" onclick="scrollTo('sec-session')"><span class="ch-n">04</span>Session Loop</button>
+    <button class="ch" onclick="scrollTo('sec-decision')"><span class="ch-n">05</span>Decision Protocol</button>
+    <button class="ch" onclick="scrollTo('sec-memory')"><span class="ch-n">06</span>Memory System</button>
+    <button class="ch" onclick="scrollTo('sec-ref')"><span class="ch-n">07</span>Reference Diagrams</button>
   </div>
 </div>
 
@@ -409,7 +410,76 @@ section{padding:80px 32px}
 <hr class="sdiv">
 
 <!-- ═══════════════════════════════════════════
-     02 — TIERS
+     02 — SIMULATION
+════════════════════════════════════════════ -->
+<section id="sec-sim">
+  <div class="inner">
+    <div class="sec-kicker" style="color:var(--purple)">Interactive Simulation</div>
+    <h2 class="sec-h">ดู Session จริงทำงาน — ทีละขั้นตอน</h2>
+    <p class="sec-sub">โปรเจ็กต์ตัวอย่าง: E-Commerce Shop · Session ที่ 15 · Kwan กำลังทำ payment feature กด ▶ Play หรือกด Next ทีละขั้น</p>
+
+    <div style="margin-top:36px">
+      <!-- header row -->
+      <div class="sim-header">
+        <div class="sim-scenario">
+          <span id="sim-scenario-dot" style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;animation:pulse 2s infinite"></span>
+          <span id="sim-scenario-text">ecommerce-shop · Session #15</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px">
+          <div class="sim-step-dots" id="sim-dots"></div>
+          <div class="sim-step-counter"><span id="sim-cur">1</span> / <span id="sim-tot">10</span></div>
+        </div>
+      </div>
+
+      <!-- Stage: terminal + doc -->
+      <div class="sim-stage" id="sim-stage">
+        <div class="sim-term-wrap">
+          <div class="sim-panel-bar">
+            <div class="sim-bar-dots">
+              <div class="sim-bar-dot" style="background:#ef4444"></div>
+              <div class="sim-bar-dot" style="background:#fbbf24"></div>
+              <div class="sim-bar-dot" style="background:#22c55e"></div>
+            </div>
+            <span class="sim-bar-title">AI Action Log</span>
+          </div>
+          <div class="sim-term-body" id="sim-term"></div>
+        </div>
+        <div class="sim-doc-wrap">
+          <div class="sim-panel-bar">
+            <span style="font-size:13px">📄</span>
+            <span class="sim-bar-title" id="sim-doc-title">doc/</span>
+          </div>
+          <div class="sim-doc-body" id="sim-doc"></div>
+        </div>
+      </div>
+
+      <!-- Narrative -->
+      <div class="sim-narrative" id="sim-narrative-box">
+        <div class="sim-nar-tag" id="sim-nar-tag" style="color:var(--blue)">Session Start</div>
+        <div class="sim-nar-text" id="sim-nar-text">กำลังโหลด...</div>
+      </div>
+
+      <!-- Controls -->
+      <div class="sim-controls">
+        <div class="sim-btns">
+          <button class="sim-btn" onclick="simNav(-1)">← Prev</button>
+          <button class="sim-btn primary" id="sim-play-btn" onclick="simTogglePlay()">▶ Play</button>
+          <button class="sim-btn" onclick="simNav(1)">Next →</button>
+        </div>
+        <div class="sim-progress-bar"><div class="sim-progress-fill" id="sim-prog"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+</style>
+
+<hr class="sdiv">
+
+<!-- ═══════════════════════════════════════════
+     03 — TIERS
 ════════════════════════════════════════════ -->
 <section id="sec-tiers">
   <div class="inner">
@@ -1259,6 +1329,352 @@ async function showRef(id, btn) {
 
 // Render first ref diagram on load
 window.addEventListener('load', () => showRef('r-overview', document.querySelector('.rtab')));
+
+// ══════════════════════════════════════════════════════════
+//  SIMULATION ENGINE
+// ══════════════════════════════════════════════════════════
+const SIM_FRAMES = [
+  {
+    tag:'🚀 เปิด Session', tagColor:'#4f8ef7', scenario:'ecommerce-shop · Session #15 · สัปดาห์ที่ 3',
+    term:[
+      {c:'tl-dim',  t:'$ claude --project ./ecommerce-shop'},
+      {c:'tl-ok',   t:'✓  CLAUDE.md โหลดแล้ว'},
+      {c:'tl-ok',   t:'✓  core/ (19 templates) พร้อมใช้'},
+      {c:'tl-ok',   t:'✓  entity-register.md พบแล้ว'},
+      {c:'tl-info', t:'▶  เริ่ม session...'},
+    ],
+    docFile:'doc/01-plan/work-status.md',
+    doc:[
+      {t:'<!-- AI-CONTEXT'},
+      {t:'phase: implementation',         hi:'hi-blue'},
+      {t:'sprint: 3 of 5'},
+      {t:'focus: T-023 payment-flow',     hi:'hi-blue'},
+      {t:'blocked: none',                 hi:'hi-green'},
+      {t:'read_more:'},
+      {t:'  entities: doc/07-decisions/entity-register.md'},
+      {t:'-->'},
+    ],
+    nar:'<strong>AI เปิด session</strong> บน ecommerce-shop Claude Code อ่าน CLAUDE.md อัตโนมัติ โหลด core templates ทั้ง 19 ไฟล์ และตรวจพบ entity-register',
+  },
+  {
+    tag:'📖 อ่าน work-status', tagColor:'#4f8ef7', scenario:'ecommerce-shop · อ่านไฟล์ที่ 1 จาก 3',
+    term:[
+      {c:'tl-info', t:'▶  อ่าน work-status.md...'},
+      {c:'tl-ok',   t:'✓  Phase: implementation'},
+      {c:'tl-ok',   t:'✓  Task ปัจจุบัน: T-023 payment-flow'},
+      {c:'tl-ok',   t:'✓  Blocked: ไม่มี'},
+      {c:'tl-accent',t:'→  โหลด entity-register ตาม read_more hint'},
+    ],
+    docFile:'doc/01-plan/work-status.md',
+    doc:[
+      {t:'<!-- AI-CONTEXT'},
+      {t:'phase: implementation',         hi:'hi-blue'},
+      {t:'sprint: 3 of 5'},
+      {t:'focus: T-023 payment-flow',     hi:'hi-blue'},
+      {t:'blocked: none'},
+      {t:'read_more:'},
+      {t:'  entities: entity-register.md',hi:'hi-amber'},
+      {t:'-->'},
+      {t:''},
+      {t:'## Current Status'},
+      {t:'กำลัง implement payment integration'},
+    ],
+    nar:'AI อ่าน <strong>AI-CONTEXT block</strong> บนสุดของ work-status ใน 10 วินาที รู้ทันทีว่าอยู่ใน sprint 3, task ปัจจุบันคือ T-023, และต้องโหลด entity-register เพิ่ม',
+  },
+  {
+    tag:'📖 อ่าน work-log', tagColor:'#4f8ef7', scenario:'ecommerce-shop · อ่านไฟล์ที่ 2 จาก 3',
+    term:[
+      {c:'tl-info', t:'▶  อ่าน work-log-index.md...'},
+      {c:'tl-ok',   t:'✓  Session ล่าสุด: 2026-05-05'},
+      {c:'tl-ok',   t:'✓  เสร็จ: T-019 auth flow, T-021 cart'},
+      {c:'tl-ok',   t:'✓  T-023 เริ่มแล้ว: Stripe SDK connected'},
+      {c:'tl-ok',   t:'✓  Checkpoint: ถึง checkout step'},
+    ],
+    docFile:'doc/03-log/work-log-index.md',
+    doc:[
+      {t:'<!-- AI-CONTEXT'},
+      {t:'last_session: 2026-05-05',      hi:'hi-blue'},
+      {t:'completed: T-019, T-021'},
+      {t:'in_progress: T-023',            hi:'hi-blue'},
+      {t:'checkpoint: checkout-step',     hi:'hi-green'},
+      {t:'-->'},
+      {t:''},
+      {t:'## 2026-05-05 (Session #14)'},
+      {t:'- ✅ T-019 auth flow เสร็จแล้ว'},
+      {t:'- ✅ T-021 cart feature done'},
+      {t:'- 🔄 T-023: Stripe connected, เริ่ม checkout'},
+    ],
+    nar:'AI รู้ว่า session ที่แล้วทำอะไรไปบ้าง และ T-023 หยุดตรงไหน <strong>ไม่ต้องอธิบายซ้ำ</strong> — work-log เก็บ checkpoint ไว้',
+  },
+  {
+    tag:'📖 อ่าน task-board', tagColor:'#4f8ef7', scenario:'ecommerce-shop · อ่านไฟล์ที่ 3 จาก 3',
+    term:[
+      {c:'tl-info', t:'▶  อ่าน task-board.md...'},
+      {c:'tl-ok',   t:'✓  T-023 in_progress → focus task'},
+      {c:'tl-ok',   t:'✓  T-024 todo: order confirmation email'},
+      {c:'tl-warn', t:'⚠  T-025 BLOCKED: ขาด email template'},
+      {c:'tl-ok',   t:'✓  Compliance scan: ผ่าน C-01–C-14'},
+      {c:'tl-accent',t:'→  พร้อมทำงาน'},
+    ],
+    docFile:'doc/02-task/task-board.md',
+    doc:[
+      {t:'## In Progress'},
+      {t:'T-023 | payment-flow | in_progress', hi:'hi-blue'},
+      {t:'  src: v1.3/payment-spec.md'},
+      {t:''},
+      {t:'## Todo'},
+      {t:'T-024 | order-email  | todo'},
+      {t:''},
+      {t:'## Blocked'},
+      {t:'T-025 | email-template | BLOCKED',   hi:'hi-red'},
+      {t:'  [NEEDS HUMAN DECISION]',            hi:'hi-red'},
+      {t:'  ขาด: email template design'},
+    ],
+    nar:'อ่านครบ 3 ไฟล์แล้ว — <strong>AI รู้ทุกอย่างที่ต้องรู้</strong> ใช้เวลา ~2 นาที เห็น T-023 คือ focus task, T-025 block รออยู่',
+  },
+  {
+    tag:'⚙️ เริ่มทำงาน T-023', tagColor:'#a78bfa', scenario:'ecommerce-shop · implement payment',
+    term:[
+      {c:'tl-accent',t:'▶  T-023: payment-flow'},
+      {c:'tl-info',  t:'   src: v1.3/payment-spec.md ✓'},
+      {c:'tl-info',  t:'   entity: Stripe API → active (ADR-008)'},
+      {c:'tl-ok',    t:'✓  Scope: checkout → confirm → webhook'},
+      {c:'tl-ok',    t:'   เขียน checkout.ts...'},
+      {c:'tl-ok',    t:'   เขียน payment-webhook.ts...'},
+    ],
+    docFile:'doc/07-decisions/entity-register.md',
+    doc:[
+      {t:'| Entity    | Type | Status | ADR     |'},
+      {t:'|-----------|------|--------|---------|'},
+      {t:'| Stripe    | pay  | active | ADR-008 |', hi:'hi-green'},
+      {t:'| JWT       | auth | active | ADR-001 |', hi:'hi-green'},
+      {t:'| Redux     | state| deprecated| ADR-005|',hi:'hi-amber'},
+      {t:'| REST API  | api  | active | ADR-003 |', hi:'hi-green'},
+      {t:''},
+      {t:'[ENTITY:deprecated:Redux]  ← ห้ามใช้ใหม่'},
+    ],
+    nar:'AI ตรวจ <strong>entity-register</strong> ก่อนเขียน code — Stripe status: active ตาม ADR-008 เห็น Redux deprecated ไม่ใช้ state library นั้น',
+  },
+  {
+    tag:'🚨 Scope Creep ตรวจพบ', tagColor:'#fbbf24', scenario:'ecommerce-shop · Decision Protocol',
+    term:[
+      {c:'tl-ok',   t:'✓  checkout.ts เสร็จ'},
+      {c:'tl-warn', t:'⚠  พบ: refund flow ยังไม่มีใน scope'},
+      {c:'tl-warn', t:'   T-023 ไม่ครอบคลุม refund...'},
+      {c:'tl-accent',t:'→  Decision Protocol: Scenario C'},
+      {c:'tl-info', t:'   ทำ scope เดิมต่อ'},
+      {c:'tl-info', t:'   log refund เป็น task ใหม่'},
+    ],
+    docFile:'doc/02-task/task-board.md',
+    doc:[
+      {t:'## Todo (เพิ่งเพิ่ม)'},
+      {t:'T-026 | refund-flow | todo',          hi:'hi-amber'},
+      {t:'  [NEEDS SOURCE VALIDATION]',          hi:'hi-amber'},
+      {t:'  found-in-passing ขณะทำ T-023'},
+      {t:'  ต้องการ: source ref สำหรับ refund'},
+      {t:''},
+      {t:'## In Progress'},
+      {t:'T-023 | payment-flow | in_progress',  hi:'hi-blue'},
+      {t:'  (ยังทำต่ออยู่ — scope ไม่เปลี่ยน)'},
+    ],
+    nar:'Scope creep ตรวจพบ — AI ไม่ทำเกิน scope <strong>Scenario C:</strong> log T-026 เป็น task ใหม่พร้อม [NEEDS SOURCE VALIDATION] แล้วทำ T-023 ต่อทันที',
+  },
+  {
+    tag:'✅ T-023 เสร็จ → review', tagColor:'#34d399', scenario:'ecommerce-shop · Definition of Done',
+    term:[
+      {c:'tl-ok',    t:'✓  checkout.ts ✓'},
+      {c:'tl-ok',    t:'✓  payment-webhook.ts ✓'},
+      {c:'tl-ok',    t:'✓  tests pass (12/12)'},
+      {c:'tl-ok',    t:'✓  compliance check: C-01–C-14 ผ่าน'},
+      {c:'tl-accent', t:'→  T-023 status: in_progress → review'},
+    ],
+    docFile:'doc/02-task/task-board.md',
+    doc:[
+      {t:'## Review'},
+      {t:'T-023 | payment-flow | review',  hi:'hi-green'},
+      {t:'  src: v1.3/payment-spec.md ✓'},
+      {t:'  compliance: ✓ all C-01–C-14'},
+      {t:'  tests: 12/12 pass'},
+      {t:''},
+      {t:'## Todo'},
+      {t:'T-024 | order-email | todo'},
+      {t:'T-026 | refund-flow | todo',     hi:'hi-amber'},
+    ],
+    nar:'T-023 ผ่าน Definition of Done ครบ — source ref ถูกต้อง, compliance ผ่าน, test pass <strong>status เปลี่ยนเป็น review</strong>',
+  },
+  {
+    tag:'📝 Session End: อัปเดตไฟล์', tagColor:'#fbbf24', scenario:'ecommerce-shop · Session End checklist',
+    term:[
+      {c:'tl-info',  t:'▶  Session End checklist...'},
+      {c:'tl-ok',    t:'✓  work-status.md อัปเดตแล้ว'},
+      {c:'tl-ok',    t:'✓  work-log-index.md เพิ่ม log แล้ว'},
+      {c:'tl-ok',    t:'✓  task-board.md T-023→review บันทึก'},
+      {c:'tl-ok',    t:'✓  entity-register: ไม่มีการเปลี่ยนแปลง'},
+      {c:'tl-ok',    t:'✓  cross-project pattern: ไม่มีในรอบนี้'},
+    ],
+    docFile:'doc/01-plan/work-status.md',
+    doc:[
+      {t:'<!-- AI-CONTEXT'},
+      {t:'phase: implementation'},
+      {t:'sprint: 3 of 5'},
+      {t:'focus: T-024 order-email (next)',  hi:'hi-blue'},
+      {t:'completed_this_session: T-023',    hi:'hi-green'},
+      {t:'blocked: T-025 (email template)',  hi:'hi-amber'},
+      {t:'read_more:'},
+      {t:'  entities: entity-register.md'},
+      {t:'-->'},
+    ],
+    nar:'<strong>Session End checklist ผ่านครบ</strong> — อัปเดต 3 ไฟล์หลัก, entity ไม่มีการเปลี่ยน, บันทึก T-023 เสร็จ, focus ถัดไปคือ T-024',
+  },
+  {
+    tag:'📓 เขียน Work Log', tagColor:'#fbbf24', scenario:'ecommerce-shop · บันทึก session',
+    term:[
+      {c:'tl-info',  t:'▶  เขียน work-log entry...'},
+      {c:'tl-ok',    t:'✓  log: 2026-05-06 #15'},
+      {c:'tl-ok',    t:'✓  T-023 payment-flow: done'},
+      {c:'tl-ok',    t:'✓  T-026 refund: found-in-passing, logged'},
+      {c:'tl-ok',    t:'✓  checkpoint: T-024 next session'},
+      {c:'tl-accent', t:'→  Session สิ้นสุด'},
+    ],
+    docFile:'doc/03-log/work-log-index.md',
+    doc:[
+      {t:'<!-- AI-CONTEXT'},
+      {t:'last_session: 2026-05-06',      hi:'hi-blue'},
+      {t:'completed: T-023',              hi:'hi-green'},
+      {t:'in_progress: —'},
+      {t:'checkpoint: start T-024 next',  hi:'hi-blue'},
+      {t:'-->'},
+      {t:''},
+      {t:'## 2026-05-06 (Session #15)',   hi:'hi-blue'},
+      {t:'- ✅ T-023 payment-flow เสร็จ'},
+      {t:'- 📋 T-026 refund: logged [FOUND-IN-PASSING]'},
+      {t:'- ⏭  Session #16: เริ่มที่ T-024'},
+    ],
+    nar:'Work log บันทึกแล้ว — <strong>Session #16 เปิดได้ทันที</strong> AI ใหม่หรือ AI เดิมก็รับต่อได้จาก checkpoint นี้โดยไม่ต้องอธิบายอะไรเพิ่ม',
+  },
+  {
+    tag:'🔄 Session #16 — รับต่อ', tagColor:'#34d399', scenario:'ecommerce-shop · 2 วันต่อมา',
+    term:[
+      {c:'tl-dim',   t:'$ claude --project ./ecommerce-shop'},
+      {c:'tl-ok',    t:'✓  CLAUDE.md โหลด'},
+      {c:'tl-info',  t:'▶  อ่าน 3 ไฟล์...'},
+      {c:'tl-ok',    t:'✓  last session: T-023 done'},
+      {c:'tl-ok',    t:'✓  next: T-024 order-email'},
+      {c:'tl-accent', t:'→  พร้อมทำงานต่อทันที (ไม่ต้องอธิบายซ้ำ)'},
+    ],
+    docFile:'doc/02-task/task-board.md',
+    doc:[
+      {t:'## In Progress'},
+      {t:'T-024 | order-email | in_progress', hi:'hi-blue'},
+      {t:'  (รับต่อจาก session #16)',         hi:'hi-blue'},
+      {t:''},
+      {t:'## Review'},
+      {t:'T-023 | payment-flow | review',    hi:'hi-green'},
+      {t:''},
+      {t:'## Todo'},
+      {t:'T-026 | refund-flow | todo',       hi:'hi-amber'},
+      {t:''},
+      {t:'## Blocked'},
+      {t:'T-025 | email-template | BLOCKED', hi:'hi-red'},
+    ],
+    nar:'2 วันต่อมา เปิด session ใหม่ — AI อ่าน 3 ไฟล์, รู้ว่า T-023 review รอ, T-024 คือ next task <strong>ระบบจำได้ทุกอย่าง ไม่มีอะไรหาย</strong>',
+  },
+];
+
+let simIdx = 0;
+let simPlaying = false;
+let simTimer = null;
+
+function simRender(idx) {
+  const f = SIM_FRAMES[idx];
+  const total = SIM_FRAMES.length;
+  // header
+  document.getElementById('sim-scenario-text').textContent = f.scenario;
+  document.getElementById('sim-cur').textContent = idx + 1;
+  document.getElementById('sim-tot').textContent = total;
+  // progress
+  document.getElementById('sim-prog').style.width = ((idx + 1) / total * 100) + '%';
+  // dots
+  const dotsEl = document.getElementById('sim-dots');
+  dotsEl.innerHTML = '';
+  SIM_FRAMES.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'sim-dot' + (i === idx ? ' on' : '');
+    d.onclick = () => simGo(i);
+    dotsEl.appendChild(d);
+  });
+  // dot color
+  document.querySelector('#sim-dots .sim-dot.on').style.background = f.tagColor;
+  // terminal
+  const termEl = document.getElementById('sim-term');
+  termEl.innerHTML = '';
+  f.term.forEach(line => {
+    const div = document.createElement('div');
+    div.className = 'tl-line';
+    div.innerHTML = `<span class="tl-prompt">›</span><span class="${line.c}">${escHtml(line.t)}</span>`;
+    termEl.appendChild(div);
+  });
+  // doc
+  document.getElementById('sim-doc-title').textContent = f.docFile;
+  const docEl = document.getElementById('sim-doc');
+  docEl.innerHTML = '';
+  f.doc.forEach((line, i) => {
+    const div = document.createElement('div');
+    div.className = 'dl' + (line.hi ? ' ' + line.hi : '');
+    div.innerHTML = `<span class="dl-n">${i + 1}</span><span class="dl-txt">${escHtml(line.t)}</span>`;
+    docEl.appendChild(div);
+  });
+  // narrative
+  document.getElementById('sim-nar-tag').textContent = f.tag;
+  document.getElementById('sim-nar-tag').style.color = f.tagColor;
+  document.getElementById('sim-nar-text').innerHTML = f.nar;
+  // animate stage
+  const stage = document.getElementById('sim-stage');
+  const narBox = document.getElementById('sim-narrative-box');
+  stage.classList.remove('sim-fade');
+  narBox.classList.remove('sim-fade');
+  void stage.offsetWidth;
+  stage.classList.add('sim-fade');
+  narBox.classList.add('sim-fade');
+}
+
+function simGo(idx) {
+  simIdx = Math.max(0, Math.min(SIM_FRAMES.length - 1, idx));
+  simRender(simIdx);
+}
+
+function simNav(dir) {
+  simGo(simIdx + dir);
+}
+
+function simTogglePlay() {
+  simPlaying = !simPlaying;
+  const btn = document.getElementById('sim-play-btn');
+  if (simPlaying) {
+    btn.textContent = '⏸ Pause';
+    simTimer = setInterval(() => {
+      if (simIdx >= SIM_FRAMES.length - 1) {
+        simPlaying = false;
+        btn.textContent = '▶ Play';
+        clearInterval(simTimer);
+        return;
+      }
+      simNav(1);
+    }, 3800);
+  } else {
+    btn.textContent = '▶ Play';
+    clearInterval(simTimer);
+  }
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// init sim on load
+window.addEventListener('load', () => {
+  simRender(0);
+});
 </script>
 </body>
 </html>
