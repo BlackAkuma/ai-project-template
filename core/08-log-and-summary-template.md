@@ -239,18 +239,71 @@ deep_context: archive: doc/03-log/archive/ | none
 
 ---
 
-## ตัวอย่าง AI-CONTEXT ของ work-log-index ที่กรอกแล้ว
+## ตัวอย่าง work-log-index.md แบบสองชั้นที่กรอกแล้ว
 
-```
+ตัวอย่างนี้แสดงโครงสร้างจริงที่ควรมีหลังใช้งานมาสัก 2–3 milestone
+สังเกตว่า Milestone Summary สั้นและถาวร ส่วน Recent Sessions เก็บแค่ที่จำเป็น
+
+```md
 <!-- AI-CONTEXT
 last_session: 2026-04-28
 tool: Claude Code
-completed: [T-001, T-002]
+completed: [T-018, T-019]
 checkpoint: none
-next_from_last: T-003 T-004
-notes: ADR-001 created for auth approach
+next_from_last: T-020 T-021
+notes: ADR-003 created — เลือก Stripe over Paddle เพราะ SDK official ครบกว่า
+deep_context: archive: doc/03-log/archive/2026-02-sessions.md
 -->
+
+---
+
+# Work Log Index — ShopFlow
+
+อัปเดตล่าสุด: 2026-04-28
+
+## Milestone Summary
+
+สรุปสิ่งที่เสร็จถาวรแต่ละ milestone — อ่านก่อนเสมอ ไม่เคย archive
+
+- **v0.1 (2026-02): Foundation** — setup โครงสร้าง, auth system JWT+refresh (T-001–T-008) ADR-001 accepted
+- **v0.2 (2026-03): Product Catalog** — CRUD สินค้า, image upload S3, search basic (T-009–T-015) ADR-002 accepted
+- **v0.3 (กำลังทำ): Payment** — Stripe integration (T-016–), ADR-003 proposed รอ accept
+
+## Recent Sessions
+
+### 2026-04-28 — [Claude Code]
+
+- **สรุป session:** implement Stripe webhook handler และ idempotency logic
+- **Tasks:** `T-018` (webhook handler — done) `T-019` (idempotency key — done)
+- **Validation:** unit test ผ่าน 12/12, manual test กับ Stripe CLI ผ่าน
+- **ผลลัพธ์:** webhook รับ event ได้ถูกต้อง, duplicate event ถูก reject
+- **Daily Log:** `doc/03-log/2026/04/2026-04-28-log.md`
+
+### 2026-04-25 — [Claude Code]
+
+- **สรุป session:** setup Stripe SDK และ checkout session creation
+- **Tasks:** `T-016` (SDK setup — done) `T-017` (checkout session — done)
+- **Validation:** sandbox payment flow ทำงานได้ end-to-end
+- **ผลลัพธ์:** สร้าง payment session ได้ redirect ไป Stripe hosted page ถูกต้อง
+- **Daily Log:** `doc/03-log/2026/04/2026-04-25-log.md`
+
+### 2026-04-20 — [Claude.ai]
+
+- **สรุป session:** review payment architecture, propose ADR-003
+- **Tasks:** `T-016` (design review) — สร้าง ADR-003 draft
+- **Validation:** ADR-003 review โดย human — pending accept
+- **ผลลัพธ์:** ตัดสินใจใช้ Stripe over Paddle เหตุผลใน ADR-003
+- **Daily Log:** `doc/03-log/2026/04/2026-04-20-log.md`
 ```
+
+**กฎ Milestone Summary:**
+- เขียนหนึ่งบรรทัดต่อ milestone — สั้น ครอบคลุม, ไม่ขยาย
+- ระบุ version, เดือน, งานหลักที่เสร็จ, ADR ที่เกี่ยวข้อง
+- milestone ที่กำลังทำใส่ "(กำลังทำ)" — อัปเดตเมื่อ close milestone
+
+**กฎ Recent Sessions:**
+- เก็บแค่ 20 entries — entry เก่ากว่านั้น archive ไปที่ `doc/03-log/archive/`
+- ทุก entry ต้องมี: สรุป session, tasks ที่ทำ, validation, ผลลัพธ์, link ไป daily log
 
 ---
 

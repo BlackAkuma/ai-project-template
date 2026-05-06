@@ -106,9 +106,57 @@ ADR ที่ถูก accept แล้วถือเป็น source of truth 
 1. AI พบว่าต้องตัดสินใจเชิง architecture → สร้าง ADR ในสถานะ Proposed
 2. เพิ่มรายการใน `doc/07-decisions/README.md`
 3. บันทึกใน work-log ว่าสร้าง ADR-NNN
-4. มนุษย์ review → เปลี่ยนสถานะเป็น Accepted หรือปรับ
+4. มนุษย์ review → เปลี่ยนสถานะเป็น Accepted หรือแจ้ง reject
 5. **เมื่อ ADR ถูก Accept** → อัปเดต `doc/07-decisions/entity-register.md` ทันที
    - ถ้าเป็น tech/integration ใหม่: เพิ่ม row ใน Active Entities พร้อม ADR reference
    - ถ้าเป็นการ deprecate tech เก่า: ย้าย row ไป Deprecated พร้อม `until` date
    - อัปเดต AI-CONTEXT block ของ entity-register ด้วย
 6. Session ถัดไป: อ่าน ADR index ก่อนตัดสินใจ architecture
+
+**เมื่อ human reject ADR (Proposed → Rejected):**
+
+```
+human บอกว่า ADR-NNN ไม่ได้รับการ approve
+
+→ เปลี่ยนสถานะ ADR เป็น Rejected (ไม่ลบ — เก็บไว้เป็นประวัติว่าเคยพิจารณาแล้ว)
+→ เพิ่ม section "เหตุผลที่ Reject" ใน ADR file:
+
+## เหตุผลที่ Reject (เพิ่มเมื่อ reject)
+
+**Rejected by:** <ชื่อ> on YYYY-MM-DD
+**เหตุผล:** <สรุปสั้นว่าทำไมถึงไม่เลือก approach นี้>
+**ทิศทางที่จะทำแทน:** <approach ที่จะใช้จริง>
+
+→ อัปเดต ADR index ใน README.md เปลี่ยน Status เป็น Rejected
+→ บันทึกใน work-log ว่า ADR-NNN ถูก reject และทิศทางที่จะใช้แทน
+→ ถ้าต้องการ approach ใหม่: สร้าง ADR-NNN+1 ใหม่สำหรับ approach ที่ตัดสินใจแทน
+→ task ที่รอ ADR นั้นอยู่: อัปเดตให้ ref ADR ใหม่ หรือ unblock ถ้าตัดสินใจไม่ต้องการ ADR
+```
+
+**ตัวอย่าง ADR ที่ถูก reject:**
+
+```md
+# ADR-004: ใช้ GraphQL แทน REST สำหรับ API
+
+**วันที่:** 2026-04-20
+**สถานะ:** Rejected
+**ผู้เสนอ:** AI session — Claude Code
+
+## Context
+ต้องการ API ที่ flexible สำหรับ mobile client ที่มี data requirements ต่างกัน
+
+## Options ที่พิจารณา
+1. GraphQL — ยืดหยุ่น แต่ทีมไม่มี experience
+2. REST with field filtering — ทำได้ใน REST ปกติ
+
+## การตัดสินใจ (Proposed)
+เสนอ GraphQL เพราะ flexibility
+
+## เหตุผลที่ Reject
+
+**Rejected by:** Beam on 2026-04-21
+**เหตุผล:** ทีมไม่มี GraphQL experience, timeline ไม่เอื้อให้เรียนใหม่,
+           REST + field filtering ตอบโจทย์ได้เพียงพอในขนาด project นี้
+**ทิศทางที่จะทำแทน:** REST API พร้อม ?fields= parameter สำหรับ partial response
+                       → ดู ADR-005
+```

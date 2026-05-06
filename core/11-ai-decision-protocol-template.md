@@ -101,6 +101,40 @@
 → รอ human ยืนยันก่อนดำเนินต่อ
 ```
 
+**ตัวอย่าง gap จริง — gap เล็ก (แก้ได้เลย):**
+
+```
+Session เริ่มต้น → อ่าน task-board พบ:
+
+T-022 [in_progress]: implement product search
+  ref: doc/00-source/versions/v1.0/03-search.md  ← source version เก่า
+
+แต่ current source version คือ v1.2 ซึ่งเพิ่ม fuzzy search requirement
+
+Gap: T-022 อ้างอิง v1.0 ขณะที่มี v1.2 แล้ว
+
+→ gap เล็ก (แค่ task เดียว ขาด reference ใหม่)
+→ อัปเดต T-022 ให้ ref v1.2 แทน + บันทึกใน work-log
+→ ตรวจว่า fuzzy search requirement ใน v1.2 กระทบ scope T-022 หรือไม่
+   ถ้ากระทบ: mark T-022 [BLOCKED] รอ human ยืนยัน scope
+   ถ้าไม่กระทบ: ดำเนินต่อได้เลย
+```
+
+**ตัวอย่าง gap จริง — gap ใหญ่ (รอมนุษย์):**
+
+```
+Session เริ่มต้น → อ่าน task-board พบ T-020, T-021, T-022, T-023 ทั้งหมด ref v1.0
+แต่ source ถูกอัปเดตเป็น v1.3 เมื่อ 3 วันก่อน และมีการเปลี่ยน auth model ใหม่ทั้งหมด
+
+Gap: 4 tasks ที่กำลังทำอยู่อาจต้องแก้ scope ทั้งหมด
+
+→ gap ใหญ่ — ไม่ implement อะไรเพิ่ม
+→ เปลี่ยน work-status เป็น:
+   [NEEDS HUMAN DECISION: source v1.3 เปลี่ยน auth model — T-020, T-021, T-022, T-023
+    อาจกระทบ scope ทั้งหมด รอยืนยันก่อนดำเนิน]
+→ รอ human ยืนยันก่อน
+```
+
 ### Scenario I — พบ code ที่ไม่มี documentation รองรับ
 
 ```

@@ -55,8 +55,8 @@ active_patterns: 0
 
 Pattern ที่ทดสอบแล้วในโปรเจ็กต์จริง และใช้ได้ดี
 
-<!-- FORMAT:
-- [pattern-name] — [อธิบายสั้น] (source: project-name, date)
+<!-- FORMAT (ใช้รูปแบบนี้ทุกครั้ง):
+- **pattern-name** — อธิบายสั้น (source: project-name, YYYY-MM)
   Context: เหมาะกับสถานการณ์แบบไหน
   Notes: ข้อควรระวัง
 -->
@@ -69,8 +69,8 @@ Pattern ที่ทดสอบแล้วในโปรเจ็กต์จ
 
 สิ่งที่ลองแล้วไม่ได้ผล หรือทำให้เสียเวลา — เพื่อไม่ให้ทำซ้ำ
 
-<!-- FORMAT:
-- [บทเรียน] (source: project-name, date)
+<!-- FORMAT (ใช้รูปแบบนี้ทุกครั้ง):
+- **บทเรียน** (source: project-name, YYYY-MM)
   สิ่งที่เกิดขึ้น: ...
   วิธีแก้ที่ใช้: ...
 -->
@@ -83,10 +83,10 @@ Pattern ที่ทดสอบแล้วในโปรเจ็กต์จ
 
 ADR จากโปรเจ็กต์เก่าที่อาจ apply ได้กับโปรเจ็กต์ใหม่
 
-<!-- FORMAT:
-- [project-name]/ADR-NNN: [ชื่อ decision] — [สรุปสั้น]
-  ใช้ได้กับ: [project type หรือ context]
-  Path: ~/projects/[project-name]/doc/07-decisions/ADR-NNN-*.md
+<!-- FORMAT (ใช้รูปแบบนี้ทุกครั้ง):
+- **project-name/ADR-NNN**: ชื่อ decision — สรุปสั้น
+  ใช้ได้กับ: project type หรือ context
+  Path: ~/projects/project-name/doc/07-decisions/ADR-NNN-*.md
 -->
 
 *(ยังไม่มี ADR cross-reference)*
