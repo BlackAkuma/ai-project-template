@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/BlackAkuma?style=flat&logo=github&color=pink)](https://github.com/sponsors/BlackAkuma)
 
-📖 **[See How It Works →](https://blackakuma.github.io/ai-project-template/how-it-works.html)**
+📖 **[See How It Works →](https://blackakuma.github.io/ai-project-template/how-it-works.html)** · 📊 **[Workflow Diagram →](https://blackakuma.github.io/ai-project-template/workflow-diagram.html)**
 
 ---
 
