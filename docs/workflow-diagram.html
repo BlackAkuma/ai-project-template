@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Project Template — Workflow Diagram</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #0f1117; color: #e2e8f0; padding: 32px 24px; }
+  h1 { font-size: 22px; font-weight: 700; color: #f8fafc; margin-bottom: 6px; }
+  .subtitle { font-size: 13px; color: #64748b; margin-bottom: 28px; }
+  .tabs { display: flex; gap: 4px; margin-bottom: 20px; flex-wrap: wrap; }
+  .tab { padding: 7px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; border: 1px solid #1e293b; background: #1e293b; color: #94a3b8; transition: all 0.15s; }
+  .tab:hover { background: #273344; color: #cbd5e1; }
+  .tab.active { background: #3b82f6; border-color: #3b82f6; color: #fff; font-weight: 600; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+  .card { background: #1e293b; border: 1px solid #273344; border-radius: 12px; padding: 24px; margin-bottom: 20px; overflow: auto; }
+  .card h2 { font-size: 13px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 20px; }
+  .mermaid { display: flex; justify-content: center; }
+</style>
+</head>
+<body>
+
+<h1>AI Project Template — Workflow Diagram</h1>
+<p class="subtitle">ภาพรวมการทำงานของระบบทั้งหมด</p>
+
+<div class="tabs">
+  <div class="tab active" onclick="show('overview',this)">🗺 ภาพรวมระบบ</div>
+  <div class="tab" onclick="show('session',this)">🔄 Session Loop</div>
+  <div class="tab" onclick="show('task',this)">📋 Task Lifecycle</div>
+  <div class="tab" onclick="show('decision',this)">🧭 Decision Protocol</div>
+  <div class="tab" onclick="show('memory',this)">🧠 Memory System</div>
+</div>
+
+<!-- TAB 1: OVERVIEW -->
+<div id="overview" class="panel active">
+  <div class="card">
+    <h2>ภาพรวมระบบ — 3 Tiers + Memory</h2>
+    <div class="mermaid">
+flowchart TD
+  classDef core fill:#1d4ed8,stroke:#3b82f6,color:#fff
+  classDef game fill:#7c3aed,stroke:#a855f7,color:#fff
+  classDef platform fill:#0f766e,stroke:#14b8a6,color:#fff
+  classDef mem fill:#b45309,stroke:#f59e0b,color:#fff
+  classDef out fill:#1e293b,stroke:#475569,color:#e2e8f0
+
+  HUMAN(["👤 Human + AI"])
+
+  subgraph CORE["📁 core/ — Universal 19 files"]
+    C1["Session Protocol\n03 · 06 · 08"]
+    C2["Task and Planning\n05 · 07 · 10"]
+    C3["Decisions\n11 · 12 · 09"]
+    C4["Standards\n04 · 14 · 15 · 16"]
+    C5["Memory System\n17 · 18 · 19"]
+  end
+
+  subgraph GAME["🎮 skills/game/ — Game Domain 12 files"]
+    G1["FDD + GDD\n01 · 07"]
+    G2["Balance + Playtest\n05 · 04"]
+    G3["Narrative + Levels\n06 · 11"]
+    G4["Art + UX\n09 · 10"]
+  end
+
+  subgraph PLATFORM["💻 platforms/claude-code/"]
+    P1["CLAUDE.md auto-load"]
+    P2["49 Specialist Agents"]
+    P3["Hooks session/commit/compact"]
+    P4["Skills /compliance /session-end"]
+    P5["33 Thinking Frames"]
+  end
+
+  subgraph WORKSPACE["🧠 ai-workspace/ นอก git"]
+    M1["cross-project-memory.md"]
+    M2["entity-registry.md"]
+  end
+
+  subgraph PROJECT["📂 doc/ per project"]
+    D1["work-status.md"]
+    D2["task-board.md"]
+    D3["work-log-index.md"]
+    D4["entity-register.md"]
+    D5["ADR + decisions"]
+  end
+
+  HUMAN --> CORE
+  CORE --> GAME
+  CORE --> PLATFORM
+  CORE --> WORKSPACE
+  CORE --> PROJECT
+  GAME --> PROJECT
+  PLATFORM --> PROJECT
+  WORKSPACE -.->|"bootstrap read"| PROJECT
+
+  class C1,C2,C3,C4,C5 core
+  class G1,G2,G3,G4 game
+  class P1,P2,P3,P4,P5 platform
+  class M1,M2 mem
+  class D1,D2,D3,D4,D5 out
+    </div>
+  </div>
+</div>
+
+<!-- TAB 2: SESSION LOOP -->
+<div id="session" class="panel">
+  <div class="card">
+    <h2>Session Loop — ทุก Session ทำตามนี้</h2>
+    <div class="mermaid">
+flowchart TD
+  classDef green fill:#166534,stroke:#22c55e,color:#fff
+  classDef blue fill:#1d4ed8,stroke:#3b82f6,color:#fff
+  classDef purple fill:#7c3aed,stroke:#a855f7,color:#fff
+  classDef amber fill:#b45309,stroke:#f59e0b,color:#fff
+  classDef teal fill:#0f766e,stroke:#14b8a6,color:#fff
+
+  START(["🚀 เริ่ม Session"])
+  FIRST{"First Run?"}
+
+  subgraph BOOT["📦 Bootstrap — ครั้งแรกเท่านั้น"]
+    B1["อ่าน cross-project-memory\nใน ai-workspace"]
+    B2["ถามภาษา + ประเภทโปรเจ็กต์"]
+    B3{"Game Project?"}
+    B4["โหลด skills/game/"]
+    B5["สร้าง doc/ structure\nentity-register + ADR index"]
+  end
+
+  subgraph SS["🔍 Session Start — ทุกครั้ง"]
+    S1["อ่าน work-status AI-CONTEXT"]
+    S2["อ่าน work-log-index AI-CONTEXT"]
+    S3["อ่าน task-board AI-CONTEXT"]
+    S4["ตาม read-more hints\nload เฉพาะที่ต้องการ"]
+    S5{"Multi-tool?"}
+    S6["อ่าน agent diary\nของ tool นี้"]
+    S7["รัน compliance scan"]
+  end
+
+  WORK(["⚙️ ทำงาน"])
+
+  subgraph SE["📝 Session End — ทุกครั้ง ห้ามข้าม"]
+    E1["อัปเดต work-status\n+ AI-CONTEXT block"]
+    E2["อัปเดต work-log-index\n+ AI-CONTEXT block"]
+    E3["อัปเดต task-board\nถ้า status เปลี่ยน"]
+    E4{"entity เปลี่ยน?"}
+    E5["อัปเดต entity-register"]
+    E6{"Multi-tool?"}
+    E7["เขียน agent diary"]
+    E8{"มี pattern\nข้ามโปรเจ็กต์?"}
+    E9["ถามผู้ใช้\nเพิ่ม cross-project-memory"]
+  end
+
+  DONE(["✅ จบ Session"])
+
+  START --> FIRST
+  FIRST -->|First Run| B1 --> B2 --> B3
+  B3 -->|Game| B4 --> B5
+  B3 -->|Other| B5
+  B5 --> S1
+  FIRST -->|Existing| S1
+
+  S1 --> S2 --> S3 --> S4 --> S5
+  S5 -->|Yes| S6 --> S7
+  S5 -->|No| S7
+  S7 --> WORK
+
+  WORK --> E1 --> E2 --> E3 --> E4
+  E4 -->|Yes| E5 --> E6
+  E4 -->|No| E6
+  E6 -->|Yes| E7 --> E8
+  E6 -->|No| E8
+  E8 -->|Yes| E9 --> DONE
+  E8 -->|No| DONE
+
+  DONE -.->|"session ถัดไป"| START
+
+  class START,DONE green
+  class S1,S2,S3,S4,B1,B2,B5 blue
+  class WORK purple
+  class E1,E2,E3,E5,E7,E9 amber
+  class FIRST,B3,S5,E4,E6,E8 teal
+    </div>
+  </div>
+</div>
+
+<!-- TAB 3: TASK LIFECYCLE -->
+<div id="task" class="panel">
+  <div class="card">
+    <h2>Task Lifecycle</h2>
+    <div class="mermaid">
+flowchart LR
+  classDef todo fill:#475569,stroke:#64748b,color:#fff
+  classDef design fill:#1d4ed8,stroke:#3b82f6,color:#fff
+  classDef prog fill:#7c3aed,stroke:#a855f7,color:#fff
+  classDef play fill:#b45309,stroke:#f59e0b,color:#fff
+  classDef rev fill:#0f766e,stroke:#14b8a6,color:#fff
+  classDef done fill:#166534,stroke:#22c55e,color:#fff
+  classDef block fill:#7f1d1d,stroke:#ef4444,color:#fff
+
+  T1(["📋 todo"])
+  T2(["📐 design_validate"])
+  T3(["⚙️ in_progress"])
+  T4(["🎮 playtest\ngame only"])
+  T5(["🔍 review"])
+  T6(["✅ done"])
+  BL(["🚫 BLOCKED"])
+
+  T1 -->|"Definition of Ready"| T2
+  T2 -->|"source ref + approved"| T3
+  T3 -->|"game project"| T4
+  T3 -->|"non-game"| T5
+  T4 --> T5
+  T5 -->|"Definition of Done"| T6
+
+  T1 -.->|"ขาด source ref"| BL
+  T2 -.->|"CONFLICT detected"| BL
+  T3 -.->|"ขาดข้อมูล"| BL
+  BL -.->|"human resolved"| T1
+
+  class T1 todo
+  class T2 design
+  class T3 prog
+  class T4 play
+  class T5 rev
+  class T6 done
+  class BL block
+    </div>
+  </div>
+  <div class="card">
+    <h2>Tags ที่ใช้บน Task</h2>
+    <div class="mermaid">
+flowchart LR
+  classDef warn fill:#7f1d1d,stroke:#ef4444,color:#fff
+  classDef info fill:#1d4ed8,stroke:#3b82f6,color:#fff
+  classDef tag fill:#374151,stroke:#6b7280,color:#d1d5db
+
+  A["NEEDS SOURCE VALIDATION\nยังไม่มี source ref"]
+  B["BLOCKED CONFLICT\nsource docs ขัดแย้งกัน"]
+  C["BLOCKED NEEDS HUMAN\nต้องการ human decision"]
+  D["FOUND-IN-PASSING\nบั๊กเจอระหว่างทำงานอื่น"]
+  E["IN PROGRESS checkpoint saved\nบันทึกก่อน context หมด"]
+  F["ENTITY deprecated X\ntech นี้ deprecated แล้ว"]
+
+  class A,B,C warn
+  class D,E info
+  class F tag
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4: DECISION PROTOCOL -->
+<div id="decision" class="panel">
+  <div class="card">
+    <h2>AI Decision Protocol — เมื่อเจอสถานการณ์คลุมเครือ</h2>
+    <div class="mermaid">
+flowchart TD
+  classDef teal fill:#0f766e,stroke:#14b8a6,color:#fff
+  classDef blue fill:#1d4ed8,stroke:#3b82f6,color:#fff
+  classDef red fill:#7f1d1d,stroke:#ef4444,color:#fff
+  classDef green fill:#166534,stroke:#22c55e,color:#fff
+  classDef amber fill:#92400e,stroke:#f59e0b,color:#fff
+
+  START(["⚠️ เจอสถานการณ์คลุมเครือ"])
+
+  Q1{"รู้ผลลัพธ์ที่คาด?"}
+  Q2{"ตรงกับ source docs?"}
+  Q3{"Reversible ถ้าผิด?"}
+  OK(["✅ ดำเนินการต่อ"])
+
+  SCA["Scenario A — Task คลุมเครือ\nดู pattern เดิม\nถ้าไม่มี → BLOCKED"]
+  SCB["Scenario B — Code ไม่ตรง Source\nสร้าง extension doc\nNEEDS HUMAN DECISION"]
+  SCC["Scenario C — Scope Creep\nทำเฉพาะ scope เดิม\nlog task ใหม่"]
+  SCD["Scenario D — พบบั๊กนอก scope\nอย่าแก้ตอนนี้\nlog FOUND-IN-PASSING"]
+  SCE["Scenario E — Requirements ขัดแย้ง\nสร้าง extension doc\nBLOCKED CONFLICT"]
+  SCF["Scenario F — ไม่มีข้อมูล\nใส่ placeholder\nห้ามเดา"]
+  SCG["Scenario G — Context ใกล้เต็ม\nบันทึก checkpoint\nIN PROGRESS saved"]
+  SCH["Scenario H — Gap ใน source ref\nเล็ก → แก้ inline\nใหญ่ → block all"]
+
+  LVL["Escalation Levels\nL1 Log and Continue\nL2 Block and Flag\nL3 Stop Session"]
+
+  START --> Q1
+  Q1 -->|No| SCF
+  Q1 -->|Yes| Q2
+  Q2 -->|No| SCB
+  Q2 -->|Yes| Q3
+  Q3 -->|No| SCE
+  Q3 -->|Yes| OK
+
+  SCA -.-> LVL
+  SCB -.-> LVL
+  SCC -.-> LVL
+  SCD -.-> LVL
+  SCE -.-> LVL
+  SCF -.-> LVL
+  SCG -.-> LVL
+  SCH -.-> LVL
+
+  class Q1,Q2,Q3 teal
+  class SCC,SCD,SCG blue
+  class SCA,SCF red
+  class SCB,SCE,SCH amber
+  class OK green
+  class LVL teal
+    </div>
+  </div>
+</div>
+
+<!-- TAB 5: MEMORY SYSTEM -->
+<div id="memory" class="panel">
+  <div class="card">
+    <h2>Memory System — 3 ชั้น</h2>
+    <div class="mermaid">
+flowchart TD
+  classDef l1 fill:#1d4ed8,stroke:#3b82f6,color:#fff
+  classDef l2 fill:#7c3aed,stroke:#a855f7,color:#fff
+  classDef l3 fill:#b45309,stroke:#f59e0b,color:#fff
+  classDef rule fill:#0f766e,stroke:#14b8a6,color:#fff
+  classDef adr fill:#166534,stroke:#22c55e,color:#fff
+
+  ADR["📋 ADR Accept\nอัปเดต entity-register ทันที"]
+
+  subgraph L1["ชั้น 1 — Entity Memory Phase 1"]
+    ER["entity-register.md\ndoc/07-decisions\n\nstatus · since · until · ADR"]
+    TAG["Entity Lifecycle Tags\nENTITY deprecated X\nENTITY superseded A to B\nENTITY proposed X"]
+    R1["กฎ C-14\nเจอ deprecated tag\nตรวจ entity-register ก่อนใช้"]
+  end
+
+  subgraph L2["ชั้น 2 — Context Routing Phase 1"]
+    RM["read-more hints\nใน AI-CONTEXT block\nของ work-status.md"]
+    R2["กฎ\nload เฉพาะ section ที่ต้องการ\nไม่ scan ทั้งโปรเจ็กต์"]
+  end
+
+  subgraph L3["ชั้น 3 — Agent + Cross-Project Phase 2"]
+    DI["Agent Diary\ndoc/03-log/agents/\nแต่ละ tool เขียนตัวเอง\nห้าม cross-write"]
+    CP["Cross-Project Memory\nai-workspace/\nPatterns · Lessons · ADR refs\nอ่านตอน bootstrap"]
+    SC["Memory Scope Protocol\nADR → decisions\nEntity → entity-register\nPattern → cross-project\nProgress → diary + log\nTask → task-board"]
+  end
+
+  ADR --> ER
+  ER --> TAG --> R1
+  RM --> R2
+  DI --> SC
+  CP --> SC
+
+  class ER,TAG l1
+  class RM l2
+  class DI,CP,SC l3
+  class R1,R2 rule
+  class ADR adr
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Decision Tree — ข้อมูลชิ้นหนึ่งเก็บที่ไหน</h2>
+    <div class="mermaid">
+flowchart TD
+  classDef q fill:#0f766e,stroke:#14b8a6,color:#fff
+  classDef dest fill:#1e293b,stroke:#475569,color:#e2e8f0
+
+  NEW(["📥 ข้อมูลใหม่ระหว่าง session"])
+  Q1{"Architectural decision?"}
+  Q2{"Entity ใหม่ หรือ status เปลี่ยน?"}
+  Q3{"Pattern ใช้ข้ามโปรเจ็กต์ได้?"}
+  Q4{"Progress หรือ detail session นี้?"}
+  D1["doc/07-decisions\nADR file"]
+  D2["doc/07-decisions\nentity-register.md"]
+  D3["ai-workspace\ncross-project-memory.md\nถามผู้ใช้ก่อน"]
+  D4["doc/03-log\nagent diary + work-log-index"]
+  D5["doc/02-task\ntask-board.md"]
+
+  NEW --> Q1
+  Q1 -->|Yes| D1
+  Q1 -->|No| Q2
+  Q2 -->|Yes| D2
+  Q2 -->|No| Q3
+  Q3 -->|Yes| D3
+  Q3 -->|No| Q4
+  Q4 -->|Yes| D4
+  Q4 -->|No| D5
+
+  class Q1,Q2,Q3,Q4 q
+  class D1,D2,D3,D4,D5 dest
+    </div>
+  </div>
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'dark',
+    themeVariables: {
+      darkMode: true,
+      background: '#1e293b',
+      primaryColor: '#1d4ed8',
+      primaryTextColor: '#e2e8f0',
+      primaryBorderColor: '#3b82f6',
+      lineColor: '#475569',
+      fontSize: '13px'
+    },
+    flowchart: { curve: 'basis', padding: 20 }
+  });
+
+  const rendered = new Set();
+
+  async function renderPanel(id) {
+    if (rendered.has(id)) return;
+    rendered.add(id);
+    const panel = document.getElementById(id);
+    const divs = panel.querySelectorAll('.mermaid');
+    for (const div of divs) {
+      const src = div.textContent.trim();
+      div.textContent = '';
+      try {
+        const uid = 'mermaid-' + id + '-' + Math.random().toString(36).slice(2);
+        const { svg } = await mermaid.render(uid, src);
+        div.innerHTML = svg;
+      } catch(e) {
+        div.innerHTML = '<p style="color:#ef4444;font-size:12px">Render error: ' + e.message + '</p>';
+      }
+    }
+  }
+
+  function show(id, el) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+    renderPanel(id);
+  }
+
+  // Render the default tab on load
+  window.addEventListener('load', () => renderPanel('overview'));
+</script>
+</body>
+</html>

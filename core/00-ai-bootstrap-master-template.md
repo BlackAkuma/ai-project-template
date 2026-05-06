@@ -47,6 +47,7 @@ AI ต้องเตรียมอย่างน้อย:
 - `doc/05-summary/`
 - `doc/06-extensions/`
 - `doc/07-decisions/README.md` (ADR index จาก `12-adr-template.md`)
+- `doc/07-decisions/entity-register.md` (จาก `17-entity-register-template.md`)
 
 ## Core Rules
 
@@ -57,6 +58,8 @@ AI ต้องเตรียมอย่างน้อย:
 - daily logs และ daily summaries อาจเป็น local working records และไม่จำเป็นต้องเก็บใน git
 - เมื่อเจอสถานการณ์คลุมเครือหรือขัดแย้ง ให้ปฏิบัติตาม `doc/04-way-of-work/ai-decision-protocol.md`
 - ก่อนตัดสินใจเชิง architecture ต้องอ่าน `doc/07-decisions/README.md` ก่อน
+- ถ้ามี `~/ai-workspace/cross-project-memory.md` ให้อ่านก่อน bootstrap โปรเจ็กต์ใหม่
+- Memory system overview: `19-memory-architecture-overview.md`
 
 ## AI Execution Steps
 
