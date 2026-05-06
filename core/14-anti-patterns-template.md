@@ -95,15 +95,41 @@
 
 ### ❌ Commit credentials, .env, หรือ local config เข้า repo
 
-**ปัญหา:** ข้อมูลสำคัญรั่วไหลใน git history
-**แนวทางที่ถูก:** ตรวจ `.gitignore` ก่อน commit เสมอ ไม่มีข้อยกเว้น
+**ปัญหา:** ข้อมูลสำคัญรั่วไหลใน git history — แม้จะลบใน commit ถัดไป ก็ยังอยู่ใน history
+**ผลลัพธ์:** ถ้า repo เป็น public หรือ clone ออกไปแล้ว credential รั่วถาวร
+**แนวทางที่ถูก:** ตรวจ `.gitignore` ก่อน commit เสมอ ไม่มีข้อยกเว้น ถ้าเผลอ commit ให้ revoke credential ทันที
 
 ---
 
 ### ❌ Commit ไฟล์ log รายวันโดยไม่ได้ตั้งใจ
 
 **ปัญหา:** repo อ้วนด้วย working records ที่ไม่ควรอยู่ใน git
+**ผลลัพธ์:** clone ช้า, PR diff ยาว, ประวัติ git ถูกรบกวนด้วย noise
 **แนวทางที่ถูก:** ตัดสินใจก่อน setup ว่า daily logs เก็บ local หรือ git ดู `08-log-and-summary-template.md`
+
+---
+
+### ❌ Force push ไปที่ branch ที่คนอื่นใช้งานอยู่
+
+**ปัญหา:** AI rewrite history โดยไม่รู้ว่ามีคนอื่น (หรือ tool อื่น) ที่ base อยู่บน commit เดิม
+**ผลลัพธ์:** ทีมต้อง reset และ re-apply งาน, commit history ของคนอื่นหาย
+**แนวทางที่ถูก:** force push ได้เฉพาะ branch ที่ตัวเองสร้างและยังไม่มีใคร pull ไป — ถ้าไม่แน่ใจ ห้ามทำ ถามมนุษย์ก่อน
+
+---
+
+### ❌ Commit โดยไม่มี message ที่อธิบายได้
+
+**ปัญหา:** AI สร้าง commit message แบบ "fix", "update", "changes" โดยไม่บอกว่าทำอะไร
+**ผลลัพธ์:** `git log` ไม่บอกอะไรเลย ไม่รู้ว่า commit ไหนแก้อะไร ทำให้ debug และ rollback ยาก
+**แนวทางที่ถูก:** commit message ต้องบอก "ทำอะไร เพราะอะไร" เช่น `fix: prevent negative health on simultaneous damage (T-034)`
+
+---
+
+### ❌ ตัดสินใจ merge หรือ rebase โดยไม่ถามมนุษย์
+
+**ปัญหา:** AI merge branch หรือ rebase history โดยไม่รู้ว่า branch นั้นมีสถานะอะไรในทีม
+**ผลลัพธ์:** อาจ merge code ที่ยังไม่ผ่าน review, ทำลาย feature branch ที่คนอื่นกำลังทำงาน
+**แนวทางที่ถูก:** merge/rebase เป็น destructive operation — เสนอให้มนุษย์สั่ง ไม่ทำเอง
 
 ---
 

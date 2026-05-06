@@ -35,6 +35,68 @@
 
 ---
 
+## ตัวอย่าง Extension Doc กรณี Conflict (source vs code)
+
+ใช้เมื่อ AI พบว่า code ที่ทำงานอยู่ขัดแย้งกับสิ่งที่ source doc กำหนดไว้
+ห้ามแก้ไขเงียบ ๆ — ต้องบันทึก conflict และรอมนุษย์ตัดสินใจ
+
+```md
+# Extension: Conflict — Auth Middleware vs Source v1.1
+
+วันที่: 2026-04-28
+สถานะ: Needs Human Decision
+สร้างโดย: AI session — Claude Code
+
+## Reason
+
+พบ conflict ระหว่าง source doc v1.1 กับ code ที่ implement อยู่จริง
+Source doc ระบุ approach หนึ่ง แต่ code ใช้อีก approach — ไม่ทราบว่าอันไหนคือ "ความตั้งใจจริง"
+
+## Related Source References
+
+- `doc/00-source/versions/v1.1/02-auth-requirements.md` — Section 3.2: "ทุก endpoint ต้องผ่าน JWT middleware"
+
+## Description
+
+**Source doc v1.1 ระบุ:**
+> ทุก endpoint รวมถึง `/api/public/*` ต้องผ่านการ verify JWT ก่อน
+
+**Code ที่พบ (`src/middleware/auth.ts:47`):**
+```typescript
+// Public routes bypass auth
+const PUBLIC_PATHS = ['/api/public/products', '/api/public/health'];
+if (PUBLIC_PATHS.includes(req.path)) return next();
+```
+
+code ปัจจุบัน bypass auth สำหรับ public endpoints ซึ่งขัดกับ source doc โดยตรง
+
+**ข้อมูลเพิ่มเติม:**
+- code ส่วนนี้ commit ครั้งแรก: 2026-03-15 (ก่อน source v1.1 ออก: 2026-04-01)
+- ไม่มี task ใน task-board อ้างถึงการเปลี่ยนแปลงนี้
+- ไม่มี ADR บันทึกเหตุผลที่เลือก bypass
+
+## Impact
+
+- ถ้า source doc ถูก: ต้องแก้ middleware ให้ครอบคลุม public paths ด้วย → กระทบ T-020 (public catalog)
+- ถ้า code ถูก: ต้องอัปเดต source doc v1.2 ให้ระบุ exception กรณี public endpoints → ต้องสร้าง ADR
+
+## Required Updates
+
+เมื่อมนุษย์ตัดสินใจแล้ว:
+- ถ้าเลือก "ตาม source doc": แก้ `src/middleware/auth.ts` + อัปเดต task-board
+- ถ้าเลือก "ตาม code": สร้าง source v1.2 + สร้าง ADR บันทึกเหตุผล
+- ทั้งสองกรณี: อัปเดต work-status ออกจาก [NEEDS HUMAN DECISION]
+```
+
+**งาน task-board ที่ต้องสร้างพร้อมกัน:**
+```
+T-XXX: [NEEDS HUMAN DECISION] Resolve auth middleware vs source v1.1 conflict
+  ref: doc/06-extensions/conflict-auth-middleware-2026-04-28.md
+  blocked by: human decision on which is source of truth
+```
+
+---
+
 ## Reverse-Document Protocol
 
 ใช้เมื่อ AI พบ code ที่ทำงานอยู่แล้วแต่ไม่มีเอกสารรองรับ เช่น พบ function ที่ implement logic ซับซ้อนแต่ไม่มี requirement หรือ design doc ใดอ้างถึง
