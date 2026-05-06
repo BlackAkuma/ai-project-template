@@ -3,85 +3,308 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Project Template — Workflow Diagram</title>
+<title>How It Works — AI Project Template</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', sans-serif; background: #0f1117; color: #e2e8f0; padding: 32px 24px; }
-  h1 { font-size: 22px; font-weight: 700; color: #f8fafc; margin-bottom: 6px; }
-  .subtitle { font-size: 13px; color: #64748b; margin-bottom: 28px; }
-  .tabs { display: flex; gap: 4px; margin-bottom: 20px; flex-wrap: wrap; }
-  .tab { padding: 7px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; border: 1px solid #1e293b; background: #1e293b; color: #94a3b8; transition: all 0.15s; }
-  .tab:hover { background: #273344; color: #cbd5e1; }
-  .tab.active { background: #3b82f6; border-color: #3b82f6; color: #fff; font-weight: 600; }
-  .panel { display: none; }
-  .panel.active { display: block; }
-  .card { background: #1e293b; border: 1px solid #273344; border-radius: 12px; padding: 24px; margin-bottom: 20px; overflow: auto; }
-  .card h2 { font-size: 13px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 20px; }
-  .mermaid { display: flex; justify-content: center; }
+/* ─── Reset & Base ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #080c14;
+  --surface:   #0e1420;
+  --card:      #111828;
+  --border:    rgba(255,255,255,0.07);
+  --border-hi: rgba(79,142,247,0.35);
+  --text-1:    #e8eef8;
+  --text-2:    #7f8fa8;
+  --text-3:    #3d4f66;
+  --blue:      #4f8ef7;
+  --blue-dim:  rgba(79,142,247,0.12);
+  --purple:    #8b5cf6;
+  --purple-dim:rgba(139,92,246,0.12);
+  --green:     #22c55e;
+  --amber:     #f59e0b;
+  --red:       #ef4444;
+  --teal:      #14b8a6;
+  --radius:    10px;
+  --transition:0.18s ease;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text-1); min-height: 100vh; line-height: 1.6; }
+
+/* ─── Nav Bar ───────────────────────────────────────────────────── */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px; height: 52px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(8,12,20,0.9); backdrop-filter: blur(12px);
+  position: sticky; top: 0; z-index: 100;
+}
+.topbar-left { display: flex; align-items: center; gap: 20px; }
+.logo { font-size: 13px; font-weight: 600; color: var(--text-1); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+.logo-badge { background: var(--blue-dim); border: 1px solid var(--border-hi); color: var(--blue); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; }
+.topbar-sep { width: 1px; height: 16px; background: var(--border); }
+.topbar-title { font-size: 13px; color: var(--text-2); }
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+.topbar-link { font-size: 12px; color: var(--text-2); text-decoration: none; display: flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border); transition: all var(--transition); }
+.topbar-link:hover { color: var(--text-1); border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.04); }
+
+/* ─── Hero ──────────────────────────────────────────────────────── */
+.hero {
+  padding: 40px 28px 32px;
+  border-bottom: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 14px;
+  max-width: 1200px; margin: 0 auto; width: 100%;
+}
+.hero-kicker { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); }
+.hero h1 { font-size: clamp(22px, 4vw, 30px); font-weight: 700; color: var(--text-1); line-height: 1.2; }
+.hero p { font-size: 14px; color: var(--text-2); max-width: 540px; }
+.stat-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.stat-chip {
+  font-size: 11px; font-weight: 500; color: var(--text-2);
+  background: var(--card); border: 1px solid var(--border);
+  padding: 4px 12px; border-radius: 20px;
+  display: flex; align-items: center; gap: 6px;
+}
+.stat-chip span { color: var(--text-1); font-weight: 600; }
+
+/* ─── Chapter Nav ───────────────────────────────────────────────── */
+.chapter-nav-wrap { border-bottom: 1px solid var(--border); background: var(--surface); position: sticky; top: 52px; z-index: 90; }
+.chapter-nav { display: flex; gap: 0; max-width: 1200px; margin: 0 auto; padding: 0 20px; overflow-x: auto; scrollbar-width: none; }
+.chapter-nav::-webkit-scrollbar { display: none; }
+.chapter-tab {
+  display: flex; align-items: center; gap: 9px;
+  padding: 13px 18px; font-size: 13px; font-weight: 500;
+  color: var(--text-2); cursor: pointer;
+  border-bottom: 2px solid transparent; transition: all var(--transition);
+  white-space: nowrap; background: none; border-top: none; border-left: none; border-right: none;
+  user-select: none;
+}
+.chapter-tab:hover { color: var(--text-1); }
+.chapter-tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+.chapter-tab .tab-num { font-size: 11px; font-weight: 700; color: var(--text-3); font-variant-numeric: tabular-nums; }
+.chapter-tab.active .tab-num { color: var(--blue); opacity: 0.7; }
+.chapter-tab .tab-icon { font-size: 14px; line-height: 1; }
+
+/* ─── Main Layout ───────────────────────────────────────────────── */
+.workspace { max-width: 1200px; margin: 0 auto; padding: 28px 20px; }
+.panel { display: none; }
+.panel.active { display: block; animation: fadeIn 0.2s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+.split { display: grid; grid-template-columns: 1fr 400px; gap: 20px; align-items: start; }
+@media (max-width: 900px) { .split { grid-template-columns: 1fr; } }
+
+/* ─── Diagram Pane ──────────────────────────────────────────────── */
+.diagram-pane {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; min-height: 400px;
+}
+.diagram-header { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+.diagram-header .tag { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; }
+.tag-core    { background: rgba(79,142,247,0.15); color: #93c5fd; border: 1px solid rgba(79,142,247,0.2); }
+.tag-session { background: rgba(34,197,94,0.12); color: #86efac; border: 1px solid rgba(34,197,94,0.2); }
+.tag-task    { background: rgba(139,92,246,0.12); color: #c4b5fd; border: 1px solid rgba(139,92,246,0.2); }
+.tag-decision{ background: rgba(245,158,11,0.12); color: #fcd34d; border: 1px solid rgba(245,158,11,0.2); }
+.tag-memory  { background: rgba(20,184,166,0.12); color: #5eead4; border: 1px solid rgba(20,184,166,0.2); }
+.diagram-header-title { font-size: 13px; font-weight: 600; color: var(--text-1); }
+.diagram-body { padding: 20px; overflow-x: auto; }
+.diagram-body .mermaid-wrap { display: flex; justify-content: center; min-height: 300px; align-items: flex-start; }
+.diagram-body .mermaid-wrap svg { max-width: 100%; }
+.diagram-body .mermaid-wrap.loading::after {
+  content: 'กำลังโหลด...'; color: var(--text-3); font-size: 13px; display: block; padding: 60px 0;
+}
+
+/* Second diagram in same panel (task tags) */
+.diagram-section { margin-top: 20px; }
+.diagram-section .diagram-pane { min-height: auto; }
+
+/* ─── Explanation Pane ──────────────────────────────────────────── */
+.explain-pane { display: flex; flex-direction: column; gap: 12px; position: sticky; top: calc(52px + 46px + 20px); max-height: calc(100vh - 160px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+
+.explain-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.explain-header { padding: 14px 18px 12px; border-bottom: 1px solid var(--border); }
+.explain-chapter { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); margin-bottom: 4px; }
+.explain-title { font-size: 15px; font-weight: 700; color: var(--text-1); }
+
+/* Step List */
+.step-list { padding: 10px 0; }
+.step-item {
+  display: flex; gap: 12px; padding: 10px 18px;
+  cursor: pointer; transition: background var(--transition);
+  border-left: 2px solid transparent;
+}
+.step-item:hover { background: rgba(255,255,255,0.03); }
+.step-item.active { background: var(--blue-dim); border-left-color: var(--blue); }
+.step-num { width: 20px; height: 20px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: var(--text-3); flex-shrink: 0; margin-top: 2px; transition: all var(--transition); }
+.step-item.active .step-num { background: var(--blue); border-color: var(--blue); color: #fff; }
+.step-body {}
+.step-label { font-size: 13px; font-weight: 600; color: var(--text-1); line-height: 1.3; }
+.step-desc { font-size: 12px; color: var(--text-2); margin-top: 3px; display: none; line-height: 1.5; }
+.step-item.active .step-desc { display: block; }
+
+/* Insight Box */
+.insight-box { margin: 0 14px 14px; padding: 12px 14px; border-radius: 8px; background: rgba(245,158,11,0.07); border: 1px solid rgba(245,158,11,0.18); display: flex; gap: 10px; align-items: flex-start; }
+.insight-icon { font-size: 14px; margin-top: 1px; flex-shrink: 0; }
+.insight-text { font-size: 12px; color: #fcd34d; line-height: 1.5; }
+.insight-text strong { font-weight: 600; }
+
+/* Rules Box */
+.rules-box { margin: 0 14px 14px; }
+.rule-item { display: flex; gap: 10px; align-items: flex-start; padding: 8px 12px; border-radius: 6px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); margin-bottom: 6px; font-size: 12px; }
+.rule-badge { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 3px; white-space: nowrap; flex-shrink: 0; margin-top: 1px; }
+.badge-c { background: rgba(20,184,166,0.15); color: var(--teal); }
+.rule-text { color: var(--text-2); line-height: 1.4; }
+
+/* ─── Bottom Nav ────────────────────────────────────────────────── */
+.bottom-nav {
+  max-width: 1200px; margin: 0 auto; padding: 20px 20px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid var(--border);
+}
+.nav-btn {
+  display: flex; align-items: center; gap: 8px; padding: 9px 18px;
+  font-size: 13px; font-weight: 500; background: var(--card);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  color: var(--text-2); cursor: pointer; transition: all var(--transition); text-decoration: none;
+}
+.nav-btn:hover { color: var(--text-1); border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); }
+.nav-btn.primary { background: var(--blue-dim); border-color: var(--border-hi); color: var(--blue); }
+.nav-btn.primary:hover { background: rgba(79,142,247,0.2); }
+.progress-dots { display: flex; gap: 6px; align-items: center; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); cursor: pointer; transition: all var(--transition); }
+.dot.active { background: var(--blue); width: 20px; border-radius: 3px; }
+
+/* ─── Mermaid theme overrides ───────────────────────────────────── */
+.mermaid-wrap svg { background: transparent !important; }
+.highlighted-node rect,
+.highlighted-node polygon,
+.highlighted-node circle { filter: drop-shadow(0 0 8px rgba(79,142,247,0.7)) !important; }
 </style>
 </head>
 <body>
 
-<h1>AI Project Template — Workflow Diagram</h1>
-<p class="subtitle">ภาพรวมการทำงานของระบบทั้งหมด</p>
+<!-- Top Bar -->
+<nav class="topbar">
+  <div class="topbar-left">
+    <a href="https://blackakuma.github.io/ai-project-template/" class="logo">
+      <span class="logo-badge">AI Template</span>
+    </a>
+    <div class="topbar-sep"></div>
+    <span class="topbar-title">How It Works</span>
+  </div>
+  <div class="topbar-right">
+    <a href="how-it-works.html" class="topbar-link">← Overview</a>
+    <a href="https://github.com/BlackAkuma/ai-project-template" class="topbar-link" target="_blank">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      GitHub
+    </a>
+  </div>
+</nav>
 
-<div class="tabs">
-  <div class="tab active" onclick="show('overview',this)">🗺 ภาพรวมระบบ</div>
-  <div class="tab" onclick="show('session',this)">🔄 Session Loop</div>
-  <div class="tab" onclick="show('task',this)">📋 Task Lifecycle</div>
-  <div class="tab" onclick="show('decision',this)">🧭 Decision Protocol</div>
-  <div class="tab" onclick="show('memory',this)">🧠 Memory System</div>
+<!-- Hero -->
+<div style="max-width:1200px;margin:0 auto;width:100%;">
+  <div class="hero">
+    <div class="hero-kicker">System Architecture</div>
+    <h1>The Workflow, Explained</h1>
+    <p>5 concepts ที่ทำให้ AI ทำงานกับโปรเจ็กต์ได้อย่างต่อเนื่อง ข้ามเวลาและข้ามเครื่องมือ</p>
+    <div class="stat-row">
+      <div class="stat-chip"><span>19</span> core templates</div>
+      <div class="stat-chip"><span>11</span> decision scenarios</div>
+      <div class="stat-chip"><span>3</span> memory layers</div>
+      <div class="stat-chip"><span>Any</span> AI tool</div>
+      <div class="stat-chip"><span>0</span> re-explaining per session</div>
+    </div>
+  </div>
 </div>
 
-<!-- TAB 1: OVERVIEW -->
-<div id="overview" class="panel active">
-  <div class="card">
-    <h2>ภาพรวมระบบ — 3 Tiers + Memory</h2>
-    <div class="mermaid">
+<!-- Chapter Navigation -->
+<div class="chapter-nav-wrap">
+  <div class="chapter-nav">
+    <button class="chapter-tab active" onclick="showTab('overview',0,this)">
+      <span class="tab-icon">🗺</span>
+      <span class="tab-num">01</span>
+      <span>System Overview</span>
+    </button>
+    <button class="chapter-tab" onclick="showTab('session',1,this)">
+      <span class="tab-icon">🔄</span>
+      <span class="tab-num">02</span>
+      <span>Session Loop</span>
+    </button>
+    <button class="chapter-tab" onclick="showTab('task',2,this)">
+      <span class="tab-icon">📋</span>
+      <span class="tab-num">03</span>
+      <span>Task Lifecycle</span>
+    </button>
+    <button class="chapter-tab" onclick="showTab('decision',3,this)">
+      <span class="tab-icon">🧭</span>
+      <span class="tab-num">04</span>
+      <span>Decision Protocol</span>
+    </button>
+    <button class="chapter-tab" onclick="showTab('memory',4,this)">
+      <span class="tab-icon">🧠</span>
+      <span class="tab-num">05</span>
+      <span>Memory System</span>
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     TAB 1 — OVERVIEW
+══════════════════════════════════════════════════════════════════ -->
+<div class="workspace">
+<div id="panel-overview" class="panel active">
+  <div class="split">
+
+    <!-- Diagram -->
+    <div class="diagram-pane">
+      <div class="diagram-header">
+        <span class="tag tag-core">Core</span>
+        <span class="diagram-header-title">3-Tier Architecture + Memory</span>
+      </div>
+      <div class="diagram-body">
+        <div id="diag-overview" class="mermaid-wrap loading">
 flowchart TD
   classDef core fill:#1d4ed8,stroke:#3b82f6,color:#fff
   classDef game fill:#7c3aed,stroke:#a855f7,color:#fff
   classDef platform fill:#0f766e,stroke:#14b8a6,color:#fff
-  classDef mem fill:#b45309,stroke:#f59e0b,color:#fff
+  classDef mem fill:#92400e,stroke:#f59e0b,color:#fff
   classDef out fill:#1e293b,stroke:#475569,color:#e2e8f0
 
   HUMAN(["👤 Human + AI"])
 
-  subgraph CORE["📁 core/ — Universal 19 files"]
+  subgraph CORE["📁 core/ — Universal · 19 files"]
     C1["Session Protocol\n03 · 06 · 08"]
-    C2["Task and Planning\n05 · 07 · 10"]
+    C2["Task & Planning\n05 · 07 · 10"]
     C3["Decisions\n11 · 12 · 09"]
     C4["Standards\n04 · 14 · 15 · 16"]
     C5["Memory System\n17 · 18 · 19"]
   end
 
-  subgraph GAME["🎮 skills/game/ — Game Domain 12 files"]
+  subgraph GAME["🎮 skills/game/ — Game Domain · 12 files"]
     G1["FDD + GDD\n01 · 07"]
     G2["Balance + Playtest\n05 · 04"]
     G3["Narrative + Levels\n06 · 11"]
-    G4["Art + UX\n09 · 10"]
   end
 
   subgraph PLATFORM["💻 platforms/claude-code/"]
     P1["CLAUDE.md auto-load"]
-    P2["49 Specialist Agents"]
-    P3["Hooks session/commit/compact"]
-    P4["Skills /compliance /session-end"]
-    P5["33 Thinking Frames"]
+    P2["49 Agents · 33 Frames"]
+    P3["Hooks · Skills"]
   end
 
-  subgraph WORKSPACE["🧠 ai-workspace/ นอก git"]
+  subgraph WORKSPACE["🧠 ai-workspace/ — นอก git"]
     M1["cross-project-memory.md"]
-    M2["entity-registry.md"]
+    M2["entity-register.md"]
   end
 
-  subgraph PROJECT["📂 doc/ per project"]
-    D1["work-status.md"]
-    D2["task-board.md"]
-    D3["work-log-index.md"]
-    D4["entity-register.md"]
-    D5["ADR + decisions"]
+  subgraph PROJECT["📂 doc/ — per project"]
+    D1["work-status · task-board"]
+    D2["work-log · entity-register"]
+    D3["ADR + decisions"]
   end
 
   HUMAN --> CORE
@@ -94,67 +317,129 @@ flowchart TD
   WORKSPACE -.->|"bootstrap read"| PROJECT
 
   class C1,C2,C3,C4,C5 core
-  class G1,G2,G3,G4 game
-  class P1,P2,P3,P4,P5 platform
+  class G1,G2,G3 game
+  class P1,P2,P3 platform
   class M1,M2 mem
-  class D1,D2,D3,D4,D5 out
+  class D1,D2,D3 out
+        </div>
+      </div>
     </div>
+
+    <!-- Explanation -->
+    <div class="explain-pane">
+      <div class="explain-card">
+        <div class="explain-header">
+          <div class="explain-chapter">Chapter 01</div>
+          <div class="explain-title">สถาปัตยกรรม 3 ชั้น</div>
+        </div>
+        <div class="step-list" data-panel="overview">
+          <div class="step-item active" onclick="activateStep(this,'CORE')" data-node="CORE">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-label">core/ — รากฐานของทุกโปรเจ็กต์</div>
+              <div class="step-desc">19 ไฟล์ template ที่ AI อ่านครั้งเดียวแล้วเข้าใจวิธีทำงานทั้งหมด ใช้ได้กับทุก AI tool ทุกโปรเจ็กต์ ทุกทีม ไม่ต้อง explain ซ้ำทุก session</div>
+            </div>
+          </div>
+          <div class="step-item" onclick="activateStep(this,'GAME')" data-node="GAME">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-label">skills/game/ — extension สำหรับเกม</div>
+              <div class="step-desc">12 ไฟล์เพิ่มเติมสำหรับ game developer ครอบคลุม FDD, balance check, playtest report, narrative standards AI ตรวจจาก doc/08-design/ ว่าเป็น game project และโหลด skill เพิ่มอัตโนมัติ</div>
+            </div>
+          </div>
+          <div class="step-item" onclick="activateStep(this,'PLATFORM')" data-node="PLATFORM">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-label">platforms/claude-code/ — deep integration</div>
+              <div class="step-desc">สำหรับผู้ใช้ Claude Code CLI โดยเฉพาะ — CLAUDE.md โหลดอัตโนมัติ, 49 specialist agents, 33 thinking frames, hooks ครบทุก lifecycle (session-start, pre-commit, post-compact)</div>
+            </div>
+          </div>
+          <div class="step-item" onclick="activateStep(this,'WORKSPACE')" data-node="WORKSPACE">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-label">ai-workspace/ — memory ข้ามโปรเจ็กต์</div>
+              <div class="step-desc">อยู่นอก git ระดับ user workspace AI อ่านไฟล์นี้ตอน bootstrap โปรเจ็กต์ใหม่ เพื่อเอา pattern และ lesson ที่ proven แล้วมาใช้ทันที ไม่เริ่มจากศูนย์</div>
+            </div>
+          </div>
+          <div class="step-item" onclick="activateStep(this,'PROJECT')" data-node="PROJECT">
+            <div class="step-num">5</div>
+            <div class="step-body">
+              <div class="step-label">doc/ — output จริงในโปรเจ็กต์</div>
+              <div class="step-desc">สิ่งที่ได้หลัง bootstrap คือ doc/ ใน repo ของคุณ มี work-status, task-board, work-log, entity-register และ ADR index พร้อมใช้งาน เปลี่ยน AI tool ได้โดยระบบไม่หยุด</div>
+            </div>
+          </div>
+        </div>
+        <div class="insight-box">
+          <span class="insight-icon">💡</span>
+          <div class="insight-text"><strong>Progressive Enhancement</strong> — core/ ทำงานได้คนเดียว เพิ่ม skills/ และ platforms/ เฉพาะเมื่อต้องการ ไม่มี overhead โดยไม่จำเป็น</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
-<!-- TAB 2: SESSION LOOP -->
-<div id="session" class="panel">
-  <div class="card">
-    <h2>Session Loop — ทุก Session ทำตามนี้</h2>
-    <div class="mermaid">
+<!-- ═══════════════════════════════════════════════════════════════
+     TAB 2 — SESSION LOOP
+══════════════════════════════════════════════════════════════════ -->
+<div id="panel-session" class="panel">
+  <div class="split">
+
+    <div class="diagram-pane">
+      <div class="diagram-header">
+        <span class="tag tag-session">Session</span>
+        <span class="diagram-header-title">Session Loop — ทุก Session ทำตามนี้</span>
+      </div>
+      <div class="diagram-body">
+        <div id="diag-session" class="mermaid-wrap loading">
 flowchart TD
   classDef green fill:#166534,stroke:#22c55e,color:#fff
   classDef blue fill:#1d4ed8,stroke:#3b82f6,color:#fff
   classDef purple fill:#7c3aed,stroke:#a855f7,color:#fff
-  classDef amber fill:#b45309,stroke:#f59e0b,color:#fff
+  classDef amber fill:#92400e,stroke:#f59e0b,color:#fff
   classDef teal fill:#0f766e,stroke:#14b8a6,color:#fff
 
   START(["🚀 เริ่ม Session"])
   FIRST{"First Run?"}
 
   subgraph BOOT["📦 Bootstrap — ครั้งแรกเท่านั้น"]
-    B1["อ่าน cross-project-memory\nใน ai-workspace"]
+    B1["อ่าน cross-project-memory"]
     B2["ถามภาษา + ประเภทโปรเจ็กต์"]
     B3{"Game Project?"}
     B4["โหลด skills/game/"]
-    B5["สร้าง doc/ structure\nentity-register + ADR index"]
+    B5["สร้าง doc/ + entity-register + ADR"]
   end
 
-  subgraph SS["🔍 Session Start — ทุกครั้ง"]
+  subgraph SS["🔍 Session Start — ทุก session"]
     S1["อ่าน work-status AI-CONTEXT"]
     S2["อ่าน work-log-index AI-CONTEXT"]
     S3["อ่าน task-board AI-CONTEXT"]
-    S4["ตาม read-more hints\nload เฉพาะที่ต้องการ"]
+    S4["ตาม read-more hints"]
     S5{"Multi-tool?"}
-    S6["อ่าน agent diary\nของ tool นี้"]
+    S6["อ่าน agent diary ของ tool นี้"]
     S7["รัน compliance scan"]
   end
 
   WORK(["⚙️ ทำงาน"])
 
-  subgraph SE["📝 Session End — ทุกครั้ง ห้ามข้าม"]
-    E1["อัปเดต work-status\n+ AI-CONTEXT block"]
-    E2["อัปเดต work-log-index\n+ AI-CONTEXT block"]
-    E3["อัปเดต task-board\nถ้า status เปลี่ยน"]
+  subgraph SE["📝 Session End — ห้ามข้าม"]
+    E1["อัปเดต work-status + AI-CONTEXT"]
+    E2["อัปเดต work-log-index"]
+    E3["อัปเดต task-board"]
     E4{"entity เปลี่ยน?"}
     E5["อัปเดต entity-register"]
     E6{"Multi-tool?"}
     E7["เขียน agent diary"]
-    E8{"มี pattern\nข้ามโปรเจ็กต์?"}
-    E9["ถามผู้ใช้\nเพิ่ม cross-project-memory"]
+    E8{"มี cross-project pattern?"}
+    E9["ถามผู้ใช้ก่อนเพิ่ม"]
   end
 
   DONE(["✅ จบ Session"])
 
   START --> FIRST
   FIRST -->|First Run| B1 --> B2 --> B3
-  B3 -->|Game| B4 --> B5
-  B3 -->|Other| B5
+  B3 -->|Yes| B4 --> B5
+  B3 -->|No| B5
   B5 --> S1
   FIRST -->|Existing| S1
 
@@ -171,27 +456,82 @@ flowchart TD
   E8 -->|Yes| E9 --> DONE
   E8 -->|No| DONE
 
-  DONE -.->|"session ถัดไป"| START
+  DONE -.->|"next session"| START
 
   class START,DONE green
   class S1,S2,S3,S4,B1,B2,B5 blue
   class WORK purple
   class E1,E2,E3,E5,E7,E9 amber
   class FIRST,B3,S5,E4,E6,E8 teal
+        </div>
+      </div>
     </div>
+
+    <div class="explain-pane">
+      <div class="explain-card">
+        <div class="explain-header">
+          <div class="explain-chapter">Chapter 02</div>
+          <div class="explain-title">Session Loop</div>
+        </div>
+        <div class="step-list" data-panel="session">
+          <div class="step-item active" onclick="activateStep(this,'BOOT')" data-node="BOOT">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-label">Bootstrap — ครั้งแรกเท่านั้น</div>
+              <div class="step-desc">AI อ่าน cross-project-memory ก่อน (ถ้ามี) แล้วถามภาษาและประเภทโปรเจ็กต์ ถ้าเป็น game → โหลด skills/game/ เพิ่มอัตโนมัติ จากนั้นสร้าง doc/ structure ทั้งหมด</div>
+            </div>
+          </div>
+          <div class="step-item" onclick="activateStep(this,'SS')" data-node="SS">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-label">Session Start — 3 ไฟล์หลัก</div>
+              <div class="step-desc">อ่าน AI-CONTEXT block ของ work-status + work-log + task-board แค่ 3 ไฟล์นี้ AI รู้ทุกอย่างที่ต้องรู้ จากนั้นตาม read-more hints โหลดเฉพาะส่วนที่ task นี้ต้องการ</div>
+            </div>
+          </div>
+          <div class="step-item" onclick="activateStep(this,'WORK')" data-node="WORK">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-label">ทำงาน — ภายใต้ protocol ทั้งหมด</div>
+              <div class="step-desc">AI ทำงานตาม decision protocol (chapter 04), compliance check C-01–C-14, entity lifecycle ถ้าเจอสิ่งที่ไม่รู้ → ใช้ scenario ที่เหมาะสม ไม่เดา ไม่ข้ามขั้น</div>
+            </div>
+          </div>
+          <div class="step-item" onclick="activateStep(this,'SE')" data-node="SE">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-label">Session End — ห้ามข้าม</div>
+              <div class="step-desc">อัปเดต work-status, work-log, task-board ทุกครั้ง ตรวจว่ามี entity ที่เปลี่ยน status ไหม ถ้าใช้ multi-tool เขียน agent diary ของ tool นี้ ถ้ามี pattern ข้ามโปรเจ็กต์ → ถามผู้ใช้ก่อนเสมอ</div>
+            </div>
+          </div>
+        </div>
+        <div class="insight-box">
+          <span class="insight-icon">💡</span>
+          <div class="insight-text"><strong>3 ไฟล์ = เพียงพอ</strong> — ทุก session อ่านแค่ AI-CONTEXT 3 ไฟล์ ใช้ token น้อย ได้ context ครบ ไม่ต้อง scan ทั้งโปรเจ็กต์</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
-<!-- TAB 3: TASK LIFECYCLE -->
-<div id="task" class="panel">
-  <div class="card">
-    <h2>Task Lifecycle</h2>
-    <div class="mermaid">
+<!-- ═══════════════════════════════════════════════════════════════
+     TAB 3 — TASK LIFECYCLE
+══════════════════════════════════════════════════════════════════ -->
+<div id="panel-task" class="panel">
+  <div class="split">
+
+    <div>
+      <div class="diagram-pane">
+        <div class="diagram-header">
+          <span class="tag tag-task">Task</span>
+          <span class="diagram-header-title">Task Lifecycle — สถานะและการเปลี่ยนผ่าน</span>
+        </div>
+        <div class="diagram-body">
+          <div id="diag-task" class="mermaid-wrap loading">
 flowchart LR
   classDef todo fill:#475569,stroke:#64748b,color:#fff
   classDef design fill:#1d4ed8,stroke:#3b82f6,color:#fff
   classDef prog fill:#7c3aed,stroke:#a855f7,color:#fff
-  classDef play fill:#b45309,stroke:#f59e0b,color:#fff
+  classDef play fill:#92400e,stroke:#f59e0b,color:#fff
   classDef rev fill:#0f766e,stroke:#14b8a6,color:#fff
   classDef done fill:#166534,stroke:#22c55e,color:#fff
   classDef block fill:#7f1d1d,stroke:#ef4444,color:#fff
@@ -205,14 +545,13 @@ flowchart LR
   BL(["🚫 BLOCKED"])
 
   T1 -->|"Definition of Ready"| T2
-  T2 -->|"source ref + approved"| T3
+  T2 -->|"source ref confirmed"| T3
   T3 -->|"game project"| T4
   T3 -->|"non-game"| T5
   T4 --> T5
   T5 -->|"Definition of Done"| T6
-
   T1 -.->|"ขาด source ref"| BL
-  T2 -.->|"CONFLICT detected"| BL
+  T2 -.->|"CONFLICT"| BL
   T3 -.->|"ขาดข้อมูล"| BL
   BL -.->|"human resolved"| T1
 
@@ -223,35 +562,105 @@ flowchart LR
   class T5 rev
   class T6 done
   class BL block
-    </div>
-  </div>
-  <div class="card">
-    <h2>Tags ที่ใช้บน Task</h2>
-    <div class="mermaid">
+          </div>
+        </div>
+      </div>
+
+      <div class="diagram-section">
+        <div class="diagram-pane">
+          <div class="diagram-header">
+            <span class="tag tag-task">Tags</span>
+            <span class="diagram-header-title">Task Tags — สัญญาณสำคัญในระบบ</span>
+          </div>
+          <div class="diagram-body">
+            <div id="diag-task2" class="mermaid-wrap loading">
 flowchart LR
   classDef warn fill:#7f1d1d,stroke:#ef4444,color:#fff
   classDef info fill:#1d4ed8,stroke:#3b82f6,color:#fff
   classDef tag fill:#374151,stroke:#6b7280,color:#d1d5db
 
-  A["NEEDS SOURCE VALIDATION\nยังไม่มี source ref"]
-  B["BLOCKED CONFLICT\nsource docs ขัดแย้งกัน"]
-  C["BLOCKED NEEDS HUMAN\nต้องการ human decision"]
-  D["FOUND-IN-PASSING\nบั๊กเจอระหว่างทำงานอื่น"]
-  E["IN PROGRESS checkpoint saved\nบันทึกก่อน context หมด"]
-  F["ENTITY deprecated X\ntech นี้ deprecated แล้ว"]
+  A["NEEDS SOURCE\nVALIDATION"]
+  B["BLOCKED\nCONFLICT"]
+  C["NEEDS HUMAN\nDECISION"]
+  D["FOUND-IN\nPASSING"]
+  E["CHECKPOINT\nSAVED"]
+  F["ENTITY\ndeprecated"]
 
   class A,B,C warn
   class D,E info
   class F tag
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="explain-pane">
+      <div class="explain-card">
+        <div class="explain-header">
+          <div class="explain-chapter">Chapter 03</div>
+          <div class="explain-title">Task Lifecycle</div>
+        </div>
+        <div class="step-list" data-panel="task">
+          <div class="step-item active" onclick="activateStep(this,'T1')" data-node="T1">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-label">todo → Definition of Ready</div>
+              <div class="step-desc">Task ที่ผ่าน Definition of Ready จะต้องมี: source doc reference, scope ชัดเจน, และ acceptance criteria ที่ตรวจสอบได้ ถ้ายังไม่มี source ref → ติด NEEDS SOURCE VALIDATION ทันที</div>
+            </div>
+          </div>
+          <div class="step-item" onclick="activateStep(this,'T2')" data-node="T2">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-label">design_validate — ตรวจก่อนลงมือ</div>
+              <div class="step-desc">AI ตรวจว่า source doc confirm scope นี้หรือไม่ ถ้า source doc ขัดแย้งกัน หรือขาดข้อมูล → BLOCKED CONFLICT ห้าม AI เลือกเองเงียบ ๆ ต้องให้ human ตัดสินใจ</div>
+            </div>
+          </div>
+          <div class="step-item" onclick="activateStep(this,'T3')" data-node="T3">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-label">in_progress — ทำงานภายใต้ protocol</div>
+              <div class="step-desc">AI ทำเฉพาะ scope ที่ design_validate ผ่านแล้ว ถ้าเจอ scope creep → log เป็น task ใหม่ ถ้าเจอบั๊กนอก scope → log FOUND-IN-PASSING แล้วทำงานเดิมต่อ</div>
+            </div>
+          </div>
+          <div class="step-item" onclick="activateStep(this,'T5')" data-node="T5">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-label">review → Definition of Done</div>
+              <div class="step-desc">Definition of Done ต้องครบ: code ตรงกับ source doc version ที่ใช้, compliance check ผ่าน C-01–C-14, task-board อัปเดต, work-log บันทึกแล้ว</div>
+            </div>
+          </div>
+          <div class="step-item" onclick="activateStep(this,'BL')" data-node="BL">
+            <div class="step-num">5</div>
+            <div class="step-body">
+              <div class="step-label">BLOCKED — หยุดอย่างมีระเบียบ</div>
+              <div class="step-desc">BLOCKED ไม่ใช่ความล้มเหลว — เป็นกลไกป้องกัน AI เดา BLOCKED มี tags บอกสาเหตุชัด human เห็นปัญหาและ resolve ได้ทันที จากนั้น task กลับไป todo และเริ่มใหม่</div>
+            </div>
+          </div>
+        </div>
+        <div class="insight-box">
+          <span class="insight-icon">💡</span>
+          <div class="insight-text"><strong>หยุดมีราคาถูกกว่าเดา</strong> — task ที่ BLOCKED พร้อม description ชัดแก้ได้เร็ว task ที่ AI เดาแล้วผิดแก้ยากกว่ามาก</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
-<!-- TAB 4: DECISION PROTOCOL -->
-<div id="decision" class="panel">
-  <div class="card">
-    <h2>AI Decision Protocol — เมื่อเจอสถานการณ์คลุมเครือ</h2>
-    <div class="mermaid">
+<!-- ═══════════════════════════════════════════════════════════════
+     TAB 4 — DECISION PROTOCOL
+══════════════════════════════════════════════════════════════════ -->
+<div id="panel-decision" class="panel">
+  <div class="split">
+
+    <div class="diagram-pane">
+      <div class="diagram-header">
+        <span class="tag tag-decision">Decision</span>
+        <span class="diagram-header-title">AI Decision Protocol — เมื่อเจอความคลุมเครือ</span>
+      </div>
+      <div class="diagram-body">
+        <div id="diag-decision" class="mermaid-wrap loading">
 flowchart TD
   classDef teal fill:#0f766e,stroke:#14b8a6,color:#fff
   classDef blue fill:#1d4ed8,stroke:#3b82f6,color:#fff
@@ -266,16 +675,16 @@ flowchart TD
   Q3{"Reversible ถ้าผิด?"}
   OK(["✅ ดำเนินการต่อ"])
 
-  SCA["Scenario A — Task คลุมเครือ\nดู pattern เดิม\nถ้าไม่มี → BLOCKED"]
-  SCB["Scenario B — Code ไม่ตรง Source\nสร้าง extension doc\nNEEDS HUMAN DECISION"]
-  SCC["Scenario C — Scope Creep\nทำเฉพาะ scope เดิม\nlog task ใหม่"]
-  SCD["Scenario D — พบบั๊กนอก scope\nอย่าแก้ตอนนี้\nlog FOUND-IN-PASSING"]
-  SCE["Scenario E — Requirements ขัดแย้ง\nสร้าง extension doc\nBLOCKED CONFLICT"]
-  SCF["Scenario F — ไม่มีข้อมูล\nใส่ placeholder\nห้ามเดา"]
-  SCG["Scenario G — Context ใกล้เต็ม\nบันทึก checkpoint\nIN PROGRESS saved"]
-  SCH["Scenario H — Gap ใน source ref\nเล็ก → แก้ inline\nใหญ่ → block all"]
+  SCA["A — Task คลุมเครือ\nดู pattern → ถ้าไม่มี BLOCKED"]
+  SCB["B — Code ≠ Source\nสร้าง extension doc\nNEEDS HUMAN"]
+  SCC["C — Scope Creep\nทำ scope เดิม\nlog task ใหม่"]
+  SCD["D — พบบั๊กนอก scope\nlog FOUND-IN-PASSING\nทำงานเดิมต่อ"]
+  SCE["E — Requirements ขัดแย้ง\nBLOCKED CONFLICT\nsร้าง extension doc"]
+  SCF["F — ไม่มีข้อมูล\nใส่ placeholder\nห้ามเดา"]
+  SCG["G — Context ใกล้เต็ม\nบันทึก checkpoint\nIN PROGRESS saved"]
+  SCH["H — Gap ใน source\nเล็ก → inline · ใหญ่ → block"]
 
-  LVL["Escalation Levels\nL1 Log and Continue\nL2 Block and Flag\nL3 Stop Session"]
+  LVL["⚡ Escalation\nL1 Log and Continue\nL2 Block and Flag\nL3 Stop Session"]
 
   START --> Q1
   Q1 -->|No| SCF
@@ -300,39 +709,104 @@ flowchart TD
   class SCB,SCE,SCH amber
   class OK green
   class LVL teal
+        </div>
+      </div>
     </div>
+
+    <div class="explain-pane">
+      <div class="explain-card">
+        <div class="explain-header">
+          <div class="explain-chapter">Chapter 04</div>
+          <div class="explain-title">Decision Protocol</div>
+        </div>
+        <div class="step-list" data-panel="decision">
+          <div class="step-item active" onclick="activateStep(this,'Q1')" data-node="Q1">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-label">3-Question Check ก่อนทุกการกระทำ</div>
+              <div class="step-desc">1) รู้ผลลัพธ์ที่คาดหวังไหม? 2) ตรงกับ source docs ไหม? 3) กลับคืนได้ถ้าผิดไหม? ถ้าทั้ง 3 ใช่ → ดำเนินการต่อ ถ้าข้อใดข้อหนึ่งไม่ใช่ → ใช้ scenario ที่เหมาะสม</div>
+            </div>
+          </div>
+          <div class="step-item" onclick="activateStep(this,'SCA')" data-node="SCA">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-label">Scenario A–D — ปัญหาทั่วไป</div>
+              <div class="step-desc">A: task คลุมเครือ → หา pattern เดิมก่อน ถ้าไม่มี BLOCKED · B: code ไม่ตรง source → extension doc + NEEDS HUMAN · C: scope creep → log task ใหม่ ไม่ทำเกิน · D: เจอบั๊ก → FOUND-IN-PASSING ไม่แก้เดี๋ยวนั้น</div>
+            </div>
+          </div>
+          <div class="step-item" onclick="activateStep(this,'SCE')" data-node="SCE">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-label">Scenario E–H — ปัญหาที่ซับซ้อน</div>
+              <div class="step-desc">E: requirements ขัดแย้ง → BLOCKED CONFLICT ไม่เลือกเอง · F: ไม่มีข้อมูลในเลย → placeholder ชัดเจน ห้ามเดา · G: context ใกล้เต็ม → บันทึก checkpoint ก่อนหมด · H: gap ใน source ref → ขนาดเล็กแก้ inline ใหญ่ block ทั้งหมด</div>
+            </div>
+          </div>
+          <div class="step-item" onclick="activateStep(this,'LVL')" data-node="LVL">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-label">Escalation Levels — 3 ระดับ</div>
+              <div class="step-desc">L1 Log and Continue — stake ต่ำ reversible ได้ บันทึกแล้วทำต่อ · L2 Block and Flag — stake กลาง mark BLOCKED อัปเดต work-status รอ human · L3 Stop Session — stake สูง (data loss, security, irreversible) หยุดทันที log ชัดเจน</div>
+            </div>
+          </div>
+        </div>
+        <div class="insight-box">
+          <span class="insight-icon">💡</span>
+          <div class="insight-text"><strong>"Do less, document more"</strong> — หลักการสำคัญที่สุดของระบบ การหยุดที่ document ไว้ชัดดีกว่าการตัดสินใจผิดแบบเงียบ ๆ เสมอ</div>
+        </div>
+        <div class="rules-box">
+          <div class="rule-item">
+            <span class="rule-badge badge-c">NEVER</span>
+            <span class="rule-text">AI ห้ามเปลี่ยน requirements เชิงธุรกิจเอง — human only</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-badge badge-c">NEVER</span>
+            <span class="rule-text">AI ห้ามทำ production operations โดยไม่มี explicit permission</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
-<!-- TAB 5: MEMORY SYSTEM -->
-<div id="memory" class="panel">
-  <div class="card">
-    <h2>Memory System — 3 ชั้น</h2>
-    <div class="mermaid">
+<!-- ═══════════════════════════════════════════════════════════════
+     TAB 5 — MEMORY SYSTEM
+══════════════════════════════════════════════════════════════════ -->
+<div id="panel-memory" class="panel">
+  <div class="split">
+
+    <div>
+      <div class="diagram-pane">
+        <div class="diagram-header">
+          <span class="tag tag-memory">Memory</span>
+          <span class="diagram-header-title">Memory System — 3 ชั้น</span>
+        </div>
+        <div class="diagram-body">
+          <div id="diag-memory" class="mermaid-wrap loading">
 flowchart TD
   classDef l1 fill:#1d4ed8,stroke:#3b82f6,color:#fff
   classDef l2 fill:#7c3aed,stroke:#a855f7,color:#fff
-  classDef l3 fill:#b45309,stroke:#f59e0b,color:#fff
+  classDef l3 fill:#92400e,stroke:#f59e0b,color:#fff
   classDef rule fill:#0f766e,stroke:#14b8a6,color:#fff
   classDef adr fill:#166534,stroke:#22c55e,color:#fff
 
-  ADR["📋 ADR Accept\nอัปเดต entity-register ทันที"]
+  ADR["📋 ADR Accept\n→ อัปเดต entity-register ทันที"]
 
-  subgraph L1["ชั้น 1 — Entity Memory Phase 1"]
-    ER["entity-register.md\ndoc/07-decisions\n\nstatus · since · until · ADR"]
-    TAG["Entity Lifecycle Tags\nENTITY deprecated X\nENTITY superseded A to B\nENTITY proposed X"]
-    R1["กฎ C-14\nเจอ deprecated tag\nตรวจ entity-register ก่อนใช้"]
+  subgraph L1["Layer 1 — Entity Memory · Phase 1"]
+    ER["entity-register.md\ndoc/07-decisions/\nstatus · since · until · ADR"]
+    TAG["Entity Lifecycle Tags\nENTITY:deprecated:X\nENTITY:superseded:A→B\nENTITY:proposed:X"]
+    R1["C-14 · เจอ deprecated tag\n→ ตรวจ entity-register ก่อนใช้"]
   end
 
-  subgraph L2["ชั้น 2 — Context Routing Phase 1"]
+  subgraph L2["Layer 2 — Context Routing · Phase 1"]
     RM["read-more hints\nใน AI-CONTEXT block\nของ work-status.md"]
-    R2["กฎ\nload เฉพาะ section ที่ต้องการ\nไม่ scan ทั้งโปรเจ็กต์"]
+    R2["โหลดเฉพาะ section\nที่ task นี้ต้องการ\nไม่ scan ทั้งโปรเจ็กต์"]
   end
 
-  subgraph L3["ชั้น 3 — Agent + Cross-Project Phase 2"]
-    DI["Agent Diary\ndoc/03-log/agents/\nแต่ละ tool เขียนตัวเอง\nห้าม cross-write"]
-    CP["Cross-Project Memory\nai-workspace/\nPatterns · Lessons · ADR refs\nอ่านตอน bootstrap"]
-    SC["Memory Scope Protocol\nADR → decisions\nEntity → entity-register\nPattern → cross-project\nProgress → diary + log\nTask → task-board"]
+  subgraph L3["Layer 3 — Agent + Cross-Project · Phase 2"]
+    DI["Agent Diary\ndoc/03-log/agents/\nแต่ละ tool เขียนตัวเอง"]
+    CP["Cross-Project Memory\nai-workspace/\nPatterns · Lessons · ADR refs"]
+    SC["Memory Scope Protocol\nADR · Entity · Pattern\nProgress · Task"]
   end
 
   ADR --> ER
@@ -346,26 +820,32 @@ flowchart TD
   class DI,CP,SC l3
   class R1,R2 rule
   class ADR adr
-    </div>
-  </div>
+          </div>
+        </div>
+      </div>
 
-  <div class="card">
-    <h2>Decision Tree — ข้อมูลชิ้นหนึ่งเก็บที่ไหน</h2>
-    <div class="mermaid">
+      <div class="diagram-section">
+        <div class="diagram-pane">
+          <div class="diagram-header">
+            <span class="tag tag-memory">Routing</span>
+            <span class="diagram-header-title">ข้อมูลใหม่เก็บที่ไหน?</span>
+          </div>
+          <div class="diagram-body">
+            <div id="diag-memory2" class="mermaid-wrap loading">
 flowchart TD
   classDef q fill:#0f766e,stroke:#14b8a6,color:#fff
   classDef dest fill:#1e293b,stroke:#475569,color:#e2e8f0
 
-  NEW(["📥 ข้อมูลใหม่ระหว่าง session"])
-  Q1{"Architectural decision?"}
-  Q2{"Entity ใหม่ หรือ status เปลี่ยน?"}
-  Q3{"Pattern ใช้ข้ามโปรเจ็กต์ได้?"}
-  Q4{"Progress หรือ detail session นี้?"}
-  D1["doc/07-decisions\nADR file"]
-  D2["doc/07-decisions\nentity-register.md"]
-  D3["ai-workspace\ncross-project-memory.md\nถามผู้ใช้ก่อน"]
-  D4["doc/03-log\nagent diary + work-log-index"]
-  D5["doc/02-task\ntask-board.md"]
+  NEW(["📥 ข้อมูลใหม่"])
+  Q1{"Architectural\ndecision?"}
+  Q2{"Entity ใหม่ หรือ\nstatus เปลี่ยน?"}
+  Q3{"Pattern ข้าม\nโปรเจ็กต์ได้?"}
+  Q4{"Progress ของ\nsession นี้?"}
+  D1["ADR file\ndoc/07-decisions/"]
+  D2["entity-register.md"]
+  D3["cross-project-memory\n(ถามผู้ใช้ก่อน)"]
+  D4["agent diary\n+ work-log-index"]
+  D5["task-board.md"]
 
   NEW --> Q1
   Q1 -->|Yes| D1
@@ -379,56 +859,210 @@ flowchart TD
 
   class Q1,Q2,Q3,Q4 q
   class D1,D2,D3,D4,D5 dest
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="explain-pane">
+      <div class="explain-card">
+        <div class="explain-header">
+          <div class="explain-chapter">Chapter 05</div>
+          <div class="explain-title">Memory System</div>
+        </div>
+        <div class="step-list" data-panel="memory">
+          <div class="step-item active" onclick="activateStep(this,'L1')" data-node="L1">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-label">Layer 1 — Entity Memory</div>
+              <div class="step-desc">AI ไม่รู้ว่า tech ที่เคยเลือกไว้ยังใช้อยู่ไหม entity-register.md แก้ปัญหานี้ — track ทุก tech decision พร้อม status (active / deprecated / superseded) และช่วงเวลา เจอ [ENTITY:deprecated] ในไฟล์ไหน → ตรวจ register ก่อนใช้เสมอ (C-14)</div>
+            </div>
+          </div>
+          <div class="step-item" onclick="activateStep(this,'L2')" data-node="L2">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-label">Layer 2 — Context Routing</div>
+              <div class="step-desc">AI อ่าน AI-CONTEXT 3 ไฟล์แล้วยังไม่รู้ว่าต้องอ่านอะไรเพิ่ม read-more hints ใน work-status บอกชัดว่าถ้าต้องการ context เรื่องอะไรให้ไปอ่านที่ไหน โหลดเฉพาะส่วนที่ task ปัจจุบันต้องการ ประหยัด token</div>
+            </div>
+          </div>
+          <div class="step-item" onclick="activateStep(this,'L3')" data-node="L3">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-label">Layer 3 — Agent Isolation</div>
+              <div class="step-desc">ถ้าใช้หลาย AI tool บนโปรเจ็กต์เดียว work-log จะปนกัน agents/ folder แก้ปัญหานี้ — แต่ละ tool เขียน diary ของตัวเอง ห้าม cross-write session เริ่ม → อ่าน diary ของ tool ที่ใช้อยู่ก่อน</div>
+            </div>
+          </div>
+          <div class="step-item" onclick="activateStep(this,'CP')" data-node="CP">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-label">Layer 3 — Cross-Project Memory</div>
+              <div class="step-desc">pattern และ lesson ที่เรียนรู้ไม่ตกหายเมื่อโปรเจ็กต์จบ cross-project-memory.md อยู่นอก git ระดับ user workspace AI อ่านตอน bootstrap ใหม่ เขียนเพิ่มได้เฉพาะ pattern ที่ proven แล้ว และต้องขออนุญาตผู้ใช้ก่อนเสมอ</div>
+            </div>
+          </div>
+        </div>
+        <div class="insight-box">
+          <span class="insight-icon">💡</span>
+          <div class="insight-text"><strong>Memory ≠ Context Window</strong> — memory system ทำงานข้ามเวลา ข้ามโปรเจ็กต์ และข้ามเครื่องมือ context window หมดได้ แต่ระบบ memory ยังอยู่</div>
+        </div>
+        <div class="rules-box">
+          <div class="rule-item">
+            <span class="rule-badge badge-c">C-14</span>
+            <span class="rule-text">เจอ [ENTITY:deprecated] ต้องตรวจ entity-register ก่อนใช้ข้อมูลนั้น</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-badge badge-c">Rule</span>
+            <span class="rule-text">ห้ามเขียน cross-project-memory โดยไม่ได้รับอนุญาตจากผู้ใช้</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
+<!-- Bottom Nav -->
+<div class="bottom-nav">
+  <button class="nav-btn" id="btn-prev" onclick="navigate(-1)">← ก่อนหน้า</button>
+  <div class="progress-dots" id="progress-dots">
+    <div class="dot active" onclick="jumpTo(0)"></div>
+    <div class="dot" onclick="jumpTo(1)"></div>
+    <div class="dot" onclick="jumpTo(2)"></div>
+    <div class="dot" onclick="jumpTo(3)"></div>
+    <div class="dot" onclick="jumpTo(4)"></div>
+  </div>
+  <button class="nav-btn primary" id="btn-next" onclick="navigate(1)">ถัดไป →</button>
+</div>
+
+</div><!-- /workspace -->
+
 <script>
-  mermaid.initialize({
-    startOnLoad: false,
-    theme: 'dark',
-    themeVariables: {
-      darkMode: true,
-      background: '#1e293b',
-      primaryColor: '#1d4ed8',
-      primaryTextColor: '#e2e8f0',
-      primaryBorderColor: '#3b82f6',
-      lineColor: '#475569',
-      fontSize: '13px'
-    },
-    flowchart: { curve: 'basis', padding: 20 }
-  });
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'dark',
+  themeVariables: {
+    darkMode: true,
+    background: '#111828',
+    primaryColor: '#1d4ed8',
+    primaryTextColor: '#e2e8f0',
+    primaryBorderColor: '#3b82f6',
+    lineColor: '#334155',
+    secondaryColor: '#1e293b',
+    tertiaryColor: '#0f172a',
+    fontSize: '13px'
+  },
+  flowchart: { curve: 'basis', padding: 16, nodeSpacing: 40, rankSpacing: 40 }
+});
 
-  const rendered = new Set();
+// ─── Tab & navigation state ───────────────────────────────────
+const TABS = ['overview','session','task','decision','memory'];
+const DIAGRAM_IDS = {
+  overview: ['diag-overview'],
+  session:  ['diag-session'],
+  task:     ['diag-task','diag-task2'],
+  decision: ['diag-decision'],
+  memory:   ['diag-memory','diag-memory2']
+};
+let currentIdx = 0;
+const rendered = new Set();
 
-  async function renderPanel(id) {
-    if (rendered.has(id)) return;
+// ─── Render Mermaid lazily ────────────────────────────────────
+async function renderDiagrams(ids) {
+  for (const id of ids) {
+    if (rendered.has(id)) continue;
     rendered.add(id);
-    const panel = document.getElementById(id);
-    const divs = panel.querySelectorAll('.mermaid');
-    for (const div of divs) {
-      const src = div.textContent.trim();
-      div.textContent = '';
-      try {
-        const uid = 'mermaid-' + id + '-' + Math.random().toString(36).slice(2);
-        const { svg } = await mermaid.render(uid, src);
-        div.innerHTML = svg;
-      } catch(e) {
-        div.innerHTML = '<p style="color:#ef4444;font-size:12px">Render error: ' + e.message + '</p>';
-      }
+    const el = document.getElementById(id);
+    if (!el) continue;
+    el.classList.remove('loading');
+    const src = el.textContent.trim();
+    el.innerHTML = '';
+    try {
+      const uid = 'mg-' + id + '-' + Math.random().toString(36).slice(2,8);
+      const { svg } = await mermaid.render(uid, src);
+      el.innerHTML = svg;
+    } catch(e) {
+      el.innerHTML = '<p style="color:#ef4444;font-size:12px;padding:20px">Render error: ' + e.message + '</p>';
     }
   }
+}
 
-  function show(id, el) {
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    el.classList.add('active');
-    renderPanel(id);
-  }
+// ─── Show Tab ─────────────────────────────────────────────────
+function showTab(id, idx, btnEl) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.chapter-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  if (btnEl) btnEl.classList.add('active');
+  currentIdx = idx;
+  updateNavButtons();
+  renderDiagrams(DIAGRAM_IDS[id]);
+}
 
-  // Render the default tab on load
-  window.addEventListener('load', () => renderPanel('overview'));
+function jumpTo(idx) {
+  const tabs = document.querySelectorAll('.chapter-tab');
+  showTab(TABS[idx], idx, tabs[idx]);
+  updateDots(idx);
+}
+
+function navigate(dir) {
+  const next = Math.max(0, Math.min(TABS.length - 1, currentIdx + dir));
+  jumpTo(next);
+}
+
+function updateNavButtons() {
+  const prev = document.getElementById('btn-prev');
+  const next = document.getElementById('btn-next');
+  prev.style.visibility = currentIdx === 0 ? 'hidden' : 'visible';
+  next.style.visibility = currentIdx === TABS.length - 1 ? 'hidden' : 'visible';
+  updateDots(currentIdx);
+}
+
+function updateDots(idx) {
+  document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i === idx));
+}
+
+// ─── Step interactions ────────────────────────────────────────
+function activateStep(el, nodeKeyword) {
+  const list = el.closest('.step-list');
+  list.querySelectorAll('.step-item').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  highlightNode(currentIdx, nodeKeyword);
+}
+
+function highlightNode(panelIdx, keyword) {
+  const panelId = 'panel-' + TABS[panelIdx];
+  const panel = document.getElementById(panelId);
+  if (!panel) return;
+
+  // Clear previous highlights
+  panel.querySelectorAll('svg .highlighted-node').forEach(g => {
+    g.classList.remove('highlighted-node');
+    const shapes = g.querySelectorAll('rect, polygon, circle, path');
+    shapes.forEach(s => { s.style.filter = ''; s.style.strokeWidth = ''; });
+  });
+
+  if (!keyword) return;
+
+  // Find matching nodes by text content or subgraph label
+  panel.querySelectorAll('svg g').forEach(g => {
+    const text = g.textContent || '';
+    const id = g.id || '';
+    if (text.includes(keyword) || id.includes(keyword)) {
+      // Check if this is a meaningful node (has a shape)
+      const shape = g.querySelector('rect, polygon, circle, path[fill]');
+      if (shape) {
+        g.classList.add('highlighted-node');
+        shape.style.filter = 'drop-shadow(0 0 10px rgba(79,142,247,0.8))';
+        shape.style.strokeWidth = '2.5px';
+      }
+    }
+  });
+}
+
+// ─── Init ─────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  renderDiagrams(DIAGRAM_IDS['overview']);
+  updateNavButtons();
+});
 </script>
 </body>
 </html>
