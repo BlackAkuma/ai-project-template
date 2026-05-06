@@ -33,6 +33,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .tr{display:flex;gap:10px}
 .tbtn{font-size:12px;color:var(--t2);text-decoration:none;padding:5px 12px;border-radius:7px;border:1px solid var(--border);background:transparent;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:5px}
 .tbtn:hover{color:var(--t1);border-color:var(--border2);background:rgba(255,255,255,0.04)}
+.lang-btn{font-size:12px;font-weight:700;padding:5px 14px;border-radius:7px;border:1px solid var(--border2);background:rgba(255,255,255,0.05);color:var(--t1);cursor:pointer;transition:.15s;letter-spacing:.04em}
+.lang-btn:hover{background:rgba(255,255,255,.1)}
 
 /* ── Sections ── */
 section{padding:80px 32px}
@@ -344,6 +346,7 @@ section{padding:80px 32px}
     <span class="tpage">How It Works</span>
   </div>
   <div class="tr">
+    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button>
     <a href="how-it-works.html" class="tbtn">← Overview</a>
     <a href="https://github.com/BlackAkuma/ai-project-template" class="tbtn" target="_blank">
       <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -355,13 +358,13 @@ section{padding:80px 32px}
 <!-- Chapter Nav -->
 <div class="chapter-bar">
   <div class="chapters">
-    <button class="ch on" onclick="scrollTo('sec-problem')"><span class="ch-n">01</span>ปัญหาที่แก้</button>
-    <button class="ch" onclick="scrollTo('sec-sim')"><span class="ch-n">02</span>▶ Live Simulation</button>
-    <button class="ch" onclick="scrollTo('sec-tiers')"><span class="ch-n">03</span>3 ชั้นของระบบ</button>
-    <button class="ch" onclick="scrollTo('sec-session')"><span class="ch-n">04</span>Session Loop</button>
-    <button class="ch" onclick="scrollTo('sec-decision')"><span class="ch-n">05</span>Decision Protocol</button>
-    <button class="ch" onclick="scrollTo('sec-memory')"><span class="ch-n">06</span>Memory System</button>
-    <button class="ch" onclick="scrollTo('sec-ref')"><span class="ch-n">07</span>Reference Diagrams</button>
+    <button class="ch on" onclick="scrollTo('sec-problem')"><span class="ch-n">01</span><span data-i18n="nav.problem">ปัญหาที่แก้</span></button>
+    <button class="ch" onclick="scrollTo('sec-sim')"><span class="ch-n">02</span><span data-i18n="nav.sim">▶ Live Simulation</span></button>
+    <button class="ch" onclick="scrollTo('sec-tiers')"><span class="ch-n">03</span><span data-i18n="nav.tiers">3 ชั้นของระบบ</span></button>
+    <button class="ch" onclick="scrollTo('sec-session')"><span class="ch-n">04</span><span data-i18n="nav.session">Session Loop</span></button>
+    <button class="ch" onclick="scrollTo('sec-decision')"><span class="ch-n">05</span><span data-i18n="nav.decision">Decision Protocol</span></button>
+    <button class="ch" onclick="scrollTo('sec-memory')"><span class="ch-n">06</span><span data-i18n="nav.memory">Memory System</span></button>
+    <button class="ch" onclick="scrollTo('sec-ref')"><span class="ch-n">07</span><span data-i18n="nav.ref">Reference Diagrams</span></button>
   </div>
 </div>
 
@@ -371,9 +374,9 @@ section{padding:80px 32px}
 ════════════════════════════════════════════ -->
 <section id="sec-problem">
   <div class="inner">
-    <div class="sec-kicker" style="color:var(--red)">ทำไมถึงต้องมีระบบนี้</div>
-    <h2 class="sec-h">AI ทำงานกับโปรเจ็กต์ได้ดี — แต่ไม่ได้ตลอด</h2>
-    <p class="sec-sub">ทุกครั้งที่เปิด session ใหม่ AI เริ่มจากศูนย์ ไม่รู้ว่าเคยตัดสินใจอะไรไว้ ไม่รู้ว่างานอยู่จุดไหน ไม่รู้กฎที่ทีมตกลงกันไว้ ปัญหานี้ระบบนี้แก้ได้</p>
+    <div class="sec-kicker" style="color:var(--red)" data-i18n="prob.kicker">ทำไมถึงต้องมีระบบนี้</div>
+    <h2 class="sec-h" data-i18n="prob.h">AI ทำงานกับโปรเจ็กต์ได้ดี — แต่ไม่ได้ตลอด</h2>
+    <p class="sec-sub" data-i18n="prob.sub">ทุกครั้งที่เปิด session ใหม่ AI เริ่มจากศูนย์ ไม่รู้ว่าเคยตัดสินใจอะไรไว้ ไม่รู้ว่างานอยู่จุดไหน ไม่รู้กฎที่ทีมตกลงกันไว้ ปัญหานี้ระบบนี้แก้ได้</p>
 
     <div class="problem-grid">
       <div class="problem-card bad">
@@ -440,9 +443,9 @@ section{padding:80px 32px}
 ════════════════════════════════════════════ -->
 <section id="sec-sim">
   <div class="inner">
-    <div class="sec-kicker" style="color:var(--purple)">Interactive Simulation</div>
-    <h2 class="sec-h">ดู Session จริงทำงาน — ทีละขั้นตอน</h2>
-    <p class="sec-sub">โปรเจ็กต์ตัวอย่าง: E-Commerce Shop · Session ที่ 15 · Kwan กำลังทำ payment feature กด ▶ Play หรือกด Next ทีละขั้น</p>
+    <div class="sec-kicker" style="color:var(--purple)" data-i18n="sim.kicker">Interactive Simulation</div>
+    <h2 class="sec-h" data-i18n="sim.h">ดู Session จริงทำงาน — ทีละขั้นตอน</h2>
+    <p class="sec-sub" data-i18n="sim.sub">โปรเจ็กต์ตัวอย่าง: E-Commerce Shop · Session ที่ 15 · Kwan กำลังทำ payment feature กด ▶ Play หรือกด Next ทีละขั้น</p>
 
     <div style="margin-top:36px">
       <!-- Flow Track -->
@@ -515,9 +518,9 @@ section{padding:80px 32px}
 ════════════════════════════════════════════ -->
 <section id="sec-tiers">
   <div class="inner">
-    <div class="sec-kicker" style="color:var(--blue)">โครงสร้างของระบบ</div>
-    <h2 class="sec-h">3 ชั้น — ใช้เท่าที่ต้องการ</h2>
-    <p class="sec-sub">ระบบออกแบบแบบ progressive — ชั้นล่างทำงานได้คนเดียว เพิ่มชั้นบนเมื่อโปรเจ็กต์ต้องการ ไม่มี overhead โดยไม่จำเป็น</p>
+    <div class="sec-kicker" style="color:var(--blue)" data-i18n="tiers.kicker">โครงสร้างของระบบ</div>
+    <h2 class="sec-h" data-i18n="tiers.h">3 ชั้น — ใช้เท่าที่ต้องการ</h2>
+    <p class="sec-sub" data-i18n="tiers.sub">ระบบออกแบบแบบ progressive — ชั้นล่างทำงานได้คนเดียว เพิ่มชั้นบนเมื่อโปรเจ็กต์ต้องการ ไม่มี overhead โดยไม่จำเป็น</p>
 
     <div class="tiers-stack">
 
@@ -614,9 +617,9 @@ section{padding:80px 32px}
 ════════════════════════════════════════════ -->
 <section id="sec-session">
   <div class="inner">
-    <div class="sec-kicker" style="color:var(--green)">ทุก Session ทำตามนี้</div>
-    <h2 class="sec-h">Session Loop — ตั้งแต่เปิดจนปิด</h2>
-    <p class="sec-sub">ทุก session มีโครงสร้างเดียวกันเสมอ ไม่ว่าจะเป็นวันแรกหรือ session ที่ 200 AI รู้ว่าต้องทำอะไรก่อนและหลัง ไม่ต้อง guide ทุกครั้ง</p>
+    <div class="sec-kicker" style="color:var(--green)" data-i18n="session.kicker">ทุก Session ทำตามนี้</div>
+    <h2 class="sec-h" data-i18n="session.h">Session Loop — ตั้งแต่เปิดจนปิด</h2>
+    <p class="sec-sub" data-i18n="session.sub">ทุก session มีโครงสร้างเดียวกันเสมอ ไม่ว่าจะเป็นวันแรกหรือ session ที่ 200 AI รู้ว่าต้องทำอะไรก่อนและหลัง ไม่ต้อง guide ทุกครั้ง</p>
 
     <div class="flow-phases" style="margin-top:48px">
 
@@ -758,9 +761,9 @@ section{padding:80px 32px}
 ════════════════════════════════════════════ -->
 <section id="sec-decision">
   <div class="inner">
-    <div class="sec-kicker" style="color:var(--amber)">เมื่อ AI ไม่แน่ใจ</div>
-    <h2 class="sec-h">Decision Protocol — ไม่เดา ไม่แข็งทื่อ</h2>
-    <p class="sec-sub">ระบบมี 11 scenario สำหรับทุกสถานการณ์ที่ AI อาจเจอ แต่ละ scenario บอกชัดว่าต้องทำอะไร ผลที่ได้คือ AI ที่หยุดอย่างมีระเบียบแทนการเดาผิด</p>
+    <div class="sec-kicker" style="color:var(--amber)" data-i18n="dec.kicker">เมื่อ AI ไม่แน่ใจ</div>
+    <h2 class="sec-h" data-i18n="dec.h">Decision Protocol — ไม่เดา ไม่แข็งทื่อ</h2>
+    <p class="sec-sub" data-i18n="dec.sub">ระบบมี 11 scenario สำหรับทุกสถานการณ์ที่ AI อาจเจอ แต่ละ scenario บอกชัดว่าต้องทำอะไร ผลที่ได้คือ AI ที่หยุดอย่างมีระเบียบแทนการเดาผิด</p>
 
     <!-- 3 Questions -->
     <div class="decision-intro">
@@ -927,9 +930,9 @@ section{padding:80px 32px}
 ════════════════════════════════════════════ -->
 <section id="sec-memory">
   <div class="inner">
-    <div class="sec-kicker" style="color:var(--amber)">จำข้ามเวลา ข้ามโปรเจ็กต์</div>
-    <h2 class="sec-h">Memory System — 3 ชั้น ไม่ขึ้นกับ context window</h2>
-    <p class="sec-sub">ปัญหาของ AI คือ memory หายเมื่อ session จบ ระบบนี้แก้ด้วย 3 ชั้น: entity ที่ track สถานะ, context routing ที่โหลดเฉพาะสิ่งที่ต้องการ, และ memory ที่ข้ามโปรเจ็กต์ได้</p>
+    <div class="sec-kicker" style="color:var(--amber)" data-i18n="mem.kicker">จำข้ามเวลา ข้ามโปรเจ็กต์</div>
+    <h2 class="sec-h" data-i18n="mem.h">Memory System — 3 ชั้น ไม่ขึ้นกับ context window</h2>
+    <p class="sec-sub" data-i18n="mem.sub">ปัญหาของ AI คือ memory หายเมื่อ session จบ ระบบนี้แก้ด้วย 3 ชั้น: entity ที่ track สถานะ, context routing ที่โหลดเฉพาะสิ่งที่ต้องการ, และ memory ที่ข้ามโปรเจ็กต์ได้</p>
 
     <div class="mem-layers">
 
@@ -1771,9 +1774,151 @@ function escHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
+// ══════════════════════════════════════════════════════════
+//  i18n — Bilingual System
+// ══════════════════════════════════════════════════════════
+let currentLang = localStorage.getItem('lang') || 'th';
+
+const T = {
+  th: {
+    // Nav
+    'nav.problem':'ปัญหาที่แก้','nav.sim':'▶ Live Simulation','nav.tiers':'3 ชั้นของระบบ',
+    'nav.session':'Session Loop','nav.decision':'Decision Protocol',
+    'nav.memory':'Memory System','nav.ref':'Reference Diagrams',
+    // Problem
+    'prob.kicker':'ทำไมถึงต้องมีระบบนี้',
+    'prob.h':'AI ทำงานกับโปรเจ็กต์ได้ดี — แต่ไม่ได้ตลอด',
+    'prob.sub':'ทุกครั้งที่เปิด session ใหม่ AI เริ่มจากศูนย์ ไม่รู้ว่าเคยตัดสินใจอะไรไว้ ไม่รู้ว่างานอยู่จุดไหน ไม่รู้กฎที่ทีมตกลงกันไว้ ปัญหานี้ระบบนี้แก้ได้',
+    // Simulation
+    'sim.kicker':'Interactive Simulation',
+    'sim.h':'ดู Session จริงทำงาน — ทีละขั้นตอน',
+    'sim.sub':'โปรเจ็กต์ตัวอย่าง: E-Commerce Shop · Session ที่ 15 · Kwan กำลังทำ payment feature กด ▶ Play หรือกด Next ทีละขั้น',
+    // Tiers
+    'tiers.kicker':'โครงสร้างของระบบ',
+    'tiers.h':'3 ชั้น — ใช้เท่าที่ต้องการ',
+    'tiers.sub':'ระบบออกแบบแบบ progressive — ชั้นล่างทำงานได้คนเดียว เพิ่มชั้นบนเมื่อโปรเจ็กต์ต้องการ ไม่มี overhead โดยไม่จำเป็น',
+    // Session
+    'session.kicker':'ทุก Session ทำตามนี้',
+    'session.h':'Session Loop — ตั้งแต่เปิดจนปิด',
+    'session.sub':'ทุก session มีโครงสร้างเดียวกันเสมอ ไม่ว่าจะเป็นวันแรกหรือ session ที่ 200 AI รู้ว่าต้องทำอะไรก่อนและหลัง ไม่ต้อง guide ทุกครั้ง',
+    // Decision
+    'dec.kicker':'เมื่อ AI ไม่แน่ใจ',
+    'dec.h':'Decision Protocol — ไม่เดา ไม่แข็งทื่อ',
+    'dec.sub':'ระบบมี 11 scenario สำหรับทุกสถานการณ์ที่ AI อาจเจอ แต่ละ scenario บอกชัดว่าต้องทำอะไร ผลที่ได้คือ AI ที่หยุดอย่างมีระเบียบแทนการเดาผิด',
+    // Memory
+    'mem.kicker':'จำข้ามเวลา ข้ามโปรเจ็กต์',
+    'mem.h':'Memory System — 3 ชั้น ไม่ขึ้นกับ context window',
+    'mem.sub':'ปัญหาของ AI คือ memory หายเมื่อ session จบ ระบบนี้แก้ด้วย 3 ชั้น: entity ที่ track สถานะ, context routing ที่โหลดเฉพาะสิ่งที่ต้องการ, และ memory ที่ข้ามโปรเจ็กต์ได้',
+  },
+  en: {
+    // Nav
+    'nav.problem':'The Problem','nav.sim':'▶ Live Simulation','nav.tiers':'3-Tier Architecture',
+    'nav.session':'Session Loop','nav.decision':'Decision Protocol',
+    'nav.memory':'Memory System','nav.ref':'Reference Diagrams',
+    // Problem
+    'prob.kicker':'Why This Exists',
+    'prob.h':'AI works great on projects — but not consistently',
+    'prob.sub':'Every new session, AI starts from zero. It doesn\'t know past decisions, doesn\'t know where work left off, doesn\'t know the team\'s rules. This system fixes that.',
+    // Simulation
+    'sim.kicker':'Interactive Simulation',
+    'sim.h':'Watch a Real Session — Step by Step',
+    'sim.sub':'Example project: E-Commerce Shop · Session 15 · Kwan is implementing the payment feature. Press ▶ Play or step through manually with Next.',
+    // Tiers
+    'tiers.kicker':'System Architecture',
+    'tiers.h':'3 Tiers — Use Only What You Need',
+    'tiers.sub':'Designed for progressive adoption — the base tier works standalone. Add upper tiers only when the project demands it. No overhead without purpose.',
+    // Session
+    'session.kicker':'Every Session Follows This',
+    'session.h':'Session Loop — From Open to Close',
+    'session.sub':'Every session has the same structure — whether it\'s day one or session 200. AI knows exactly what to do at start and end, no guiding needed.',
+    // Decision
+    'dec.kicker':'When AI Is Uncertain',
+    'dec.h':'Decision Protocol — No Guessing, No Freezing',
+    'dec.sub':'11 scenarios covering every ambiguous situation AI might face. Each tells AI exactly what to do. The result: AI that stops cleanly instead of guessing wrong.',
+    // Memory
+    'mem.kicker':'Remember Across Time & Projects',
+    'mem.h':'Memory System — 3 Layers, Independent of Context Window',
+    'mem.sub':'AI\'s core problem: memory disappears when a session ends. This system solves it with 3 layers: entity status tracking, context routing that loads only what\'s needed, and cross-project memory.',
+  }
+};
+
+// Simulation frame bilingual content
+const SIM_LANG = {
+  th: [
+    { tag:'🚀 เปิด Session', scenario:'ecommerce-shop · Session #15 · สัปดาห์ที่ 3', nar:'<strong>AI เปิด session</strong> บน ecommerce-shop Claude Code อ่าน CLAUDE.md อัตโนมัติ โหลด core templates ทั้ง 19 ไฟล์ และตรวจพบ entity-register' },
+    { tag:'📖 อ่าน work-status', scenario:'ecommerce-shop · อ่านไฟล์ที่ 1 จาก 3', nar:'AI อ่าน <strong>AI-CONTEXT block</strong> บนสุดของ work-status ใน 10 วินาที รู้ทันทีว่าอยู่ใน sprint 3, task ปัจจุบันคือ T-023, และต้องโหลด entity-register เพิ่ม' },
+    { tag:'📖 อ่าน work-log', scenario:'ecommerce-shop · อ่านไฟล์ที่ 2 จาก 3', nar:'AI รู้ว่า session ที่แล้วทำอะไรไปบ้าง และ T-023 หยุดตรงไหน <strong>ไม่ต้องอธิบายซ้ำ</strong> — work-log เก็บ checkpoint ไว้' },
+    { tag:'📖 อ่าน task-board', scenario:'ecommerce-shop · อ่านไฟล์ที่ 3 จาก 3', nar:'อ่านครบ 3 ไฟล์แล้ว — <strong>AI รู้ทุกอย่างที่ต้องรู้</strong> ใช้เวลา ~2 นาที เห็น T-023 คือ focus task, T-025 block รออยู่' },
+    { tag:'⚙️ เริ่มทำงาน T-023', scenario:'ecommerce-shop · implement payment', nar:'AI ตรวจ <strong>entity-register</strong> ก่อนเขียน code — Stripe status: active ตาม ADR-008 เห็น Redux deprecated ไม่ใช้ state library นั้น' },
+    { tag:'🚨 Scope Creep ตรวจพบ', scenario:'ecommerce-shop · Decision Protocol', nar:'Scope creep ตรวจพบ — AI ไม่ทำเกิน scope <strong>Scenario C:</strong> log T-026 เป็น task ใหม่พร้อม [NEEDS SOURCE VALIDATION] แล้วทำ T-023 ต่อทันที' },
+    { tag:'✅ T-023 เสร็จ → review', scenario:'ecommerce-shop · Definition of Done', nar:'T-023 ผ่าน Definition of Done ครบ — source ref ถูกต้อง, compliance ผ่าน, test pass <strong>status เปลี่ยนเป็น review</strong>' },
+    { tag:'📝 Session End: อัปเดตไฟล์', scenario:'ecommerce-shop · Session End checklist', nar:'<strong>Session End checklist ผ่านครบ</strong> — อัปเดต 3 ไฟล์หลัก, entity ไม่มีการเปลี่ยน, บันทึก T-023 เสร็จ, focus ถัดไปคือ T-024' },
+    { tag:'📓 เขียน Work Log', scenario:'ecommerce-shop · บันทึก session', nar:'Work log บันทึกแล้ว — <strong>Session #16 เปิดได้ทันที</strong> AI ใหม่หรือ AI เดิมก็รับต่อได้จาก checkpoint นี้โดยไม่ต้องอธิบายอะไรเพิ่ม' },
+    { tag:'🔄 Session #16 — รับต่อ', scenario:'ecommerce-shop · 2 วันต่อมา', nar:'2 วันต่อมา เปิด session ใหม่ — AI อ่าน 3 ไฟล์, รู้ว่า T-023 review รอ, T-024 คือ next task <strong>ระบบจำได้ทุกอย่าง ไม่มีอะไรหาย</strong>' },
+  ],
+  en: [
+    { tag:'🚀 Open Session', scenario:'ecommerce-shop · Session #15 · Week 3', nar:'<strong>AI opens the session</strong> on ecommerce-shop. Claude Code auto-reads CLAUDE.md, loads all 19 core templates, and detects the entity register.' },
+    { tag:'📖 Read work-status', scenario:'ecommerce-shop · Reading file 1 of 3', nar:'AI reads the <strong>AI-CONTEXT block</strong> at the top of work-status in seconds. Instantly knows: sprint 3, current task T-023, needs to load entity-register.' },
+    { tag:'📖 Read work-log', scenario:'ecommerce-shop · Reading file 2 of 3', nar:'AI knows what the previous session accomplished and exactly where T-023 left off. <strong>No re-explaining needed</strong> — the work-log holds the checkpoint.' },
+    { tag:'📖 Read task-board', scenario:'ecommerce-shop · Reading file 3 of 3', nar:'3 files read — <strong>AI knows everything it needs</strong>, in ~2 minutes. T-023 is the focus task, T-025 is blocked and waiting.' },
+    { tag:'⚙️ Start work on T-023', scenario:'ecommerce-shop · Implementing payment', nar:'AI checks the <strong>entity register</strong> before writing any code — Stripe: active (ADR-008). Redux: deprecated — won\'t use that state library.' },
+    { tag:'🚨 Scope Creep Detected', scenario:'ecommerce-shop · Decision Protocol', nar:'Scope creep detected. AI doesn\'t go beyond scope. <strong>Scenario C fires:</strong> logs T-026 as a new task with [NEEDS SOURCE VALIDATION], then continues T-023.' },
+    { tag:'✅ T-023 Done → review', scenario:'ecommerce-shop · Definition of Done', nar:'T-023 passes Definition of Done — source ref valid, compliance clear (C-01–C-14), all tests pass. <strong>Status moves to review.</strong>' },
+    { tag:'📝 Session End: Update Files', scenario:'ecommerce-shop · Session End checklist', nar:'<strong>Session End checklist complete</strong> — 3 files updated, no entity changes, T-023 marked done, next focus is T-024.' },
+    { tag:'📓 Write Work Log', scenario:'ecommerce-shop · Logging the session', nar:'Work log written — <strong>Session #16 can start immediately.</strong> Any AI, same or different, can pick up from this checkpoint with no explanation needed.' },
+    { tag:'🔄 Session #16 — Continue', scenario:'ecommerce-shop · 2 days later', nar:'2 days later. New session opens — AI reads 3 files, sees T-023 in review, T-024 is next. <strong>The system remembers everything. Nothing is lost.</strong>' },
+  ]
+};
+
+function applyLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  document.documentElement.lang = lang === 'th' ? 'th' : 'en';
+  document.getElementById('lang-btn').textContent = lang === 'th' ? 'EN' : 'TH';
+  // Apply all data-i18n text
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.dataset.i18n;
+    if (T[lang] && T[lang][k] !== undefined) el.textContent = T[lang][k];
+  });
+  // Re-render simulation with new lang
+  simRender(simIdx);
+}
+
+function toggleLang() {
+  applyLang(currentLang === 'th' ? 'en' : 'th');
+}
+
+// Override simRender to use bilingual content
+const _origSimRender = simRender;
+// Patch: inject lang into simRender by overriding nar/tag/scenario from SIM_LANG
+const _patchedSimRender = function(idx) {
+  const langData = SIM_LANG[currentLang][idx];
+  // Patch SIM_FRAMES[idx] with current lang before render
+  SIM_FRAMES[idx]._tag      = SIM_FRAMES[idx].tag;
+  SIM_FRAMES[idx]._scenario = SIM_FRAMES[idx].scenario;
+  SIM_FRAMES[idx]._nar      = SIM_FRAMES[idx].nar;
+  SIM_FRAMES[idx].tag      = langData.tag;
+  SIM_FRAMES[idx].scenario = langData.scenario;
+  SIM_FRAMES[idx].nar      = langData.nar;
+  _origSimRender(idx);
+  SIM_FRAMES[idx].tag      = SIM_FRAMES[idx]._tag;
+  SIM_FRAMES[idx].scenario = SIM_FRAMES[idx]._scenario;
+  SIM_FRAMES[idx].nar      = SIM_FRAMES[idx]._nar;
+};
+// Replace global simRender
+window.simRender = _patchedSimRender;
+// Also patch simGo/simNav to use window.simRender
+const _origSimGo = simGo;
+window.simGo = function(idx) {
+  simIdx = Math.max(0, Math.min(SIM_FRAMES.length - 1, idx));
+  window.simRender(simIdx);
+};
+
 // init sim on load
 window.addEventListener('load', () => {
-  simRender(0);
+  // Apply stored lang
+  if (currentLang === 'en') applyLang('en');
+  window.simRender(0);
 });
 </script>
 </body>
