@@ -69,9 +69,9 @@ AI ใช้ checklist นี้ตรวจสอบก่อนประกา
 
 - [ ] `.gitignore` มี `_template/` อยู่แล้ว (ถ้าไม่มี AI ต้องเพิ่มให้)
 - [ ] ไม่มีไฟล์ของ template ค้างอยู่นอก `_template/` โดยไม่ได้ตั้งใจ
-- [ ] `doc/` พร้อม commit เข้า project git แล้ว (ไม่ติด .gitignore)
+- [ ] `doc/` พร้อม commit เข้า git บน **dev branch เท่านั้น** — ไม่ขึ้น production branch
 - [ ] ถ้า `git_mode: branch-separated`: `git push origin [dev_branch]` รัน bootstrap ครั้งแรกแล้ว
-- [ ] `doc/` และ `CLAUDE.md` **ไม่ได้อยู่บน production branch**
+- [ ] ยืนยัน: `doc/` และ `CLAUDE.md` **ไม่มีอยู่บน production branch** (ตรวจด้วย `git checkout [prod] && ls`)
 
 ## 8. Policy ที่ต้องตัดสินใจ
 

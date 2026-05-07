@@ -147,6 +147,39 @@ doc/ อยู่บน production branch — ตอน deploy ต้อง excl
 
 ---
 
+### Scenario 5 — doc/ มีอยู่บน production branch แล้ว ต้องการย้ายไป dev
+
+**สัญญาณ:** เริ่มใช้ระบบใหม่กับโปรเจ็กต์ที่ทำงานบน main อยู่แล้ว หรือ bootstrap ผ่านไปแล้วโดยไม่ได้แยก branch
+
+**AI ต้องทำ (ขอ permission ผู้ใช้ก่อนทุกขั้น):**
+
+```bash
+# ขั้น 1: สร้าง dev branch จาก main (เพื่อให้ dev มี doc/ ครบ)
+git checkout main
+git checkout -b dev
+# ตอนนี้ dev มี doc/ ครบแล้ว ✓
+
+# ขั้น 2: ลบ doc/ ออกจาก main
+git checkout main
+git rm -r --cached doc/ CLAUDE.md
+echo "doc/" >> .gitignore
+echo "CLAUDE.md" >> .gitignore
+git add .gitignore
+git commit -m "chore: move AI working files to dev branch only"
+
+# ขั้น 3: ยืนยัน
+git checkout main && ls doc  # ควร error — doc/ ไม่ควรอยู่บน main
+git checkout dev && ls doc   # ควรเห็น doc/ ครบ
+```
+
+**หลังจากนั้น:**
+- อัปเดต work-status git fields: `git_prod_branch: main`, `git_dev_branch: dev`, `git_mode: branch-separated`
+- ทำงานบน dev ต่อไปตามปกติ
+
+**ข้อควรระวัง:** ขั้น 2 เป็น destructive กับ main history — ยืนยันกับผู้ใช้ก่อนรัน และ push ต่อเมื่อผู้ใช้ยืนยันเท่านั้น
+
+---
+
 ## Merge Policy: dev → production branch
 
 **merge ขึ้น production:**
@@ -161,9 +194,11 @@ doc/ อยู่บน production branch — ตอน deploy ต้อง excl
 
 ```bash
 # Option A: merge แล้ว unstage doc/ (clean)
+# ⚠️ ต้องอยู่บน prod-branch ก่อนรัน git rm — ตรวจก่อนเสมอ
 git checkout [prod-branch]
+git branch --show-current  # ยืนยันว่าอยู่บน prod-branch จริง
 git merge dev --no-ff
-git rm -r --cached doc/ CLAUDE.md 2>/dev/null || true
+git rm -r --cached doc/ CLAUDE.md
 git commit -m "chore: exclude AI working files from production"
 
 # Option B: cherry-pick เฉพาะ code commits
@@ -215,9 +250,10 @@ git_mode: branch-separated     # หรือ single-branch
 
 ## สิ่งที่ AI ต้องไม่ทำ (เกี่ยวกับ git)
 
-- ❌ commit doc/ ลงบน production branch โดยไม่แจ้งผู้ใช้
-- ❌ merge CLAUDE.md ขึ้น production branch
-- ❌ ข้าม branch check ตอน bootstrap
-- ❌ ลบ branch ใดๆ โดยไม่ได้รับคำสั่งชัดเจน
-- ❌ force push ใดๆ โดยไม่ได้รับคำสั่งชัดเจน
-- ❌ สร้าง branch ใหม่โดยไม่แจ้งผู้ใช้ก่อน (ยกเว้น dev branch ตอนผู้ใช้เลือก A)
+- ❌ commit `doc/` หรือ `CLAUDE.md` ลงบน production branch — **ห้ามเด็ดขาด ไม่มีข้อยกเว้น ไม่ว่าผู้ใช้จะขอแค่ไหน**
+- ❌ merge `doc/` หรือ `CLAUDE.md` ขึ้น production branch — ใช้ Option B หรือ C แทน
+- ❌ ข้าม branch check ตอน bootstrap — ไม่มีข้อยกเว้น
+- ❌ รัน `git rm -r --cached doc/` บน dev branch — ต้องอยู่บน prod-branch เท่านั้น
+- ❌ ลบ branch ใดๆ โดยไม่ได้รับคำสั่งชัดเจนจากผู้ใช้
+- ❌ force push ใดๆ โดยไม่ได้รับคำสั่งชัดเจนจากผู้ใช้
+- ❌ สร้าง branch ใหม่โดยไม่แจ้งผู้ใช้ก่อน (ยกเว้นเฉพาะ dev branch หลังผู้ใช้เลือก A ใน Scenario 1)
