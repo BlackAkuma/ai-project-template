@@ -236,9 +236,20 @@ else
   fail "S4: mock-project still uses old doc/ structure"
 fi
 
-# Check: docs/ preserved correctly
-[ -d "docs" ] && pass "S5: docs/ web pages preserved" || fail "S5: docs/ web pages missing"
-[ -f "docs/workflow-diagram.html" ] && pass "S6: workflow-diagram.html intact" || fail "S6: workflow-diagram.html missing"
+# Check: docs/ NOT tracked on dev/master (correctly moved to gh-pages branch)
+DOCS_TRACKED=$(git ls-files docs/ | wc -l | tr -d ' ')
+if [ "$DOCS_TRACKED" -eq 0 ]; then
+  pass "S5: docs/ has no tracked files on dev — correctly on gh-pages branch only"
+else
+  fail "S5: docs/ has $DOCS_TRACKED tracked file(s) on dev — should be on gh-pages only"
+fi
+
+# Check: ai/ naming doesn't conflict with anything
+if [ ! -d "doc" ]; then
+  pass "S6: no legacy doc/ folder on dev branch"
+else
+  fail "S6: legacy doc/ folder found on dev — rename incomplete"
+fi
 
 # =============================================================================
 # RESULTS
