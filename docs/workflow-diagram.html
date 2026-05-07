@@ -258,6 +258,35 @@ section{padding:80px 32px}
 .mermaid-wrap svg{max-width:100%}
 .loading-txt{color:var(--t3);font-size:13px;padding:60px 0;text-align:center;display:block}
 
+/* ── Custom Reference Diagrams ── */
+.rdiag{font-size:13px;line-height:1.5}
+.rnode{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:8px;font-weight:600;border:1px solid}
+.rnode-pill{border-radius:20px;font-size:13px;padding:7px 20px}
+.rnode-center{display:flex;justify-content:center}
+.rgrp{border-radius:10px;border:1px solid var(--border);overflow:hidden}
+.rgrp-hd{padding:10px 16px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06)}
+.rgrp-body{padding:12px 16px;display:flex;flex-wrap:wrap;gap:7px}
+.rgrp-col{padding:12px 16px;display:flex;flex-direction:column;gap:7px}
+.rtag{font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;border:1px solid;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.rarr{display:flex;flex-direction:column;align-items:center;height:28px;justify-content:flex-end}
+.rarr::before{content:'';width:2px;height:16px;background:var(--border2);display:block;margin-bottom:0}
+.rarr::after{content:'▼';font-size:8px;color:var(--t3);line-height:1;margin-top:-2px}
+.rgrid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.rgrid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.rgrid3{grid-template-columns:1fr}.rgrid2{grid-template-columns:1fr}}
+.rpipe{display:flex;align-items:center;overflow-x:auto;scrollbar-width:none;padding:4px 0 8px;gap:0}
+.rpipe::-webkit-scrollbar{display:none}
+.rpipe-arr{color:var(--t3);font-size:18px;padding:0 6px;flex-shrink:0;line-height:1}
+.rpipe-node{flex-shrink:0;text-align:center;padding:10px 14px;border-radius:8px;border:1px solid;font-size:12px;font-weight:600;min-width:108px}
+.rc-blue{background:var(--blue-bg);border-color:var(--blue-bd);color:var(--blue)}
+.rc-purple{background:var(--purple-bg);border-color:var(--purple-bd);color:var(--purple)}
+.rc-green{background:var(--green-bg);border-color:var(--green-bd);color:var(--green)}
+.rc-amber{background:var(--amber-bg);border-color:var(--amber-bd);color:var(--amber)}
+.rc-teal{background:var(--teal-bg);border-color:var(--teal-bd);color:var(--teal)}
+.rc-red{background:var(--red-bg);border-color:var(--red-bd);color:var(--red)}
+.rc-dim{background:rgba(255,255,255,.04);border-color:var(--border);color:var(--t2)}
+.rc-human{background:rgba(255,255,255,.06);border-color:var(--border2);color:var(--t1)}
+
 /* ══ SIMULATION ══════════════════════════════════════════════ */
 #sec-sim{background:var(--surface);padding:80px 32px}
 
@@ -1106,218 +1135,247 @@ section{padding:80px 32px}
       <button class="rtab" onclick="showRef('r-memory',this)">🧠 Memory System</button>
     </div>
 
+    <!-- ── 1. System Overview ── -->
     <div id="r-overview" class="ref-panel on">
       <div class="ref-diagram-box">
-        <div id="rd-overview" class="mermaid-wrap"><span class="loading-txt">กำลังโหลด...</span>
-flowchart TD
-  classDef core fill:#1d4ed8,stroke:#3b82f6,color:#fff
-  classDef game fill:#7c3aed,stroke:#a855f7,color:#fff
-  classDef platform fill:#0f766e,stroke:#14b8a6,color:#fff
-  classDef mem fill:#92400e,stroke:#f59e0b,color:#fff
-  classDef out fill:#1e293b,stroke:#475569,color:#e2e8f0
-  HUMAN(["👤 Human + AI"])
-  subgraph CORE["📁 core/ — Universal 19 files"]
-    C1["Session Protocol 03·06·08"]
-    C2["Task & Planning 05·07·10"]
-    C3["Decisions 11·12·09"]
-    C4["Standards 04·14·15·16"]
-    C5["Memory 17·18·19"]
-  end
-  subgraph GAME["🎮 skills/game/ — 12 files"]
-    G1["FDD+GDD 01·07"]
-    G2["Balance+Playtest 05·04"]
-    G3["Narrative+Levels 06·11"]
-  end
-  subgraph PLATFORM["💻 platforms/claude-code/"]
-    P1["CLAUDE.md auto-load"]
-    P2["49 Agents · 33 Frames"]
-    P3["Hooks · Skills"]
-  end
-  subgraph WORKSPACE["🧠 ai-workspace/ นอก git"]
-    M1["cross-project-memory.md"]
-  end
-  subgraph PROJECT["📂 doc/ per project"]
-    D1["work-status · task-board"]
-    D2["work-log · entity-register"]
-    D3["ADR + decisions"]
-  end
-  HUMAN --> CORE
-  CORE --> GAME
-  CORE --> PLATFORM
-  CORE --> WORKSPACE
-  CORE --> PROJECT
-  GAME --> PROJECT
-  PLATFORM --> PROJECT
-  WORKSPACE -.->|"bootstrap read"| PROJECT
-  class C1,C2,C3,C4,C5 core
-  class G1,G2,G3 game
-  class P1,P2,P3 platform
-  class M1 mem
-  class D1,D2,D3 out
+        <div class="rdiag">
+          <div class="rnode-center" style="margin-bottom:4px">
+            <div class="rnode rnode-pill rc-human">👤 Human + AI</div>
+          </div>
+          <div class="rarr"></div>
+          <div class="rgrp rc-blue">
+            <div class="rgrp-hd rc-blue">📁 core/ — Universal 19 files</div>
+            <div class="rgrp-body">
+              <span class="rtag rc-blue">Session Protocol 03·06·08</span>
+              <span class="rtag rc-blue">Task &amp; Planning 05·07·10</span>
+              <span class="rtag rc-blue">Decisions 11·12·09</span>
+              <span class="rtag rc-blue">Standards 04·14·15·16</span>
+              <span class="rtag rc-blue">Memory 17·18·19</span>
+            </div>
+          </div>
+          <div class="rarr"></div>
+          <div class="rgrid3">
+            <div class="rgrp rc-purple">
+              <div class="rgrp-hd">🎮 skills/game/ — 12 files</div>
+              <div class="rgrp-col">
+                <span class="rtag rc-purple">FDD+GDD 01·07</span>
+                <span class="rtag rc-purple">Balance+Playtest 05·04</span>
+                <span class="rtag rc-purple">Narrative+Levels 06·11</span>
+              </div>
+            </div>
+            <div class="rgrp rc-teal">
+              <div class="rgrp-hd">💻 platforms/claude-code/</div>
+              <div class="rgrp-col">
+                <span class="rtag rc-teal">CLAUDE.md auto-load</span>
+                <span class="rtag rc-teal">49 Agents · 33 Frames</span>
+                <span class="rtag rc-teal">Hooks · Skills</span>
+              </div>
+            </div>
+            <div class="rgrp rc-amber">
+              <div class="rgrp-hd">🧠 ai-workspace/ <span style="font-size:9px;opacity:.55;text-transform:none;letter-spacing:0">นอก git</span></div>
+              <div class="rgrp-col">
+                <span class="rtag rc-amber">cross-project-memory.md</span>
+                <span style="font-size:11px;color:var(--t3);padding:2px 4px">↘ bootstrap read</span>
+              </div>
+            </div>
+          </div>
+          <div class="rarr"></div>
+          <div class="rgrp rc-dim">
+            <div class="rgrp-hd" style="color:var(--t1)">📂 doc/ per project</div>
+            <div class="rgrp-body">
+              <span class="rtag rc-dim">work-status · task-board</span>
+              <span class="rtag rc-dim">work-log · entity-register</span>
+              <span class="rtag rc-dim">ADR + decisions</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
+    <!-- ── 2. Session Loop ── -->
     <div id="r-session" class="ref-panel">
       <div class="ref-diagram-box">
-        <div id="rd-session" class="mermaid-wrap"><span class="loading-txt">กำลังโหลด...</span>
-flowchart TD
-  classDef green fill:#166534,stroke:#22c55e,color:#fff
-  classDef blue fill:#1d4ed8,stroke:#3b82f6,color:#fff
-  classDef purple fill:#7c3aed,stroke:#a855f7,color:#fff
-  classDef amber fill:#92400e,stroke:#f59e0b,color:#fff
-  classDef teal fill:#0f766e,stroke:#14b8a6,color:#fff
-  START(["🚀 Start"])
-  FIRST{"First Run?"}
-  subgraph BOOT["Bootstrap"]
-    B1["อ่าน cross-project-memory"]
-    B2["ถามภาษา + type"]
-    B3{"Game?"}
-    B4["load skills/game/"]
-    B5["สร้าง doc/"]
-  end
-  subgraph SS["Session Start"]
-    S1["อ่าน work-status"]
-    S2["อ่าน work-log"]
-    S3["อ่าน task-board"]
-    S4["ตาม read-more hints"]
-    S5["compliance scan"]
-  end
-  WORK(["⚙️ Work"])
-  subgraph SE["Session End"]
-    E1["อัปเดต work-status"]
-    E2["อัปเดต work-log"]
-    E3["อัปเดต task-board"]
-    E4{"entity เปลี่ยน?"}
-    E5["อัปเดต entity-register"]
-    E6{"multi-tool?"}
-    E7["เขียน agent diary"]
-  end
-  DONE(["✅ Done"])
-  START --> FIRST
-  FIRST -->|First| B1 --> B2 --> B3
-  B3 -->|Yes| B4 --> B5
-  B3 -->|No| B5
-  B5 --> S1
-  FIRST -->|Existing| S1
-  S1 --> S2 --> S3 --> S4 --> S5 --> WORK
-  WORK --> E1 --> E2 --> E3 --> E4
-  E4 -->|Yes| E5 --> E6
-  E4 -->|No| E6
-  E6 -->|Yes| E7 --> DONE
-  E6 -->|No| DONE
-  DONE -.->|next session| START
-  class START,DONE green
-  class S1,S2,S3,S4,B1,B2,B5 blue
-  class WORK purple
-  class E1,E2,E3,E5,E7 amber
-  class FIRST,B3,E4,E6 teal
+        <div class="rdiag">
+          <div class="rnode-center"><div class="rnode rnode-pill rc-green">🚀 Start</div></div>
+          <div class="rarr"></div>
+          <div class="rgrp rc-blue">
+            <div class="rgrp-hd">🚀 Bootstrap — ครั้งแรกเท่านั้น</div>
+            <div class="rgrp-body">
+              <span class="rtag rc-blue">อ่าน cross-project-memory</span>
+              <span class="rtag rc-blue">ถามภาษา + project type</span>
+              <span class="rtag rc-purple">Game? → load skills/game/</span>
+              <span class="rtag rc-blue">สร้าง doc/ structure</span>
+            </div>
+          </div>
+          <div class="rarr"></div>
+          <div class="rgrp rc-green">
+            <div class="rgrp-hd">📖 Session Start — ทุก session</div>
+            <div class="rgrp-body">
+              <span class="rtag rc-green">① อ่าน work-status</span>
+              <span class="rtag rc-green">② อ่าน work-log</span>
+              <span class="rtag rc-green">③ อ่าน task-board</span>
+              <span class="rtag rc-teal">ตาม read-more hints</span>
+              <span class="rtag rc-teal">compliance scan C-01…C-14</span>
+            </div>
+          </div>
+          <div class="rarr"></div>
+          <div class="rgrp rc-purple">
+            <div class="rgrp-hd">⚡ Work — ภายใต้ Decision Protocol</div>
+            <div class="rgrp-body">
+              <span class="rtag rc-purple">ทำงานตาม 3-question check</span>
+              <span class="rtag rc-purple">track task-board ทุก task</span>
+            </div>
+          </div>
+          <div class="rarr"></div>
+          <div class="rgrp rc-amber">
+            <div class="rgrp-hd">✅ Session End — ห้ามข้าม</div>
+            <div class="rgrp-body">
+              <span class="rtag rc-amber">อัปเดต work-status</span>
+              <span class="rtag rc-amber">อัปเดต work-log</span>
+              <span class="rtag rc-amber">อัปเดต task-board</span>
+              <span class="rtag rc-dim">entity เปลี่ยน → entity-register</span>
+              <span class="rtag rc-dim">multi-tool → agent diary</span>
+            </div>
+          </div>
+          <div class="rarr"></div>
+          <div style="display:flex;align-items:center;gap:12px;justify-content:center">
+            <div class="rnode rnode-pill rc-green">✅ Done</div>
+            <span style="font-size:12px;color:var(--t3)">↺ next session → Start</span>
+          </div>
         </div>
       </div>
     </div>
 
+    <!-- ── 3. Task Lifecycle ── -->
     <div id="r-task" class="ref-panel">
       <div class="ref-diagram-box">
-        <div id="rd-task" class="mermaid-wrap"><span class="loading-txt">กำลังโหลด...</span>
-flowchart LR
-  classDef todo fill:#475569,stroke:#64748b,color:#fff
-  classDef design fill:#1d4ed8,stroke:#3b82f6,color:#fff
-  classDef prog fill:#7c3aed,stroke:#a855f7,color:#fff
-  classDef rev fill:#0f766e,stroke:#14b8a6,color:#fff
-  classDef done fill:#166534,stroke:#22c55e,color:#fff
-  classDef block fill:#7f1d1d,stroke:#ef4444,color:#fff
-  T1(["📋 todo"])
-  T2(["📐 design_validate"])
-  T3(["⚙️ in_progress"])
-  T5(["🔍 review"])
-  T6(["✅ done"])
-  BL(["🚫 BLOCKED"])
-  T1 -->|"Definition of Ready"| T2
-  T2 -->|"source confirmed"| T3
-  T3 --> T5
-  T5 -->|"Definition of Done"| T6
-  T1 -.->|"ขาด source ref"| BL
-  T2 -.->|"CONFLICT"| BL
-  T3 -.->|"ขาดข้อมูล"| BL
-  BL -.->|"resolved"| T1
-  class T1 todo
-  class T2 design
-  class T3 prog
-  class T5 rev
-  class T6 done
-  class BL block
+        <div class="rdiag">
+          <div class="rpipe" style="margin-bottom:20px">
+            <div class="rpipe-node rc-dim">📋<br>todo</div>
+            <div class="rpipe-arr">→</div>
+            <div class="rpipe-node rc-blue">📐<br>design_validate</div>
+            <div class="rpipe-arr">→</div>
+            <div class="rpipe-node rc-purple">⚙️<br>in_progress</div>
+            <div class="rpipe-arr">→</div>
+            <div class="rpipe-node rc-teal">🔍<br>review</div>
+            <div class="rpipe-arr">→</div>
+            <div class="rpipe-node rc-green">✅<br>done</div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:20px;flex-wrap:wrap">
+            <span style="font-size:11px;color:var(--t3)">ขาด source ref / CONFLICT / ขาดข้อมูล ↓</span>
+            <div class="rpipe-node rc-red" style="min-width:120px">🚫 BLOCKED</div>
+            <span style="font-size:11px;color:var(--t3)">resolved → todo ↑</span>
+          </div>
+          <div class="rgrid2">
+            <div style="padding:14px 16px;background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:8px">
+              <div style="font-size:10px;font-weight:800;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">Definition of Ready</div>
+              <div style="font-size:12px;color:var(--t2);line-height:1.6">มี source doc reference · scope ชัด · acceptance criteria ครบ</div>
+            </div>
+            <div style="padding:14px 16px;background:var(--green-bg);border:1px solid var(--green-bd);border-radius:8px">
+              <div style="font-size:10px;font-weight:800;color:var(--green);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">Definition of Done</div>
+              <div style="font-size:12px;color:var(--t2);line-height:1.6">test ผ่าน · doc อัปเดต · compliance check ผ่าน · review approved</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
+    <!-- ── 4. Decision Protocol ── -->
     <div id="r-decision" class="ref-panel">
       <div class="ref-diagram-box">
-        <div id="rd-decision" class="mermaid-wrap"><span class="loading-txt">กำลังโหลด...</span>
-flowchart TD
-  classDef teal fill:#0f766e,stroke:#14b8a6,color:#fff
-  classDef blue fill:#1d4ed8,stroke:#3b82f6,color:#fff
-  classDef red fill:#7f1d1d,stroke:#ef4444,color:#fff
-  classDef green fill:#166534,stroke:#22c55e,color:#fff
-  classDef amber fill:#92400e,stroke:#f59e0b,color:#fff
-  START(["⚠️ Ambiguous"])
-  Q1{"รู้ outcome?"}
-  Q2{"ตรง source docs?"}
-  Q3{"Reversible?"}
-  OK(["✅ Proceed"])
-  SCA["A: Task คลุมเครือ → BLOCKED"]
-  SCB["B: Code≠Source → extension doc"]
-  SCC["C: Scope Creep → log task ใหม่"]
-  SCD["D: Bug นอก scope → FOUND-IN-PASSING"]
-  SCE["E: Req ขัดแย้ง → BLOCKED CONFLICT"]
-  SCF["F: ไม่มีข้อมูล → placeholder"]
-  SCG["G: Context เต็ม → checkpoint"]
-  LVL["L1 Log · L2 Block · L3 Stop"]
-  START --> Q1
-  Q1 -->|No| SCF
-  Q1 -->|Yes| Q2
-  Q2 -->|No| SCB
-  Q2 -->|Yes| Q3
-  Q3 -->|No| SCE
-  Q3 -->|Yes| OK
-  SCA & SCB & SCC & SCD & SCE & SCF & SCG -.-> LVL
-  class Q1,Q2,Q3,LVL teal
-  class SCC,SCD,SCG blue
-  class SCA,SCF red
-  class SCB,SCE amber
-  class OK green
+        <div class="rdiag">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
+            <!-- Left: 3-question tree -->
+            <div>
+              <div class="rnode-center" style="margin-bottom:4px">
+                <div class="rnode rnode-pill rc-amber">⚠️ Ambiguous Situation</div>
+              </div>
+              <div class="rarr"></div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+                <div class="rnode rc-teal" style="flex:1;justify-content:center;font-size:12px">Q1: รู้ outcome?</div>
+                <div style="font-size:10px;color:var(--t3);flex-shrink:0">No →</div>
+                <span class="rtag rc-red" style="flex-shrink:0">F: placeholder</span>
+              </div>
+              <div class="rarr"></div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+                <div class="rnode rc-teal" style="flex:1;justify-content:center;font-size:12px">Q2: ตรง source docs?</div>
+                <div style="font-size:10px;color:var(--t3);flex-shrink:0">No →</div>
+                <span class="rtag rc-amber" style="flex-shrink:0">B: ext doc</span>
+              </div>
+              <div class="rarr"></div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+                <div class="rnode rc-teal" style="flex:1;justify-content:center;font-size:12px">Q3: Reversible?</div>
+                <div style="font-size:10px;color:var(--t3);flex-shrink:0">No →</div>
+                <span class="rtag rc-red" style="flex-shrink:0">E: CONFLICT</span>
+              </div>
+              <div class="rarr"></div>
+              <div class="rnode-center">
+                <div class="rnode rnode-pill rc-green">✅ Proceed</div>
+              </div>
+            </div>
+            <!-- Right: all scenarios + levels -->
+            <div style="display:flex;flex-direction:column;gap:5px">
+              <div style="font-size:10px;font-weight:800;letter-spacing:.08em;color:var(--t3);text-transform:uppercase;margin-bottom:2px">Scenarios A–G</div>
+              <div class="rtag rc-amber" style="justify-content:space-between"><span>A: Task คลุมเครือ</span><span style="opacity:.55">BLOCKED</span></div>
+              <div class="rtag rc-amber" style="justify-content:space-between"><span>B: Code ≠ Source</span><span style="opacity:.55">extension doc</span></div>
+              <div class="rtag rc-blue" style="justify-content:space-between"><span>C: Scope Creep</span><span style="opacity:.55">log new task</span></div>
+              <div class="rtag rc-blue" style="justify-content:space-between"><span>D: Bug นอก scope</span><span style="opacity:.55">FOUND-IN-PASSING</span></div>
+              <div class="rtag rc-red" style="justify-content:space-between"><span>E: Req ขัดแย้ง</span><span style="opacity:.55">BLOCKED CONFLICT</span></div>
+              <div class="rtag rc-red" style="justify-content:space-between"><span>F: ไม่มีข้อมูล</span><span style="opacity:.55">placeholder</span></div>
+              <div class="rtag rc-blue" style="justify-content:space-between"><span>G: Context เต็ม</span><span style="opacity:.55">checkpoint</span></div>
+              <div style="font-size:10px;font-weight:800;letter-spacing:.08em;color:var(--t3);text-transform:uppercase;margin:6px 0 2px">Escalation Levels</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap">
+                <div class="rtag rc-blue">L1 Log &amp; Continue</div>
+                <div class="rtag rc-amber">L2 Block &amp; Flag</div>
+                <div class="rtag rc-red">L3 Stop Session</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
+    <!-- ── 5. Memory System ── -->
     <div id="r-memory" class="ref-panel">
       <div class="ref-diagram-box">
-        <div id="rd-memory" class="mermaid-wrap"><span class="loading-txt">กำลังโหลด...</span>
-flowchart TD
-  classDef l1 fill:#1d4ed8,stroke:#3b82f6,color:#fff
-  classDef l2 fill:#7c3aed,stroke:#a855f7,color:#fff
-  classDef l3 fill:#92400e,stroke:#f59e0b,color:#fff
-  classDef rule fill:#0f766e,stroke:#14b8a6,color:#fff
-  ADR["📋 ADR Accept → update entity-register"]
-  subgraph L1["Layer 1 — Entity Memory"]
-    ER["entity-register.md\nstatus · since · until · ADR"]
-    TAG["Tags: deprecated · superseded · proposed"]
-    R1["C-14: เจอ deprecated → ตรวจ register"]
-  end
-  subgraph L2["Layer 2 — Context Routing"]
-    RM["read-more hints ใน AI-CONTEXT"]
-    R2["โหลดเฉพาะ section ที่ต้องการ"]
-  end
-  subgraph L3["Layer 3 — Agent + Cross-Project"]
-    DI["Agent Diary · agents/ · แยกต่อ tool"]
-    CP["Cross-Project Memory · ai-workspace/"]
-  end
-  ADR --> ER --> TAG --> R1
-  RM --> R2
-  class ER,TAG l1
-  class RM l2
-  class DI,CP l3
-  class R1,R2 rule
-  class ADR l1
+        <div class="rdiag">
+          <div class="rnode-center" style="margin-bottom:4px">
+            <div class="rnode rnode-pill rc-blue">📋 ADR Accept → update entity-register</div>
+          </div>
+          <div class="rarr"></div>
+          <div class="rgrp rc-blue" style="margin-bottom:0">
+            <div class="rgrp-hd">Layer 1 — Entity Memory</div>
+            <div class="rgrp-body" style="flex-direction:column;gap:8px">
+              <div style="display:flex;gap:7px;flex-wrap:wrap">
+                <span class="rtag rc-blue">entity-register.md</span>
+                <span class="rtag rc-dim">status · since · until · ADR ref</span>
+              </div>
+              <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
+                <span class="rtag rc-dim">deprecated</span>
+                <span class="rtag rc-dim">superseded</span>
+                <span class="rtag rc-dim">proposed</span>
+                <span style="font-size:11px;color:var(--t3)">← Tags</span>
+              </div>
+              <span class="rtag rc-teal" style="align-self:flex-start">C-14: เจอ deprecated → ตรวจ register ก่อนใช้เสมอ</span>
+            </div>
+          </div>
+          <div class="rarr"></div>
+          <div class="rgrp rc-purple">
+            <div class="rgrp-hd">Layer 2 — Context Routing</div>
+            <div class="rgrp-body" style="flex-direction:column;gap:7px">
+              <span class="rtag rc-purple">read-more hints ใน AI-CONTEXT block ของแต่ละไฟล์</span>
+              <span class="rtag rc-teal" style="align-self:flex-start">โหลดเฉพาะ section ที่ task ต้องการ — ไม่ scan ทั้งโปรเจ็กต์</span>
+            </div>
+          </div>
+          <div class="rarr"></div>
+          <div class="rgrp rc-amber">
+            <div class="rgrp-hd">Layer 3 — Agent + Cross-Project</div>
+            <div class="rgrp-body">
+              <span class="rtag rc-amber">Agent Diary · doc/03-log/agents/</span>
+              <span class="rtag rc-amber">แยกต่อ tool · ห้าม cross-write</span>
+              <span class="rtag rc-amber">cross-project-memory.md · ai-workspace/</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1330,14 +1388,7 @@ flowchart TD
   <p><a href="how-it-works.html">← กลับหน้า Overview</a> · <a href="https://github.com/BlackAkuma/ai-project-template" target="_blank">GitHub Repository</a> · <a href="https://github.com/BlackAkuma/ai-project-template/blob/master/README.md" target="_blank">README</a></p>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <script>
-mermaid.initialize({
-  startOnLoad:false, theme:'dark',
-  themeVariables:{darkMode:true,background:'#111827',primaryColor:'#1d4ed8',primaryTextColor:'#e2e8f0',primaryBorderColor:'#3b82f6',lineColor:'#334155',fontSize:'13px'},
-  flowchart:{curve:'basis',padding:14}
-});
-
 // ── Scenario accordion ──────────────────────────────────────
 function toggleSc(el) {
   el.classList.toggle('open');
@@ -1377,28 +1428,11 @@ const obs = new IntersectionObserver(entries => {
 sections.forEach(id => { const el = document.getElementById(id); if(el) obs.observe(el); });
 
 // ── Reference diagram tabs ──────────────────────────────────
-const rdRendered = new Set();
-async function showRef(id, btn) {
+function showRef(id, btn) {
   document.querySelectorAll('.ref-panel').forEach(p => p.classList.remove('on'));
   document.querySelectorAll('.rtab').forEach(b => b.classList.remove('on'));
   document.getElementById(id).classList.add('on');
   btn.classList.add('on');
-  if (rdRendered.has(id)) return;
-  rdRendered.add(id);
-  const wrap = document.querySelector('#' + id + ' .mermaid-wrap');
-  if (!wrap) return;
-  // First child is the loading span, rest is the diagram source text
-  const loading = wrap.querySelector('.loading-txt');
-  if (loading) loading.remove();
-  const src = wrap.textContent.trim();
-  wrap.textContent = '';
-  try {
-    const uid = 'rd-' + id + '-' + Math.random().toString(36).slice(2,8);
-    const { svg } = await mermaid.render(uid, src);
-    wrap.innerHTML = svg;
-  } catch(e) {
-    wrap.innerHTML = '<p style="color:#f87171;font-size:12px;padding:20px">Error: ' + e.message + '</p>';
-  }
 }
 
 // Render first ref diagram on load
