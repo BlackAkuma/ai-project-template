@@ -109,42 +109,74 @@ section{padding:80px 32px}
    SESSION FLOW SECTION
 ════════════════════════════════════ */
 #sec-session{background:var(--bg)}
-.flow-phases{display:flex;flex-direction:column;gap:0;margin-top:48px}
-.flow-phase{display:flex;gap:0;align-items:stretch}
-.flow-phase-label{width:160px;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;padding-right:24px;padding-top:4px}
-@media(max-width:760px){
-  .flow-phase{flex-direction:column}
-  .flow-phase-label{width:auto;align-items:flex-start;padding-right:0;padding-left:0;flex-direction:row;align-items:center;gap:10px;margin-bottom:12px}
-}
-.phase-name{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-align:right}
-.phase-hint{font-size:11px;color:var(--t3);text-align:right;margin-top:2px}
-.flow-spine{width:2px;flex-shrink:0;background:linear-gradient(to bottom,var(--border2),var(--border));position:relative;margin-right:24px}
-.flow-spine-dot{width:12px;height:12px;border-radius:50%;border:2px solid;background:var(--bg);position:absolute;left:-5px;top:18px}
-.flow-steps-col{flex:1;display:flex;flex-direction:column;gap:10px;padding-bottom:32px}
+.flow-phases{display:flex;flex-direction:column;gap:8px;margin-top:48px}
+
+/* Phase card panel */
+.flow-phase{display:flex;flex-direction:column;border-radius:14px;overflow:hidden;border:1px solid var(--border);transition:border-color .2s}
+.flow-phase:hover{border-color:var(--border2)}
+
+/* Phase header banner */
+.flow-phase-hd{display:flex;align-items:center;gap:12px;padding:13px 22px;border-bottom:1px solid rgba(255,255,255,.06)}
+.flow-hd-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.flow-hd-name{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;flex:1}
+.flow-hd-hint{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid;white-space:nowrap}
+
+/* Connector arrow between phases */
+.flow-conn{display:flex;align-items:center;justify-content:center;height:24px;position:relative}
+.flow-conn::before{content:'';position:absolute;left:50%;transform:translateX(-50%);top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--border2),var(--border))}
+.flow-conn-dot{position:relative;z-index:1;background:var(--bg);padding:0 5px;color:var(--t3);font-size:9px;line-height:1}
+
+/* Step column */
+.flow-steps-col{display:flex;flex-direction:column}
 
 /* Step card */
-.step-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;display:flex;gap:16px;align-items:flex-start;transition:.15s}
-.step-card:hover{border-color:var(--border2);background:var(--card2)}
-.step-n{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0;line-height:1}
-.step-content{}
-.step-title{font-size:18px;font-weight:700;line-height:1.3;margin-bottom:8px}
+.step-card{background:transparent;border-top:1px solid var(--border);padding:20px 22px 20px 0;display:flex;gap:0;align-items:flex-start;transition:background .15s;position:relative}
+.step-card:first-child{border-top:none}
+.step-card:hover{background:rgba(255,255,255,.015)}
+.step-card-bar{width:3px;flex-shrink:0;align-self:stretch;border-radius:0;margin-right:20px;opacity:.7}
+.step-n{width:38px;height:38px;min-width:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0;border:1px solid;margin-right:16px}
+.step-content{flex:1;min-width:0}
+.step-title{font-size:17px;font-weight:700;line-height:1.3;margin-bottom:8px}
 .step-body{font-size:15px;color:var(--t2);line-height:1.7}
 .step-body strong{color:var(--t1);font-weight:600}
 .step-body code{font-family:monospace;font-size:12px;background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px;color:#c4b5fd}
 .step-aside{margin-top:10px;padding:10px 14px;border-radius:8px;border-left:3px solid;font-size:13px;line-height:1.5}
 
-/* ── Phase colors ── */
-.phase-boot .phase-name{color:var(--blue)} .phase-boot .flow-spine-dot{border-color:var(--blue);background:var(--blue)}
-.phase-start .phase-name{color:var(--green)} .phase-start .flow-spine-dot{border-color:var(--green);background:var(--green)}
-.phase-work .phase-name{color:var(--purple)} .phase-work .flow-spine-dot{border-color:var(--purple);background:var(--purple)}
-.phase-end .phase-name{color:var(--amber)} .phase-end .flow-spine-dot{border-color:var(--amber);background:var(--amber)}
-.phase-boot .step-n{background:var(--blue-bg);color:var(--blue)}
-.phase-start .step-n{background:var(--green-bg);color:var(--green)}
-.phase-work .step-n{background:var(--purple-bg);color:var(--purple)}
-.phase-end .step-n{background:var(--amber-bg);color:var(--amber)}
+/* ── Phase color themes ── */
+.phase-boot{border-color:var(--blue-bd)}
+.phase-boot .flow-phase-hd{background:rgba(79,142,247,.07)}
+.phase-boot .flow-hd-icon{background:var(--blue-bg);color:var(--blue)}
+.phase-boot .flow-hd-name{color:var(--blue)}
+.phase-boot .flow-hd-hint{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)}
+.phase-boot .step-card-bar{background:var(--blue)}
+.phase-boot .step-n{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)}
 .phase-boot .step-aside{background:var(--blue-bg);border-color:var(--blue);color:var(--t2)}
+
+.phase-start{border-color:var(--green-bd)}
+.phase-start .flow-phase-hd{background:rgba(52,211,153,.07)}
+.phase-start .flow-hd-icon{background:var(--green-bg);color:var(--green)}
+.phase-start .flow-hd-name{color:var(--green)}
+.phase-start .flow-hd-hint{background:var(--green-bg);color:var(--green);border-color:var(--green-bd)}
+.phase-start .step-card-bar{background:var(--green)}
+.phase-start .step-n{background:var(--green-bg);color:var(--green);border-color:var(--green-bd)}
 .phase-start .step-aside{background:var(--green-bg);border-color:var(--green);color:var(--t2)}
+
+.phase-work{border-color:var(--purple-bd)}
+.phase-work .flow-phase-hd{background:rgba(167,139,250,.07)}
+.phase-work .flow-hd-icon{background:var(--purple-bg);color:var(--purple)}
+.phase-work .flow-hd-name{color:var(--purple)}
+.phase-work .flow-hd-hint{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-bd)}
+.phase-work .step-card-bar{background:var(--purple)}
+.phase-work .step-n{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-bd)}
 .phase-work .step-aside{background:var(--purple-bg);border-color:var(--purple);color:var(--t2)}
+
+.phase-end{border-color:var(--amber-bd)}
+.phase-end .flow-phase-hd{background:rgba(251,191,36,.07)}
+.phase-end .flow-hd-icon{background:var(--amber-bg);color:var(--amber)}
+.phase-end .flow-hd-name{color:var(--amber)}
+.phase-end .flow-hd-hint{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-bd)}
+.phase-end .step-card-bar{background:var(--amber)}
+.phase-end .step-n{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-bd)}
 .phase-end .step-aside{background:var(--amber-bg);border-color:var(--amber);color:var(--t2)}
 
 /* ════════════════════════════════════
@@ -621,17 +653,18 @@ section{padding:80px 32px}
     <h2 class="sec-h" data-i18n="session.h">Session Loop — ตั้งแต่เปิดจนปิด</h2>
     <p class="sec-sub" data-i18n="session.sub">ทุก session มีโครงสร้างเดียวกันเสมอ ไม่ว่าจะเป็นวันแรกหรือ session ที่ 200 AI รู้ว่าต้องทำอะไรก่อนและหลัง ไม่ต้อง guide ทุกครั้ง</p>
 
-    <div class="flow-phases" id="flow-phases" style="margin-top:48px">
+    <div class="flow-phases" id="flow-phases">
 
       <!-- BOOTSTRAP -->
       <div class="flow-phase phase-boot">
-        <div class="flow-phase-label">
-          <div class="phase-name">Bootstrap</div>
-          <div class="phase-hint">ครั้งแรกเท่านั้น</div>
+        <div class="flow-phase-hd">
+          <div class="flow-hd-icon">🚀</div>
+          <div class="flow-hd-name">Bootstrap</div>
+          <div class="flow-hd-hint">ครั้งแรกเท่านั้น</div>
         </div>
-        <div class="flow-spine"><div class="flow-spine-dot"></div></div>
         <div class="flow-steps-col">
           <div class="step-card">
+            <div class="step-card-bar"></div>
             <div class="step-n">1</div>
             <div class="step-content">
               <div class="step-title">อ่าน Cross-Project Memory ก่อน</div>
@@ -639,15 +672,16 @@ section{padding:80px 32px}
             </div>
           </div>
           <div class="step-card">
+            <div class="step-card-bar"></div>
             <div class="step-n">2</div>
             <div class="step-content">
               <div class="step-title">ถามภาษา + ถามประเภทโปรเจ็กต์</div>
-              <div class="step-body">AI ถาม 2 คำถามก่อนสร้างอะไร: <strong>(1) เราสื่อสารกันภาษาอะไร?</strong> — บันทึกลง way-of-work.md ถาวร <strong>(2) โปรเจ็กต์นี้ประเภทอะไร?</strong> — Software / Game / อื่น ถ้าเป็น Game → โหลด skills/game/ เพิ่มอัตโนมัติ ถ้าไม่ใช่ → ใช้ core/ เท่านั้น
-              </div>
+              <div class="step-body">AI ถาม 2 คำถามก่อนสร้างอะไร: <strong>(1) เราสื่อสารกันภาษาอะไร?</strong> — บันทึกลง way-of-work.md ถาวร <strong>(2) โปรเจ็กต์นี้ประเภทอะไร?</strong> — Software / Game / อื่น ถ้าเป็น Game → โหลด skills/game/ เพิ่มอัตโนมัติ ถ้าไม่ใช่ → ใช้ core/ เท่านั้น</div>
               <div class="step-aside">ไม่ถามซ้ำ — คำตอบ save ไว้ใน way-of-work.md ตลอดอายุโปรเจ็กต์</div>
             </div>
           </div>
           <div class="step-card">
+            <div class="step-card-bar"></div>
             <div class="step-n">3</div>
             <div class="step-content">
               <div class="step-title">สร้าง doc/ structure ทั้งหมด</div>
@@ -657,31 +691,27 @@ section{padding:80px 32px}
         </div>
       </div>
 
+      <div class="flow-conn"><span class="flow-conn-dot">▼</span></div>
+
       <!-- SESSION START -->
       <div class="flow-phase phase-start">
-        <div class="flow-phase-label">
-          <div class="phase-name">Session Start</div>
-          <div class="phase-hint">ทุก session</div>
+        <div class="flow-phase-hd">
+          <div class="flow-hd-icon">📖</div>
+          <div class="flow-hd-name">Session Start</div>
+          <div class="flow-hd-hint">ทุก session</div>
         </div>
-        <div class="flow-spine"><div class="flow-spine-dot"></div></div>
         <div class="flow-steps-col">
           <div class="step-card">
+            <div class="step-card-bar"></div>
             <div class="step-n">4</div>
             <div class="step-content">
               <div class="step-title">อ่าน 3 ไฟล์หลัก — ใช้เวลา ~2 นาที</div>
-              <div class="step-body">
-                ทุก session เริ่มด้วยการอ่านแค่ <strong>3 ไฟล์นี้เท่านั้น</strong>:
-                <br><br>
-                <strong>① work-status.md</strong> — บอกว่า phase ปัจจุบันคืออะไร task กำลังทำอยู่อะไร และมีบล็อคเกอร์อะไรบ้าง
-                <br>
-                <strong>② work-log-index.md</strong> — บอกว่า session ล่าสุดทำอะไรไปบ้าง จบตรงไหน
-                <br>
-                <strong>③ task-board.md</strong> — บอก task ทั้งหมดพร้อม status ว่าอะไร todo / in_progress / done
-              </div>
+              <div class="step-body">ทุก session เริ่มด้วยการอ่านแค่ <strong>3 ไฟล์นี้เท่านั้น</strong>:<br><br><strong>① work-status.md</strong> — บอกว่า phase ปัจจุบันคืออะไร task กำลังทำอยู่อะไร และมีบล็อคเกอร์อะไรบ้าง<br><strong>② work-log-index.md</strong> — บอกว่า session ล่าสุดทำอะไรไปบ้าง จบตรงไหน<br><strong>③ task-board.md</strong> — บอก task ทั้งหมดพร้อม status ว่าอะไร todo / in_progress / done</div>
               <div class="step-aside">แต่ละไฟล์มี <strong>AI-CONTEXT block</strong> อยู่บนสุด — compressed summary ที่ใช้ token น้อย แต่ให้ข้อมูลครบ</div>
             </div>
           </div>
           <div class="step-card">
+            <div class="step-card-bar"></div>
             <div class="step-n">5</div>
             <div class="step-content">
               <div class="step-title">ตาม read-more hints — โหลดเฉพาะที่ต้องการ</div>
@@ -689,6 +719,7 @@ section{padding:80px 32px}
             </div>
           </div>
           <div class="step-card">
+            <div class="step-card-bar"></div>
             <div class="step-n">6</div>
             <div class="step-content">
               <div class="step-title">รัน Compliance Scan</div>
@@ -698,15 +729,18 @@ section{padding:80px 32px}
         </div>
       </div>
 
+      <div class="flow-conn"><span class="flow-conn-dot">▼</span></div>
+
       <!-- WORK -->
       <div class="flow-phase phase-work">
-        <div class="flow-phase-label">
-          <div class="phase-name">ทำงาน</div>
-          <div class="phase-hint">ภายใต้ protocol</div>
+        <div class="flow-phase-hd">
+          <div class="flow-hd-icon">⚡</div>
+          <div class="flow-hd-name">ทำงาน</div>
+          <div class="flow-hd-hint">ภายใต้ Protocol</div>
         </div>
-        <div class="flow-spine"><div class="flow-spine-dot"></div></div>
         <div class="flow-steps-col">
           <div class="step-card">
+            <div class="step-card-bar"></div>
             <div class="step-n">7</div>
             <div class="step-content">
               <div class="step-title">ทำงานภายใต้ Decision Protocol</div>
@@ -717,15 +751,18 @@ section{padding:80px 32px}
         </div>
       </div>
 
+      <div class="flow-conn"><span class="flow-conn-dot">▼</span></div>
+
       <!-- SESSION END -->
       <div class="flow-phase phase-end">
-        <div class="flow-phase-label">
-          <div class="phase-name">Session End</div>
-          <div class="phase-hint">ห้ามข้าม</div>
+        <div class="flow-phase-hd">
+          <div class="flow-hd-icon">✅</div>
+          <div class="flow-hd-name">Session End</div>
+          <div class="flow-hd-hint">ห้ามข้าม</div>
         </div>
-        <div class="flow-spine" style="background:transparent"><div class="flow-spine-dot"></div></div>
         <div class="flow-steps-col">
           <div class="step-card">
+            <div class="step-card-bar"></div>
             <div class="step-n">8</div>
             <div class="step-content">
               <div class="step-title">อัปเดต 3 ไฟล์ — ทุกครั้ง ห้ามข้าม</div>
@@ -733,6 +770,7 @@ section{padding:80px 32px}
             </div>
           </div>
           <div class="step-card">
+            <div class="step-card-bar"></div>
             <div class="step-n">9</div>
             <div class="step-content">
               <div class="step-title">เขียน Agent Diary (ถ้าใช้หลาย AI tool)</div>
@@ -740,6 +778,7 @@ section{padding:80px 32px}
             </div>
           </div>
           <div class="step-card">
+            <div class="step-card-bar"></div>
             <div class="step-n">10</div>
             <div class="step-content">
               <div class="step-title">ประเมิน Cross-Project Pattern</div>
@@ -1984,13 +2023,14 @@ const EN_SEC = {
 
 'flow-phases': `
 <div class="flow-phase phase-boot">
-  <div class="flow-phase-label">
-    <div class="phase-name">Bootstrap</div>
-    <div class="phase-hint">First run only</div>
+  <div class="flow-phase-hd">
+    <div class="flow-hd-icon">🚀</div>
+    <div class="flow-hd-name">Bootstrap</div>
+    <div class="flow-hd-hint">First run only</div>
   </div>
-  <div class="flow-spine"><div class="flow-spine-dot"></div></div>
   <div class="flow-steps-col">
     <div class="step-card">
+      <div class="step-card-bar"></div>
       <div class="step-n">1</div>
       <div class="step-content">
         <div class="step-title">Read Cross-Project Memory First</div>
@@ -1998,6 +2038,7 @@ const EN_SEC = {
       </div>
     </div>
     <div class="step-card">
+      <div class="step-card-bar"></div>
       <div class="step-n">2</div>
       <div class="step-content">
         <div class="step-title">Ask Language + Ask Project Type</div>
@@ -2006,6 +2047,7 @@ const EN_SEC = {
       </div>
     </div>
     <div class="step-card">
+      <div class="step-card-bar"></div>
       <div class="step-n">3</div>
       <div class="step-content">
         <div class="step-title">Create Full doc/ Structure</div>
@@ -2014,14 +2056,16 @@ const EN_SEC = {
     </div>
   </div>
 </div>
+<div class="flow-conn"><span class="flow-conn-dot">▼</span></div>
 <div class="flow-phase phase-start">
-  <div class="flow-phase-label">
-    <div class="phase-name">Session Start</div>
-    <div class="phase-hint">Every session</div>
+  <div class="flow-phase-hd">
+    <div class="flow-hd-icon">📖</div>
+    <div class="flow-hd-name">Session Start</div>
+    <div class="flow-hd-hint">Every session</div>
   </div>
-  <div class="flow-spine"><div class="flow-spine-dot"></div></div>
   <div class="flow-steps-col">
     <div class="step-card">
+      <div class="step-card-bar"></div>
       <div class="step-n">4</div>
       <div class="step-content">
         <div class="step-title">Read 3 Core Files — Takes ~2 Minutes</div>
@@ -2030,6 +2074,7 @@ const EN_SEC = {
       </div>
     </div>
     <div class="step-card">
+      <div class="step-card-bar"></div>
       <div class="step-n">5</div>
       <div class="step-content">
         <div class="step-title">Follow read-more Hints — Load Only What's Needed</div>
@@ -2037,6 +2082,7 @@ const EN_SEC = {
       </div>
     </div>
     <div class="step-card">
+      <div class="step-card-bar"></div>
       <div class="step-n">6</div>
       <div class="step-content">
         <div class="step-title">Run Compliance Scan</div>
@@ -2045,14 +2091,16 @@ const EN_SEC = {
     </div>
   </div>
 </div>
+<div class="flow-conn"><span class="flow-conn-dot">▼</span></div>
 <div class="flow-phase phase-work">
-  <div class="flow-phase-label">
-    <div class="phase-name">Work</div>
-    <div class="phase-hint">Under Protocol</div>
+  <div class="flow-phase-hd">
+    <div class="flow-hd-icon">⚡</div>
+    <div class="flow-hd-name">Work</div>
+    <div class="flow-hd-hint">Under Protocol</div>
   </div>
-  <div class="flow-spine"><div class="flow-spine-dot"></div></div>
   <div class="flow-steps-col">
     <div class="step-card">
+      <div class="step-card-bar"></div>
       <div class="step-n">7</div>
       <div class="step-content">
         <div class="step-title">Work Under Decision Protocol</div>
@@ -2062,14 +2110,16 @@ const EN_SEC = {
     </div>
   </div>
 </div>
+<div class="flow-conn"><span class="flow-conn-dot">▼</span></div>
 <div class="flow-phase phase-end">
-  <div class="flow-phase-label">
-    <div class="phase-name">Session End</div>
-    <div class="phase-hint">Never Skip</div>
+  <div class="flow-phase-hd">
+    <div class="flow-hd-icon">✅</div>
+    <div class="flow-hd-name">Session End</div>
+    <div class="flow-hd-hint">Never Skip</div>
   </div>
-  <div class="flow-spine" style="background:transparent"><div class="flow-spine-dot"></div></div>
   <div class="flow-steps-col">
     <div class="step-card">
+      <div class="step-card-bar"></div>
       <div class="step-n">8</div>
       <div class="step-content">
         <div class="step-title">Update 3 Files — Every Time, Never Skip</div>
@@ -2077,6 +2127,7 @@ const EN_SEC = {
       </div>
     </div>
     <div class="step-card">
+      <div class="step-card-bar"></div>
       <div class="step-n">9</div>
       <div class="step-content">
         <div class="step-title">Write Agent Diary (If Using Multiple AI Tools)</div>
@@ -2084,6 +2135,7 @@ const EN_SEC = {
       </div>
     </div>
     <div class="step-card">
+      <div class="step-card-bar"></div>
       <div class="step-n">10</div>
       <div class="step-content">
         <div class="step-title">Evaluate Cross-Project Patterns</div>
