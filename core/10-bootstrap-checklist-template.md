@@ -5,6 +5,17 @@ AI ใช้ checklist นี้ตรวจสอบก่อนประกา
 
 ---
 
+## 0. Git Branch Setup — ต้องผ่านก่อนเริ่มทุกอย่าง
+
+- [ ] ตรวจ branch ปัจจุบันด้วย `git branch --show-current` แล้ว
+- [ ] ถ้าอยู่บน production branch: ผู้ใช้ตัดสินใจแล้วว่าจะ (A) สร้าง dev branch หรือ (B) single-branch mode
+- [ ] `git_prod_branch` และ `git_dev_branch` บันทึกใน `work-status.md` AI-CONTEXT block แล้ว
+- [ ] `git_mode` บันทึกแล้ว (`branch-separated` หรือ `single-branch`)
+- [ ] ถ้า `single-branch`: `.deployignore` สร้างแล้วและมี `doc/`, `CLAUDE.md`, `*.lance`
+- [ ] `.gitignore` มี `doc/08-vector-index/` และ `*.lance`
+
+---
+
 ## 1. โครงสร้างโฟลเดอร์
 
 - [ ] `doc/` และโฟลเดอร์หลักทั้งหมดสร้างแล้ว
@@ -58,7 +69,9 @@ AI ใช้ checklist นี้ตรวจสอบก่อนประกา
 
 - [ ] `.gitignore` มี `_template/` อยู่แล้ว (ถ้าไม่มี AI ต้องเพิ่มให้)
 - [ ] ไม่มีไฟล์ของ template ค้างอยู่นอก `_template/` โดยไม่ได้ตั้งใจ
-- [ ] `doc/` พร้อม commit เข้า project git แล้ว (ไม่ติด .gitignore)
+- [ ] `doc/` พร้อม commit เข้า git บน **dev branch เท่านั้น** — ไม่ขึ้น production branch
+- [ ] ถ้า `git_mode: branch-separated`: `git push origin [dev_branch]` รัน bootstrap ครั้งแรกแล้ว
+- [ ] ยืนยัน: `doc/` และ `CLAUDE.md` **ไม่มีอยู่บน production branch** (ตรวจด้วย `git checkout [prod] && ls`)
 
 ## 8. Policy ที่ต้องตัดสินใจ
 

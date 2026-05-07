@@ -55,6 +55,8 @@ AI ต้องเตรียมอย่างน้อย:
 - ห้ามเขียนทับ source docs revision เดิมแบบเงียบ ๆ
 - ถ้าความต้องการเปลี่ยน ต้องสร้าง source docs เวอร์ชันใหม่หรือ extension doc
 - plan, status, task, log ต้องอ้างอิง source docs เวอร์ชันที่ใช้อยู่
+- **Git branch ต้องตรวจก่อนทุกอย่าง** — ดู `21-git-workflow-template.md` สำหรับ scenarios ทั้งหมด
+- `doc/` และ `CLAUDE.md` ต้องไม่ขึ้น production branch — นี่คือ core principle
 - daily logs และ daily summaries อาจเป็น local working records และไม่จำเป็นต้องเก็บใน git
 - เมื่อเจอสถานการณ์คลุมเครือหรือขัดแย้ง ให้ปฏิบัติตาม `doc/04-way-of-work/ai-decision-protocol.md`
 - ก่อนตัดสินใจเชิง architecture ต้องอ่าน `doc/07-decisions/README.md` ก่อน
@@ -62,6 +64,12 @@ AI ต้องเตรียมอย่างน้อย:
 - Memory system overview: `19-memory-architecture-overview.md`
 
 ## AI Execution Steps
+
+0. **ตรวจ Git Branch — ทำก่อนทุกอย่าง:**
+   - รัน `git branch --show-current` เพื่อรู้ว่าอยู่บน branch ไหน
+   - ถ้าอยู่บน production branch (main/master/release/prod) → **STOP** → ปฏิบัติตาม Scenario 1 ใน `21-git-workflow-template.md`
+   - ถ้าอยู่บน dev/non-production branch → proceed ได้เลย
+   - บันทึก `git_prod_branch`, `git_dev_branch`, `git_mode` ใน `work-status.md` AI-CONTEXT block
 
 1. **ถามภาษา:** "เราจะสื่อสารกันเป็นภาษาอะไร?" — รอคำตอบก่อน บันทึกลง `way-of-work.md`
 2. **ถามประเภทโปรเจ็กต์:** "โปรเจ็กต์นี้เป็นประเภทอะไร?" พร้อมตัวเลือก:
@@ -94,6 +102,8 @@ AI ต้องเตรียมอย่างน้อย:
 
 ## What AI Must Not Do
 
+- ไม่ commit `doc/` หรือ `CLAUDE.md` ลงบน production branch โดยไม่แจ้งผู้ใช้
+- ไม่ข้าม Git Branch Check (Step 0) ไม่ว่าจะด้วยเหตุผลใด
 - ไม่สร้าง requirement เชิงธุรกิจเองเกิน source docs
 - ไม่เขียนทับเอกสารต้นแบบเดิมโดยไม่มีเวอร์ชันใหม่
 - ไม่ประกาศว่างานเสร็จถ้ายังไม่มี status/log ที่รองรับ

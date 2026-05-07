@@ -36,6 +36,8 @@
 ทำตามลำดับนี้ทุก session:
 
 1. อ่าน AI-CONTEXT block ของ `doc/01-plan/work-status.md`
+   - ถ้า `git_mode: branch-separated` → รัน `git branch --show-current` ทันที
+   - ถ้า branch ปัจจุบัน == `git_prod_branch` → **หยุด** แจ้งผู้ใช้ก่อนดำเนินการต่อ: "คุณอยู่บน production branch ([branch]) แนะนำให้ switch ไป [git_dev_branch] ก่อน"
 2. อ่าน AI-CONTEXT block ของ `doc/03-log/work-log-index.md`
 3. อ่าน AI-CONTEXT block ของ `doc/02-task/task-board.md`
 4. ถ้า `doc/03-log/agents/claude-code.md` มีอยู่ → อ่าน AI-CONTEXT block ของไฟล์นั้นด้วย เพื่อรับ checkpoint ที่ Claude Code session ก่อนหน้าบันทึกไว้ *(ไฟล์นี้มีเฉพาะโปรเจ็กต์ที่ใช้ AI tool มากกว่า 1 ตัว)*
@@ -54,6 +56,7 @@
 2. เพิ่ม entry ใน `work-log-index` — body **และ** AI-CONTEXT block
 3. อัปเดต `task-board` — status **และ** AI-CONTEXT block (ถ้ามี task เปลี่ยน)
 4. task ที่ยัง in_progress → mark เป็น `[IN_PROGRESS: checkpoint saved — <สิ่งที่ทำไปแล้ว>]`
+5. ถ้า `git_mode: branch-separated` → รัน `git push origin [git_dev_branch]` เพื่อป้องกัน data loss
 
 **กฎ sync:** AI-CONTEXT block ต้องสะท้อน body เสมอ — ถ้าไม่ตรงให้เชื่อ body และอัปเดต block
 
