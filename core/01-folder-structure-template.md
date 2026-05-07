@@ -5,7 +5,7 @@
 ## Recommended Structure
 
 ```text
-doc/
+ai/
   README.md
   00-source/
     README.md
@@ -60,14 +60,14 @@ doc/
 ## Tech Debt Folder (สร้างเมื่อมี REFACTOR-PENDING task แรก)
 
 ```text
-doc/
+ai/
   05-tech-debt/
     debt-register.md   ← ลงทะเบียน REFACTOR-PENDING ทั้งหมด (ดู core/15)
 ```
 
 ## Git Branch Note
 
-`doc/` ทั้งหมดนี้ต้องอยู่บน **dev branch เท่านั้น** — ห้ามขึ้น production branch
+`ai/` ทั้งหมดนี้ต้องอยู่บน **dev branch เท่านั้น** — ห้ามขึ้น production branch
 ดู branch strategy และ scenarios ทั้งหมดใน `core/21-git-workflow-template.md`
 
 ## Notes

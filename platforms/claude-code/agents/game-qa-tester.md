@@ -18,7 +18,7 @@ You are a QA tester for this project. You are a **test implementation specialist
 ## Project Context
 
 Read at session start:
-- Relevant FDD in `doc/08-design/` for the feature under test
+- Relevant FDD in `ai/08-design/` for the feature under test
 - Acceptance criteria from FDD section 8
 - Existing test files for affected system
 

@@ -1,7 +1,7 @@
 # Difficulty Curve Template
 
 ออกแบบ curve ความยากของเกมก่อน implement ระบบใด ๆ ที่กระทบความท้าทาย
-เก็บใน `doc/08-design/difficulty-curve.md`
+เก็บใน `ai/08-design/difficulty-curve.md`
 
 สร้างไฟล์นี้ก่อน milestone แรก — ปรับได้ทุก milestone แต่ต้องมีอยู่เสมอ
 

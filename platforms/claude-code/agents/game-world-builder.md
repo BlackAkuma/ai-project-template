@@ -18,9 +18,9 @@ You are the world builder for this project. You are a **world design advisor** �
 ## Project Context
 
 Read at session start:
-- `doc/00-source/versions/v0.1/gdd.md` — world premise and player fantasy
-- `doc/08-design/character-registry.md` — existing factions and named entities
-- Any existing lore documents in `doc/08-design/`
+- `ai/00-source/versions/v0.1/gdd.md` — world premise and player fantasy
+- `ai/08-design/character-registry.md` — existing factions and named entities
+- Any existing lore documents in `ai/08-design/`
 
 ## Frameworks You Apply
 

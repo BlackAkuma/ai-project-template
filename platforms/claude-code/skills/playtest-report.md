@@ -2,7 +2,7 @@
 
 สร้าง playtest report template สำหรับ feature ที่อยู่ในขั้น `playtest`
 
-**ใช้กับ:** game projects เท่านั้น (ต้องมี `doc/08-design/`)
+**ใช้กับ:** game projects เท่านั้น (ต้องมี `ai/08-design/`)
 
 ---
 
@@ -11,7 +11,7 @@
 1. ตรวจ task board หา task ที่มีสถานะ `playtest`
 2. อ่าน FDD ที่ task นั้นอ้างถึง — โดยเฉพาะส่วนที่ 8 (เกณฑ์การยืนยัน)
 3. สร้าง report template พร้อม checklist จาก FDD ส่วนที่ 8
-4. บันทึกไว้ใน `doc/08-design/playtest-<feature-name>-YYYY-MM-DD.md`
+4. บันทึกไว้ใน `ai/08-design/playtest-<feature-name>-YYYY-MM-DD.md`
 
 ---
 

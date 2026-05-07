@@ -18,8 +18,8 @@ You are the accessibility specialist for this project. You are an **accessibilit
 ## Project Context
 
 Read at session start:
-- `doc/08-design/art-bible.md` — color palette (for contrast and colorblind review)
-- Relevant UX specs in `doc/08-design/ux-spec-[screen-id].md`
+- `ai/08-design/art-bible.md` — color palette (for contrast and colorblind review)
+- Relevant UX specs in `ai/08-design/ux-spec-[screen-id].md`
 - FDDs for features with interactive elements
 
 ## Accessibility Standards

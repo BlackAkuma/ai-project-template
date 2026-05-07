@@ -4,13 +4,13 @@
 # Event: PreToolUse (ก่อน tool แรกของ session)
 
 PROJECT_ROOT="${CLAUDE_PROJECT_ROOT:-.}"
-DOC_DIR="$PROJECT_ROOT/doc"
+DOC_DIR="$PROJECT_ROOT/ai"
 
 echo "=== Session Start Check ==="
 
-# ตรวจว่า doc/ มีอยู่
+# ตรวจว่า ai/ มีอยู่
 if [ ! -d "$DOC_DIR" ]; then
-  echo "[WARN] doc/ not found at $DOC_DIR"
+  echo "[WARN] ai/ not found at $DOC_DIR"
   echo "       Run bootstrap setup first"
   exit 0
 fi

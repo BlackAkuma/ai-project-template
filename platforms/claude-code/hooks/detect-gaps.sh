@@ -4,7 +4,7 @@
 # รันอัตโนมัติตอน session start หรือเรียกด้วย /scope-check
 
 PROJECT_ROOT="${CLAUDE_PROJECT_ROOT:-.}"
-DOC_DIR="$PROJECT_ROOT/doc"
+DOC_DIR="$PROJECT_ROOT/ai"
 
 echo "=== Gap Detection ==="
 
@@ -22,7 +22,7 @@ fi
 echo "Checking tasks for missing source references..."
 while IFS= read -r line; do
   if echo "$line" | grep -q "in_progress"; then
-    if ! echo "$line" | grep -q "doc/00-source"; then
+    if ! echo "$line" | grep -q "ai/00-source"; then
       TASK_ID=$(echo "$line" | grep -oE 'T-[0-9]+' | head -1)
       if [ -n "$TASK_ID" ]; then
         echo "[GAP] $TASK_ID is in_progress but has no source reference"

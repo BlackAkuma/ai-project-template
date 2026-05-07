@@ -18,9 +18,9 @@ You are a level designer for this project. You are a **spatial design advisor** 
 ## Project Context
 
 Read at session start:
-- `doc/08-design/difficulty-curve.md` — difficulty philosophy and target axes
-- `doc/00-source/versions/v0.1/gdd.md` — core loop and player fantasy
-- Relevant LDD in `doc/08-design/level-[id].md` (if reviewing existing level)
+- `ai/08-design/difficulty-curve.md` — difficulty philosophy and target axes
+- `ai/00-source/versions/v0.1/gdd.md` — core loop and player fantasy
+- Relevant LDD in `ai/08-design/level-[id].md` (if reviewing existing level)
 
 ## Frameworks You Apply
 
@@ -50,7 +50,7 @@ Read at session start:
 
 | Code | What to look for |
 |------|-----------------|
-| L-01 | Level implemented without LDD in `doc/08-design/` |
+| L-01 | Level implemented without LDD in `ai/08-design/` |
 | L-02 | Encounter added or changed without updating LDD |
 | G-09 | Level changes difficulty without updating difficulty-curve.md |
 

@@ -27,7 +27,7 @@ Core workflow แข็งแกร่งในด้าน "ทำอะไร 
 - ทีมที่ต้องการ pattern และ lesson สะสมข้ามโปรเจ็กต์
 
 **Phase 3 (Optional — ต้องการ setup เพิ่ม):**
-- โปรเจ็กต์ขนาดใหญ่ที่ doc/ มีหลายสิบไฟล์และ routing hints ไม่พอ
+- โปรเจ็กต์ขนาดใหญ่ที่ ai/ มีหลายสิบไฟล์และ routing hints ไม่พอ
 - workspace ที่มีหลายโปรเจ็กต์และต้องการ semantic search ข้ามโปรเจ็กต์
 
 ---
@@ -37,12 +37,14 @@ Core workflow แข็งแกร่งในด้าน "ทำอะไร 
 | ไฟล์ | หน้าที่ |
 |------|--------|
 | `core/19-memory-architecture-overview.md` | ภาพรวม (ไฟล์นี้) |
-| `core/17-entity-register-template.md` | template สำหรับ `doc/07-decisions/entity-register.md` |
+| `core/17-entity-register-template.md` | template สำหรับ `ai/07-decisions/entity-register.md` |
 | `core/18-cross-project-memory-template.md` | template สำหรับ `~/ai-workspace/cross-project-memory.md` |
 | `core/06-work-status-template.md` | มี `read_more` field (Scoped Memory Map) |
 | `core/08-log-and-summary-template.md` | มี Agent Diary format และ `deep_context` hint |
 | `core/03-way-of-work-template.md` | มี Memory Scope Protocol (decision tree) |
 | `core/11-ai-decision-protocol-template.md` | มี Scenario J (Entity Lifecycle Tags) และ Scenario K (Memory Scope) |
+| `core/20-vector-memory-optional.md` | Phase 3 — MemPalace vector search setup และ decision protocol |
+| `tools/vector-memory/README.md` | Quick reference: install, คำสั่งประจำวัน, token budget |
 
 ---
 
@@ -52,7 +54,7 @@ Core workflow แข็งแกร่งในด้าน "ทำอะไร 
 
 **ปัญหา:** AI ไม่รู้ว่า entity (tech, integration, person, pattern) ยังมีสถานะอะไรอยู่
 
-**วิธีแก้:** `doc/07-decisions/entity-register.md` — ไฟล์เดียวที่ track entity ทั้งหมดพร้อม status และช่วงเวลา
+**วิธีแก้:** `ai/07-decisions/entity-register.md` — ไฟล์เดียวที่ track entity ทั้งหมดพร้อม status และช่วงเวลา
 
 ```markdown
 | Entity | Type | Status | Since | Until | ADR |
@@ -84,9 +86,9 @@ Core workflow แข็งแกร่งในด้าน "ทำอะไร 
 phase: implementation
 focus: T-012 payment integration
 read_more:
-  architecture: doc/07-decisions/README.md
-  entities:     doc/07-decisions/entity-register.md
-  source:       doc/00-source/versions/v1.2/
+  architecture: ai/07-decisions/README.md
+  entities:     ai/07-decisions/entity-register.md
+  source:       ai/00-source/versions/v1.2/
 -->
 ```
 
@@ -102,7 +104,7 @@ read_more:
 
 **วิธีแก้:**
 ```
-doc/03-log/
+ai/03-log/
   work-log-index.md      ← master index รวมทุก tool (ไม่เปลี่ยน)
   agents/
     claude-code.md       ← diary เฉพาะ Claude Code
@@ -142,7 +144,7 @@ doc/03-log/
 
 ```
 ข้อมูลใหม่ที่ต้องเก็บ
-├── เป็น architectural decision?       → ADR (doc/07-decisions/)
+├── เป็น architectural decision?       → ADR (ai/07-decisions/)
 ├── เป็น entity ใหม่หรือ status เปลี่ยน? → entity-register.md
 ├── เป็น pattern ที่ใช้ได้ข้ามโปรเจ็กต์? → cross-project-memory.md (ถามผู้ใช้ก่อน)
 ├── เป็น progress/detail ของ session นี้? → agent diary + work-log-index
@@ -151,6 +153,27 @@ doc/03-log/
 
 **กฎ:** ข้อมูลหนึ่งชิ้นอาจต้องเก็บหลายที่ — ไม่ mutually exclusive
 ถ้าไม่แน่ใจ: เก็บลง work-log ก่อน แล้วระบุว่า "ยังไม่แน่ใจว่าควรอยู่ที่ไหน"
+
+---
+
+### ชั้น 4 — Vector Search (Phase 3, Optional)
+
+**ปัญหา:** ai/ มีหลายสิบไฟล์ — `read_more` hints ไม่เพียงพอ ต้อง semantic search เพื่อหา context จาก session เก่า
+
+**วิธีแก้:** MemPalace — local-first vector memory (ChromaDB backend, ไม่ต้อง cloud)
+
+```
+Wing: <project-name>
+  Room: decisions     ← ai/07-decisions/
+  Room: tasks         ← ai/02-task/
+  Room: plan          ← ai/01-plan/
+  Room: logs          ← ai/03-log/
+```
+
+**กฎ:**
+- search เฉพาะเมื่อ context window ไม่มีคำตอบ — ไม่ต้อง search ทุก query
+- ผล search สูงสุด 5 chunks, ไม่เกิน 1,500 token รวม
+- ดูรายละเอียดทั้งหมดใน `core/20-vector-memory-optional.md`
 
 ---
 
@@ -172,6 +195,7 @@ Memory system เพิ่มขั้นตอนต่อไปนี้บน
 □ entity-register — มี entity ใหม่หรือ status เปลี่ยนไหม? (deprecated, added, removed)
 □ agent diary — เขียน diary ของ tool นี้ (ถ้าใช้ multi-tool workflow)
 □ cross-project memory — มี pattern ที่ควร promote ข้ามโปรเจ็กต์ไหม? (ถามผู้ใช้ก่อน)
+□ ถ้า vector_memory: enabled และ ai/ เปลี่ยน → รัน mempalace mine ai/ --wing <vector_wing>
 ```
 
 ### เมื่อ ADR ถูก Accept
@@ -206,5 +230,8 @@ Memory system เพิ่มขั้นตอนต่อไปนี้บน
 |------|-----------|
 | C-14 | AI เจอ `[ENTITY:deprecated]` ต้องตรวจ entity-register ก่อนใช้ข้อมูลนั้น |
 | C-14 | เมื่อ ADR Accept → ต้องอัปเดต entity-register ทันที |
+| C-20 | ถ้า `vector_memory: enabled` และ ai/ เปลี่ยน → ต้อง re-mine ก่อนจบ session |
+| C-21 | ผล search ที่ score < 0.60 ห้ามใส่ใน context |
+| C-22 | ห้าม inject ผล search เกิน 1,500 token ต่อ session |
 
 validate-commit.sh hook: warn เมื่อ commit file มี reference ถึง entity ที่อยู่ใน entity-register ด้วย status `deprecated`

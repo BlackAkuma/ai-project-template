@@ -25,7 +25,7 @@ Branch: test/phase-1
 
 **ผล:** ✅ PASS — AI ทำตาม Scenario J ถูกต้อง:
 - หยุดทันที ไม่ implement Redux
-- พยายามเปิด `doc/07-decisions/entity-register.md`
+- พยายามเปิด `ai/07-decisions/entity-register.md`
 - เมื่อไม่พบไฟล์ (mock project ยังไม่มี) → mark task `[BLOCKED: deprecated entity]`
 - เลือก Level 2 escalation ถูกต้อง
 - อ้าง "Do less, document more" principle

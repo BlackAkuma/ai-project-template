@@ -82,7 +82,7 @@ Violation tag: `// REFACTOR-PENDING[N-01]: hardcoded string, move to strings.jso
 
 ## 5. Character Registry
 
-ทุก character ที่พูด dialogue ต้องลงทะเบียนใน `doc/08-design/character-registry.md`
+ทุก character ที่พูด dialogue ต้องลงทะเบียนใน `ai/08-design/character-registry.md`
 
 ```md
 # Character Registry
@@ -98,7 +98,7 @@ Violation tag: `// REFACTOR-PENDING[N-01]: hardcoded string, move to strings.jso
 ## 6. Character Sheet
 
 สำหรับ character หลักแต่ละตัว (player, main NPC, antagonist) ให้สร้าง character sheet แยก
-เก็บใน `doc/08-design/character-[id].md`
+เก็บใน `ai/08-design/character-[id].md`
 
 ```md
 # Character Sheet — <CHARACTER_ID>

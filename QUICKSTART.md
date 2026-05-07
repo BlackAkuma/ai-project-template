@@ -43,7 +43,7 @@ Copy prompt นี้ให้ AI:
 
 ข้อมูลโปรเจ็กต์:
 - ชื่อ: [PROJECT_NAME]
-- Path ที่จะสร้าง doc/: [path โปรเจ็กต์นี้ / current directory]
+- Path ที่จะสร้าง ai/: [path โปรเจ็กต์นี้ / current directory]
 - Template อยู่ที่: _template/
 - ประเภท: [app / web / game / mobile]
 - Source docs: [แนบไฟล์มาด้วย / ยังไม่มี]
@@ -53,7 +53,7 @@ Copy prompt นี้ให้ AI:
 1. ถามว่าจะสื่อสารกันเป็นภาษาอะไร รอคำตอบก่อน
 2. อ่านไฟล์ทุกไฟล์ใน _template/core/ ตามลำดับ (00 → 18)
 3. ถ้าโปรเจ็กต์เป็น game หรือ web game ให้อ่าน _template/skills/game/ ต่อด้วย (00 → 06)
-4. สร้างโครงสร้าง doc/ ใน current directory
+4. สร้างโครงสร้าง ai/ ใน current directory
 5. กรอกข้อมูลโปรเจ็กต์ที่มี ถ้าไม่พอใส่ placeholder ห้ามเดา
 6. ตรวจสอบกับ _template/core/10-bootstrap-checklist-template.md ก่อนประกาศว่าเสร็จ
 ```
@@ -62,9 +62,9 @@ Copy prompt นี้ให้ AI:
 # 3. หลัง AI ทำเสร็จ ลบ template ทิ้ง
 rm -rf _template/
 
-# 4. Init git แล้ว commit doc/
+# 4. Init git แล้ว commit ai/
 git init
-git add doc/
+git add ai/
 git commit -m "setup: add AI project documentation"
 ```
 
@@ -100,7 +100,7 @@ Copy prompt นี้ให้ AI (เหมือน Use Case 1):
 
 ข้อมูลโปรเจ็กต์:
 - ชื่อ: [PROJECT_NAME]
-- Path ที่จะสร้าง doc/: [path โปรเจ็กต์นี้ / current directory]
+- Path ที่จะสร้าง ai/: [path โปรเจ็กต์นี้ / current directory]
 - Template อยู่ที่: _template/
 - ประเภท: [app / web / game / mobile]
 - Source docs: [แนบไฟล์มาด้วย / ยังไม่มี]
@@ -110,7 +110,7 @@ Copy prompt นี้ให้ AI (เหมือน Use Case 1):
 1. ถามว่าจะสื่อสารกันเป็นภาษาอะไร รอคำตอบก่อน
 2. อ่านไฟล์ทุกไฟล์ใน _template/core/ ตามลำดับ (00 → 18)
 3. ถ้าโปรเจ็กต์เป็น game หรือ web game ให้อ่าน _template/skills/game/ ต่อด้วย (00 → 06)
-4. สร้างโครงสร้าง doc/ ใน current directory
+4. สร้างโครงสร้าง ai/ ใน current directory
 5. กรอกข้อมูลโปรเจ็กต์ที่มี ถ้าไม่พอใส่ placeholder ห้ามเดา
 6. ตรวจสอบกับ _template/core/10-bootstrap-checklist-template.md ก่อนประกาศว่าเสร็จ
 ```
@@ -119,9 +119,9 @@ Copy prompt นี้ให้ AI (เหมือน Use Case 1):
 # 3. หลัง AI ทำเสร็จ ลบ template ทิ้ง
 rm -rf _template/
 
-# 4. Commit doc/ เข้า project git เดิม
+# 4. Commit ai/ เข้า project git เดิม
 # (.gitignore ถูก AI เพิ่ม _template/ ให้แล้วระหว่าง setup)
-git add doc/ .gitignore
+git add ai/ .gitignore
 git commit -m "setup: add AI project documentation"
 ```
 
@@ -154,7 +154,7 @@ cp _template/platforms/claude-code/skills/*.md .claude/skills/
 
 # ลบ template แล้ว commit ทั้งหมด
 rm -rf _template/
-git add doc/ CLAUDE.md .claude/ .gitignore
+git add ai/ CLAUDE.md .claude/ .gitignore
 git commit -m "setup: add AI project documentation and Claude Code layer"
 ```
 
@@ -162,22 +162,22 @@ git commit -m "setup: add AI project documentation and Claude Code layer"
 
 ---
 
-## doc/ กับ git — ต้อง commit ไปด้วยหรือเปล่า?
+## ai/ กับ git — ต้อง commit ไปด้วยหรือเปล่า?
 
 **ใช่ — ต้อง commit เสมอ**
 
-`doc/` คือ memory ของโปรเจ็กต์ที่ทีมและ AI ทุก session ต้องอ่าน:
+`ai/` คือ memory ของโปรเจ็กต์ที่ทีมและ AI ทุก session ต้องอ่าน:
 
 | ไฟล์ | ทำไมต้อง commit |
 |------|----------------|
 | `work-status.md` | AI session ใหม่อ่านตรงนี้เพื่อรู้ว่าต้องทำอะไรต่อ |
 | `task-board.md` | track งานที่ค้าง ประวัติการตัดสินใจ |
 | `work-log-index.md` | บันทึก session — ทีมรู้ว่าใครทำอะไรไปแล้ว |
-| `doc/07-decisions/` | ADR — ป้องกัน AI session ใหม่ reverse decision เดิม |
+| `ai/07-decisions/` | ADR — ป้องกัน AI session ใหม่ reverse decision เดิม |
 
 ```bash
-# Commit doc/ พร้อมกับ code หรืออย่างน้อย end of day
-git add doc/ && git commit -m "docs: update work status and session log"
+# Commit ai/ พร้อมกับ code หรืออย่างน้อย end of day
+git add ai/ && git commit -m "docs: update work status and session log"
 ```
 
 ---
@@ -186,11 +186,11 @@ git add doc/ && git commit -m "docs: update work status and session log"
 
 ```
 Setup (ครั้งเดียว):
-  Download ZIP → แตกเป็น _template/ → AI อ่าน → สร้าง doc/ → ลบ _template/ → commit doc/
+  Download ZIP → แตกเป็น _template/ → AI อ่าน → สร้าง ai/ → ลบ _template/ → commit ai/
 
 ทุก session หลังจากนั้น:
-  AI อ่าน doc/ → ทำงาน → อัพเดต doc/ → commit
+  AI อ่าน ai/ → ทำงาน → อัพเดต ai/ → commit
 
 ทีมหลายคน:
-  git pull → AI อ่าน doc/ → รู้ทันทีว่าโปรเจ็กต์อยู่ตรงไหน ใครทำอะไรไปแล้ว
+  git pull → AI อ่าน ai/ → รู้ทันทีว่าโปรเจ็กต์อยู่ตรงไหน ใครทำอะไรไปแล้ว
 ```

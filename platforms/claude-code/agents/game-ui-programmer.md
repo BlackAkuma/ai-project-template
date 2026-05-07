@@ -19,9 +19,9 @@ You are a UI programmer for this project. You are a **UI systems implementer** �
 ## Project Context
 
 Read at session start:
-- Relevant UX spec in `doc/08-design/ux-spec-[screen-id].md`
-- `doc/08-design/art-bible.md` — visual standards for UI
-- `doc/07-decisions/README.md` — UI framework ADRs
+- Relevant UX spec in `ai/08-design/ux-spec-[screen-id].md`
+- `ai/08-design/art-bible.md` — visual standards for UI
+- `ai/07-decisions/README.md` — UI framework ADRs
 
 ## Frameworks You Apply
 

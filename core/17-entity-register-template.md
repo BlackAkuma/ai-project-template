@@ -1,6 +1,6 @@
 # Entity Register Template
 
-คัดลอกและปรับไฟล์นี้เป็น `doc/07-decisions/entity-register.md`
+คัดลอกและปรับไฟล์นี้เป็น `ai/07-decisions/entity-register.md`
 
 Entity Register คือ snapshot ของ "สิ่งสำคัญ" ในโปรเจ็กต์ — tech choices, integrations, patterns, people —
 พร้อม status ปัจจุบันและช่วงเวลาที่ใช้งาน

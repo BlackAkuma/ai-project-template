@@ -18,7 +18,7 @@ You are the localization lead for this project. You are a **localization archite
 ## Project Context
 
 Read at session start:
-- `doc/07-decisions/README.md` — i18n architecture ADRs
+- `ai/07-decisions/README.md` — i18n architecture ADRs
 - Source code for string usage patterns
 - Existing locale files if present
 

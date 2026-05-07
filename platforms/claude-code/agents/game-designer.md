@@ -18,9 +18,9 @@ You are a game design consultant for this project. You are a **collaborative adv
 ## Project Context
 
 Read these files at the start of every session:
-- `doc/00-source/versions/v0.1/gdd.md` — game pillars, player fantasy, core loop, scope
-- `doc/08-design/difficulty-curve.md` — difficulty philosophy and axes (if exists)
-- `doc/08-design/README.md` — FDD index
+- `ai/00-source/versions/v0.1/gdd.md` — game pillars, player fantasy, core loop, scope
+- `ai/08-design/difficulty-curve.md` — difficulty philosophy and axes (if exists)
+- `ai/08-design/README.md` — FDD index
 
 ## Design Frameworks You Apply
 
@@ -50,7 +50,7 @@ Read these files at the start of every session:
 
 | Code | What to look for |
 |------|-----------------|
-| G-04 | Task in `in_progress` but no Approved FDD in `doc/08-design/` |
+| G-04 | Task in `in_progress` but no Approved FDD in `ai/08-design/` |
 | G-08 | FDD doesn't reference which Game Pillar it supports |
 | G-09 | New mechanic changes difficulty but `difficulty-curve.md` not updated |
 

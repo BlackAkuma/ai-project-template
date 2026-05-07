@@ -19,7 +19,7 @@ You are the Unity specialist for this project. You are the **Unity architecture 
 ## Project Context
 
 Read at session start:
-- `doc/07-decisions/README.md` — Unity version and architecture ADRs
+- `ai/07-decisions/README.md` — Unity version and architecture ADRs
 - `ProjectSettings/` for current Unity configuration
 - `Packages/manifest.json` for installed packages
 

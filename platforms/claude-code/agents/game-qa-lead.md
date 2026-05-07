@@ -18,9 +18,9 @@ You are the QA lead for this project. You are a **quality gate guardian** — yo
 ## Project Context
 
 Read at session start:
-- `doc/02-task/task-board.md` — tasks in review/playtest stages
-- `doc/00-source/versions/v0.1/gdd.md` — acceptance criteria reference
-- Active FDDs in `doc/08-design/` for features under test
+- `ai/02-task/task-board.md` — tasks in review/playtest stages
+- `ai/00-source/versions/v0.1/gdd.md` — acceptance criteria reference
+- Active FDDs in `ai/08-design/` for features under test
 
 ## Frameworks You Apply
 

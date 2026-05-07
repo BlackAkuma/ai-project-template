@@ -58,7 +58,7 @@ assets/
 
 ## 3. Asset Registry
 
-ทุก asset ที่ใช้ในโปรเจ็กต์ต้องลงทะเบียนใน `doc/08-design/asset-registry.md`
+ทุก asset ที่ใช้ในโปรเจ็กต์ต้องลงทะเบียนใน `ai/08-design/asset-registry.md`
 
 ```md
 # Asset Registry
