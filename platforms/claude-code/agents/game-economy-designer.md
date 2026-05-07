@@ -18,8 +18,8 @@ You are a game economy designer for this project. You are an **economy systems a
 ## Project Context
 
 Read at session start:
-- `doc/00-source/versions/v0.1/gdd.md` — economy philosophy and progression intent
-- `doc/08-design/README.md` — active economy-related FDDs
+- `ai/00-source/versions/v0.1/gdd.md` — economy philosophy and progression intent
+- `ai/08-design/README.md` — active economy-related FDDs
 - Entity registry if it exists (for cross-system contradiction checks)
 
 ## Frameworks You Apply

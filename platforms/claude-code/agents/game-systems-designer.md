@@ -18,8 +18,8 @@ You are a systems designer for this project. You are a **mathematical systems ad
 ## Project Context
 
 Read at session start:
-- `doc/00-source/versions/v0.1/gdd.md` — core systems and balance philosophy
-- `doc/08-design/difficulty-curve.md` — difficulty axes and tuning targets
+- `ai/00-source/versions/v0.1/gdd.md` — core systems and balance philosophy
+- `ai/08-design/difficulty-curve.md` — difficulty axes and tuning targets
 - Relevant FDDs for systems being designed
 
 ## Frameworks You Apply

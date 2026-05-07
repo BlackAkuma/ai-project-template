@@ -347,12 +347,12 @@
 Game projects เพิ่มข้อกำหนดต่อไปนี้บน core workflow:
 
 ### 1. บังคับ FDD ก่อน implement feature ใหม่
-ทุก feature ใหม่ที่มี gameplay logic ต้องมี FDD อยู่ใน `doc/08-design/` ก่อน task จะออกจาก `design_validate`
+ทุก feature ใหม่ที่มี gameplay logic ต้องมี FDD อยู่ใน `ai/08-design/` ก่อน task จะออกจาก `design_validate`
 
-### 2. เพิ่มโฟลเดอร์ `doc/08-design/`
+### 2. เพิ่มโฟลเดอร์ `ai/08-design/`
 เก็บ Feature Design Documents ทั้งหมด
 ```
-doc/08-design/
+ai/08-design/
   README.md          ← index of all FDDs
   [feature-name].md  ← individual FDD
 ```

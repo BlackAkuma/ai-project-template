@@ -1,7 +1,7 @@
 # Art Bible Template
 
 เอกสารกำหนด visual identity ของเกม — เขียนก่อนสร้าง asset จริงตัวแรก
-เก็บใน `doc/08-design/art-bible.md`
+เก็บใน `ai/08-design/art-bible.md`
 
 Art Bible คือ source of truth ของทุกการตัดสินใจด้าน visual — ถ้าไม่มีใน bible → ต้องสร้างกฎก่อน
 

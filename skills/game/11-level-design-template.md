@@ -1,7 +1,7 @@
 # Level Design Document (LDD) Template
 
 ออกแบบ level ก่อน implement — ใช้กับ game ที่มี level, stage, หรือ area ที่ออกแบบเฉพาะ
-เก็บใน `doc/08-design/level-[name].md`
+เก็บใน `ai/08-design/level-[name].md`
 
 ไม่บังคับสำหรับ game ที่ไม่มี designed level (เช่น: procedural, sandbox ล้วน ๆ)
 

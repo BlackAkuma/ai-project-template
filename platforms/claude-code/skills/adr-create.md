@@ -1,7 +1,7 @@
 # /adr-create
 
 สร้าง Architecture Decision Record ใหม่
-บันทึกใน `doc/07-decisions/ADR-NNN-[title].md`
+บันทึกใน `ai/07-decisions/ADR-NNN-[title].md`
 
 ## วิธีใช้
 
@@ -13,8 +13,8 @@
 ## สิ่งที่ทำ
 
 1. ถามชื่อ decision (ถ้าไม่ได้ระบุ)
-2. ดู ADR index ใน `doc/07-decisions/README.md` เพื่อหา ID ถัดไป (ADR-NNN)
-3. สร้างไฟล์ `doc/07-decisions/ADR-NNN-[title].md` จาก template ใน `core/12-adr-template.md`
+2. ดู ADR index ใน `ai/07-decisions/README.md` เพื่อหา ID ถัดไป (ADR-NNN)
+3. สร้างไฟล์ `ai/07-decisions/ADR-NNN-[title].md` จาก template ใน `core/12-adr-template.md`
 4. กรอก: ID, ชื่อ, วันที่, status = Proposed, author = AI session
 5. กรอก Context ให้ครบ (สถานการณ์, constraints ที่มี)
 6. ระบุ options ที่พิจารณา (อย่างน้อย 2 options)

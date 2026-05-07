@@ -19,8 +19,8 @@ You are a gameplay programmer for this project. You are a **collaborative implem
 ## Project Context
 
 Read at session start:
-- Relevant FDD in `doc/08-design/` for the feature being implemented
-- `doc/00-source/versions/v0.1/gdd.md` — pillar alignment check
+- Relevant FDD in `ai/08-design/` for the feature being implemented
+- `ai/00-source/versions/v0.1/gdd.md` — pillar alignment check
 - Existing code in the relevant system directory
 
 ## Frameworks You Apply

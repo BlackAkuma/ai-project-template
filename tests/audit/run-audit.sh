@@ -98,13 +98,13 @@ assert_grep "A-5: core/00 references 12-adr" "12-adr" "core/00-ai-bootstrap-mast
 assert_grep "A-6: core/00 references 13-retrospective" "13-retrospective" "core/00-ai-bootstrap-master-template.md"
 assert_grep "A-7: core/00 references 14-anti-patterns" "14-anti-patterns" "core/00-ai-bootstrap-master-template.md"
 assert_grep "A-8: core/00 references 15-compliance" "15-compliance" "core/00-ai-bootstrap-master-template.md"
-assert_grep "A-9: core/00 lists doc/04-way-of-work/ai-decision-protocol.md output" "ai-decision-protocol" "core/00-ai-bootstrap-master-template.md"
-assert_grep "A-10: core/00 lists doc/07-decisions/ output" "07-decisions" "core/00-ai-bootstrap-master-template.md"
+assert_grep "A-9: core/00 lists ai/04-way-of-work/ai-decision-protocol.md output" "ai-decision-protocol" "core/00-ai-bootstrap-master-template.md"
+assert_grep "A-10: core/00 lists ai/07-decisions/ output" "07-decisions" "core/00-ai-bootstrap-master-template.md"
 
 # core/01 folder structure
-assert_grep "A-11: core/01 has doc/07-decisions/" "07-decisions" "core/01-folder-structure-template.md"
-assert_grep "A-12: core/01 has doc/04-way-of-work/ai-decision-protocol" "ai-decision-protocol" "core/01-folder-structure-template.md"
-assert_grep "A-13: core/01 has doc/04-way-of-work/compliance" "compliance" "core/01-folder-structure-template.md"
+assert_grep "A-11: core/01 has ai/07-decisions/" "07-decisions" "core/01-folder-structure-template.md"
+assert_grep "A-12: core/01 has ai/04-way-of-work/ai-decision-protocol" "ai-decision-protocol" "core/01-folder-structure-template.md"
+assert_grep "A-13: core/01 has ai/04-way-of-work/compliance" "compliance" "core/01-folder-structure-template.md"
 
 # core/11 scenario completeness
 assert_grep "A-14: core/11 has Scenario H (gap detection)" "Scenario H" "core/11-ai-decision-protocol-template.md"
@@ -154,7 +154,7 @@ assert_grep "C-2: CLAUDE.md references Scenario H" "Scenario H" "platforms/claud
 assert_grep "C-3: CLAUDE.md references Scenario K" "Scenario K" "platforms/claude-code/CLAUDE.md"
 assert_grep "C-4: CLAUDE.md references Scenario B" "Scenario B" "platforms/claude-code/CLAUDE.md"
 assert_grep "C-5: CLAUDE.md references Scenario J" "Scenario J" "platforms/claude-code/CLAUDE.md"
-assert_grep "C-6: CLAUDE.md has doc/08-design game detection" "doc/08-design" "platforms/claude-code/CLAUDE.md"
+assert_grep "C-6: CLAUDE.md has ai/08-design game detection" "ai/08-design" "platforms/claude-code/CLAUDE.md"
 assert_grep "C-7: CLAUDE.md has 00 → 18 range" "00 → 18" "platforms/claude-code/CLAUDE.md"
 assert_grep "C-8: CLAUDE.md game section includes expanded compliance (G-10, N-01, L-01)" "G-10" "platforms/claude-code/CLAUDE.md"
 assert_grep "C-9: CLAUDE.md has Memory Scope reference" "cross-project-memory" "platforms/claude-code/CLAUDE.md"
@@ -298,9 +298,9 @@ for tf in test-agent-diary test-cross-project-memory test-memory-scope test-scen
 done
 
 # mock-project structure
-assert_dir "F-4: tests/mock-project/doc exists" "tests/mock-project/doc"
-assert_file "F-5: tests/mock-project/doc/01-plan/work-status.md" "tests/mock-project/doc/01-plan/work-status.md"
-assert_file "F-6: tests/mock-project/doc/02-task/task-board.md" "tests/mock-project/doc/02-task/task-board.md"
+assert_dir "F-4: tests/mock-project/doc exists" "tests/mock-project/ai"
+assert_file "F-5: tests/mock-project/ai/01-plan/work-status.md" "tests/mock-project/ai/01-plan/work-status.md"
+assert_file "F-6: tests/mock-project/ai/02-task/task-board.md" "tests/mock-project/ai/02-task/task-board.md"
 
 # bootstrap script — verify script exists and is valid
 assert_file "F-7: scripts/new-project.sh" "scripts/new-project.sh"
@@ -328,14 +328,14 @@ else
   fail "F-9: scripts/new-project.sh HexGame --game — bootstrap failed"
 fi
 
-assert_file "F-10: shopflow — doc/07-decisions/entity-register.md"  "$FUNC_SHOPFLOW/doc/07-decisions/entity-register.md"
-assert_file "F-11: shopflow — doc/04-way-of-work/ai-decision-protocol.md" "$FUNC_SHOPFLOW/doc/04-way-of-work/ai-decision-protocol.md"
-assert_file "F-12: hexgame  — doc/08-design/README.md"              "$FUNC_HEXGAME/doc/08-design/README.md"
-assert_file "F-13: hexgame  — doc/08-design/asset-registry.md"      "$FUNC_HEXGAME/doc/08-design/asset-registry.md"
-assert_no_grep "F-14: entity-register has no example entity data" "my-app|PostgreSQL|MongoDB|Redux" "$FUNC_SHOPFLOW/doc/07-decisions/entity-register.md"
-assert_no_grep "F-15: compliance has no fictional example paths"  "src/game/player" "$FUNC_SHOPFLOW/doc/04-way-of-work/compliance.md"
-assert_grep "F-16: ai-decision-protocol has project title (not template title)" "AI Decision Protocol — ShopFlow" "$FUNC_SHOPFLOW/doc/04-way-of-work/ai-decision-protocol.md"
-assert_grep "F-17: hexgame ai-decision-protocol has project title" "AI Decision Protocol — HexGame" "$FUNC_HEXGAME/doc/04-way-of-work/ai-decision-protocol.md"
+assert_file "F-10: shopflow — ai/07-decisions/entity-register.md"  "$FUNC_SHOPFLOW/ai/07-decisions/entity-register.md"
+assert_file "F-11: shopflow — ai/04-way-of-work/ai-decision-protocol.md" "$FUNC_SHOPFLOW/ai/04-way-of-work/ai-decision-protocol.md"
+assert_file "F-12: hexgame  — ai/08-design/README.md"              "$FUNC_HEXGAME/ai/08-design/README.md"
+assert_file "F-13: hexgame  — ai/08-design/asset-registry.md"      "$FUNC_HEXGAME/ai/08-design/asset-registry.md"
+assert_no_grep "F-14: entity-register has no example entity data" "my-app|PostgreSQL|MongoDB|Redux" "$FUNC_SHOPFLOW/ai/07-decisions/entity-register.md"
+assert_no_grep "F-15: compliance has no fictional example paths"  "src/game/player" "$FUNC_SHOPFLOW/ai/04-way-of-work/compliance.md"
+assert_grep "F-16: ai-decision-protocol has project title (not template title)" "AI Decision Protocol — ShopFlow" "$FUNC_SHOPFLOW/ai/04-way-of-work/ai-decision-protocol.md"
+assert_grep "F-17: hexgame ai-decision-protocol has project title" "AI Decision Protocol — HexGame" "$FUNC_HEXGAME/ai/04-way-of-work/ai-decision-protocol.md"
 
 # clean up generated test projects — never commit bootstrap output
 rm -rf "$FUNC_SHOPFLOW" "$FUNC_HEXGAME"

@@ -19,8 +19,8 @@ You are a tools programmer for this project. You are a **workflow enabler** — 
 ## Project Context
 
 Read at session start:
-- `doc/07-decisions/README.md` — technology constraints to respect
-- `doc/04-way-of-work/compliance.md` — standards for automation scripts
+- `ai/07-decisions/README.md` — technology constraints to respect
+- `ai/04-way-of-work/compliance.md` — standards for automation scripts
 
 ## Frameworks You Apply
 

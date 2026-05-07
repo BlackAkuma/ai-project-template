@@ -1,6 +1,6 @@
 # Task Board Template
 
-คัดลอกและปรับไฟล์นี้เป็น `doc/02-task/task-board.md`
+คัดลอกและปรับไฟล์นี้เป็น `ai/02-task/task-board.md`
 
 **กฎสำคัญ:** เมื่อเปลี่ยน status ของ task ใด ต้องอัปเดต `AI-CONTEXT` block ด้านบนพร้อมกันเสมอ
 
@@ -39,7 +39,7 @@ Status ที่ใช้ได้: `todo` `design_validate` `in_progress` `revi
 
 task พร้อม implement เมื่อผ่านทุกข้อ:
 
-- [ ] มี source reference ที่ชัดเจน (doc/00-source/...)
+- [ ] มี source reference ที่ชัดเจน (ai/00-source/...)
 - [ ] scope ระบุชัดว่าทำอะไร ไม่ทำอะไร
 - [ ] ไม่มี dependency ที่ยังค้างอยู่
 - [ ] ถ้าเป็น game feature: มี FDD ที่ approved แล้ว

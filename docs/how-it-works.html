@@ -279,7 +279,7 @@
       <div class="tier-game">
         <div style="font-size:2rem;margin-bottom:12px">🎮</div>
         <h3 style="color:var(--green);margin-bottom:6px"><span class="th">+ skills/game/ — นักพัฒนาเกม</span><span class="en">+ skills/game/ — Game Devs</span></h3>
-        <p class="muted" style="font-size:.85rem;margin-bottom:16px"><span class="th">เปิดอัตโนมัติเมื่อโปรเจ็กต์มี <code>doc/08-design/</code></span><span class="en">Auto-activated when project has <code>doc/08-design/</code></span></p>
+        <p class="muted" style="font-size:.85rem;margin-bottom:16px"><span class="th">เปิดอัตโนมัติเมื่อโปรเจ็กต์มี <code>ai/08-design/</code></span><span class="en">Auto-activated when project has <code>ai/08-design/</code></span></p>
         <ul class="checklist">
           <li><span class="check-icon" style="color:var(--green)">✓</span> <span class="th">FDD — design ก่อน code ทุกครั้ง</span><span class="en">FDD — design before code, every time</span></li>
           <li><span class="check-icon" style="color:var(--green)">✓</span> <span class="th">Balance check อัตโนมัติ</span><span class="en">Automatic balance checks</span></li>
@@ -399,7 +399,7 @@
             <div class="step-line" style="background:linear-gradient(var(--green),var(--amber))"></div>
           </div>
           <div class="step-content">
-            <h3><span class="th">AI อ่าน core/ ทั้งหมด + สร้าง doc/</span><span class="en">AI reads all core/ + creates doc/</span></h3>
+            <h3><span class="th">AI อ่าน core/ ทั้งหมด + สร้าง ai/</span><span class="en">AI reads all core/ + creates ai/</span></h3>
             <p><span class="th">อ่าน 19 template files → เข้าใจระบบทั้งหมด → สร้างโครงสร้างให้</span><span class="en">Reads 19 template files → understands the full system → creates structure for you</span></p>
           </div>
         </div>
@@ -414,7 +414,7 @@
             <p><span class="th">AI รัน checklist ใน core/10 — ถ้าผ่านครบ setup เสร็จ ลบ core/ ทิ้งได้</span><span class="en">AI runs core/10 checklist — if all pass, setup is done and core/ can be deleted</span></p>
             <div class="notif notif-green" style="margin-top:12px">
               <span class="th">✅ Bootstrap checklist ผ่านครบ 8 หัวข้อ</span><span class="en">✅ Bootstrap checklist passed — all 8 items</span><br>
-              <span style="color:var(--muted)"><span class="th">doc/ พร้อมใช้งาน · ลบ core/ ออกจาก git ได้แล้ว</span><span class="en">doc/ ready · core/ can be removed from git</span></span>
+              <span style="color:var(--muted)"><span class="th">ai/ พร้อมใช้งาน · ลบ core/ ออกจาก git ได้แล้ว</span><span class="en">ai/ ready · core/ can be removed from git</span></span>
             </div>
           </div>
         </div>
@@ -424,7 +424,7 @@
     <div>
       <p class="muted" style="font-size:.8rem;margin-bottom:8px"><span class="th">📁 โครงสร้างที่ AI สร้างให้ — ครั้งเดียวจบ</span><span class="en">📁 Structure AI creates for you — once and done</span></p>
       <div class="file-tree">
-        <div><span class="ft-folder">doc/</span></div>
+        <div><span class="ft-folder">ai/</span></div>
         <div class="ft-indent"><span class="ft-new">README.md</span></div>
         <div class="ft-indent"><span class="ft-folder">00-source/</span> <span class="ft-comment"><span class="th">← PRD ของคุณ</span><span class="en">← your PRD</span></span></div>
         <div class="ft-indent2"><span class="ft-new">versions/v0.1/prd.md</span></div>
@@ -447,7 +447,7 @@
       <div style="margin-top:16px">
         <p class="muted" style="font-size:.8rem;margin-bottom:8px"><span class="th">🔑 หัวใจของระบบ — AI-CONTEXT block</span><span class="en">🔑 Heart of the system — AI-CONTEXT block</span></p>
         <div class="code-block">
-          <div class="code-header"><span class="code-dot" style="background:#ff5f57"></span><span class="code-dot" style="background:#febc2e"></span><span class="code-dot" style="background:#28c840"></span> doc/01-plan/work-status.md</div>
+          <div class="code-header"><span class="code-dot" style="background:#ff5f57"></span><span class="code-dot" style="background:#febc2e"></span><span class="code-dot" style="background:#28c840"></span> ai/01-plan/work-status.md</div>
           <div class="code-body">
             <span class="c-comment">&lt;!-- AI-CONTEXT</span><br>
             <span class="c-key">phase:</span> <span class="c-val">setup</span><br>
@@ -455,8 +455,8 @@
             <span class="c-key">blocked:</span> <span class="c-val">none</span><br>
             <span class="c-key">next:</span> <span class="c-val">implement +/- buttons</span><br>
             <span class="c-key">read_more:</span><br>
-            &nbsp; <span class="c-key">architecture:</span> <span class="c-val">doc/07-decisions/README.md</span><br>
-            &nbsp; <span class="c-key">entities:</span> <span class="c-val">doc/07-decisions/entity-register.md</span><br>
+            &nbsp; <span class="c-key">architecture:</span> <span class="c-val">ai/07-decisions/README.md</span><br>
+            &nbsp; <span class="c-key">entities:</span> <span class="c-val">ai/07-decisions/entity-register.md</span><br>
             <span class="c-comment">--&gt;</span><br>
             <br>
             <span class="c-comment"><span class="th"># AI อ่าน block นี้ก่อนเสมอ</span><span class="en"># AI reads this block first, always</span></span><br>
@@ -499,7 +499,7 @@
           <div class="tl-item">
             <div class="tl-time">Step 4 · ตรวจ agent diary (ถ้ามี)</div>
             <div class="card-sm">
-              <p style="font-size:.85rem">ถ้าโปรเจ็กต์ใช้หลาย AI tool → อ่าน <code>doc/03-log/agents/claude-code.md</code> เพื่อรับ checkpoint จาก session ก่อน</p>
+              <p style="font-size:.85rem">ถ้าโปรเจ็กต์ใช้หลาย AI tool → อ่าน <code>ai/03-log/agents/claude-code.md</code> เพื่อรับ checkpoint จาก session ก่อน</p>
             </div>
           </div>
           <div class="tl-item">
@@ -630,7 +630,7 @@
               <span style="color:var(--indigo)">1.</span> มี task คล้ายที่เสร็จแล้วไหม? → T-002 (ปุ่ม 0-9) — ดูรูปแบบ
             </div>
             <div class="card-sm" style="font-size:.85rem">
-              <span style="color:var(--indigo)">2.</span> มีใน PRD ไหม? → อ่าน <code>doc/00-source/versions/v0.1/prd.md</code>
+              <span style="color:var(--indigo)">2.</span> มีใน PRD ไหม? → อ่าน <code>ai/00-source/versions/v0.1/prd.md</code>
             </div>
             <div class="card-sm" style="font-size:.85rem;border-color:rgba(251,191,36,.3)">
               <span style="color:var(--amber)">3.</span> ยังไม่ชัด? → mark <code>[BLOCKED: ต้องการ spec ว่า "1.5" หรือ "1.50"?]</code> อัปเดต work-status รอมนุษย์
@@ -680,7 +680,7 @@
         </div>
         <div>
           <div class="code-block">
-            <div class="code-header"><span class="code-dot" style="background:#ff5f57"></span> doc/07-decisions/ADR-003-state-management.md</div>
+            <div class="code-header"><span class="code-dot" style="background:#ff5f57"></span> ai/07-decisions/ADR-003-state-management.md</div>
             <div class="code-body" style="font-size:.78rem">
               <span class="c-key">Status:</span> <span class="c-val">Accepted</span><br>
               <span class="c-key">Options:</span><br>
@@ -817,8 +817,8 @@
             <div class="card-sm" style="font-size:.82rem;line-height:1.9">
               <div>📖 อ่าน CLAUDE.md → โหลด core/ 19 templates</div>
               <div>❓ ถาม: "จะสื่อสารภาษาอะไร?"</div>
-              <div>📁 สร้าง <code style="color:var(--cyan)">doc/</code> ทั้งโครงสร้าง</div>
-              <div>✍️ draft PRD v0.1 ใส่ใน <code style="color:var(--cyan)">doc/00-source/</code></div>
+              <div>📁 สร้าง <code style="color:var(--cyan)">ai/</code> ทั้งโครงสร้าง</div>
+              <div>✍️ draft PRD v0.1 ใส่ใน <code style="color:var(--cyan)">ai/00-source/</code></div>
               <div>📋 สร้าง task board: T-001, T-002, T-003</div>
               <div>✅ รายงาน: "Bootstrap เสร็จ พร้อมทำงาน"</div>
             </div>
@@ -827,7 +827,7 @@
         <div>
           <div style="font-size:.75rem;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">ไฟล์ที่สร้าง</div>
           <div class="card-sm" style="font-family:monospace;font-size:.78rem;line-height:2">
-            <div style="color:var(--indigo)">📁 doc/</div>
+            <div style="color:var(--indigo)">📁 ai/</div>
             <div style="padding-left:16px;color:var(--muted)">📁 00-source/versions/v0.1/</div>
             <div style="padding-left:32px;color:var(--cyan)">PRD.md <span style="color:var(--green);font-size:.7rem">← requirement ทั้งหมด</span></div>
             <div style="padding-left:16px;color:var(--muted)">📁 01-plan/</div>

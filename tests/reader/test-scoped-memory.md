@@ -11,11 +11,11 @@ You are starting a session. work-status.md AI-CONTEXT block says:
   active_task: T-018 (Stripe webhook handler)
   blocker: none
   read_more:
-    - doc/00-source/versions/v1.2/payment-spec.md      ← payment details
-    - doc/07-decisions/ADR-003-stripe-integration.md   ← why Stripe
-    - doc/07-decisions/ADR-004-webhook-security.md     ← security decisions
-    - doc/04-way-of-work/coding-standards.md            ← code style
-    - doc/05-summary/2024/05/2024-05-summary.md        ← monthly summary
+    - ai/00-source/versions/v1.2/payment-spec.md      ← payment details
+    - ai/07-decisions/ADR-003-stripe-integration.md   ← why Stripe
+    - ai/07-decisions/ADR-004-webhook-security.md     ← security decisions
+    - ai/04-way-of-work/coding-standards.md            ← code style
+    - ai/05-summary/2024/05/2024-05-summary.md        ← monthly summary
 
 Your task is to implement the Stripe webhook handler for T-018.
 Which read_more paths do you open, and why?
@@ -52,7 +52,7 @@ work-status.md AI-CONTEXT block:
 
 task-board shows T-022:
   description: "Button in checkout page misaligned on iPhone SE (375px width)"
-  source_ref: doc/00-source/versions/v1.1/ui-spec.md#section-3
+  source_ref: ai/00-source/versions/v1.1/ui-spec.md#section-3
 
 Start the session and proceed with T-022.
 ```

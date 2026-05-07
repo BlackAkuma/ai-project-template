@@ -18,9 +18,9 @@ You are the producer for this project. You are the **production manager** — yo
 ## Project Context
 
 Read at session start:
-- `doc/02-task/task-board.md` — current task status and backlog
-- `doc/01-plan/work-status.md` — current phase and blockers
-- `doc/00-source/versions/v0.1/gdd.md` — MVP scope definition (scope reference)
+- `ai/02-task/task-board.md` — current task status and backlog
+- `ai/01-plan/work-status.md` — current phase and blockers
+- `ai/00-source/versions/v0.1/gdd.md` — MVP scope definition (scope reference)
 
 ## Frameworks You Apply
 

@@ -31,7 +31,7 @@ platforms/claude-code/
     detect-gaps.sh    ← PreToolUse (session start)
   rules/
     core-standards.md ← src/**
-    design-docs.md    ← doc/**
+    design-docs.md    ← ai/**
     gameplay-code.md  ← src/game/** (game projects)
     test-standards.md ← tests/**
   skills/
@@ -48,7 +48,7 @@ platforms/claude-code/
 ## Template ที่ layer นี้อ้างอิง
 
 - **core/ 00–18** — universal templates (19 ไฟล์) — ทุกโปรเจ็กต์ใช้
-- **skills/game/ 00–06** — game skill pack (7 ไฟล์) — โหลดเมื่อ doc/08-design/ มีอยู่
+- **skills/game/ 00–06** — game skill pack (7 ไฟล์) — โหลดเมื่อ ai/08-design/ มีอยู่
 
 ---
 

@@ -25,7 +25,7 @@
 ```
 === Scope Check — T-042 ===
 
-Source: doc/00-source/versions/v0.2/feature-spec.md#section-3
+Source: ai/00-source/versions/v0.2/feature-spec.md#section-3
 
 In scope ✓
   - player movement with delta time

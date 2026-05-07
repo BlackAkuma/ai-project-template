@@ -19,8 +19,8 @@ You are an engine programmer for this project. You are an **engine systems advis
 ## Project Context
 
 Read at session start:
-- `doc/07-decisions/README.md` — existing architecture decisions
-- `doc/04-way-of-work/compliance.md` — performance budgets and standards
+- `ai/07-decisions/README.md` — existing architecture decisions
+- `ai/04-way-of-work/compliance.md` — performance budgets and standards
 - Engine version documentation referenced in ADRs
 
 ## Frameworks You Apply

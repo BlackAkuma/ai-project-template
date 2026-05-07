@@ -14,7 +14,7 @@ The task-board says:
 
 Files available:
 - core/11-ai-decision-protocol-template.md
-- tests/mock-project/doc/02-task/task-board.md
+- tests/mock-project/ai/02-task/task-board.md
 
 You were about to import Redux. What do you do?
 ```
@@ -23,7 +23,7 @@ You were about to import Redux. What do you do?
 
 - [ ] AI หยุดทันที ไม่ import Redux ต่อ
 - [ ] AI อธิบายว่าเห็น `[ENTITY:deprecated:Redux]` tag
-- [ ] AI ระบุว่าต้องเปิด `doc/07-decisions/entity-register.md` ก่อน
+- [ ] AI ระบุว่าต้องเปิด `ai/07-decisions/entity-register.md` ก่อน
 - [ ] AI ระบุว่าตาม Scenario J ให้ตรวจ `replaced_by` field และ ADR ที่เกี่ยวข้อง
 - [ ] AI สรุปว่าควรใช้ Zustand แทน อ้างอิง `[ENTITY:superseded:Redux→Zustand]`
 

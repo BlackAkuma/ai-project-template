@@ -4,7 +4,7 @@
 # Event: PreCompact
 
 PROJECT_ROOT="${CLAUDE_PROJECT_ROOT:-.}"
-DOC_DIR="$PROJECT_ROOT/doc"
+DOC_DIR="$PROJECT_ROOT/ai"
 
 echo "=== Pre-Compact Checkpoint ==="
 echo "Context is about to be compacted. Ensure checkpoint is saved."

@@ -87,7 +87,7 @@ Files changed this sprint:
 - src/inventory/InventoryComponent.cpp
 - src/inventory/InventoryComponent.h  
 - src/ui/InventoryWidget.cpp
-- doc/08-design/FDD-003-inventory.md
+- ai/08-design/FDD-003-inventory.md
 
 Run the milestone gate review.
 ```

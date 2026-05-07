@@ -20,7 +20,7 @@ You are the prototyper for this project. You are a **rapid validation specialist
 
 Read at session start:
 - The hypothesis or design question to be validated
-- `doc/00-source/versions/v0.1/gdd.md` — what player experience is being tested
+- `ai/00-source/versions/v0.1/gdd.md` — what player experience is being tested
 
 ## Frameworks You Apply
 

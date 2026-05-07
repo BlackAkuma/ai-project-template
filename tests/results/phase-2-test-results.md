@@ -9,7 +9,7 @@ Branch: test/phase-2
 
 ### Scenario L: Session Start reads agent diary
 
-**Scenario:** เริ่ม session ใหม่บนโปรเจ็กต์ที่มี `doc/03-log/agents/claude-code.md` อยู่แล้ว
+**Scenario:** เริ่ม session ใหม่บนโปรเจ็กต์ที่มี `ai/03-log/agents/claude-code.md` อยู่แล้ว
 
 **ผล:** ✅ PASS — AI ทำตาม Session Start Protocol ถูกต้องครบทุก step:
 - อ่าน AI-CONTEXT block ครบ 3 ไฟล์หลัก (work-status, work-log-index, task-board)
@@ -99,7 +99,7 @@ Branch: test/phase-2
 - Step 3 (cross-project?): อาจได้ แต่ต้องถามผู้ใช้ก่อน ✅
 - Step 4 (session decision?): ใช่ → เก็บใน work-log/diary ✅
 - ไม่สร้าง ADR — อธิบายเหตุผลชัดเจน: convention ไม่ใช่ architectural constraint ✅
-- Bonus: แนะนำว่า `doc/04-way-of-work/way-of-work.md` (Language Policy) เป็นที่ที่เหมาะที่สุดสำหรับ convention ประเภทนี้ — proactive ✅
+- Bonus: แนะนำว่า `ai/04-way-of-work/way-of-work.md` (Language Policy) เป็นที่ที่เหมาะที่สุดสำหรับ convention ประเภทนี้ — proactive ✅
 
 ---
 
