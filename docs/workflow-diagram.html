@@ -483,7 +483,7 @@ section{padding:80px 32px}
     <button class="ch" onclick="scrollToSec('sec-session')"><span class="ch-n">04</span><span data-i18n="nav.session">Session Loop</span></button>
     <button class="ch" onclick="scrollToSec('sec-decision')"><span class="ch-n">05</span><span data-i18n="nav.decision">Decision Protocol</span></button>
     <button class="ch" onclick="scrollToSec('sec-memory')"><span class="ch-n">06</span><span data-i18n="nav.memory">Memory System</span></button>
-    <button class="ch" onclick="scrollToSec('sec-ref')"><span class="ch-n">07</span><span data-i18n="nav.ref">Reference Diagrams</span></button>
+    <button class="ch" onclick="scrollToSec('sec-ref')"><span class="ch-n">07</span><span data-i18n="nav.ref">System Flows</span></button>
   </div>
 </div>
 
@@ -1923,7 +1923,7 @@ const T = {
     // Nav
     'nav.problem':'ปัญหาที่แก้','nav.sim':'▶ Live Simulation','nav.tiers':'3 ชั้นของระบบ',
     'nav.session':'Session Loop','nav.decision':'Decision Protocol',
-    'nav.memory':'Memory System','nav.ref':'Reference Diagrams',
+    'nav.memory':'Memory System','nav.ref':'System Flows',
     // Problem
     'prob.kicker':'ทำไมถึงต้องมีระบบนี้',
     'prob.h':'AI ทำงานกับโปรเจ็กต์ได้ดี — แต่ไม่ได้ตลอด',
@@ -1950,14 +1950,16 @@ const T = {
     'mem.sub':'ปัญหาของ AI คือ memory หายเมื่อ session จบ ระบบนี้แก้ด้วย 3 ชั้น: entity ที่ track สถานะ, context routing ที่โหลดเฉพาะสิ่งที่ต้องการ, และ memory ที่ข้ามโปรเจ็กต์ได้',
     // Decision scenarios title
     'dec.scenarios-title':'ถ้าผ่าน 3 คำถาม → ดำเนินการต่อ / ถ้าไม่ → ดูสถานการณ์ที่ตรงกัน',
-    // Reference note
+    // Reference / System Flows
+    'ref.kicker':'ภาพรวมระบบทั้งหมด',
+    'ref.h':'System Flows — ทุก flow ในหน้าเดียว',
     'ref.note':'Flowchart สำหรับ reference — ภาพรวมทางเทคนิคที่เห็นได้ในไฟล์เดียว สำหรับผู้ที่เข้าใจระบบแล้วและต้องการ reference ด่วน',
   },
   en: {
     // Nav
     'nav.problem':'The Problem','nav.sim':'▶ Live Simulation','nav.tiers':'3-Tier Architecture',
     'nav.session':'Session Loop','nav.decision':'Decision Protocol',
-    'nav.memory':'Memory System','nav.ref':'Reference Diagrams',
+    'nav.memory':'Memory System','nav.ref':'System Flows',
     // Problem
     'prob.kicker':'Why This Exists',
     'prob.h':'AI works great on projects — but not consistently',
@@ -1984,7 +1986,9 @@ const T = {
     'mem.sub':'AI\'s core problem: memory disappears when a session ends. This system solves it with 3 layers: entity status tracking, context routing that loads only what\'s needed, and cross-project memory.',
     // Decision scenarios title
     'dec.scenarios-title':'If all 3 questions pass → proceed / If any fails → find the matching scenario',
-    // Reference note
+    // Reference / System Flows
+    'ref.kicker':'Full System Overview',
+    'ref.h':'System Flows — Every Flow on One Page',
     'ref.note':'Flowcharts for reference — a technical overview in a single view, for those who already understand the system and need a quick reference.',
   }
 };
