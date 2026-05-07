@@ -2,7 +2,7 @@
 phase: maintenance
 active_task: none
 blocker: none
-last_updated: 2026-05-07
+last_updated: 2026-05-08
 read_more:
   plan: ai/01-plan/project-plan.md
   decisions: ai/07-decisions/README.md
@@ -11,7 +11,7 @@ read_more:
 
 # Work Status — ai-project-template
 
-อัปเดตล่าสุด: 2026-05-07
+อัปเดตล่าสุด: 2026-05-08
 
 ## สถานะปัจจุบัน
 
@@ -35,7 +35,5 @@ read_more:
 
 ## Next Actions (ลำดับความสำคัญ)
 
-1. **Update ROADMAP.md** — Phase 3 (MemPalace) template เสร็จแล้ว แต่ยังแสดง "planned"
-2. **Update CHANGELOG.md** — บันทึก restructure + MemPalace template
-3. **Field test MemPalace** — ทดสอบ core/20 กับโปรเจ็กต์จริงเพื่อ validate workflow
-4. **Merge dev → master** — เมื่อ stable ครบ (ต้องได้รับ permission ก่อน)
+1. **Field test MemPalace** (T-022) — ทดสอบ core/20 กับโปรเจ็กต์จริงเพื่อ validate workflow
+2. **Merge dev → master** (T-023) — เมื่อ T-022 ผ่าน (ต้องได้รับ permission ก่อน)

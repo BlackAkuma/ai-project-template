@@ -1,10 +1,10 @@
 <!-- AI-CONTEXT
-last_session: 2026-05-07
+last_session: 2026-05-08
 tool: Claude Code
-completed: [T-010,T-011,T-012,T-013,T-014,bootstrap-ai]
+completed: [T-010,T-011,T-012,T-013,T-014,bootstrap-ai,T-020,T-021]
 checkpoint: none
-next_from_last: update ROADMAP + CHANGELOG (T-020, T-021)
-notes: structural restructure complete + ai/ bootstrapped
+next_from_last: field test MemPalace (T-022), then merge to master (T-023)
+notes: ROADMAP + CHANGELOG updated, release prep nearly complete
 deep_context: none
 -->
 
@@ -36,7 +36,18 @@ deep_context: none
 
 **ผล:** 35/35 tests passing, dev branch clean + pushed
 
-**Next:** T-020 (ROADMAP), T-021 (CHANGELOG), T-023 (merge to master เมื่อพร้อม)
+**Next:** T-022 (field test MemPalace), T-023 (merge to master เมื่อ T-022 ผ่าน)
+
+---
+
+### 2026-05-08 — [ROADMAP + CHANGELOG + Release Prep]
+
+**สิ่งที่ทำ:**
+- อัปเดต ROADMAP.md — Phase 3 Semantic Search Layer เปลี่ยนจาก "planned" เป็น "✅ template done"
+- อัปเดต CHANGELOG.md — เพิ่ม v1.1.0 (memory architecture Phase 1–3) และ v1.2.0 (structural integrity)
+- อัปเดต task-board.md — T-020/021 done, T-022 (field test) คือ next
+
+**ผล:** ROADMAP ตรงกับ reality, CHANGELOG บันทึกครบ, งานเหลือ T-022 + T-023
 
 ---
 

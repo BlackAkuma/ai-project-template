@@ -46,8 +46,8 @@ AI ที่ทำงานถูกต้อง (workflow) AND จำได้ 
 | **Phase 2** | Agent Diary Protocol | ✅ done |
 | **Phase 2** | Cross-Project Memory Bridge | ✅ done |
 | **Phase 2** | Memory Scope Protocol | ✅ done |
-| **Phase 3** | Semantic Search Layer | planned |
-| **Phase 3** | Cross-Project Learning Engine | planned |
+| **Phase 3** | Semantic Search Layer (MemPalace) | ✅ template done |
+| **Phase 3** | Cross-Project Learning Engine | future |
 
 ---
 
@@ -299,45 +299,50 @@ AI อ่านไฟล์นี้ตอน bootstrap แทนการเร
 
 ---
 
-## 5. Phase 3 — Long-term Vision
+## 5. Phase 3 — Semantic Search Layer ✅ Template Done
 
-ระยะนี้ต้องการ dependency เพิ่ม และ setup ที่หนักกว่า
+ระยะนี้ต้องการ dependency เพิ่ม (`pip install mempalace`, ~300 MB disk)
 เป็น opt-in — ไม่ทำก็ใช้ Phase 1–2 ได้ครบ
-เป้าหมายคือให้ระบบ markdown ของเราเชื่อมกับ semantic search ได้
+**Implementation ที่เลือก: MemPalace** — local-first, ไม่ต้อง cloud, มี MCP tools 29 ตัวสำหรับ Claude Code
 
 ---
 
-### Feature 7: Semantic Search Layer
+### Feature 7: Semantic Search Layer (MemPalace)
 
 **ปัญหาที่แก้**
 Phase 1–2 ค้นหาด้วยการอ่าน — AI ต้องรู้ว่าต้องอ่านไฟล์ไหน
 ถ้าโปรเจ็กต์ใหญ่ขึ้น จำนวนไฟล์มากขึ้น การ navigate ด้วย routing hints อาจไม่พอ
 ต้องการ "ค้นหาด้วยความหมาย" แทนการค้นหาด้วย path
 
-**หลักการ**
-เพิ่ม semantic search เป็น optional layer บน ai/ ที่มีอยู่แล้ว
-ไม่ย้ายข้อมูลออกจาก markdown — แค่ index มันเพิ่มเติม
-โครงสร้าง ai/ ของเราแบ่ง folder ตาม concern อยู่แล้ว — เหมาะกับการ index เป็น section แยกกัน
+**Implementation: MemPalace**
+- Local-first — ChromaDB backend, ไม่ต้อง cloud API, ไม่มีค่าใช้จ่ายรายเดือน
+- Wing/Room/Drawer hierarchy — map ตรงกับโครงสร้าง ai/ ของเรา
+- 29 MCP tools สำหรับ Claude Code — AI ค้นหาได้โดยตรงไม่ต้องรัน CLI
+- 96.6% R@5 recall โดยไม่ต้อง LLM call เพิ่ม
+- GitHub: https://github.com/MemPalace/mempalace
 
-**การ map ai/ เข้า search index**
+**การ map ai/ เข้า MemPalace**
 ```
-ai/00-source/       ← source docs (immutable, versioned)
-ai/01-plan/         ← project plan + work status
-ai/02-task/         ← task board
-ai/03-log/          ← session logs + agent diaries
-ai/07-decisions/    ← ADR + entity register
+Wing: <project-name>
+  Room: decisions  ← ai/07-decisions/
+  Room: tasks      ← ai/02-task/
+  Room: plan       ← ai/01-plan/
+  Room: logs       ← ai/03-log/
 ```
 
-**วิธี integrate**
-- script ที่ index ai/ เข้า vector store ที่เลือก (ChromaDB, Qdrant, หรืออื่น)
-- เพิ่ม MCP tool ใน Claude Code: `search_project_docs "query"` → ค้นหาข้าม ai/ ทั้งหมด
-- ยัง write ลง markdown ตามปกติ — vector store เป็น read-only index เท่านั้น
+**Token Budget (ห้ามเกิน)**
+- สูงสุด 5 chunks ต่อ search
+- สูงสุด 1,500 token รวมจาก retrieval
+- ทิ้ง chunk ที่ similarity score < 0.60
 
-**สิ่งที่ต้องสร้าง**
-- script `tools/index-docs.sh` — index ai/ เข้า vector store ที่เลือก
-- MCP server wrapper หรือ skill `/search-docs` สำหรับ Claude Code
-- documentation วิธี setup พร้อม option หลายแบบ
-- ระบุชัดว่า markdown ยังเป็น source of truth — vector store เป็นแค่ index
+**สิ่งที่ทำเสร็จแล้ว**
+- ~~`core/20-vector-memory-optional.md`~~ ✅ setup guide + decision protocol + compliance rules C-20/21/22
+- ~~`tools/vector-memory/README.md`~~ ✅ quick reference: install, commands, troubleshooting
+- ~~เพิ่ม Layer 4 ใน `core/19-memory-architecture-overview.md`~~ ✅
+- ~~อัปเดต session protocol ใน `CLAUDE.md`~~ ✅ (re-mine step ใน session end checklist)
+
+**สิ่งที่ยังต้องทำ (T-022)**
+- Field test ด้วยโปรเจ็กต์จริงที่มี ai/ หลายสิบไฟล์ — validate token budget rules และ MCP integration
 
 ---
 
