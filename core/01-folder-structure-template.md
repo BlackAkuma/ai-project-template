@@ -65,6 +65,11 @@ doc/
     debt-register.md   ← ลงทะเบียน REFACTOR-PENDING ทั้งหมด (ดู core/15)
 ```
 
+## Git Branch Note
+
+`doc/` ทั้งหมดนี้ต้องอยู่บน **dev branch เท่านั้น** — ห้ามขึ้น production branch
+ดู branch strategy และ scenarios ทั้งหมดใน `core/21-git-workflow-template.md`
+
 ## Notes
 
 - `00-source/` ไฟล์ชื่อหลักเป็น index/pointer
