@@ -35,11 +35,25 @@ template system — ระบบ template สำหรับ AI-human collaborat
 
 ## Git Workflow
 
-- **dev** — branch หลักสำหรับการพัฒนา
-- **master** — stable release เท่านั้น — ห้าม commit โดยตรง
+- **dev** — branch หลักสำหรับการพัฒนา — ทำงานที่นี่เท่านั้น
+- **master** — stable release เท่านั้น — ห้าม commit หรือ merge โดยตรงโดยไม่ผ่านขั้นตอนด้านล่าง
 - **gh-pages** — web pages เท่านั้น (how-it-works.html, workflow-diagram.html)
 - Feature branches — ตั้งชื่อตาม `feat/`, `fix/`, `refactor/`, `test/`
-- ต้องได้รับ permission จากผู้ใช้ก่อน merge ไปที่ master หรือ push feature ใหม่ไปที่ dev
+
+### ขั้นตอน Merge dev → master (ห้ามข้าม)
+
+AI ต้องทำตามลำดับนี้ก่อน merge ทุกครั้ง:
+
+1. **สรุปสิ่งที่จะขึ้น master** ให้ครบก่อน:
+   - ไฟล์ที่เปลี่ยน + สิ่งที่เปลี่ยน
+   - tests ผ่านกี่/กี่
+   - version ที่จะ release
+   - ไฟล์ที่จะ **ไม่** ขึ้น (เช่น CoreAiWorkspaces/)
+2. **รอผู้ใช้อนุมัติ** — ต้องได้รับคำยืนยันชัดเจน
+3. **merge + push** — เมื่อได้รับอนุมัติแล้วเท่านั้น
+4. **รายงานผล** — บอกว่าขึ้นสำเร็จ branch ไหน commit hash อะไร
+
+**ห้าม:** จู่ๆ merge master โดยไม่สรุปงานก่อน ไม่ว่าบริบทจะชัดแค่ไหน
 
 ## กฎพิเศษสำหรับโปรเจ็กต์นี้
 
