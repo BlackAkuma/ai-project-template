@@ -58,8 +58,8 @@ cp docs/design-spec.md CoreAiWorkspaces/00-source/
 
 ```bash
 rm -rf _template/
-cp platforms/claude-code/CLAUDE.md ./CLAUDE.md
-git add CoreAiWorkspaces/ CLAUDE.md
+# CLAUDE.md และ .claude/commands/ ถูกติดตั้งโดย new-project.sh แล้ว
+git add CoreAiWorkspaces/ CLAUDE.md .claude/
 git commit -m "chore: add AI collaboration system"
 ```
 

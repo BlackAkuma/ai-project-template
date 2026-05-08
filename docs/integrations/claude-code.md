@@ -28,18 +28,23 @@ title: Claude Code Integration
 ### ขั้น 1: ติดตั้ง Claude Code
 
 ```bash
-# ดูคำสั่งติดตั้งล่าสุดที่ claude.CoreAiWorkspaces/code
+# ดูคำสั่งติดตั้งล่าสุดที่ claude.ai/code
 npm install -g @anthropic-ai/claude-code
 # หรือดูวิธีติดตั้งอื่นๆ ที่ official docs
 ```
 
-### ขั้น 2: วาง CLAUDE.md ที่ root
+### ขั้น 2: รัน Bootstrap Script
 
 ```bash
-cp platforms/claude-code/CLAUDE.md ./CLAUDE.md
+bash _template/scripts/new-project.sh "ชื่อโปรเจ็กต์" .
 ```
 
-Claude Code โหลด `CLAUDE.md` อัตโนมัติทุกครั้งที่เปิดโปรเจ็กต์ — ไม่ต้อง paste ด้วยมือ
+Script ติดตั้งทุกอย่างอัตโนมัติ:
+- `CLAUDE.md` ที่ root ← Claude Code โหลดทุก session
+- `.claude/commands/` ← slash commands พร้อมใช้
+- `.git/hooks/validate-commit` ← commit validation
+
+> ถ้าใช้ **Flow B (git clone)** — Claude จะ bootstrap เองผ่าน First Run Bootstrap แทน
 
 ### ขั้น 3: เปิดโปรเจ็กต์
 
@@ -70,6 +75,12 @@ claude .
 ---
 
 ## Slash Commands
+
+หลัง bootstrap ไฟล์ command จะอยู่ที่ `.claude/commands/` และใช้ได้เลยใน Claude Code
+
+**ทำไมชื่อขึ้นต้นด้วย `/caw-`?**
+
+`caw-` ย่อมาจาก **C**ore**A**i**W**orkspaces — prefix เฉพาะของระบบนี้ เพื่อป้องกันชนกับ slash commands จาก tools อื่นที่ผู้ใช้อาจติดตั้งไว้ใน `.claude/commands/` เดียวกัน (เช่น custom commands, other template systems)
 
 คำสั่งทั้งหมดที่ใช้ได้ใน Claude Code:
 

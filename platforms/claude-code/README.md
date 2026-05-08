@@ -54,53 +54,39 @@ platforms/claude-code/
 
 ## วิธี Setup
 
-### 1. Copy CLAUDE.md
+**ใช้ bootstrap script — ไม่ต้อง copy ไฟล์เองเลย:**
 
 ```bash
-cp platforms/claude-code/CLAUDE.md ./CLAUDE.md
+bash _template/scripts/new-project.sh "ชื่อโปรเจ็กต์" /path/to/your-project
 ```
 
-ปรับ language policy และ project-specific notes ตามโปรเจ็กต์
+Script ติดตั้งให้อัตโนมัติ:
 
-### 2. Setup Hooks
+| สิ่งที่ติดตั้ง | ที่ไหน | หมายเหตุ |
+|--------------|--------|---------|
+| `CLAUDE.md` | project root | Claude Code โหลดทุก session |
+| slash commands | `.claude/commands/` | `/caw-*` ทั้งหมด |
+| `validate-commit` | `.git/hooks/` | ถ้ามี `.git` อยู่ |
+| `CoreAiWorkspaces/` | project root | AI working folder |
 
-สร้าง `.claude/hooks/` ในโปรเจ็กต์แล้ว copy hooks ที่ต้องการ:
+### ไฟล์ที่ติดตั้งใน `.claude/commands/`
 
-```bash
-mkdir -p .claude/hooks
-cp platforms/claude-code/hooks/session-start.sh .claude/hooks/
-cp platforms/claude-code/hooks/session-stop.sh .claude/hooks/
-cp platforms/claude-code/hooks/pre-compact.sh .claude/hooks/
-cp platforms/claude-code/hooks/validate-commit.sh .claude/hooks/
-cp platforms/claude-code/hooks/detect-gaps.sh .claude/hooks/
-chmod +x .claude/hooks/*.sh
+```
+caw-session-end.md       sync work-status + log + task-board
+caw-compliance-check.md  ตรวจ compliance violations
+caw-adr-create.md        สร้าง architectural decision record
+caw-scope-check.md       ตรวจ scope ของ task ปัจจุบัน
+caw-fdd-create.md        สร้าง feature design document
+caw-launch-check.md      checklist ก่อน deploy
+caw-archive-logs.md      compress session logs เก่า
 ```
 
-### 3. Setup Rules
-
-```bash
-mkdir -p .claude/rules
-
-# ทุกโปรเจ็กต์:
-cp platforms/claude-code/rules/core-standards.md .claude/rules/
-cp platforms/claude-code/rules/design-docs.md .claude/rules/
-cp platforms/claude-code/rules/test-standards.md .claude/rules/
-
-# game projects เท่านั้น:
-cp platforms/claude-code/rules/gameplay-code.md .claude/rules/
-```
-
-### 4. Setup Skills
-
-```bash
-mkdir -p .claude/skills
-cp platforms/claude-code/skills/* .claude/skills/
-```
+ชื่อขึ้นต้นด้วย `caw-` (**C**ore**A**i**W**orkspaces) เพื่อป้องกันชนกับ commands ของ tools อื่น
 
 ---
 
 ## หมายเหตุ
 
-- Hook scripts ต้องการ bash และ git
-- `PROJECT_ROOT` environment variable ควรตั้งค่าให้ตรงกับ root ของโปรเจ็กต์
-- ปรับ glob patterns ใน rules ให้ตรงกับโครงสร้าง folder ของโปรเจ็กต์
+- `validate-commit` hook ต้องการ bash และ git
+- ถ้าโปรเจ็กต์ไม่มี `.git` — hook จะข้ามการติดตั้งโดยอัตโนมัติ
+- ปรับ `CoreAiWorkspaces/04-way-of-work/way-of-work.md` เพื่อ customize language policy และ project rules

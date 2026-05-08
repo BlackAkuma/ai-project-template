@@ -127,35 +127,39 @@ git commit -m "setup: add AI project documentation"
 
 ---
 
-## ถ้าใช้ Claude Code — setup เพิ่มเติม
+## ถ้าใช้ Claude Code — bootstrap script ทำให้อัตโนมัติ
 
-ทำหลังจากขั้นตอนด้านบนเสร็จแล้ว (ก่อนลบ `_template/`):
+**ไม่ต้อง copy ไฟล์อะไรเองเลย** — `new-project.sh` จัดการให้ครบ:
 
 ```bash
-# Copy CLAUDE.md ไปที่ root
-cp _template/platforms/claude-code/CLAUDE.md ./
+bash _template/scripts/new-project.sh "ชื่อโปรเจ็กต์" .
+```
 
-# Setup hooks
-mkdir -p .claude/hooks
-cp _template/platforms/claude-code/hooks/*.sh .claude/hooks/
-chmod +x .claude/hooks/*.sh
+Script จะติดตั้ง:
 
-# Setup rules (ปรับ glob paths ให้ตรงกับโครงสร้าง project)
-mkdir -p .claude/rules
-cp _template/platforms/claude-code/rules/core-standards.md .claude/rules/
-cp _template/platforms/claude-code/rules/design-docs.md .claude/rules/
-cp _template/platforms/claude-code/rules/test-standards.md .claude/rules/
-# game projects เท่านั้น:
-# cp _template/platforms/claude-code/rules/gameplay-code.md .claude/rules/
+| สิ่งที่ติดตั้ง | ที่ไหน | ทำอะไร |
+|--------------|--------|--------|
+| `CLAUDE.md` | project root | Claude Code อ่านอัตโนมัติทุก session |
+| slash commands | `.claude/commands/` | คำสั่ง `/caw-*` พร้อมใช้ทันที |
+| validate-commit | `.git/hooks/` | ตรวจ deprecated entities ก่อน commit |
+| `CoreAiWorkspaces/` | project root | AI working folder ครบโครงสร้าง |
 
-# Setup slash commands
-mkdir -p .claude/skills
-cp _template/platforms/claude-code/skills/*.md .claude/skills/
-
-# ลบ template แล้ว commit ทั้งหมด
+```bash
+# หลัง script เสร็จ ลบ template ทิ้งได้เลย
 rm -rf _template/
 git add CoreAiWorkspaces/ CLAUDE.md .claude/ .gitignore
 git commit -m "setup: add AI project documentation and Claude Code layer"
+```
+
+**Slash commands ที่ติดตั้งให้** (ชื่อขึ้นต้นด้วย `caw-` เพื่อป้องกันชนกับ tools อื่น):
+```
+/caw-session-end       sync work-status + log + task-board ก่อนปิด Claude
+/caw-compliance-check  ตรวจ compliance violations
+/caw-adr-create        สร้าง architectural decision record
+/caw-scope-check       ตรวจว่างานอยู่ใน scope ไหม
+/caw-fdd-create        สร้าง feature design document
+/caw-launch-check      checklist ก่อน deploy
+/caw-archive-logs      compress session logs เก่า
 ```
 
 ดูรายละเอียดเพิ่มเติมที่ [`platforms/claude-code/README.md`](platforms/claude-code/README.md)

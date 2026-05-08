@@ -18,7 +18,7 @@ title: Quick Start — Mac / Linux
 | Bash (มีใน macOS/Linux อยู่แล้ว) | `bash --version` |
 | Claude Code CLI **หรือ** Claude.ai web account | เลือกอย่างใดอย่างหนึ่ง |
 
-ถ้าใช้ Claude Code CLI: ติดตั้งจาก [claude.CoreAiWorkspaces/code](https://claude.CoreAiWorkspaces/code)
+ถ้าใช้ Claude Code CLI: ติดตั้งจาก [claude.ai/code](https://claude.ai/code)
 
 ---
 
@@ -59,21 +59,19 @@ my-project/
 bash _template/scripts/new-project.sh "ชื่อโปรเจ็กต์" .
 ```
 
-Script จะสร้าง `CoreAiWorkspaces/` folder พร้อมไฟล์ทั้งหมดให้อัตโนมัติ
+Script จะทำทุกอย่างอัตโนมัติ:
+- สร้าง `CoreAiWorkspaces/` folder พร้อมไฟล์ทั้งหมด
+- ติดตั้ง `CLAUDE.md` ที่ root (Claude Code อ่านอัตโนมัติ)
+- ติดตั้ง slash commands ไว้ที่ `.claude/commands/`
+- ติดตั้ง git hook `validate-commit` (ถ้ามี `.git`)
 
-### ขั้น 4: Copy CLAUDE.md (ถ้าใช้ Claude Code)
-
-```bash
-cp _template/platforms/claude-code/CLAUDE.md ./CLAUDE.md
-```
-
-### ขั้น 5: ลบ _template/
+### ขั้น 4: ลบ _template/
 
 ```bash
 rm -rf _template/
 ```
 
-`_template/` ไม่จำเป็นอีกต่อไปหลัง bootstrap — `CoreAiWorkspaces/` ที่สร้างมาอยู่ด้วยตัวเองได้แล้ว
+`_template/` ไม่จำเป็นอีกต่อไปหลัง bootstrap — ทุกอย่างถูกแจกจ่ายไปยังตำแหน่งที่ถูกต้องแล้ว
 
 ---
 
@@ -157,11 +155,19 @@ Claude จะ sync work-status + work-log + task-board ให้ครบ
 
 ```
 my-project/
-├── CLAUDE.md               ← Claude Code อ่านอัตโนมัติ
+├── CLAUDE.md               ← Claude Code อ่านอัตโนมัติ (ติดตั้งโดย script)
+├── .claude/
+│   └── commands/           ← slash commands (ติดตั้งโดย script)
+│       ├── caw-session-end.md
+│       ├── caw-compliance-check.md
+│       ├── caw-adr-create.md
+│       └── ...
+├── .git/hooks/
+│   └── validate-commit     ← commit hook (ติดตั้งโดย script)
 ├── core/                   ← template engine (อย่าแก้ไข)
 ├── platforms/              ← platform-specific configs
 ├── skills/                 ← optional skill packs
-├── CoreAiWorkspaces/                     ← AI working folder ของโปรเจ็กต์คุณ
+├── CoreAiWorkspaces/       ← AI working folder ของโปรเจ็กต์คุณ
 │   ├── 00-source/          ← source documents
 │   ├── 01-plan/            ← work-status, project-plan
 │   ├── 02-task/            ← task-board
@@ -169,6 +175,21 @@ my-project/
 │   ├── 04-way-of-work/     ← rules และ protocols
 │   └── 07-decisions/       ← ADRs และ entity-register
 └── [source code ของคุณ]
+```
+
+### Slash Commands — ชื่อขึ้นต้นด้วย `caw-` คืออะไร?
+
+`caw-` ย่อมาจาก **C**ore**A**i**W**orkspaces — prefix เฉพาะของระบบนี้ เพื่อป้องกันชนกับ slash commands จาก tools อื่นที่ผู้ใช้อาจติดตั้งไว้ใน `.claude/commands/`
+
+ตัวอย่าง:
+```
+/caw-session-end       ← sync work-status + log + task-board
+/caw-compliance-check  ← ตรวจ compliance violations
+/caw-adr-create        ← สร้าง architectural decision record
+/caw-scope-check       ← ตรวจว่างานปัจจุบันอยู่ใน scope ไหม
+/caw-fdd-create        ← สร้าง feature design document
+/caw-launch-check      ← checklist ก่อน deploy
+/caw-archive-logs      ← compress session logs เก่า
 ```
 
 ---
