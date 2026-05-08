@@ -25,7 +25,7 @@
 - **Phase 2: Agent Diary Protocol** (`core/08`) — แยก log ต่อ AI tool ใน `ai/03-log/agents/`
 - **Phase 2: Cross-Project Memory Bridge** (`core/18`) — `~/ai-workspace/cross-project-memory.md` สำหรับ lesson learned ข้ามโปรเจ็กต์
 - **Phase 2: Memory Scope Protocol** (`core/03`, `core/11`) — decision tree ว่าข้อมูลแต่ละแบบควรเก็บที่ไหน
-- **Phase 3: MemPalace Vector Memory** (`core/20`, `tools/vector-memory/`) — optional semantic search layer ด้วย MemPalace (local ChromaDB, ไม่ต้อง cloud)
+- **Phase 3: Vector Memory** (`core/20`, `tools/vector-memory/`) — optional local semantic search layer, ไม่ต้อง cloud
 - **Memory Architecture Overview** (`core/19`) — ภาพรวม Phase 1–3, compliance rules C-20/21/22
 
 ### Git Workflow

@@ -43,7 +43,7 @@ Core workflow แข็งแกร่งในด้าน "ทำอะไร 
 | `core/08-log-and-summary-template.md` | มี Agent Diary format และ `deep_context` hint |
 | `core/03-way-of-work-template.md` | มี Memory Scope Protocol (decision tree) |
 | `core/11-ai-decision-protocol-template.md` | มี Scenario J (Entity Lifecycle Tags) และ Scenario K (Memory Scope) |
-| `core/20-vector-memory-optional.md` | Phase 3 — MemPalace vector search setup และ decision protocol |
+| `core/20-vector-memory-optional.md` | Phase 3 — local vector search setup และ decision protocol |
 | `tools/vector-memory/README.md` | Quick reference: install, คำสั่งประจำวัน, token budget |
 
 ---
@@ -160,7 +160,7 @@ ai/03-log/
 
 **ปัญหา:** ai/ มีหลายสิบไฟล์ — `read_more` hints ไม่เพียงพอ ต้อง semantic search เพื่อหา context จาก session เก่า
 
-**วิธีแก้:** MemPalace — local-first vector memory (ChromaDB backend, ไม่ต้อง cloud)
+**วิธีแก้:** local-first vector memory — ไม่ต้อง cloud API, ข้อมูลอยู่ในเครื่อง
 
 ```
 Wing: <project-name>
@@ -195,7 +195,7 @@ Memory system เพิ่มขั้นตอนต่อไปนี้บน
 □ entity-register — มี entity ใหม่หรือ status เปลี่ยนไหม? (deprecated, added, removed)
 □ agent diary — เขียน diary ของ tool นี้ (ถ้าใช้ multi-tool workflow)
 □ cross-project memory — มี pattern ที่ควร promote ข้ามโปรเจ็กต์ไหม? (ถามผู้ใช้ก่อน)
-□ ถ้า vector_memory: enabled และ ai/ เปลี่ยน → รัน mempalace mine ai/ --wing <vector_wing>
+□ ถ้า vector_memory: enabled และ ai/ เปลี่ยน → re-index: ai/ --wing <vector_wing>
 ```
 
 ### เมื่อ ADR ถูก Accept

@@ -46,7 +46,7 @@ AI ที่ทำงานถูกต้อง (workflow) AND จำได้ 
 | **Phase 2** | Agent Diary Protocol | ✅ done |
 | **Phase 2** | Cross-Project Memory Bridge | ✅ done |
 | **Phase 2** | Memory Scope Protocol | ✅ done |
-| **Phase 3** | Semantic Search Layer (MemPalace) | ✅ template done |
+| **Phase 3** | Semantic Search Layer | ✅ template done |
 | **Phase 3** | Cross-Project Learning Engine | future |
 
 ---
@@ -301,27 +301,25 @@ AI อ่านไฟล์นี้ตอน bootstrap แทนการเร
 
 ## 5. Phase 3 — Semantic Search Layer ✅ Template Done
 
-ระยะนี้ต้องการ dependency เพิ่ม (`pip install mempalace`, ~300 MB disk)
+ระยะนี้ต้องการ dependency เพิ่ม (local embedding tool, ~300 MB disk)
 เป็น opt-in — ไม่ทำก็ใช้ Phase 1–2 ได้ครบ
-**Implementation ที่เลือก: MemPalace** — local-first, ไม่ต้อง cloud, มี MCP tools 29 ตัวสำหรับ Claude Code
 
 ---
 
-### Feature 7: Semantic Search Layer (MemPalace)
+### Feature 7: Semantic Search Layer
 
 **ปัญหาที่แก้**
 Phase 1–2 ค้นหาด้วยการอ่าน — AI ต้องรู้ว่าต้องอ่านไฟล์ไหน
 ถ้าโปรเจ็กต์ใหญ่ขึ้น จำนวนไฟล์มากขึ้น การ navigate ด้วย routing hints อาจไม่พอ
 ต้องการ "ค้นหาด้วยความหมาย" แทนการค้นหาด้วย path
 
-**Implementation: MemPalace**
-- Local-first — ChromaDB backend, ไม่ต้อง cloud API, ไม่มีค่าใช้จ่ายรายเดือน
+**หลักการ**
+- Local-first — ไม่ต้อง cloud API, ไม่มีค่าใช้จ่ายรายเดือน, ข้อมูลอยู่ในเครื่อง
 - Wing/Room/Drawer hierarchy — map ตรงกับโครงสร้าง ai/ ของเรา
-- 29 MCP tools สำหรับ Claude Code — AI ค้นหาได้โดยตรงไม่ต้องรัน CLI
-- 96.6% R@5 recall โดยไม่ต้อง LLM call เพิ่ม
-- GitHub: https://github.com/MemPalace/mempalace
+- MCP server support — AI ค้นหาได้โดยตรงไม่ต้องรัน CLI
+- ไม่ต้อง LLM call เพิ่มสำหรับ retrieval
 
-**การ map ai/ เข้า MemPalace**
+**การ map ai/ เข้า Vector Store**
 ```
 Wing: <project-name>
   Room: decisions  ← ai/07-decisions/
@@ -333,16 +331,13 @@ Wing: <project-name>
 **Token Budget (ห้ามเกิน)**
 - สูงสุด 5 chunks ต่อ search
 - สูงสุด 1,500 token รวมจาก retrieval
-- ทิ้ง chunk ที่ similarity score < 0.60
+- Threshold: 0.35 (Thai/mixed), 0.50 (English-only)
 
 **สิ่งที่ทำเสร็จแล้ว**
 - ~~`core/20-vector-memory-optional.md`~~ ✅ setup guide + decision protocol + compliance rules C-20/21/22
-- ~~`tools/vector-memory/README.md`~~ ✅ quick reference: install, commands, troubleshooting
+- ~~`tools/vector-memory/README.md`~~ ✅ implementation quick reference
 - ~~เพิ่ม Layer 4 ใน `core/19-memory-architecture-overview.md`~~ ✅
-- ~~อัปเดต session protocol ใน `CLAUDE.md`~~ ✅ (re-mine step ใน session end checklist)
-
-**สิ่งที่ยังต้องทำ (T-022)**
-- Field test ด้วยโปรเจ็กต์จริงที่มี ai/ หลายสิบไฟล์ — validate token budget rules และ MCP integration
+- ~~อัปเดต session protocol ใน `CLAUDE.md`~~ ✅ (re-index step ใน session end checklist)
 
 ---
 
