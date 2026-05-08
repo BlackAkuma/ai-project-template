@@ -501,16 +501,6 @@ echo "[$([ $IS_GAME -eq 1 ] && echo '3' || echo '3')/6] Installing platform file
 # Install slash commands
 mkdir -p "$TARGET/.claude/commands"
 cp "$TEMPLATE_ROOT/platforms/claude-code/skills/"*.md "$TARGET/.claude/commands/" 2>/dev/null || true
-# Remove any old commands without caw- prefix (leftover from older template versions)
-for old_cmd in "$TARGET/.claude/commands/"*.md; do
-  basename=$(basename "$old_cmd")
-  if [[ "$basename" != caw-* ]]; then
-    rm -f "$old_cmd"
-    echo "  removed legacy command: $basename"
-  fi
-done
-# Remove tmp folder if exists
-rm -rf "$TARGET/.claude_commands_tmp" 2>/dev/null || true
 echo "  installed: .claude/commands/ (slash commands)"
 
 # Install agents (game projects get game agents; all projects get base agents)
