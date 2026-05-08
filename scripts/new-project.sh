@@ -36,6 +36,7 @@ done
 TEMPLATE_ROOT="$(pwd)"
 DATE="$(date '+%Y-%m-%d')"
 YEAR="$(date '+%Y')"
+TEMPLATE_VERSION="$(cat "$TEMPLATE_ROOT/VERSION" 2>/dev/null | tr -d '[:space:]' || echo "unknown")"
 MONTH="$(date '+%m')"
 
 # ── Guard ────────────────────────────────────────────────────────────────────
@@ -49,7 +50,8 @@ fi
 if [ "$UPDATE_ONLY" = true ]; then
   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   echo "  Update Commands: $PROJECT_NAME"
-  echo "  Target: $TARGET"
+  echo "  Target:          $TARGET"
+  echo "  Template version: $TEMPLATE_VERSION"
   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   echo ""
   mkdir -p "$TARGET/.claude/commands"
@@ -78,6 +80,7 @@ echo "  Bootstrap: $PROJECT_NAME"
 echo "  Target:    $TARGET"
 echo "  Type:      $([ $IS_GAME -eq 1 ] && echo 'game' || echo 'software')"
 echo "  Date:      $DATE"
+echo "  Template:  v$TEMPLATE_VERSION"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
@@ -130,7 +133,7 @@ echo "  directories created"
 echo "[2/6] Creating core files..."
 
 TYPE_LABEL=$([ $IS_GAME -eq 1 ] && echo "game" || echo "software")
-SKILLS_NOTE=$([ $IS_GAME -eq 1 ] && echo "Template version: ai-project-template (core 00–18 + skills/game 00–06)" || echo "Template version: ai-project-template (core 00–18)")
+SKILLS_PACK=$([ $IS_GAME -eq 1 ] && echo "core 00–18 + skills/game 00–06" || echo "core 00–18")
 DESIGN_ROW=$([ $IS_GAME -eq 1 ] && echo "| \`08-design/\` | Feature Design Documents (FDD) — game-only |" || echo "")
 
 make_file "$TARGET/CoreAiWorkspaces/README.md" \
@@ -138,7 +141,8 @@ make_file "$TARGET/CoreAiWorkspaces/README.md" \
 
 โครงสร้างเอกสารโปรเจ็กต์ $PROJECT_NAME (${TYPE_LABEL})
 Bootstrap date: $DATE
-$SKILLS_NOTE
+Template version: ai-project-template v$TEMPLATE_VERSION ($SKILLS_PACK)
+อัปเดต commands ด้วย: /caw-update (หรือ --update-commands flag)
 
 | โฟลเดอร์ | เนื้อหา |
 |----------|--------|

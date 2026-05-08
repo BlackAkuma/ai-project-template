@@ -1,5 +1,20 @@
 ﻿# Changelog
 
+## v1.4.0 — 2026-05-08
+
+### Versioning System
+
+- **`VERSION` file** — เก็บ version ที่ root — single source of truth สำหรับ template version
+- **`new-project.sh`** — อ่าน VERSION และ embed ลง bootstrapped `CoreAiWorkspaces/README.md` — ทุกโปรเจ็กต์รู้ว่าใช้ template version อะไร
+- **Bump rules** — PATCH/MINOR → `/caw-update` จัดการได้, MAJOR → re-bootstrap
+- **ADR-004** — บันทึก versioning strategy: single release + layer separation
+
+### Tests
+
+- **46/46 tests** (เพิ่มจาก 44) — เพิ่ม A14: VERSION file exists, A15: version embedded in bootstrapped README
+
+---
+
 ## v1.3.1 — 2026-05-08
 
 ### Update Commands Flow

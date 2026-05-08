@@ -125,6 +125,14 @@ else
   fail "A12: .claude/commands/ NOT created — slash commands not installed"
 fi
 
+# Verify VERSION file exists and bootstrapped README embeds it
+[ -f "$TEMPLATE_ROOT/VERSION" ] && pass "A14: VERSION file exists in template root" || fail "A14: VERSION file missing"
+if grep -q "ai-project-template v" "$PROJECT_A/CoreAiWorkspaces/README.md" 2>/dev/null; then
+  pass "A15: template version embedded in bootstrapped CoreAiWorkspaces/README.md"
+else
+  fail "A15: template version NOT found in CoreAiWorkspaces/README.md"
+fi
+
 # =============================================================================
 # FLOW B: git clone simulation (user clones repo directly)
 # =============================================================================
