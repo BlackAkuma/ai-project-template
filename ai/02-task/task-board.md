@@ -2,7 +2,7 @@
 total_tasks: 1
 in_progress: []
 blocked: []
-done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021]
+done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022]
 last_updated: 2026-05-08
 -->
 
@@ -13,16 +13,6 @@ last_updated: 2026-05-08
 *(ไม่มี task กำลังทำอยู่)*
 
 ## Todo
-
-### T-022: Field test MemPalace workflow
-
-**Priority:** low (ต้องทำก่อน release)
-**Ref:** core/20-vector-memory-optional.md
-**Description:** ทดสอบ workflow จริงกับโปรเจ็กต์ที่มี ai/ หลายสิบไฟล์:
-- pip install mempalace → mempalace init → mempalace mine → mempalace search
-- ตรวจว่า token budget rules (1,500 token, 5 chunks, score ≥ 0.60) ทำงานได้จริง
-
----
 
 ## Done
 
@@ -36,3 +26,4 @@ last_updated: 2026-05-08
 | T-014 | scripts/new-project.sh สร้าง ai/ ไม่ใช่ doc/ | 2026-05-07 |
 | T-020 | Update ROADMAP.md — Phase 3 MemPalace template done | 2026-05-08 |
 | T-021 | Update CHANGELOG.md — v1.1.0 + v1.2.0 | 2026-05-08 |
+| T-022 | Field test MemPalace: install + mine + search, fix 4 doc errors | 2026-05-08 |

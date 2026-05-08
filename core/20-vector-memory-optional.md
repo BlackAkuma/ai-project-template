@@ -62,13 +62,17 @@ Wing: "hod-software"
 pip install mempalace
 ```
 
-### ขั้น 2: สร้าง Palace สำหรับโปรเจ็กต์
+disk: ~300 MB สำหรับ embedding model (โหลดครั้งแรกอัตโนมัติ)
+Palace location: `~/.mempalace/palace` (default — ทุกโปรเจ็กต์ใช้ palace เดียวกัน แยกด้วย wing)
+
+### ขั้น 2: (Optional) Init wizard
 
 ```bash
-mempalace init ~/ai-workspace/mempalace/<project-name>
+mempalace init .
 ```
 
-`<project-name>` = ชื่อโปรเจ็กต์นี้ ใช้เป็น Wing name
+**หมายเหตุ:** `init` เป็น interactive wizard — ตรวจ git history และถามยืนยัน people/projects
+**ข้ามขั้นนี้ได้** — `mine` ทำงานได้โดยไม่ต้อง init ก่อน
 
 ### ขั้น 3: Index ไฟล์ใน ai/
 
@@ -76,15 +80,18 @@ mempalace init ~/ai-workspace/mempalace/<project-name>
 mempalace mine ai/ --wing <project-name>
 ```
 
-script จะสแกน `.md` ทุกไฟล์ใน `ai/` และสร้าง index
+**สำคัญ:** ต้องระบุ `--wing` เสมอเมื่อ mine จาก `ai/` subfolder
+หากไม่ระบุ wing จะ default เป็น `ai` ซึ่งจะชนกันทุกโปรเจ็กต์ที่ใช้ template นี้
 
 ### ขั้น 4: ทดสอบ
 
 ```bash
 mempalace search "authentication decisions" --wing <project-name>
+mempalace status                              # ดู palace contents
+mempalace wake-up --wing <project-name>       # L0+L1 context (~600-900 tokens)
 ```
 
-ถ้าคืนผลมีเนื้อหาจาก ADR หรือ work-log = setup สำเร็จ
+ถ้า `search` คืนผลมีเนื้อหาจาก ADR หรือ work-log = setup สำเร็จ
 
 ---
 
@@ -174,10 +181,13 @@ mempalace sweep <transcript-dir> --wing <project-name>
 |----|-----|
 | จำนวน chunk สูงสุด | 5 chunks |
 | token รวมสูงสุด | 1,500 token (~6,000 ตัวอักษร) |
-| similarity ต่ำสุดที่ใช้ได้ | 0.60 |
+| similarity ต่ำสุดที่ใช้ได้ | 0.35 (Thai/mixed content) หรือ 0.50 (English-only) |
 | ทิ้ง chunk ที่ score ต่ำที่สุดก่อน ถ้าเกิน budget | เสมอ |
 
 **วิธีนับ token แบบเร็ว:** ตัวอักษรไทย ÷ 2 + ตัวอักษรอังกฤษ ÷ 4
+
+**หมายเหตุ threshold:** content ภาษาไทย + อังกฤษ mixed จะได้ cosine score ต่ำกว่า pure-English
+ค่า 0.35 เหมาะกับโปรเจ็กต์ Thai/mixed — ถ้าโปรเจ็กต์เป็น English ล้วนใช้ 0.50 ได้
 
 ถ้าผลลัพธ์ดูไม่เกี่ยวกับ query → อย่าใช้ และ note ว่า "search ไม่เจอ context ที่ต้องการ"
 
@@ -240,5 +250,5 @@ vector_palace: ~/ai-workspace/mempalace/<project-name>
 | Code | สิ่งที่ตรวจ |
 |------|-----------|
 | C-20 | ถ้า `vector_memory: enabled` และ ai/ เปลี่ยน → ต้อง re-mine ก่อนจบ session |
-| C-21 | ผล search ที่ score < 0.60 ห้ามใส่ใน context — ทิ้งหรือ note ว่าไม่พบ |
+| C-21 | ผล search ที่ score ต่ำกว่า threshold ห้ามใส่ใน context (0.35 สำหรับ Thai/mixed, 0.50 สำหรับ English) |
 | C-22 | ห้าม inject ผล search เกิน 1,500 token ต่อ session |

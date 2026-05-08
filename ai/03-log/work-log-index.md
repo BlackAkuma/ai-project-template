@@ -3,8 +3,8 @@ last_session: 2026-05-08
 tool: Claude Code
 completed: [T-010,T-011,T-012,T-013,T-014,bootstrap-ai,T-020,T-021]
 checkpoint: none
-next_from_last: field test MemPalace (T-022), then merge to master (T-023)
-notes: ROADMAP + CHANGELOG updated, release prep nearly complete
+next_from_last: merge dev → master (T-023, needs user permission)
+notes: all tasks done except merge, docs corrected from field test
 deep_context: none
 -->
 
@@ -36,7 +36,24 @@ deep_context: none
 
 **ผล:** 35/35 tests passing, dev branch clean + pushed
 
-**Next:** T-022 (field test MemPalace), T-023 (merge to master เมื่อ T-022 ผ่าน)
+**Next:** T-023 (merge dev → master รอ permission)
+
+---
+
+### 2026-05-08 — [T-022: MemPalace Field Test + Doc Corrections]
+
+**สิ่งที่ทำ:**
+- ติดตั้ง mempalace 3.3.4 จริง และ test บน template project's ai/ folder
+- พบ 4 ข้อผิดพลาดในเอกสาร แก้ไขทั้งหมด:
+  1. `init` command — เป็น interactive wizard ไม่ใช่ path command / ข้ามได้
+  2. Palace location — `~/.mempalace/palace` (global) ไม่ใช่ `~/ai-workspace/mempalace/`
+  3. `--wing` flag — ต้องระบุเสมอเมื่อ mine จาก `ai/` subfolder (ไม่งั้น wing = 'ai')
+  4. Threshold — 0.60 → 0.35 สำหรับ Thai/mixed (จาก actual cosine scores 0.31–0.53)
+- ค้นพบ `mempalace wake-up`, `mempalace status` commands ที่ไม่ได้เขียนไว้
+- Mine 22 files, 62 drawers สำเร็จ / Search ทำงานได้ถูกต้อง
+- อัปเดต core/20, core/19, tools/vector-memory/README.md
+
+**ผล:** T-022 complete — docs ถูกต้องแล้ว
 
 ---
 

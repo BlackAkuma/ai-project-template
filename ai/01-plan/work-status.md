@@ -35,5 +35,4 @@ read_more:
 
 ## Next Actions (ลำดับความสำคัญ)
 
-1. **Field test MemPalace** (T-022) — ทดสอบ core/20 กับโปรเจ็กต์จริงเพื่อ validate workflow
-2. **Merge dev → master** (T-023) — เมื่อ T-022 ผ่าน (ต้องได้รับ permission ก่อน)
+1. **Merge dev → master** (T-023) — รอ permission จากผู้ใช้

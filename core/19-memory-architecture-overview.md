@@ -231,7 +231,7 @@ Memory system เพิ่มขั้นตอนต่อไปนี้บน
 | C-14 | AI เจอ `[ENTITY:deprecated]` ต้องตรวจ entity-register ก่อนใช้ข้อมูลนั้น |
 | C-14 | เมื่อ ADR Accept → ต้องอัปเดต entity-register ทันที |
 | C-20 | ถ้า `vector_memory: enabled` และ ai/ เปลี่ยน → ต้อง re-mine ก่อนจบ session |
-| C-21 | ผล search ที่ score < 0.60 ห้ามใส่ใน context |
+| C-21 | ผล search ที่ score ต่ำกว่า threshold ห้ามใส่ใน context (0.35 Thai/mixed, 0.50 English) |
 | C-22 | ห้าม inject ผล search เกิน 1,500 token ต่อ session |
 
 validate-commit.sh hook: warn เมื่อ commit file มี reference ถึง entity ที่อยู่ใน entity-register ด้วย status `deprecated`
