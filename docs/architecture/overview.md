@@ -36,7 +36,8 @@ CoreAiWorkspaces/
 ├── 04-way-of-work/         ← กฎและ protocol ของโปรเจ็กต์
 │   ├── way-of-work.md      ← communication rules, git workflow
 │   ├── ai-decision-protocol.md ← AI ทำอะไรได้ / ต้องหยุดเมื่อไหร่
-│   └── compliance.md       ← ข้อกำหนด C-01 ถึง C-22
+│   ├── compliance.md       ← ข้อกำหนด C-01 ถึง C-22
+│   └── tacp.md             ← Token-Aware Communication Protocol (TACP)
 │
 └── 07-decisions/           ← บันทึก architectural decisions
     ├── README.md            ← ADR index (ดู status ทุก decision)
@@ -315,4 +316,4 @@ Rules หลักที่ AI ตรวจทุก session:
 
 ---
 
-→ ต่อไป: [Memory System](memory-system.md) | [ADR System](adr-system.md) | [Visual: How It Works](how-it-works.html)
+→ ต่อไป: [TACP — Token Savings](tacp.md) | [Memory System](memory-system.md) | [ADR System](adr-system.md) | [Visual: How It Works](how-it-works.html)
