@@ -181,6 +181,25 @@ Compress session logs เก่าเป็น monthly archive
 
 ---
 
+### `/caw-update`
+
+อัปเดต `caw-*` commands และ `CLAUDE.md` เป็น version ใหม่ — โดยไม่แตะ `CoreAiWorkspaces/` หรือไฟล์โปรเจ็กต์ใดๆ
+
+ใช้เมื่อ:
+- template ออก version ใหม่และต้องการ commands ล่าสุด
+- `CLAUDE.md` มี rules หรือ protocol ใหม่ที่ต้องการ sync
+- ไม่ต้องการ bootstrap โปรเจ็กต์ใหม่ทั้งหมด
+
+ทำ:
+1. แนะนำให้ download template ล่าสุดไว้ใน `_template/`
+2. รัน `bash _template/scripts/new-project.sh "ชื่อ" . --update-commands`
+3. ลบ `_template/` หลังเสร็จ
+
+**สิ่งที่อัปเดต:** `.claude/commands/caw-*.md` + `CLAUDE.md`
+**สิ่งที่ไม่แตะ:** `CoreAiWorkspaces/`, source docs, source code
+
+---
+
 ### `/caw-balance-check` (Game Projects เท่านั้น)
 
 ตรวจ game balance ตาม design standards ใน `skills/game/`

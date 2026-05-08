@@ -109,7 +109,8 @@ my-project/
 │       ├── caw-scope-check.md      /caw-scope-check
 │       ├── caw-fdd-create.md       /caw-fdd-create
 │       ├── caw-launch-check.md     /caw-launch-check
-│       └── caw-archive-logs.md     /caw-archive-logs
+│       ├── caw-archive-logs.md     /caw-archive-logs
+│       └── caw-update.md           /caw-update
 │
 ├── .git/hooks/
 │   └── validate-commit             ← ตรวจก่อน commit อัตโนมัติ

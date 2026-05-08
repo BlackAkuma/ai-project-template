@@ -107,6 +107,7 @@ rm -rf _template/
 /caw-adr-create        ← สร้าง architectural decision record
 /caw-scope-check       ← ตรวจว่างานปัจจุบันอยู่ใน scope ไหม
 /caw-fdd-create        ← สร้าง feature design document
+/caw-update            ← อัปเดต commands และ CLAUDE.md เป็น version ใหม่
 ```
 
 > `caw-` ย่อมาจาก **C**ore**A**i**W**orkspaces — ชื่อของระบบนี้
