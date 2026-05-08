@@ -1,4 +1,4 @@
----
+﻿---
 name: game-narrative-director
 description: >
   Narrative design consultant — ดูแล story architecture, dialogue system,
@@ -18,9 +18,9 @@ You are a narrative design consultant for this project. You are a **collaborativ
 ## Project Context
 
 Read at session start:
-- `ai/08-design/character-registry.md` — all registered speakers and character IDs
-- `ai/00-source/versions/v0.1/gdd.md` — game pillars and player fantasy (narrative must serve these)
-- Any `ai/08-design/character-[id].md` files relevant to current task
+- `CoreAiWorkspaces/08-design/character-registry.md` — all registered speakers and character IDs
+- `CoreAiWorkspaces/00-source/versions/v0.1/gdd.md` — game pillars and player fantasy (narrative must serve these)
+- Any `CoreAiWorkspaces/08-design/character-[id].md` files relevant to current task
 
 ## Narrative Frameworks You Apply
 
@@ -40,7 +40,7 @@ Read at session start:
 
 ## Primary Responsibilities
 
-- Character sheet creation and maintenance (`ai/08-design/character-[id].md`)
+- Character sheet creation and maintenance (`CoreAiWorkspaces/08-design/character-[id].md`)
 - Dialogue review against character voice rules and forbidden phrase lists
 - Ludonarrative conflict detection: flag when mechanic contradicts story theme
 - String system compliance: flag hardcoded player-facing strings (N-01, N-02)
@@ -53,7 +53,7 @@ Read at session start:
 | N-01 | Hardcoded player-facing string in source code |
 | N-02 | String concatenation instead of template system |
 | N-03 | Dialogue node missing unique `id` field |
-| N-04 | Speaker ID not registered in `ai/08-design/character-registry.md` |
+| N-04 | Speaker ID not registered in `CoreAiWorkspaces/08-design/character-registry.md` |
 
 ## Gate Verdict Format
 

@@ -1,4 +1,4 @@
-# Git Workflow Template
+﻿# Git Workflow Template
 
 **นี่คือ Core Principle** — AI ต้องอ่านและปฏิบัติตามทุก session
 ความสำคัญเทียบเท่า session protocol และ decision protocol
@@ -7,11 +7,11 @@
 
 ## หลักการหลัก (ห้ามละเมิด)
 
-**`ai/` และ `CLAUDE.md` ต้องไม่อยู่บน production branch**
+**`CoreAiWorkspaces/` และ `CLAUDE.md` ต้องไม่อยู่บน production branch**
 
 เหตุผล:
 - production deploy ควรมีเฉพาะ code ที่ใช้งานจริง
-- AI working files (ai/) ไม่ควร expose ใน production environment
+- AI working files (CoreAiWorkspaces/) ไม่ควร expose ใน production environment
 - ถ้า repo เป็น public: planning docs / ADR / session logs ไม่ควรมองเห็น
 
 ---
@@ -21,14 +21,14 @@
 ```
 [production branch]   ← code เท่านั้น — deploy จาก branch นี้
       ↑ merge code only
-[dev branch]          ← code + ai/ + CLAUDE.md — ทำงาน AI ที่นี่
+[dev branch]          ← code + CoreAiWorkspaces/ + CLAUDE.md — ทำงาน AI ที่นี่
       ↑ branch off
 [feature/* branches]  ← optional
 ```
 
 **กฎ:**
-- `ai/` อยู่บน dev branch เสมอ
-- merge dev → production = **merge code เท่านั้น** ไม่เอา `ai/` ขึ้น
+- `CoreAiWorkspaces/` อยู่บน dev branch เสมอ
+- merge dev → production = **merge code เท่านั้น** ไม่เอา `CoreAiWorkspaces/` ขึ้น
 - production branch ชื่ออะไรก็ได้ (main / master / release / prod)
 - dev branch ชื่ออะไรก็ได้ — AI ต้องถามและบันทึกไว้
 
@@ -51,7 +51,7 @@
 
 ### Scenario 1 — เริ่มโปรเจ็กต์ใหม่บน production branch (main/master)
 
-**สัญญาณ:** `git branch --show-current` คืนค่า main หรือ master และยังไม่มี `ai/`
+**สัญญาณ:** `git branch --show-current` คืนค่า main หรือ master และยังไม่มี `CoreAiWorkspaces/`
 
 **AI แจ้งผู้ใช้:**
 ```
@@ -61,12 +61,12 @@
 เลือก:
 A) สร้าง dev branch ทันที (แนะนำ)
    → git checkout -b dev
-   → bootstrap และ ai/ ทั้งหมดจะอยู่บน dev
+   → bootstrap และ CoreAiWorkspaces/ ทั้งหมดจะอยู่บน dev
 
 B) ทำต่อบน [branch] นี้ (single-branch mode)
-   → ai/ จะอยู่บน production branch
-   → ต้อง exclude ai/ เองตอน deploy
-   → AI จะเตือนทุกครั้งที่ commit ai/ ลงบน branch นี้
+   → CoreAiWorkspaces/ จะอยู่บน production branch
+   → ต้อง exclude CoreAiWorkspaces/ เองตอน deploy
+   → AI จะเตือนทุกครั้งที่ commit CoreAiWorkspaces/ ลงบน branch นี้
 ```
 
 **ผู้ใช้เลือก A:**
@@ -78,7 +78,7 @@ git checkout -b dev
 **ผู้ใช้เลือก B:**
 → bootstrap ต่อบน main บันทึก git_mode: single-branch
 → สร้าง `.deployignore` ให้อัตโนมัติ (ดูด้านล่าง)
-→ เตือนทุกครั้งที่ session end ว่า "ai/ อยู่บน production branch — exclude ตอน deploy"
+→ เตือนทุกครั้งที่ session end ว่า "CoreAiWorkspaces/ อยู่บน production branch — exclude ตอน deploy"
 
 ---
 
@@ -97,9 +97,9 @@ git reflog | grep dev              # มี commit ล่าสุดของ d
 git checkout -b dev origin/dev     # restore ได้เลย ไม่มีอะไรหาย
 ```
 
-**ถ้า remote ไม่มี (ai/ หายจริง):**
+**ถ้า remote ไม่มี (CoreAiWorkspaces/ หายจริง):**
 - code ยังอยู่ครบบน production branch ✓
-- ai/ หาย แต่ code และ git history ยังอยู่ครบ
+- CoreAiWorkspaces/ หาย แต่ code และ git history ยังอยู่ครบ
 - ต้อง bootstrap ใหม่: AI อ่าน code + git log เพื่อ reconstruct context เท่าที่ทำได้
 - สิ่งที่สร้างใหม่ไม่ได้: session logs และ ADR history ที่ไม่เคย commit
 
@@ -121,7 +121,7 @@ development branch ที่ AI จะทำงานคืออะไร?
 ```
 
 บันทึกคำตอบใน work-status AI-CONTEXT block ทันที
-**กฎยังเหมือนเดิม:** ai/ อยู่บน dev_branch เท่านั้น ไม่ขึ้น prod_branch
+**กฎยังเหมือนเดิม:** CoreAiWorkspaces/ อยู่บน dev_branch เท่านั้น ไม่ขึ้น prod_branch
 
 ---
 
@@ -134,7 +134,7 @@ development branch ที่ AI จะทำงานคืออะไร?
 2. บันทึก `git_mode: single-branch` ใน work-status
 3. สร้าง `.deployignore` อัตโนมัติ:
 ```
-ai/
+CoreAiWorkspaces/
 CLAUDE.md
 *.lance
 ai-workspace/
@@ -142,34 +142,34 @@ ai-workspace/
 4. เตือนทุกสิ้น session:
 ```
 [REMINDER] git_mode: single-branch
-ai/ อยู่บน production branch — ตอน deploy ต้อง exclude ai/ และ CLAUDE.md
+CoreAiWorkspaces/ อยู่บน production branch — ตอน deploy ต้อง exclude CoreAiWorkspaces/ และ CLAUDE.md
 ```
 
 ---
 
-### Scenario 5 — ai/ มีอยู่บน production branch แล้ว ต้องการย้ายไป dev
+### Scenario 5 — CoreAiWorkspaces/ มีอยู่บน production branch แล้ว ต้องการย้ายไป dev
 
 **สัญญาณ:** เริ่มใช้ระบบใหม่กับโปรเจ็กต์ที่ทำงานบน main อยู่แล้ว หรือ bootstrap ผ่านไปแล้วโดยไม่ได้แยก branch
 
 **AI ต้องทำ (ขอ permission ผู้ใช้ก่อนทุกขั้น):**
 
 ```bash
-# ขั้น 1: สร้าง dev branch จาก main (เพื่อให้ dev มี ai/ ครบ)
+# ขั้น 1: สร้าง dev branch จาก main (เพื่อให้ dev มี CoreAiWorkspaces/ ครบ)
 git checkout main
 git checkout -b dev
-# ตอนนี้ dev มี ai/ ครบแล้ว ✓
+# ตอนนี้ dev มี CoreAiWorkspaces/ ครบแล้ว ✓
 
-# ขั้น 2: ลบ ai/ ออกจาก main
+# ขั้น 2: ลบ CoreAiWorkspaces/ ออกจาก main
 git checkout main
-git rm -r --cached ai/ CLAUDE.md
-echo "ai/" >> .gitignore
+git rm -r --cached CoreAiWorkspaces/ CLAUDE.md
+echo "CoreAiWorkspaces/" >> .gitignore
 echo "CLAUDE.md" >> .gitignore
 git add .gitignore
 git commit -m "chore: move AI working files to dev branch only"
 
 # ขั้น 3: ยืนยัน
-git checkout main && ls doc  # ควร error — ai/ ไม่ควรอยู่บน main
-git checkout dev && ls doc   # ควรเห็น ai/ ครบ
+git checkout main && ls doc  # ควร error — CoreAiWorkspaces/ ไม่ควรอยู่บน main
+git checkout dev && ls doc   # ควรเห็น CoreAiWorkspaces/ ครบ
 ```
 
 **หลังจากนั้น:**
@@ -186,26 +186,26 @@ git checkout dev && ls doc   # ควรเห็น ai/ ครบ
 - ✅ source code, build files, configs
 - ✅ package.json, requirements.txt, Dockerfile
 - ✅ README.md (ถ้าต้องการ)
-- ❌ `ai/` — ห้าม merge ขึ้น production
+- ❌ `CoreAiWorkspaces/` — ห้าม merge ขึ้น production
 - ❌ `CLAUDE.md` — ห้าม merge
-- ❌ `ai/08-vector-index/` — อยู่ใน .gitignore อยู่แล้ว
+- ❌ `CoreAiWorkspaces/08-vector-index/` — อยู่ใน .gitignore อยู่แล้ว
 
 **วิธี merge ที่ถูกต้อง (เลือกหนึ่ง):**
 
 ```bash
-# Option A: merge แล้ว unstage ai/ (clean)
+# Option A: merge แล้ว unstage CoreAiWorkspaces/ (clean)
 # ⚠️ ต้องอยู่บน prod-branch ก่อนรัน git rm — ตรวจก่อนเสมอ
 git checkout [prod-branch]
 git branch --show-current  # ยืนยันว่าอยู่บน prod-branch จริง
 git merge dev --no-ff
-git rm -r --cached ai/ CLAUDE.md
+git rm -r --cached CoreAiWorkspaces/ CLAUDE.md
 git commit -m "chore: exclude AI working files from production"
 
 # Option B: cherry-pick เฉพาะ code commits
 git checkout [prod-branch]
 git cherry-pick [commit] [commit] ...
 
-# Option C: PR/MR — reviewer ต้อง exclude ai/ ก่อน approve
+# Option C: PR/MR — reviewer ต้อง exclude CoreAiWorkspaces/ ก่อน approve
 ```
 
 ---
@@ -213,8 +213,8 @@ git cherry-pick [commit] [commit] ...
 ## .gitignore ที่ต้องมีในทุกโปรเจ็กต์
 
 ```gitignore
-# AI Vector Index (rebuilt from ai/ automatically)
-ai/08-vector-index/
+# AI Vector Index (rebuilt from CoreAiWorkspaces/ automatically)
+CoreAiWorkspaces/08-vector-index/
 *.lance
 
 # AI Workspace (cross-project memory, outside project repo)
@@ -228,8 +228,8 @@ ai-workspace/
 ทุกโปรเจ็กต์ต้องมีใน AI-CONTEXT block:
 
 ```yaml
-git_prod_branch: main          # branch ที่ deploy — ห้าม commit ai/ ที่นี่
-git_dev_branch: dev            # branch ที่ AI ทำงาน — ai/ อยู่ที่นี่
+git_prod_branch: main          # branch ที่ deploy — ห้าม commit CoreAiWorkspaces/ ที่นี่
+git_dev_branch: dev            # branch ที่ AI ทำงาน — CoreAiWorkspaces/ อยู่ที่นี่
 git_mode: branch-separated     # หรือ single-branch
 ```
 
@@ -242,18 +242,18 @@ git_mode: branch-separated     # หรือ single-branch
 เพิ่มใน session end checklist ของทุกโปรเจ็กต์ที่ใช้ branch-separated mode:
 
 ```
-□ git push origin [dev_branch]   ← push ai/ ขึ้น remote ป้องกัน data loss
-□ ไม่มี ai/ หรือ CLAUDE.md หลุดไป commit บน [prod_branch]
+□ git push origin [dev_branch]   ← push CoreAiWorkspaces/ ขึ้น remote ป้องกัน data loss
+□ ไม่มี CoreAiWorkspaces/ หรือ CLAUDE.md หลุดไป commit บน [prod_branch]
 ```
 
 ---
 
 ## สิ่งที่ AI ต้องไม่ทำ (เกี่ยวกับ git)
 
-- ❌ commit `ai/` หรือ `CLAUDE.md` ลงบน production branch — **ห้ามเด็ดขาด ไม่มีข้อยกเว้น ไม่ว่าผู้ใช้จะขอแค่ไหน**
-- ❌ merge `ai/` หรือ `CLAUDE.md` ขึ้น production branch — ใช้ Option B หรือ C แทน
+- ❌ commit `CoreAiWorkspaces/` หรือ `CLAUDE.md` ลงบน production branch — **ห้ามเด็ดขาด ไม่มีข้อยกเว้น ไม่ว่าผู้ใช้จะขอแค่ไหน**
+- ❌ merge `CoreAiWorkspaces/` หรือ `CLAUDE.md` ขึ้น production branch — ใช้ Option B หรือ C แทน
 - ❌ ข้าม branch check ตอน bootstrap — ไม่มีข้อยกเว้น
-- ❌ รัน `git rm -r --cached ai/` บน dev branch — ต้องอยู่บน prod-branch เท่านั้น
+- ❌ รัน `git rm -r --cached CoreAiWorkspaces/` บน dev branch — ต้องอยู่บน prod-branch เท่านั้น
 - ❌ ลบ branch ใดๆ โดยไม่ได้รับคำสั่งชัดเจนจากผู้ใช้
 - ❌ force push ใดๆ โดยไม่ได้รับคำสั่งชัดเจนจากผู้ใช้
 - ❌ สร้าง branch ใหม่โดยไม่แจ้งผู้ใช้ก่อน (ยกเว้นเฉพาะ dev branch หลังผู้ใช้เลือก A ใน Scenario 1)

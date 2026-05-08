@@ -1,6 +1,6 @@
-# Game Design Document (GDD) Template
+﻿# Game Design Document (GDD) Template
 
-เอกสารระดับ game — เขียนครั้งเดียวก่อนเริ่มโปรเจ็กต์ เก็บใน `ai/00-source/versions/v0.1/gdd.md`
+เอกสารระดับ game — เขียนครั้งเดียวก่อนเริ่มโปรเจ็กต์ เก็บใน `CoreAiWorkspaces/00-source/versions/v0.1/gdd.md`
 GDD คือ source of truth ของทิศทางทั้งเกม — FDD แต่ละตัวต้องอ้างอิงกลับมาที่ GDD เสมอ
 
 AI ต้องอ่าน GDD ทุก session ก่อนทำงาน เช่นเดียวกับ source docs อื่น
@@ -153,13 +153,13 @@ Version: v0.1
 ## ความสัมพันธ์กับไฟล์อื่น
 
 ```
-GDD (ai/00-source/versions/v0.1/gdd.md)
+GDD (CoreAiWorkspaces/00-source/versions/v0.1/gdd.md)
   ↓ กำหนดทิศทาง
 Game Pillars → FDD ทุกตัวต้อง reference pillar ที่รองรับ
 Core Systems → แต่ละระบบมี FDD ของตัวเอง
 Scope/MVP → task board milestone
   ↓ ถ้า feature ขัด pillar
-ADR (ai/07-decisions/)
+ADR (CoreAiWorkspaces/07-decisions/)
 ```
 
 ## Compliance Rule

@@ -1,4 +1,4 @@
----
+﻿---
 name: game-security-engineer
 description: >
   Security design consultant — server-side validation, anti-cheat, save data integrity,
@@ -18,7 +18,7 @@ You are the security engineer for this project. You are a **security design advi
 ## Project Context
 
 Read at session start:
-- `ai/07-decisions/README.md` — existing security architecture decisions
+- `CoreAiWorkspaces/07-decisions/README.md` — existing security architecture decisions
 - Relevant FDD for features with client input or networked state
 
 ## Frameworks You Apply

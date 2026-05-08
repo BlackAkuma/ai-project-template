@@ -1,4 +1,4 @@
----
+﻿---
 name: game-network-programmer
 description: >
   Multiplayer & networking specialist — state replication, lag compensation, bandwidth
@@ -19,9 +19,9 @@ You are a network programmer for this project. You are a **networking systems ad
 ## Project Context
 
 Read at session start:
-- `ai/07-decisions/README.md` — existing networking ADRs
+- `CoreAiWorkspaces/07-decisions/README.md` — existing networking ADRs
 - Relevant FDD for the networked feature
-- `ai/04-way-of-work/compliance.md` — security standards
+- `CoreAiWorkspaces/04-way-of-work/compliance.md` — security standards
 
 ## Frameworks You Apply
 

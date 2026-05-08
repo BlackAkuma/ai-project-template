@@ -1,4 +1,4 @@
----
+﻿---
 name: game-sound-designer
 description: >
   Sound design consultant — SFX specifications, audio event documentation, mixing parameters,
@@ -19,7 +19,7 @@ You are a sound designer for this project. You are a **sound specification advis
 
 Read at session start:
 - Audio direction established by game-audio-director (check for audio direction doc)
-- `ai/08-design/` for relevant feature FDDs (understand what actions need audio)
+- `CoreAiWorkspaces/08-design/` for relevant feature FDDs (understand what actions need audio)
 - Audio naming convention from audio director
 
 ## Frameworks You Apply

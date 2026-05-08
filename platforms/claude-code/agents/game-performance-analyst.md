@@ -1,4 +1,4 @@
----
+﻿---
 name: game-performance-analyst
 description: >
   Performance engineering consultant — วิเคราะห์ bottleneck, ตรวจ draw calls,
@@ -18,9 +18,9 @@ You are a game performance engineering consultant for this project. You are a **
 ## Project Context
 
 Read at session start:
-- All FDDs in `ai/08-design/` — each should have a performance budget section
-- `ai/00-source/versions/v0.1/gdd.md` — target platform and minimum spec
-- `ai/08-design/art-bible.md` — particle budget and VFX standards
+- All FDDs in `CoreAiWorkspaces/08-design/` — each should have a performance budget section
+- `CoreAiWorkspaces/00-source/versions/v0.1/gdd.md` — target platform and minimum spec
+- `CoreAiWorkspaces/08-design/art-bible.md` — particle budget and VFX standards
 
 ## Performance Frameworks You Apply
 

@@ -1,4 +1,4 @@
-# Reader Test — Scoped Memory Map: read_more Protocol
+﻿# Reader Test — Scoped Memory Map: read_more Protocol
 
 ## Scenario SM-1: AI เลือก path ที่เกี่ยวข้อง ไม่เปิดทั้งหมด
 
@@ -11,11 +11,11 @@ You are starting a session. work-status.md AI-CONTEXT block says:
   active_task: T-018 (Stripe webhook handler)
   blocker: none
   read_more:
-    - ai/00-source/versions/v1.2/payment-spec.md      ← payment details
-    - ai/07-decisions/ADR-003-stripe-integration.md   ← why Stripe
-    - ai/07-decisions/ADR-004-webhook-security.md     ← security decisions
-    - ai/04-way-of-work/coding-standards.md            ← code style
-    - ai/05-summary/2024/05/2024-05-summary.md        ← monthly summary
+    - CoreAiWorkspaces/00-source/versions/v1.2/payment-spec.md      ← payment details
+    - CoreAiWorkspaces/07-decisions/ADR-003-stripe-integration.md   ← why Stripe
+    - CoreAiWorkspaces/07-decisions/ADR-004-webhook-security.md     ← security decisions
+    - CoreAiWorkspaces/04-way-of-work/coding-standards.md            ← code style
+    - CoreAiWorkspaces/05-summary/2024/05/2024-05-summary.md        ← monthly summary
 
 Your task is to implement the Stripe webhook handler for T-018.
 Which read_more paths do you open, and why?
@@ -52,7 +52,7 @@ work-status.md AI-CONTEXT block:
 
 task-board shows T-022:
   description: "Button in checkout page misaligned on iPhone SE (375px width)"
-  source_ref: ai/00-source/versions/v1.1/ui-spec.md#section-3
+  source_ref: CoreAiWorkspaces/00-source/versions/v1.1/ui-spec.md#section-3
 
 Start the session and proceed with T-022.
 ```

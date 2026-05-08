@@ -1,21 +1,21 @@
----
-title: ภาพรวมระบบ — Session Protocol & ai/ Structure
+﻿---
+title: ภาพรวมระบบ — Session Protocol & CoreAiWorkspaces/ Structure
 ---
 
 # ภาพรวมระบบ
 
 ระบบนี้แก้ปัญหาหลักของการทำงานกับ AI: **AI ไม่มี memory ข้าม session**
 
-แทนที่จะพึ่ง AI memory ระบบนี้เก็บ state ทุกอย่างไว้ใน `ai/` folder บน filesystem — AI แค่อ่านไฟล์แล้วรู้ทันทีว่าอยู่ที่ไหน ต้องทำอะไร และตัดสินใจอะไรไปแล้ว
+แทนที่จะพึ่ง AI memory ระบบนี้เก็บ state ทุกอย่างไว้ใน `CoreAiWorkspaces/` folder บน filesystem — AI แค่อ่านไฟล์แล้วรู้ทันทีว่าอยู่ที่ไหน ต้องทำอะไร และตัดสินใจอะไรไปแล้ว
 
 → [How It Works (Visual)](how-it-works.html) | [Workflow Diagram](workflow-diagram.html)
 
 ---
 
-## โครงสร้าง ai/ — ทุกอย่างอยู่ที่นี่
+## โครงสร้าง CoreAiWorkspaces/ — ทุกอย่างอยู่ที่นี่
 
 ```
-ai/
+CoreAiWorkspaces/
 ├── 00-source/              ← source of truth ของโปรเจ็กต์
 │   ├── README.md           ← index ของ source docs ทั้งหมด
 │   └── versions/           ← version history ของ docs (ถ้ามี)
@@ -64,8 +64,8 @@ git_mode: branch-separated
 git_dev_branch: dev
 git_prod_branch: master
 read_more:
-  architecture: ai/07-decisions/README.md
-  entities:     ai/07-decisions/entity-register.md
+  architecture: CoreAiWorkspaces/07-decisions/README.md
+  entities:     CoreAiWorkspaces/07-decisions/entity-register.md
 -->
 ```
 
@@ -80,7 +80,7 @@ read_more:
 ### ขั้น 1: อ่าน work-status.md
 
 ```
-อ่าน AI-CONTEXT block ของ ai/01-plan/work-status.md
+อ่าน AI-CONTEXT block ของ CoreAiWorkspaces/01-plan/work-status.md
 
 ตรวจ:
 - ถ้า git_mode: branch-separated → รัน git branch --show-current
@@ -91,21 +91,21 @@ read_more:
 ### ขั้น 2: อ่าน work-log-index.md
 
 ```
-อ่าน AI-CONTEXT block ของ ai/03-log/work-log-index.md
+อ่าน AI-CONTEXT block ของ CoreAiWorkspaces/03-log/work-log-index.md
 → รู้ว่า session ล่าสุดทำอะไร, มีอะไรที่ยังค้างอยู่
 ```
 
 ### ขั้น 3: อ่าน task-board.md
 
 ```
-อ่าน AI-CONTEXT block ของ ai/02-task/task-board.md
+อ่าน AI-CONTEXT block ของ CoreAiWorkspaces/02-task/task-board.md
 → รู้ว่า task ไหน active, priority อะไร, blocked ไหม
 ```
 
 ### ขั้น 4: อ่าน agent diary (ถ้ามี)
 
 ```
-ถ้า ai/03-log/agents/[tool].md มีอยู่ → อ่าน AI-CONTEXT block
+ถ้า CoreAiWorkspaces/03-log/agents/[tool].md มีอยู่ → อ่าน AI-CONTEXT block
 → รู้ว่า tool นี้ทำอะไรไปแล้วใน sessions ที่ผ่านมา
 ```
 
@@ -127,7 +127,7 @@ AI รายงาน:
 
 ## Session End Protocol
 
-ก่อนจบ session ทุกครั้ง — รัน `/session-end` หรือทำด้วยมือ:
+ก่อนจบ session ทุกครั้ง — รัน `/caw-session-end` หรือทำด้วยมือ:
 
 ### 1. อัปเดต work-status.md
 
@@ -192,7 +192,7 @@ git push origin dev
 
 ## Decision Protocol — AI ทำอะไรได้ / ต้องหยุดเมื่อไหร่
 
-ดูรายละเอียดทั้งหมดใน `ai/04-way-of-work/ai-decision-protocol.md`
+ดูรายละเอียดทั้งหมดใน `CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md`
 
 **สรุปสั้น:**
 
@@ -211,7 +211,7 @@ git push origin dev
 
 ## Compliance System
 
-`ai/04-way-of-work/compliance.md` มี rules C-01 ถึง C-22
+`CoreAiWorkspaces/04-way-of-work/compliance.md` มี rules C-01 ถึง C-22
 
 Rules หลักที่ AI ตรวจทุก session:
 - **C-01:** ไม่ implement โดยไม่มี source reference
@@ -219,9 +219,9 @@ Rules หลักที่ AI ตรวจทุก session:
 - **C-03:** ห้ามแก้ requirements โดยตรง
 - **C-04:** ทุก architecture decision ต้องมี ADR draft
 - **C-14:** เจอ `[ENTITY:deprecated]` → ตรวจ entity-register ก่อนใช้
-- **C-20:** ถ้า vector_memory: enabled และ ai/ เปลี่ยน → re-index ก่อนจบ
+- **C-20:** ถ้า vector_memory: enabled และ CoreAiWorkspaces/ เปลี่ยน → re-index ก่อนจบ
 
-รัน compliance scan ด้วย: `/compliance-check`
+รัน compliance scan ด้วย: `/caw-compliance-check`
 
 ---
 

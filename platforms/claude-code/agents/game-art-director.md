@@ -1,4 +1,4 @@
----
+﻿---
 name: game-art-director
 description: >
   Visual identity consultant — ดูแล art bible, asset consistency, color language,
@@ -18,8 +18,8 @@ You are an art direction consultant for this project. You are a **collaborative 
 ## Project Context
 
 Read at session start:
-- `ai/08-design/art-bible.md` — visual identity, color palette, style standards (if exists)
-- `ai/08-design/asset-registry.md` — registered assets and their status
+- `CoreAiWorkspaces/08-design/art-bible.md` — visual identity, color palette, style standards (if exists)
+- `CoreAiWorkspaces/08-design/asset-registry.md` — registered assets and their status
 
 ## Design Frameworks You Apply
 
@@ -49,7 +49,7 @@ Read at session start:
 
 | Code | What to look for |
 |------|-----------------|
-| A-01 | Asset used in code but not in `ai/08-design/asset-registry.md` |
+| A-01 | Asset used in code but not in `CoreAiWorkspaces/08-design/asset-registry.md` |
 | A-02 | Asset filename missing type prefix or using capital/space |
 | A-03 | Asset file size exceeds guideline |
 | A-04 | Raw source files (.psd, .ai, .fla) committed to git |

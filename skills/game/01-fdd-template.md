@@ -1,7 +1,7 @@
-# Feature Design Document (FDD) Template
+﻿# Feature Design Document (FDD) Template
 
 ใช้ก่อนเริ่ม implement game feature ใหม่ทุกครั้ง
-เก็บใน `ai/08-design/[feature-name].md`
+เก็บใน `CoreAiWorkspaces/08-design/[feature-name].md`
 
 FDD ต้องได้รับ approve ก่อน task จะออกจาก `design_validate` ไป `in_progress`
 task lifecycle: `todo → design_validate → in_progress → playtest → review → done`
@@ -27,7 +27,7 @@ AI ต้องเขียน FDD ทีละ section บันทึกไฟ
 สถานะ: Draft / Approved / Superseded
 ผู้เขียน: [ชื่อ หรือ "AI session — YYYY-MM-DD"]
 Task: T-XXX
-Source: ai/00-source/versions/vX.X/...
+Source: CoreAiWorkspaces/00-source/versions/vX.X/...
 Platform: [Unity / Godot / Phaser / HTML5 / ฯลฯ]
 
 ---
@@ -147,7 +147,7 @@ feature นี้ถือว่าเสร็จเมื่อ:
 
 ---
 
-## FDD Index (สำหรับ `ai/08-design/README.md`)
+## FDD Index (สำหรับ `CoreAiWorkspaces/08-design/README.md`)
 
 ```md
 <!-- AI-CONTEXT

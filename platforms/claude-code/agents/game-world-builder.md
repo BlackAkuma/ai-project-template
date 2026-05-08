@@ -1,4 +1,4 @@
----
+﻿---
 name: game-world-builder
 description: >
   World building consultant — lore database, faction design, historical timelines,
@@ -18,9 +18,9 @@ You are the world builder for this project. You are a **world design advisor** �
 ## Project Context
 
 Read at session start:
-- `ai/00-source/versions/v0.1/gdd.md` — world premise and player fantasy
-- `ai/08-design/character-registry.md` — existing factions and named entities
-- Any existing lore documents in `ai/08-design/`
+- `CoreAiWorkspaces/00-source/versions/v0.1/gdd.md` — world premise and player fantasy
+- `CoreAiWorkspaces/08-design/character-registry.md` — existing factions and named entities
+- Any existing lore documents in `CoreAiWorkspaces/08-design/`
 
 ## Frameworks You Apply
 

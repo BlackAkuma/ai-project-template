@@ -1,4 +1,4 @@
-# Compliance Check Template
+﻿# Compliance Check Template
 
 Protocol สำหรับตรวจสอบ code quality และ documentation standards อัตโนมัติ
 ทำงานทุกครั้งที่ AI รับงานจากคนอื่น จนกว่าจะสั่ง `pause compliance`
@@ -17,7 +17,7 @@ Protocol สำหรับตรวจสอบ code quality และ document
 
 ## การบันทึก Compliance Status
 
-เพิ่มบรรทัดนี้ใน `ai/04-way-of-work/way-of-work.md` ของโปรเจ็กต์ เพื่อให้ AI ทุก session รู้สถานะปัจจุบัน:
+เพิ่มบรรทัดนี้ใน `CoreAiWorkspaces/04-way-of-work/way-of-work.md` ของโปรเจ็กต์ เพื่อให้ AI ทุก session รู้สถานะปัจจุบัน:
 
 ```
 ## Compliance Status
@@ -37,7 +37,7 @@ Protocol สำหรับตรวจสอบ code quality และ document
 | Code | สิ่งที่ตรวจ | เกณฑ์ |
 |------|-----------|-------|
 | C-01 | File size | > 500 บรรทัด |
-| C-02 | Task ไม่มี source reference | ทุก task ที่ไม่มี `ai/00-source/...` |
+| C-02 | Task ไม่มี source reference | ทุก task ที่ไม่มี `CoreAiWorkspaces/00-source/...` |
 | C-03 | Task `done` ไม่มี validation evidence | ไม่มีบันทึกว่าตรวจสอบอย่างไร |
 | C-04 | Placeholder ยังค้างในไฟล์ | `<PROJECT_NAME>`, `<NEEDS_CLARIFICATION>` ฯลฯ |
 
@@ -85,7 +85,7 @@ Protocol สำหรับตรวจสอบ code quality และ document
 ## Tech Debt Register
 
 ใช้ติดตาม REFACTOR-PENDING ทั้งหมดในโปรเจ็กต์
-เก็บไว้ใน `ai/05-tech-debt/debt-register.md`
+เก็บไว้ใน `CoreAiWorkspaces/05-tech-debt/debt-register.md`
 
 ```md
 # Tech Debt Register

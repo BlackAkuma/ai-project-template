@@ -1,7 +1,7 @@
-# Anti-Pattern Catalog Template
+﻿# Anti-Pattern Catalog Template
 
 รายการสิ่งที่ไม่ควรทำเมื่อทำงานร่วมกับ AI บนโปรเจ็กต์
-นำไปเพิ่มหรืออ้างอิงใน `ai/04-way-of-work/way-of-work.md` ของโปรเจ็กต์
+นำไปเพิ่มหรืออ้างอิงใน `CoreAiWorkspaces/04-way-of-work/way-of-work.md` ของโปรเจ็กต์
 
 ---
 

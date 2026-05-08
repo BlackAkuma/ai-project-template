@@ -1,4 +1,4 @@
-# Phase 2 Test Results
+﻿# Phase 2 Test Results
 
 วันที่ทดสอบ: 2026-04-29
 Branch: test/phase-2
@@ -9,7 +9,7 @@ Branch: test/phase-2
 
 ### Scenario L: Session Start reads agent diary
 
-**Scenario:** เริ่ม session ใหม่บนโปรเจ็กต์ที่มี `ai/03-log/agents/claude-code.md` อยู่แล้ว
+**Scenario:** เริ่ม session ใหม่บนโปรเจ็กต์ที่มี `CoreAiWorkspaces/03-log/agents/claude-code.md` อยู่แล้ว
 
 **ผล:** ✅ PASS — AI ทำตาม Session Start Protocol ถูกต้องครบทุก step:
 - อ่าน AI-CONTEXT block ครบ 3 ไฟล์หลัก (work-status, work-log-index, task-board)
@@ -24,7 +24,7 @@ Branch: test/phase-2
 
 **Scenario:** จบ session — T-015 sandbox tests ผ่าน, T-015 done, เริ่ม scope T-016
 
-**ผล:** ✅ PASS — AI ทำ /session-end ถูกต้องครบทุก step:
+**ผล:** ✅ PASS — AI ทำ /caw-session-end ถูกต้องครบทุก step:
 - Steps 1–6 (sync 3 ไฟล์หลัก) ครบและถูกต้อง
 - Step 7: เพิ่ม entry ใหม่ใน `agents/claude-code.md` ที่มีอยู่แล้ว — ไม่สร้างไฟล์ใหม่ ✅
 - Entry ใหม่มีครบ: งานที่ทำ, decisions, blocked, next
@@ -99,7 +99,7 @@ Branch: test/phase-2
 - Step 3 (cross-project?): อาจได้ แต่ต้องถามผู้ใช้ก่อน ✅
 - Step 4 (session decision?): ใช่ → เก็บใน work-log/diary ✅
 - ไม่สร้าง ADR — อธิบายเหตุผลชัดเจน: convention ไม่ใช่ architectural constraint ✅
-- Bonus: แนะนำว่า `ai/04-way-of-work/way-of-work.md` (Language Policy) เป็นที่ที่เหมาะที่สุดสำหรับ convention ประเภทนี้ — proactive ✅
+- Bonus: แนะนำว่า `CoreAiWorkspaces/04-way-of-work/way-of-work.md` (Language Policy) เป็นที่ที่เหมาะที่สุดสำหรับ convention ประเภทนี้ — proactive ✅
 
 ---
 

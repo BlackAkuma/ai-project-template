@@ -1,4 +1,4 @@
-#!/bin/bash
+﻿#!/bin/bash
 # Hook: detect-gaps
 # ตรวจ gap ระหว่าง task board กับ source docs
 # รันอัตโนมัติตอน session start หรือเรียกด้วย /scope-check
@@ -22,7 +22,7 @@ fi
 echo "Checking tasks for missing source references..."
 while IFS= read -r line; do
   if echo "$line" | grep -q "in_progress"; then
-    if ! echo "$line" | grep -q "ai/00-source"; then
+    if ! echo "$line" | grep -q "CoreAiWorkspaces/00-source"; then
       TASK_ID=$(echo "$line" | grep -oE 'T-[0-9]+' | head -1)
       if [ -n "$TASK_ID" ]; then
         echo "[GAP] $TASK_ID is in_progress but has no source reference"

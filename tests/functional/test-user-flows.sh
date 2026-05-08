@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+﻿#!/usr/bin/env bash
 # =============================================================================
 # test-user-flows.sh — End-to-end test for both user installation flows
 #
@@ -70,22 +70,22 @@ cp "$TEMPLATE_ROOT/QUICKSTART.md" "$PROJECT_A/_template/"
 # Run new-project.sh from template
 bash "$TEMPLATE_ROOT/scripts/new-project.sh" "TestProject" "$PROJECT_A" 2>&1 | tail -5
 
-# Verify ai/ structure created (NOT doc/)
-[ -d "$PROJECT_A/ai" ] && pass "A4: ai/ folder created" || fail "A4: ai/ folder NOT created"
+# Verify CoreAiWorkspaces/ structure created (NOT doc/)
+[ -d "$PROJECT_A/CoreAiWorkspaces" ] && pass "A4: CoreAiWorkspaces/ folder created" || fail "A4: CoreAiWorkspaces/ folder NOT created"
 [ ! -d "$PROJECT_A/doc" ] && pass "A5: no legacy doc/ folder (rename successful)" || fail "A5: old doc/ folder still created — rename incomplete"
 
 # Verify required files
 REQUIRED_A=(
-  "ai/README.md"
-  "ai/00-source/README.md"
-  "ai/01-plan/work-status.md"
-  "ai/02-task/task-board.md"
-  "ai/03-log/work-log-index.md"
-  "ai/04-way-of-work/way-of-work.md"
-  "ai/04-way-of-work/ai-decision-protocol.md"
-  "ai/04-way-of-work/compliance.md"
-  "ai/07-decisions/README.md"
-  "ai/07-decisions/entity-register.md"
+  "CoreAiWorkspaces/README.md"
+  "CoreAiWorkspaces/00-source/README.md"
+  "CoreAiWorkspaces/01-plan/work-status.md"
+  "CoreAiWorkspaces/02-task/task-board.md"
+  "CoreAiWorkspaces/03-log/work-log-index.md"
+  "CoreAiWorkspaces/04-way-of-work/way-of-work.md"
+  "CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md"
+  "CoreAiWorkspaces/04-way-of-work/compliance.md"
+  "CoreAiWorkspaces/07-decisions/README.md"
+  "CoreAiWorkspaces/07-decisions/entity-register.md"
 )
 
 for f in "${REQUIRED_A[@]}"; do
@@ -95,25 +95,35 @@ done
 # Verify no docs/ conflict (docs/ should NOT appear in user project)
 [ ! -d "$PROJECT_A/docs" ] && pass "A7: no docs/ conflict in user project" || fail "A7: docs/ appeared in user project — conflict exists"
 
-# Verify CLAUDE.md copy works
-cp "$TEMPLATE_ROOT/platforms/claude-code/CLAUDE.md" "$PROJECT_A/CLAUDE.md"
-[ -f "$PROJECT_A/CLAUDE.md" ] && pass "A8: CLAUDE.md copied to root" || fail "A8: CLAUDE.md copy failed"
+# Verify CLAUDE.md was auto-installed by new-project.sh (no manual copy needed)
+[ -f "$PROJECT_A/CLAUDE.md" ] && pass "A8: CLAUDE.md auto-installed at root by new-project.sh" || fail "A8: CLAUDE.md not installed at root"
 
-# Verify CLAUDE.md references ai/ (not doc/)
-if grep -q "ai/" "$PROJECT_A/CLAUDE.md" && ! grep -q "doc/" "$PROJECT_A/CLAUDE.md"; then
-  pass "A9: CLAUDE.md references ai/ correctly"
+# Verify CLAUDE.md references CoreAiWorkspaces/ (not doc/)
+if grep -q "CoreAiWorkspaces/" "$PROJECT_A/CLAUDE.md" && ! grep -q "doc/" "$PROJECT_A/CLAUDE.md"; then
+  pass "A9: CLAUDE.md references CoreAiWorkspaces/ correctly"
 elif grep -q "doc/" "$PROJECT_A/CLAUDE.md"; then
   fail "A9: CLAUDE.md still references old doc/ path"
 else
-  fail "A9: CLAUDE.md has no ai/ references"
+  fail "A9: CLAUDE.md has no CoreAiWorkspaces/ references"
 fi
 
 # Simulate cleanup (delete _template/)
 rm -rf "$PROJECT_A/_template"
 [ ! -d "$PROJECT_A/_template" ] && pass "A10: _template/ cleaned up successfully" || fail "A10: _template/ cleanup failed"
 
-# After cleanup: verify ai/ still intact, no broken references
-[ -d "$PROJECT_A/ai" ] && pass "A11: ai/ intact after _template/ deletion" || fail "A11: ai/ lost after _template/ deletion"
+# After cleanup: verify CoreAiWorkspaces/ still intact, no broken references
+[ -d "$PROJECT_A/CoreAiWorkspaces" ] && pass "A11: CoreAiWorkspaces/ intact after _template/ deletion" || fail "A11: CoreAiWorkspaces/ lost after _template/ deletion"
+
+# Verify .claude/commands/ installed with slash command files
+if [ -d "$PROJECT_A/.claude/commands" ]; then
+  pass "A12: .claude/commands/ created"
+  SLASH_FILES=("caw-session-end.md" "caw-adr-create.md" "caw-compliance-check.md" "caw-scope-check.md" "caw-fdd-create.md" "caw-archive-logs.md")
+  for sf in "${SLASH_FILES[@]}"; do
+    [ -f "$PROJECT_A/.claude/commands/$sf" ] && pass "A13: .claude/commands/$sf installed" || fail "A13: .claude/commands/$sf missing"
+  done
+else
+  fail "A12: .claude/commands/ NOT created — slash commands not installed"
+fi
 
 # =============================================================================
 # FLOW B: git clone simulation (user clones repo directly)
@@ -133,18 +143,15 @@ else
   fail "B1: CLAUDE.md NOT at root — clone flow broken (user must manually copy)"
 fi
 
-# Check: docs/ must not be git-tracked on dev (must be on gh-pages only)
-# Use git ls-files, NOT filesystem check — cp -r copies untracked dirs too
-# but real git clone only delivers tracked files
+# Check: docs/ is tracked on dev for GitHub Pages discoverability (intentional)
+# CoreAiWorkspaces/ coexists — user cleans up both after bootstrap per CLAUDE.md Case 2
 DOCS_TRACKED_B=$(git ls-files docs/ 2>/dev/null | wc -l | tr -d ' ')
-AI_EXISTS_B=$([ -d "ai" ] && echo 1 || echo 0)
-if [ "$DOCS_TRACKED_B" -gt 0 ] && [ "$AI_EXISTS_B" -eq 1 ]; then
-  fail "B2: COLLISION — git-tracked docs/ and ai/ both present in clone"
+CAW_EXISTS_B=$([ -d "CoreAiWorkspaces" ] && echo 1 || echo 0)
+if [ "$DOCS_TRACKED_B" -gt 0 ]; then
+  pass "B2: docs/ is git-tracked on dev (intentional — GitHub Pages discoverability)"
+  warn "B2: user must run: rm -rf CoreAiWorkspaces/ docs/ tests/ CHANGELOG.md ROADMAP.md after bootstrap"
 else
-  pass "B2: no git-tracked docs/ collision with ai/ (real clone is clean)"
-  if [ "$AI_EXISTS_B" -eq 1 ]; then
-    warn "B2: ai/ exists in clone (template tracking) — user must rm -rf ai/ before bootstrapping own project"
-  fi
+  pass "B2: docs/ not tracked (gh-pages-only mode)"
 fi
 
 # Check: core/ accessible (needed for First Run Bootstrap)
@@ -190,6 +197,7 @@ cd "$TEMPLATE_ROOT"
 # Simulate template extraction
 mkdir -p "$PROJECT_C/_template"
 cp -r "$TEMPLATE_ROOT/core" "$PROJECT_C/_template/"
+cp -r "$TEMPLATE_ROOT/platforms" "$PROJECT_C/_template/"
 cp -r "$TEMPLATE_ROOT/scripts" "$PROJECT_C/_template/"
 
 # Run bootstrap
@@ -199,11 +207,19 @@ bash "$TEMPLATE_ROOT/scripts/new-project.sh" "ExistingProject" "$PROJECT_C" 2>&1
 [ -f "$PROJECT_C/src/main.js" ] && pass "C1: existing src/ untouched" || fail "C1: existing src/ damaged"
 [ -f "$PROJECT_C/.gitignore" ] && pass "C2: existing .gitignore preserved" || fail "C2: .gitignore lost"
 
-# Verify ai/ created
-[ -d "$PROJECT_C/ai" ] && pass "C3: ai/ created in existing project" || fail "C3: ai/ not created"
+# Verify CoreAiWorkspaces/ created
+[ -d "$PROJECT_C/CoreAiWorkspaces" ] && pass "C3: CoreAiWorkspaces/ created in existing project" || fail "C3: CoreAiWorkspaces/ not created"
 
 # Verify no doc/ collision
 [ ! -d "$PROJECT_C/doc" ] && pass "C4: no legacy doc/ created" || fail "C4: legacy doc/ created — rename incomplete"
+
+# Verify git hook installed (PROJECT_C has .git from git init above)
+if [ -f "$PROJECT_C/.git/hooks/validate-commit" ]; then
+  pass "C5: .git/hooks/validate-commit installed"
+  [ -x "$PROJECT_C/.git/hooks/validate-commit" ] && pass "C6: .git/hooks/validate-commit is executable" || warn "C6: .git/hooks/validate-commit not executable (Windows NTFS — run: chmod +x .git/hooks/validate-commit)"
+else
+  fail "C5: .git/hooks/validate-commit NOT installed"
+fi
 
 # =============================================================================
 # STRUCTURAL CHECKS
@@ -213,7 +229,7 @@ section "Structural Integrity"
 
 cd "$TEMPLATE_ROOT"
 
-# Check: no stray doc/ references in critical files (should be ai/ now)
+# Check: no stray doc/ references in critical files (should be CoreAiWorkspaces/ now)
 if grep -q "doc/" platforms/claude-code/CLAUDE.md 2>/dev/null; then
   fail "S1: CLAUDE.md still has legacy doc/ references"
 else
@@ -232,22 +248,23 @@ else
   pass "S3: new-project.sh has no legacy TARGET/doc references"
 fi
 
-# Check: mock-project uses ai/ not doc/
-if [ -d "tests/mock-project/ai" ] && [ ! -d "tests/mock-project/doc" ]; then
-  pass "S4: mock-project uses ai/ (not doc/)"
+# Check: mock-project uses CoreAiWorkspaces/ not doc/
+if [ -d "tests/mock-project/CoreAiWorkspaces" ] && [ ! -d "tests/mock-project/doc" ]; then
+  pass "S4: mock-project uses CoreAiWorkspaces/ (not doc/)"
 else
   fail "S4: mock-project still uses old doc/ structure"
 fi
 
-# Check: docs/ NOT tracked on dev/master (correctly moved to gh-pages branch)
+# Check: docs/ is tracked on dev — intentional for GitHub Pages discoverability
+# (docs/ was moved from gh-pages to master/docs so users can read when browsing repo)
 DOCS_TRACKED=$(git ls-files docs/ | wc -l | tr -d ' ')
-if [ "$DOCS_TRACKED" -eq 0 ]; then
-  pass "S5: docs/ has no tracked files on dev — correctly on gh-pages branch only"
+if [ "$DOCS_TRACKED" -gt 0 ]; then
+  pass "S5: docs/ is tracked on dev ($DOCS_TRACKED files) — intentional for GitHub Pages via master/docs"
 else
-  fail "S5: docs/ has $DOCS_TRACKED tracked file(s) on dev — should be on gh-pages only"
+  warn "S5: docs/ has no tracked files — verify GitHub Pages is configured correctly"
 fi
 
-# Check: ai/ naming doesn't conflict with anything
+# Check: CoreAiWorkspaces/ naming doesn't conflict with anything
 if [ ! -d "doc" ]; then
   pass "S6: no legacy doc/ folder on dev branch"
 else

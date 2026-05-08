@@ -1,4 +1,4 @@
----
+﻿---
 title: Quick Start — Windows
 ---
 
@@ -81,17 +81,35 @@ cp -r /c/Users/YourName/Downloads/ai-project-template-main/. _template/
 bash _template/scripts/new-project.sh "ชื่อโปรเจ็กต์" .
 ```
 
-### ขั้น 5: Copy CLAUDE.md (ถ้าใช้ Claude Code)
+Script จะทำทุกอย่างอัตโนมัติ:
+- สร้าง `CoreAiWorkspaces/` folder พร้อมไฟล์ทั้งหมด
+- ติดตั้ง `CLAUDE.md` ที่ root
+- ติดตั้ง slash commands ไว้ที่ `.claude/commands/`
+- ติดตั้ง git hook (ถ้ามี `.git`)
 
-```bash
-cp _template/platforms/claude-code/CLAUDE.md ./CLAUDE.md
-```
-
-### ขั้น 6: ลบ _template/
+### ขั้น 5: ลบ _template/
 
 ```bash
 rm -rf _template/
 ```
+
+---
+
+## Slash Commands หลัง Bootstrap
+
+หลัง bootstrap เสร็จ script จะติดตั้ง slash commands ไว้ที่ `.claude/commands/` อัตโนมัติ
+
+คำสั่งที่ใช้บ่อย (ชื่อขึ้นต้นด้วย `caw-` เพื่อป้องกันชนกับ tools อื่น):
+
+```
+/caw-session-end       ← sync work-status + log + task-board ก่อนปิด Claude
+/caw-compliance-check  ← ตรวจ compliance violations
+/caw-adr-create        ← สร้าง architectural decision record
+/caw-scope-check       ← ตรวจว่างานปัจจุบันอยู่ใน scope ไหม
+/caw-fdd-create        ← สร้าง feature design document
+```
+
+> `caw-` ย่อมาจาก **C**ore**A**i**W**orkspaces — ชื่อของระบบนี้
 
 ---
 
@@ -105,7 +123,7 @@ cd my-project
 git checkout -b dev
 
 # ลบไฟล์ที่ไม่ต้องการ
-rm -rf ai/ tests/ CHANGELOG.md ROADMAP.md
+rm -rf CoreAiWorkspaces/ tests/ CHANGELOG.md ROADMAP.md
 git add -A && git commit -m "chore: clean template files before bootstrap"
 ```
 

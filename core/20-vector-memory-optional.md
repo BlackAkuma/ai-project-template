@@ -1,7 +1,7 @@
-# Vector Memory — Optional Phase 3
+﻿# Vector Memory — Optional Phase 3
 
 ระบบ local-first vector search เป็น layer เสริมบน Phase 1–2
-เปิดใช้เมื่อ `ai/` มีหลายสิบไฟล์และ `read_more` hints ไม่เพียงพออีกต่อไป
+เปิดใช้เมื่อ `CoreAiWorkspaces/` มีหลายสิบไฟล์และ `read_more` hints ไม่เพียงพออีกต่อไป
 
 อ่าน `core/19-memory-architecture-overview.md` ก่อนไฟล์นี้เพื่อเข้าใจบริบทของ Phase 1–2
 
@@ -13,7 +13,7 @@
 
 เปิดเมื่อ **อย่างน้อยหนึ่งข้อ** ต่อไปนี้เป็นจริง:
 
-- `ai/` มีไฟล์มากกว่า 30 ไฟล์ และหา context ยากขึ้นทุก session
+- `CoreAiWorkspaces/` มีไฟล์มากกว่า 30 ไฟล์ และหา context ยากขึ้นทุก session
 - โปรเจ็กต์ทำมานานกว่า 3 เดือน และ session เก่าๆ มี decision สำคัญที่ต้องค้นหา
 - ต้องการ semantic search ข้ามโปรเจ็กต์ใน `~/ai-workspace/`
 - `read_more` hints ต้องชี้ไฟล์มากกว่า 5 ไฟล์ต่อ query
@@ -33,22 +33,22 @@ Vector memory layer ที่เราใช้:
 
 ---
 
-## การ Map โครงสร้าง ai/ เข้า Vector Store
+## การ Map โครงสร้าง CoreAiWorkspaces/ เข้า Vector Store
 
 | โปรเจ็กต์ | Vector Store |
 |-----------|--------------|
 | ชื่อโปรเจ็กต์ | Wing |
-| โฟลเดอร์ใน ai/ (01-plan, 07-decisions) | Room |
+| โฟลเดอร์ใน CoreAiWorkspaces/ (01-plan, 07-decisions) | Room |
 | ไฟล์ .md แต่ละไฟล์ | Drawer |
 | `~/ai-workspace/` (cross-project) | Wing แยกต่างหาก |
 
 ตัวอย่าง:
 ```
 Wing: "hod-software"
-  Room: "decisions"    ← ai/07-decisions/
-  Room: "tasks"        ← ai/02-task/
-  Room: "plan"         ← ai/01-plan/
-  Room: "logs"         ← ai/03-log/
+  Room: "decisions"    ← CoreAiWorkspaces/07-decisions/
+  Room: "tasks"        ← CoreAiWorkspaces/02-task/
+  Room: "plan"         ← CoreAiWorkspaces/01-plan/
+  Room: "logs"         ← CoreAiWorkspaces/03-log/
 ```
 
 ---
@@ -60,10 +60,10 @@ Wing: "hod-software"
 **หลักการทั่วไป:**
 
 1. ติดตั้ง tool
-2. Index ไฟล์ใน `ai/` โดยระบุ wing name = ชื่อโปรเจ็กต์
+2. Index ไฟล์ใน `CoreAiWorkspaces/` โดยระบุ wing name = ชื่อโปรเจ็กต์
 3. ทดสอบด้วย query เกี่ยวกับ ADR หรือ decision ในโปรเจ็กต์
 
-**สำคัญ:** ต้องระบุ wing name เสมอเมื่อ index จาก `ai/` subfolder
+**สำคัญ:** ต้องระบุ wing name เสมอเมื่อ index จาก `CoreAiWorkspaces/` subfolder
 เพื่อป้องกัน wing name ชนกันระหว่างโปรเจ็กต์ที่ใช้ template เดียวกัน
 
 ---
@@ -80,10 +80,10 @@ Wing: "hod-software"
 → copy ผลลัพธ์ paste เข้า chat
 ```
 
-### ตอนจบ session (ถ้า ai/ มีการเปลี่ยนแปลง)
+### ตอนจบ session (ถ้า CoreAiWorkspaces/ มีการเปลี่ยนแปลง)
 
 ```
-→ รัน: index ai/ --wing <project-name>
+→ รัน: index CoreAiWorkspaces/ --wing <project-name>
 ```
 
 ### ค้นหา cross-project
@@ -164,8 +164,8 @@ sweep <transcript-dir> --wing <project-name>
 
 | เมื่อ | action |
 |-------|--------|
-| จบ session (ถ้า ai/ เปลี่ยน) | index ai/ --wing <project-name> |
-| เพิ่มไฟล์ใหม่ใน ai/ | index ai/ --wing <project-name> |
+| จบ session (ถ้า CoreAiWorkspaces/ เปลี่ยน) | index CoreAiWorkspaces/ --wing <project-name> |
+| เพิ่มไฟล์ใหม่ใน CoreAiWorkspaces/ | index CoreAiWorkspaces/ --wing <project-name> |
 | Index เสีย/ผลผิดพลาด | ดู tools/vector-memory/ troubleshooting |
 
 **กฎ:** index command เป็น idempotent — รันซ้ำได้ไม่มีปัญหา, skip ไฟล์ที่ไม่เปลี่ยน
@@ -197,8 +197,8 @@ vector_wing: <project-name>     # wing name ที่ใช้กับโปร
 ### เพิ่มใน Session End Checklist
 
 ```
-□ ถ้า vector_memory: enabled และ ai/ มีการเปลี่ยนแปลงใน session นี้
-  → re-index: index ai/ --wing <vector_wing>
+□ ถ้า vector_memory: enabled และ CoreAiWorkspaces/ มีการเปลี่ยนแปลงใน session นี้
+  → re-index: index CoreAiWorkspaces/ --wing <vector_wing>
 ```
 
 ---
@@ -215,6 +215,6 @@ vector_wing: <project-name>     # wing name ที่ใช้กับโปร
 
 | Code | สิ่งที่ตรวจ |
 |------|-----------|
-| C-20 | ถ้า `vector_memory: enabled` และ ai/ เปลี่ยน → ต้อง re-index ก่อนจบ session |
+| C-20 | ถ้า `vector_memory: enabled` และ CoreAiWorkspaces/ เปลี่ยน → ต้อง re-index ก่อนจบ session |
 | C-21 | ผล search ที่ score ต่ำกว่า threshold ห้ามใส่ใน context (0.35 Thai/mixed, 0.50 English) |
 | C-22 | ห้าม inject ผล search เกิน 1,500 token ต่อ session |

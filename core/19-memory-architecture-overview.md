@@ -1,4 +1,4 @@
-# Memory Architecture Overview
+﻿# Memory Architecture Overview
 
 ระบบ memory เสริมเข้ากับ core workflow — ทำให้ AI จำได้ข้ามเวลาและข้ามโปรเจ็กต์
 อ่านไฟล์นี้ก่อนเพื่อเข้าใจภาพรวม จากนั้นใช้ template แต่ละไฟล์ตามต้องการ
@@ -27,7 +27,7 @@ Core workflow แข็งแกร่งในด้าน "ทำอะไร 
 - ทีมที่ต้องการ pattern และ lesson สะสมข้ามโปรเจ็กต์
 
 **Phase 3 (Optional — ต้องการ setup เพิ่ม):**
-- โปรเจ็กต์ขนาดใหญ่ที่ ai/ มีหลายสิบไฟล์และ routing hints ไม่พอ
+- โปรเจ็กต์ขนาดใหญ่ที่ CoreAiWorkspaces/ มีหลายสิบไฟล์และ routing hints ไม่พอ
 - workspace ที่มีหลายโปรเจ็กต์และต้องการ semantic search ข้ามโปรเจ็กต์
 
 ---
@@ -37,7 +37,7 @@ Core workflow แข็งแกร่งในด้าน "ทำอะไร 
 | ไฟล์ | หน้าที่ |
 |------|--------|
 | `core/19-memory-architecture-overview.md` | ภาพรวม (ไฟล์นี้) |
-| `core/17-entity-register-template.md` | template สำหรับ `ai/07-decisions/entity-register.md` |
+| `core/17-entity-register-template.md` | template สำหรับ `CoreAiWorkspaces/07-decisions/entity-register.md` |
 | `core/18-cross-project-memory-template.md` | template สำหรับ `~/ai-workspace/cross-project-memory.md` |
 | `core/06-work-status-template.md` | มี `read_more` field (Scoped Memory Map) |
 | `core/08-log-and-summary-template.md` | มี Agent Diary format และ `deep_context` hint |
@@ -54,7 +54,7 @@ Core workflow แข็งแกร่งในด้าน "ทำอะไร 
 
 **ปัญหา:** AI ไม่รู้ว่า entity (tech, integration, person, pattern) ยังมีสถานะอะไรอยู่
 
-**วิธีแก้:** `ai/07-decisions/entity-register.md` — ไฟล์เดียวที่ track entity ทั้งหมดพร้อม status และช่วงเวลา
+**วิธีแก้:** `CoreAiWorkspaces/07-decisions/entity-register.md` — ไฟล์เดียวที่ track entity ทั้งหมดพร้อม status และช่วงเวลา
 
 ```markdown
 | Entity | Type | Status | Since | Until | ADR |
@@ -86,9 +86,9 @@ Core workflow แข็งแกร่งในด้าน "ทำอะไร 
 phase: implementation
 focus: T-012 payment integration
 read_more:
-  architecture: ai/07-decisions/README.md
-  entities:     ai/07-decisions/entity-register.md
-  source:       ai/00-source/versions/v1.2/
+  architecture: CoreAiWorkspaces/07-decisions/README.md
+  entities:     CoreAiWorkspaces/07-decisions/entity-register.md
+  source:       CoreAiWorkspaces/00-source/versions/v1.2/
 -->
 ```
 
@@ -104,7 +104,7 @@ read_more:
 
 **วิธีแก้:**
 ```
-ai/03-log/
+CoreAiWorkspaces/03-log/
   work-log-index.md      ← master index รวมทุก tool (ไม่เปลี่ยน)
   agents/
     claude-code.md       ← diary เฉพาะ Claude Code
@@ -144,7 +144,7 @@ ai/03-log/
 
 ```
 ข้อมูลใหม่ที่ต้องเก็บ
-├── เป็น architectural decision?       → ADR (ai/07-decisions/)
+├── เป็น architectural decision?       → ADR (CoreAiWorkspaces/07-decisions/)
 ├── เป็น entity ใหม่หรือ status เปลี่ยน? → entity-register.md
 ├── เป็น pattern ที่ใช้ได้ข้ามโปรเจ็กต์? → cross-project-memory.md (ถามผู้ใช้ก่อน)
 ├── เป็น progress/detail ของ session นี้? → agent diary + work-log-index
@@ -158,16 +158,16 @@ ai/03-log/
 
 ### ชั้น 4 — Vector Search (Phase 3, Optional)
 
-**ปัญหา:** ai/ มีหลายสิบไฟล์ — `read_more` hints ไม่เพียงพอ ต้อง semantic search เพื่อหา context จาก session เก่า
+**ปัญหา:** CoreAiWorkspaces/ มีหลายสิบไฟล์ — `read_more` hints ไม่เพียงพอ ต้อง semantic search เพื่อหา context จาก session เก่า
 
 **วิธีแก้:** local-first vector memory — ไม่ต้อง cloud API, ข้อมูลอยู่ในเครื่อง
 
 ```
 Wing: <project-name>
-  Room: decisions     ← ai/07-decisions/
-  Room: tasks         ← ai/02-task/
-  Room: plan          ← ai/01-plan/
-  Room: logs          ← ai/03-log/
+  Room: decisions     ← CoreAiWorkspaces/07-decisions/
+  Room: tasks         ← CoreAiWorkspaces/02-task/
+  Room: plan          ← CoreAiWorkspaces/01-plan/
+  Room: logs          ← CoreAiWorkspaces/03-log/
 ```
 
 **กฎ:**
@@ -195,7 +195,7 @@ Memory system เพิ่มขั้นตอนต่อไปนี้บน
 □ entity-register — มี entity ใหม่หรือ status เปลี่ยนไหม? (deprecated, added, removed)
 □ agent diary — เขียน diary ของ tool นี้ (ถ้าใช้ multi-tool workflow)
 □ cross-project memory — มี pattern ที่ควร promote ข้ามโปรเจ็กต์ไหม? (ถามผู้ใช้ก่อน)
-□ ถ้า vector_memory: enabled และ ai/ เปลี่ยน → re-index: ai/ --wing <vector_wing>
+□ ถ้า vector_memory: enabled และ CoreAiWorkspaces/ เปลี่ยน → re-index: CoreAiWorkspaces/ --wing <vector_wing>
 ```
 
 ### เมื่อ ADR ถูก Accept
@@ -230,7 +230,7 @@ Memory system เพิ่มขั้นตอนต่อไปนี้บน
 |------|-----------|
 | C-14 | AI เจอ `[ENTITY:deprecated]` ต้องตรวจ entity-register ก่อนใช้ข้อมูลนั้น |
 | C-14 | เมื่อ ADR Accept → ต้องอัปเดต entity-register ทันที |
-| C-20 | ถ้า `vector_memory: enabled` และ ai/ เปลี่ยน → ต้อง re-mine ก่อนจบ session |
+| C-20 | ถ้า `vector_memory: enabled` และ CoreAiWorkspaces/ เปลี่ยน → ต้อง re-mine ก่อนจบ session |
 | C-21 | ผล search ที่ score ต่ำกว่า threshold ห้ามใส่ใน context (0.35 Thai/mixed, 0.50 English) |
 | C-22 | ห้าม inject ผล search เกิน 1,500 token ต่อ session |
 

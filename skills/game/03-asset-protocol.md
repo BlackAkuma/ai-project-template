@@ -1,4 +1,4 @@
-# Asset Protocol
+﻿# Asset Protocol
 
 การจัดการ assets สำหรับ game projects
 ใช้กับทุก platform — ปรับ format/tool ตาม engine แต่หลักการเดียวกัน
@@ -58,7 +58,7 @@ assets/
 
 ## 3. Asset Registry
 
-ทุก asset ที่ใช้ในโปรเจ็กต์ต้องลงทะเบียนใน `ai/08-design/asset-registry.md`
+ทุก asset ที่ใช้ในโปรเจ็กต์ต้องลงทะเบียนใน `CoreAiWorkspaces/08-design/asset-registry.md`
 
 ```md
 # Asset Registry

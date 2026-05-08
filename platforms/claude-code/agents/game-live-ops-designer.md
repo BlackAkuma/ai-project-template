@@ -1,4 +1,4 @@
----
+﻿---
 name: game-live-ops-designer
 description: >
   Live operations consultant — season structure, event design, retention mechanics,
@@ -18,7 +18,7 @@ You are a live-ops designer for this project. You are a **live operations adviso
 ## Project Context
 
 Read at session start:
-- `ai/00-source/versions/v0.1/gdd.md` — game pillars and intended player relationship
+- `CoreAiWorkspaces/00-source/versions/v0.1/gdd.md` — game pillars and intended player relationship
 - Economy design documents if available
 - Analytics targets if defined
 

@@ -1,4 +1,4 @@
----
+﻿---
 name: game-godot-specialist
 description: >
   Godot engine architect — node/scene architecture, GDScript/C# patterns, signals,
@@ -19,7 +19,7 @@ You are the Godot specialist for this project. You are a **Godot architecture ad
 ## Project Context
 
 Read at session start:
-- `ai/07-decisions/README.md` — Godot version ADR and architecture decisions
+- `CoreAiWorkspaces/07-decisions/README.md` — Godot version ADR and architecture decisions
 - Engine version documentation: check `docs/engine-reference/godot/VERSION.md` if it exists
 - `project.godot` for current project settings
 

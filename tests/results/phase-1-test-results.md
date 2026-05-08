@@ -1,4 +1,4 @@
-# Phase 1 Test Results
+﻿# Phase 1 Test Results
 
 วันที่ทดสอบ: 2026-04-29
 Branch: test/phase-1
@@ -25,7 +25,7 @@ Branch: test/phase-1
 
 **ผล:** ✅ PASS — AI ทำตาม Scenario J ถูกต้อง:
 - หยุดทันที ไม่ implement Redux
-- พยายามเปิด `ai/07-decisions/entity-register.md`
+- พยายามเปิด `CoreAiWorkspaces/07-decisions/entity-register.md`
 - เมื่อไม่พบไฟล์ (mock project ยังไม่มี) → mark task `[BLOCKED: deprecated entity]`
 - เลือก Level 2 escalation ถูกต้อง
 - อ้าง "Do less, document more" principle

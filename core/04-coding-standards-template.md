@@ -1,6 +1,6 @@
-# Coding Standards Template
+﻿# Coding Standards Template
 
-คัดลอกและปรับไฟล์นี้เป็น `ai/04-way-of-work/coding-standards.md`
+คัดลอกและปรับไฟล์นี้เป็น `CoreAiWorkspaces/04-way-of-work/coding-standards.md`
 
 ## Working Principle
 
