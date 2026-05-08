@@ -354,6 +354,14 @@ else
   fail "T10: bootstrapped tacp.md missing L2_LANG config"
 fi
 
+# Check: tacp.md header stripped correctly (no template meta-header leaked)
+TACP_FIRST_LINE=$(head -1 "$PROJECT_A/CoreAiWorkspaces/04-way-of-work/tacp.md" 2>/dev/null)
+if echo "$TACP_FIRST_LINE" | grep -q "^#"; then
+  pass "T11: tacp.md starts with heading (template meta-header stripped correctly)"
+else
+  fail "T11: tacp.md has leaked template header — first line: '$TACP_FIRST_LINE'"
+fi
+
 # =============================================================================
 # RESULTS
 # =============================================================================

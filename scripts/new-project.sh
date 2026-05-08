@@ -323,9 +323,9 @@ echo "  created: $TARGET/CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md
 } > "$TARGET/CoreAiWorkspaces/04-way-of-work/compliance.md"
 echo "  created: $TARGET/CoreAiWorkspaces/04-way-of-work/compliance.md (from core/15)"
 
-# tacp: copy from core/22, strip template meta-header (AI-CONTEXT block)
+# tacp: copy from core/22, strip template meta-header (AI-CONTEXT block, lines 1-6)
 {
-  tail -n +5 "$TEMPLATE_ROOT/core/22-tacp-template.md" \
+  tail -n +7 "$TEMPLATE_ROOT/core/22-tacp-template.md" \
     | sed \
         -e "s/<PROJECT_NAME>/$PROJECT_NAME/g" \
         -e "s/<CURRENT_DATE>/$DATE/g"
