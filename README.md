@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/BlackAkuma?style=flat&logo=github&color=pink)](https://github.com/sponsors/BlackAkuma)
 
-📖 **[See How It Works →](https://blackakuma.github.io/ai-project-template/how-it-works.html)** · 📊 **[Workflow Diagram →](https://blackakuma.github.io/ai-project-template/workflow-diagram.html)**
+📖 **[See How It Works →](https://blackakuma.github.io/ai-project-template/architecture/how-it-works.html)** · 📊 **[Workflow Diagram →](https://blackakuma.github.io/ai-project-template/architecture/workflow-diagram.html)**
 
 ---
 
@@ -109,7 +109,7 @@ Steps:
 
 Once AI confirms the bootstrap checklist passes — delete the template folder. What remains is `ai/` in your project (and `.claude/` if using Claude Code).
 
-> Full walkthrough: [QUICKSTART.md](QUICKSTART.md) · Visual guide: [How It Works](https://blackakuma.github.io/ai-project-template/how-it-works.html)
+> Full walkthrough: [QUICKSTART.md](QUICKSTART.md) · Visual guide: [How It Works](https://blackakuma.github.io/ai-project-template/architecture/how-it-works.html)
 
 ---
 
@@ -181,7 +181,7 @@ If this saves you time, consider sponsoring:
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/BlackAkuma?style=flat&logo=github&color=pink)](https://github.com/sponsors/BlackAkuma)
 
-📖 **[ดู User Guide →](https://blackakuma.github.io/ai-project-template/how-it-works.html)**
+📖 **[ดู User Guide →](https://blackakuma.github.io/ai-project-template/architecture/how-it-works.html)**
 
 ---
 
@@ -285,7 +285,7 @@ Copy `core/` ไปที่ root โปรเจ็กต์ แล้วส่
 
 เมื่อ AI ยืนยันว่า bootstrap checklist ผ่านแล้ว — ลบ template folder ทิ้ง เหลือแค่ `ai/` ในโปรเจ็กต์ (และ `.claude/` ถ้าใช้ Claude Code)
 
-> คู่มือเต็ม: [QUICKSTART.md](QUICKSTART.md) · Visual guide: [How It Works](https://blackakuma.github.io/ai-project-template/how-it-works.html)
+> คู่มือเต็ม: [QUICKSTART.md](QUICKSTART.md) · Visual guide: [How It Works](https://blackakuma.github.io/ai-project-template/architecture/how-it-works.html)
 
 ---
 
