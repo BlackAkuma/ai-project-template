@@ -31,7 +31,9 @@ git checkout -b dev
 # (ทำตาม First Run Bootstrap ด้านล่าง)
 
 # 3. หลัง bootstrap เสร็จ ลบไฟล์ที่ไม่ต้องการออก
-rm -rf docs/ tests/ CHANGELOG.md ROADMAP.md
+rm -rf ai/ docs/ tests/ CHANGELOG.md ROADMAP.md
+# ai/     — tracking ของ template project เอง (ไม่ใช่ของโปรเจ็กต์คุณ)
+# docs/   — web pages ของ template (อยู่บน gh-pages branch)
 # (core/, platforms/, skills/ ยังต้องเก็บไว้ — AI อ่านทุก session)
 ```
 

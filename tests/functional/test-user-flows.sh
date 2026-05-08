@@ -133,15 +133,18 @@ else
   fail "B1: CLAUDE.md NOT at root — clone flow broken (user must manually copy)"
 fi
 
-# Check: would docs/ conflict with ai/ that bootstrap creates?
-if [ -d "docs" ] && [ -d "ai" ]; then
-  fail "B2: COLLISION — both docs/ and ai/ exist in same directory"
-elif [ -d "docs" ]; then
-  # docs/ exists but no ai/ yet — this is OK before bootstrap
-  pass "B2: docs/ exists (pre-bootstrap, no ai/ yet — no collision)"
-  warn "B2: after bootstrap, ai/ will be created alongside docs/ — verify naming is clear"
-elif [ ! -d "docs" ]; then
-  pass "B2: no docs/ folder — no conflict possible"
+# Check: docs/ must not be git-tracked on dev (must be on gh-pages only)
+# Use git ls-files, NOT filesystem check — cp -r copies untracked dirs too
+# but real git clone only delivers tracked files
+DOCS_TRACKED_B=$(git ls-files docs/ 2>/dev/null | wc -l | tr -d ' ')
+AI_EXISTS_B=$([ -d "ai" ] && echo 1 || echo 0)
+if [ "$DOCS_TRACKED_B" -gt 0 ] && [ "$AI_EXISTS_B" -eq 1 ]; then
+  fail "B2: COLLISION — git-tracked docs/ and ai/ both present in clone"
+else
+  pass "B2: no git-tracked docs/ collision with ai/ (real clone is clean)"
+  if [ "$AI_EXISTS_B" -eq 1 ]; then
+    warn "B2: ai/ exists in clone (template tracking) — user must rm -rf ai/ before bootstrapping own project"
+  fi
 fi
 
 # Check: core/ accessible (needed for First Run Bootstrap)
