@@ -32,3 +32,4 @@ ADR ที่ถูก accept แล้วถือเป็น source of truth 
 | ADR-001 | เลือก CoreAiWorkspaces/ เป็นชื่อ AI working folder (ไม่ใช่ doc/) | Accepted | 2026-05-07 | — |
 | ADR-002 | MemPalace เป็น Phase 3 vector memory implementation | Accepted | 2026-05-07 | — |
 | ADR-003 | docs/ web pages อยู่บน gh-pages branch เท่านั้น | Accepted | 2026-05-07 | — |
+| ADR-004 | Versioning strategy — single release + layer separation | Accepted | 2026-05-08 | — |
