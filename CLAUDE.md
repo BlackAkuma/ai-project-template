@@ -144,4 +144,5 @@ rm -rf CoreAiWorkspaces/ docs/ tests/ CHANGELOG.md ROADMAP.md
 /caw-scope-check        ตรวจ scope ของ task ปัจจุบัน
 /caw-launch-check       รัน launch checklist ก่อน deploy
 /caw-archive-logs       compress session เก่าเป็น monthly archive
+/caw-update             อัปเดต caw-* commands และ CLAUDE.md เป็น version ใหม่
 ```

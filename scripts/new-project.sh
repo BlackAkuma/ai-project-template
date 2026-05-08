@@ -17,7 +17,7 @@ set -euo pipefail
 # ── Args ─────────────────────────────────────────────────────────────────────
 
 if [ $# -lt 2 ]; then
-  echo "Usage: bash scripts/new-project.sh <PROJECT_NAME> <TARGET_DIR> [--game]"
+  echo "Usage: bash scripts/new-project.sh <PROJECT_NAME> <TARGET_DIR> [--game|--update-commands]"
   exit 1
 fi
 
@@ -25,7 +25,13 @@ PROJECT_NAME="$1"
 TARGET="$2"
 IS_GAME=0
 GAME_PROJECT=false
-if [ "${3:-}" = "--game" ]; then IS_GAME=1; GAME_PROJECT=true; fi
+UPDATE_ONLY=false
+for arg in "${@:3}"; do
+  case "$arg" in
+    --game) IS_GAME=1; GAME_PROJECT=true ;;
+    --update-commands) UPDATE_ONLY=true ;;
+  esac
+done
 
 TEMPLATE_ROOT="$(pwd)"
 DATE="$(date '+%Y-%m-%d')"
@@ -39,8 +45,31 @@ if [ ! -f "$TEMPLATE_ROOT/core/00-ai-bootstrap-master-template.md" ]; then
   exit 1
 fi
 
+# --update-commands: skip bootstrap, only update caw-* commands and CLAUDE.md
+if [ "$UPDATE_ONLY" = true ]; then
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "  Update Commands: $PROJECT_NAME"
+  echo "  Target: $TARGET"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo ""
+  mkdir -p "$TARGET/.claude/commands"
+  cp "$TEMPLATE_ROOT/platforms/claude-code/skills/"*.md "$TARGET/.claude/commands/" 2>/dev/null || true
+  echo "  updated: .claude/commands/ (caw-* commands)"
+  cp "$TEMPLATE_ROOT/platforms/claude-code/CLAUDE.md" "$TARGET/CLAUDE.md"
+  echo "  updated: CLAUDE.md"
+  echo ""
+  echo "  CoreAiWorkspaces/ — ไม่แตะ ✓"
+  echo "  Source docs       — ไม่แตะ ✓"
+  echo ""
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "  Update complete"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  exit 0
+fi
+
 if [ -d "$TARGET/CoreAiWorkspaces" ]; then
   echo "ERROR: $TARGET/CoreAiWorkspaces มีอยู่แล้ว — ไม่ overwrite"
+  echo "ถ้าต้องการอัปเดต commands ให้รัน: bash scripts/new-project.sh \"$PROJECT_NAME\" $TARGET --update-commands"
   exit 1
 fi
 

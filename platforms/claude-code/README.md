@@ -79,6 +79,7 @@ caw-scope-check.md       ตรวจ scope ของ task ปัจจุบั
 caw-fdd-create.md        สร้าง feature design document
 caw-launch-check.md      checklist ก่อน deploy
 caw-archive-logs.md      compress session logs เก่า
+caw-update.md            อัปเดต caw-* commands และ CLAUDE.md เป็น version ใหม่
 ```
 
 ชื่อขึ้นต้นด้วย `caw-` (**C**ore**A**i**W**orkspaces) เพื่อป้องกันชนกับ commands ของ tools อื่น

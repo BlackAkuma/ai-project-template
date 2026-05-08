@@ -1,5 +1,23 @@
 ﻿# Changelog
 
+## v1.3.1 — 2026-05-08
+
+### Update Commands Flow
+
+- **`--update-commands` flag** — `new-project.sh --update-commands` อัปเดต `caw-*` commands และ `CLAUDE.md` เป็น version ใหม่ โดยไม่แตะ `CoreAiWorkspaces/`, source docs, หรือไฟล์โปรเจ็กต์ใดๆ
+- **`/caw-update` slash command** — สั่ง update ได้โดยตรงจาก Claude Code ไม่ต้อง bootstrap ใหม่ทั้งหมด
+
+### Documentation
+
+- **Package Concept diagrams** — `docs/architecture/overview.md` เพิ่ม 3 diagrams แสดงโครงสร้าง template ก่อน/ระหว่าง/หลัง bootstrap
+- **Merge workflow notes** — `docs/advanced-setup.md` อธิบาย `--no-commit` merge flow และ `merge=ours` bidirectionality กับ `CoreAiWorkspaces/` restore step
+
+### Tests
+
+- **44/44 tests** (เพิ่มจาก 43) — เพิ่ม `caw-update.md` ใน A13 slash commands check
+
+---
+
 ## v1.3.0 — 2026-05-08
 
 ### Install Flow — Package Concept
