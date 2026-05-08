@@ -1,4 +1,4 @@
-﻿---
+---
 title: Quick Start — Mac / Linux
 ---
 
@@ -18,7 +18,7 @@ title: Quick Start — Mac / Linux
 | Bash (มีใน macOS/Linux อยู่แล้ว) | `bash --version` |
 | Claude Code CLI **หรือ** Claude.ai web account | เลือกอย่างใดอย่างหนึ่ง |
 
-ถ้าใช้ Claude Code CLI: ติดตั้งจาก [claude.CoreAiWorkspaces/code](https://claude.CoreAiWorkspaces/code)
+ถ้าใช้ Claude Code CLI: ติดตั้งจาก [claude.ai/code](https://claude.ai/code)
 
 ---
 
@@ -59,7 +59,7 @@ my-project/
 bash _template/scripts/new-project.sh "ชื่อโปรเจ็กต์" .
 ```
 
-Script จะสร้าง `CoreAiWorkspaces/` folder พร้อมไฟล์ทั้งหมดให้อัตโนมัติ
+Script จะสร้าง `ai/` folder พร้อมไฟล์ทั้งหมดให้อัตโนมัติ
 
 ### ขั้น 4: Copy CLAUDE.md (ถ้าใช้ Claude Code)
 
@@ -73,7 +73,7 @@ cp _template/platforms/claude-code/CLAUDE.md ./CLAUDE.md
 rm -rf _template/
 ```
 
-`_template/` ไม่จำเป็นอีกต่อไปหลัง bootstrap — `CoreAiWorkspaces/` ที่สร้างมาอยู่ด้วยตัวเองได้แล้ว
+`_template/` ไม่จำเป็นอีกต่อไปหลัง bootstrap — `ai/` ที่สร้างมาอยู่ด้วยตัวเองได้แล้ว
 
 ---
 
@@ -96,7 +96,7 @@ git checkout -b dev
 
 ```bash
 # ลบไฟล์ที่เป็นของ template project เอง ไม่ใช่ของโปรเจ็กต์คุณ
-rm -rf CoreAiWorkspaces/ tests/ CHANGELOG.md ROADMAP.md
+rm -rf ai/ tests/ CHANGELOG.md ROADMAP.md
 git add -A && git commit -m "chore: clean template files before bootstrap"
 ```
 
@@ -113,13 +113,13 @@ Claude จะอ่าน `CLAUDE.md` และเริ่ม **First Run Boots
 
 ## First Run Bootstrap — สิ่งที่จะเกิดขึ้น
 
-เมื่อ Claude เห็นว่าไม่มี `CoreAiWorkspaces/` folder Claude จะ:
+เมื่อ Claude เห็นว่าไม่มี `ai/` folder Claude จะ:
 
 1. ถามภาษาที่จะใช้สื่อสาร (ไทย/อังกฤษ/อื่นๆ)
 2. ตรวจว่ามี `~/ai-workspace/cross-project-memory.md` ไหม — ถ้ามีจะอ่านก่อน
 3. อ่านไฟล์ใน `core/` ทั้งหมด (00 → 21) เพื่อเข้าใจระบบ
 4. ถ้าโปรเจ็กต์เป็น game → อ่าน `skills/game/` ด้วย
-5. สร้างโครงสร้าง `CoreAiWorkspaces/` พร้อมกรอก placeholder ในแต่ละไฟล์
+5. สร้างโครงสร้าง `ai/` พร้อมกรอก placeholder ในแต่ละไฟล์
 6. ถามข้อมูลโปรเจ็กต์ที่ยังขาด
 7. ตรวจ bootstrap checklist ก่อนประกาศเสร็จ
 
@@ -134,9 +134,9 @@ Claude จะอ่าน `CLAUDE.md` และเริ่ม **First Run Boots
 **Session Start (~1 นาที):**
 ```
 Claude อ่าน 3 ไฟล์:
-  1. CoreAiWorkspaces/01-plan/work-status.md     ← phase ปัจจุบัน
-  2. CoreAiWorkspaces/03-log/work-log-index.md   ← session ล่าสุดทำอะไร
-  3. CoreAiWorkspaces/02-task/task-board.md      ← task ที่ active อยู่
+  1. ai/01-plan/work-status.md     ← phase ปัจจุบัน
+  2. ai/03-log/work-log-index.md   ← session ล่าสุดทำอะไร
+  3. ai/02-task/task-board.md      ← task ที่ active อยู่
 → รายงานสถานะและถามว่าจะเริ่มต้นที่ไหน
 ```
 
@@ -161,7 +161,7 @@ my-project/
 ├── core/                   ← template engine (อย่าแก้ไข)
 ├── platforms/              ← platform-specific configs
 ├── skills/                 ← optional skill packs
-├── CoreAiWorkspaces/                     ← AI working folder ของโปรเจ็กต์คุณ
+├── ai/                     ← AI working folder ของโปรเจ็กต์คุณ
 │   ├── 00-source/          ← source documents
 │   ├── 01-plan/            ← work-status, project-plan
 │   ├── 02-task/            ← task-board
@@ -177,11 +177,11 @@ my-project/
 
 **Claude ไม่ขึ้น First Run Bootstrap เอง:**
 - ตรวจว่า `CLAUDE.md` อยู่ที่ root ของโปรเจ็กต์
-- ตรวจว่าไม่มี `CoreAiWorkspaces/` folder อยู่แล้ว (ถ้ามีให้ลบก่อน)
+- ตรวจว่าไม่มี `ai/` folder อยู่แล้ว (ถ้ามีให้ลบก่อน)
 - ลอง prompt: `"อ่าน CLAUDE.md และทำ First Run Bootstrap"`
 
-**new-project.sh error "CoreAiWorkspaces/ already exists":**
-- มี `CoreAiWorkspaces/` จาก clone ค้างอยู่ → `rm -rf CoreAiWorkspaces/` แล้วรันใหม่
+**new-project.sh error "ai/ already exists":**
+- มี `ai/` จาก clone ค้างอยู่ → `rm -rf ai/` แล้วรันใหม่
 
 **ไม่รู้จะใส่ข้อมูลอะไรตอน bootstrap:**
 - ใส่ placeholder `<NEEDS_CLARIFICATION: ...>` ได้เลย — เติมทีหลัง
