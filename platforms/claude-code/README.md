@@ -1,20 +1,26 @@
 ﻿# Claude Code Platform Layer
 
 Layer เพิ่มเติมสำหรับคนที่ใช้ **Claude Code CLI** โดยเฉพาะ
-ใช้ร่วมกับ `core/` และ `skills/` — ไม่ใช่การแทนที่
+ใช้ร่วมกับ `core/` และ `skills/` — **ไม่ใช่การแทนที่**
+
+> **ระบบรองรับ 2 platforms:**  
+> `core/` ทำงานได้กับทั้ง **AI tool (claude.ai)** และ **Claude Code**  
+> folder นี้เพิ่ม automation ให้ Claude Code เท่านั้น — AI tool ทำงานได้ครบโดยไม่ต้องใช้ folder นี้
 
 ---
 
-## สิ่งที่ layer นี้เพิ่มให้
+## AI tool vs Claude Code
 
-| Feature | โดยไม่มี layer นี้ | โดยมี layer นี้ |
-|---------|------------------|----------------|
-| Session start | Copy prompt ให้ AI | `CLAUDE.md` โหลดอัตโนมัติ |
-| Compliance check | สั่งด้วยตัวเอง | Hook รันก่อน commit อัตโนมัติ |
-| Session log | AI เขียนเอง | Hook เตือนอัตโนมัติก่อนจบ |
-| Gap detection | ต้องนึกถึงเอง | Hook ตรวจทุก session start |
+| Feature | AI tool (claude.ai) | Claude Code |
+|---------|---------------------|-------------|
+| โหลด CLAUDE.md | Paste ต้น session / Claude.ai Projects | Auto-load ทุก session |
+| Session protocol | ทำ manual ตาม CLAUDE.md | Manual + hooks ช่วย |
+| Compliance check | `/caw-compliance-check` (พิมพ์คำสั่ง) | `/caw-*` slash commands |
+| Session end | พิมพ์ "ทำ session end" | `/caw-session-end` |
+| Commit validation | ไม่มี hook | Hook รันก่อน commit อัตโนมัติ |
+| Gap detection | AI ตรวจเองตาม protocol | Hook ตรวจทุก session start |
 | Coding standards | AI อ่าน doc | Rules โหลดตาม file path อัตโนมัติ |
-| Pre-compact | AI ต้องจำเอง | Hook บังคับ checkpoint ก่อน compact |
+| Pre-compact | AI ตรวจเองตาม Scenario G | Hook บังคับ checkpoint |
 
 ---
 

@@ -1,6 +1,15 @@
-﻿# /caw-compliance-check
+<!-- AI-CONTEXT
+cmd: caw-compliance-check
+trigger: session_start (auto) | manual
+steps: [scan_C01_to_C11, scan_game_rules_if_game_project, output_report, handle_L1_violations, block_on_C11]
+flags: [--refactor-only, --security-only]
+output_layer: L2
+-->
+<!-- HUMAN-CONTEXT lang=th
+# /caw-compliance-check
 
 รัน compliance scan ทันที ออก report ตาม core/15 format
+-->
 
 ## วิธีใช้
 

@@ -1,7 +1,17 @@
-﻿# /caw-session-end
+<!-- AI-CONTEXT
+cmd: caw-session-end
+trigger: before closing any session
+steps: [update_work_status_body, sync_work_status_context, append_log_entry, sync_log_context, update_task_statuses, sync_task_context, update_agent_diary_if_exists, append_daily_log_if_needed, report_summary]
+checkpoint_pattern: "[IN_PROGRESS: checkpoint saved — <what_was_done>]"
+optional_step: cross_project_memory (ask user first)
+output_layer: L2
+-->
+<!-- HUMAN-CONTEXT lang=th
+# /caw-session-end
 
-Sync work-status, work-log-index, และ task-board ครบในคำสั่งเดียว
+Sync work-status, work-log-index, task-board ครบในคำสั่งเดียว
 ใช้ก่อนปิด session เสมอ
+-->
 
 ## วิธีใช้
 
@@ -36,13 +46,10 @@ task ที่ยัง in_progress จะถูก mark เป็น:
 
 หลังจาก sync ครบ 9 ขั้นแล้ว — ถามผู้ใช้ว่า:
 
-> "มี pattern หรือ lesson จาก session นี้ที่ควรบันทึกข้ามโปรเจ็กต์ไหม?  
-> (เช่น วิธีแก้ปัญหาที่น่าจะใช้ได้กับโปรเจ็กต์อื่น)"
+> "มี pattern หรือ lesson จาก session นี้ที่ควรบันทึกข้ามโปรเจ็กต์ไหม?"
 
 ถ้าผู้ใช้ตอบว่ามี:
 1. ตรวจว่า `~/ai-workspace/cross-project-memory.md` มีอยู่ไหม — ถ้าไม่มีให้สร้างจาก `core/18-cross-project-memory-template.md`
-2. เพิ่ม pattern หรือ lesson ลงในส่วนที่ถูกต้อง (Patterns That Worked / Lessons Learned / ADR Cross-Reference)
+2. เพิ่ม pattern หรือ lesson ลงในส่วนที่ถูกต้อง
 3. อัปเดต AI-CONTEXT block: `last_updated`, `active_patterns`
 4. แจ้งผู้ใช้ว่าบันทึกเรียบร้อยแล้วที่ path ไหน
-
-ถ้าผู้ใช้ตอบว่าไม่มี หรือข้าม — ไม่ต้องทำ

@@ -1,6 +1,18 @@
-﻿# /caw-game-review
+<!-- AI-CONTEXT
+cmd: caw-game-review
+requires: CoreAiWorkspaces/08-design/ (game projects only)
+flags: [--design, --art, --narrative, --ux, --performance, feature_path]
+steps: [preflight_check_docs, invoke_specialist_agents_per_flag, aggregate_report, create_tasks_for_critical_concerns]
+agents: [game-designer, game-art-director, game-narrative-director, game-ux-designer, game-performance-analyst]
+verdicts: [APPROVE, CONCERNS, REJECT]
+rule: all_gates_APPROVE_before_playtest_to_review | CONCERNS_needs_task | REJECT_blocks
+output_layer: L2
+-->
+<!-- HUMAN-CONTEXT lang=th
+# /caw-game-review
 
 รัน milestone gate review สำหรับ game project โดยเรียก specialist agents ที่เกี่ยวข้อง
+-->
 
 ## วิธีใช้
 
@@ -16,80 +28,47 @@
 
 ## สิ่งที่ทำ
 
-### 1. Pre-flight Check (ก่อน invoke agents)
+### 1. Pre-flight Check
 
-ตรวจสิ่งต่อไปนี้ก่อนส่งให้ agent:
+ตรวจก่อนส่งให้ agent:
 - FDD มีอยู่ใน `CoreAiWorkspaces/08-design/` สำหรับทุก feature ที่ in_progress
 - GDD อยู่ที่ `CoreAiWorkspaces/00-source/versions/v0.1/gdd.md`
 - Art bible มีอยู่ที่ `CoreAiWorkspaces/08-design/art-bible.md`
-- Character registry มีอยู่ที่ `CoreAiWorkspaces/08-design/character-registry.md` (ถ้ามี narrative)
 
-ถ้าไฟล์ใดขาด → รายงานให้ผู้ใช้ทราบก่อนดำเนินการ review
-
-### 2. Run Specialist Gates
-
-invoke แต่ละ agent ตาม flag ที่ระบุ (default: ทั้งหมด):
+### 2. Specialist Gates
 
 | Agent | Gate Code | Focus |
 |-------|-----------|-------|
-| `game-designer` | `[GATE-DESIGN]` | mechanic vs. GDD pillar alignment, degenerate strategies |
-| `game-art-director` | `[GATE-ART]` | asset consistency, palette compliance, VFX budget |
-| `game-narrative-director` | `[GATE-NARRATIVE]` | character voice, string compliance, ludonarrative |
+| `game-designer` | `[GATE-DESIGN]` | mechanic vs. GDD pillar, degenerate strategies |
+| `game-art-director` | `[GATE-ART]` | asset consistency, palette, VFX budget |
+| `game-narrative-director` | `[GATE-NARRATIVE]` | character voice, string compliance |
 | `game-ux-designer` | `[GATE-UX]` | screen flow, input completeness, FTUX |
-| `game-performance-analyst` | `[GATE-PERF]` | frame budget, draw calls, memory patterns |
+| `game-performance-analyst` | `[GATE-PERF]` | frame budget, draw calls, memory |
 
-### 3. Aggregate Report
-
-ออก report รวมในรูปแบบ:
+### 3. Output Format
 
 ```
-# Game Review — [Feature/Milestone Name]
+# Game Review — [Feature/Milestone]
 Date: YYYY-MM-DD
 
-## Gate Summary
 | Gate | Verdict | Critical Issues |
 |------|---------|----------------|
 | DESIGN | APPROVE / CONCERNS / REJECT | [count] |
-| ART | APPROVE / CONCERNS / REJECT | [count] |
-| NARRATIVE | APPROVE / CONCERNS / REJECT | [count] |
-| UX | APPROVE / CONCERNS / REJECT | [count] |
-| PERF | APPROVE / CONCERNS / REJECT | [count] |
+...
 
 ## Overall: APPROVE / CONCERNS / REJECT
 
-## Issues by Priority
-
 ### 🔴 CRITICAL (block release)
-[specific issues from any gate]
-
 ### 🟡 CONCERNS (fix before next milestone)
-[specific issues from any gate]
-
-### 🟢 NOTES (optional improvements)
-[specific suggestions]
-
-## Next Steps
-[numbered action items]
+### 🟢 NOTES (optional)
 ```
 
 ### 4. Task Creation
 
-สำหรับทุก CRITICAL และ CONCERNS issue:
-- ถามผู้ใช้ว่าจะสร้าง task ใน `CoreAiWorkspaces/02-task/task-board.md` ไหม
-- ถ้าใช่ → สร้าง task entries พร้อม compliance code tag
+สำหรับทุก CRITICAL และ CONCERNS — ถามว่าจะสร้าง task ใน task-board ไหม
 
-## Compliance Codes Checked
+## กฎ
 
-รวม compliance codes จากทุก specialist:
-- Core: C-01 ถึง C-14
-- Game design: G-04, G-08, G-09, G-10
-- Asset: A-01 ถึง A-07
-- Narrative: N-01 ถึง N-04
-- UX: U-01 ถึง U-03
-- Level design: L-01, L-02
-
-## หมายเหตุ
-
-- review ต้องได้รับ **APPROVE ทุก gate** ก่อน feature จะออกจาก `playtest` → `review`
-- CONCERNS = ผ่านได้แต่ต้องมี task สำหรับ fix ก่อน milestone ถัดไป
-- REJECT = block: ต้องแก้และ re-review ก่อนดำเนินการต่อ
+- ทุก gate APPROVE → ผ่าน
+- CONCERNS → ผ่านได้ แต่ต้องมี task สำหรับ fix ก่อน milestone ถัดไป
+- REJECT → block — ต้องแก้และ re-review

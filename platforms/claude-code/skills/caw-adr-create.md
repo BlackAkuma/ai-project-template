@@ -1,7 +1,17 @@
-﻿# /caw-adr-create
+<!-- AI-CONTEXT
+cmd: caw-adr-create
+trigger: when making non-obvious architectural decisions
+steps: [get_title, read_adr_index, create_adr_file_from_template, fill_id_title_date_author, fill_context_options, leave_decision_blank, update_adr_index]
+default_status: Proposed
+approver: human
+output_layer: L2
+-->
+<!-- HUMAN-CONTEXT lang=th
+# /caw-adr-create
 
 สร้าง Architecture Decision Record ใหม่
 บันทึกใน `CoreAiWorkspaces/07-decisions/ADR-NNN-[title].md`
+-->
 
 ## วิธีใช้
 

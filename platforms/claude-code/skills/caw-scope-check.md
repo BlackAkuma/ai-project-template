@@ -1,6 +1,14 @@
-﻿# /caw-scope-check
+<!-- AI-CONTEXT
+cmd: caw-scope-check
+steps: [read_task, read_source_ref, compare_impl_vs_scope, report_in_scope_out_scope_missing, create_task_if_out_of_scope]
+output_format: scope_check_report
+output_layer: L2
+-->
+<!-- HUMAN-CONTEXT lang=th
+# /caw-scope-check
 
 ตรวจ scope ของ task ปัจจุบันว่า implement ตรงกับที่กำหนดไว้หรือไม่
+-->
 
 ## วิธีใช้
 

@@ -1,7 +1,17 @@
+<!-- AI-CONTEXT
+cmd: caw-update
+purpose: update caw-* commands and CLAUDE.md to latest template version
+method: run new-project.sh --update-commands
+updates: [.claude/commands/caw-*.md, CLAUDE.md]
+never_touches: [CoreAiWorkspaces/, source_docs, .git/, source_code]
+output_layer: L2
+-->
+<!-- HUMAN-CONTEXT lang=th
 # /caw-update
 
 อัปเดต caw-* commands และ CLAUDE.md เป็น version ล่าสุดจาก template
 โดยไม่แตะ CoreAiWorkspaces/, source docs, หรือไฟล์โปรเจ็กต์ใดๆ
+-->
 
 ---
 
