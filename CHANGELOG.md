@@ -1,5 +1,28 @@
 ﻿# Changelog
 
+## v1.3.0 — 2026-05-08
+
+### Install Flow — Package Concept
+
+- **`new-project.sh` upgrade** — Bootstrap script ติดตั้งทุกอย่างอัตโนมัติ: `CLAUDE.md` ที่ root, `.claude/commands/` พร้อม slash commands ทั้งหมด, `.git/hooks/validate-commit` สำหรับ commit validation — user ลบ `_template/` ได้ทันทีหลัง bootstrap
+- **`verify-install.sh`** — Post-install verification script ตรวจ 6 sections: CoreAiWorkspaces/ structure, CLAUDE.md, .claude/commands/, .git/hooks/, no legacy ai/ folder
+
+### Slash Commands — Namespace Isolation
+
+- **`caw-` prefix** — Rename slash commands ทั้งหมดเพิ่ม `caw-` prefix (CoreAiWorkspaces abbreviation) เพื่อป้องกัน namespace collision กับ tools อื่นใน `.claude/commands/`: `/caw-session-end`, `/caw-adr-create`, `/caw-compliance-check`, `/caw-scope-check`, `/caw-fdd-create`, `/caw-launch-check`, `/caw-archive-logs`
+
+### Documentation — Web Pages
+
+- **docs/ (14 files)** — Web documentation site บน GitHub Pages: index, quick-start (Mac/Linux + Windows), advanced-setup, non-technical-setup, architecture overview, memory system, ADR system, Claude Code integration, Claude.ai integration, vector memory
+- **Documentation overhaul** — อัปเดต QUICKSTART.md, README.md (EN+TH), platforms/claude-code/README.md ให้ reflect new install flow — ลบ manual copy steps ทั้งหมด
+- **Fix broken URLs** — แก้ `claude.CoreAiWorkspaces/code` → `claude.ai/code` (regression จาก ai→CoreAiWorkspaces rename)
+
+### Tests
+
+- **43/43 tests** (เพิ่มจาก 35) — เพิ่ม A8–A13: ตรวจ CLAUDE.md auto-install, .claude/commands/ ครบ, slash command files ทั้งหมด
+
+---
+
 ## v1.2.0 — 2026-05-08
 
 ### Structural Integrity

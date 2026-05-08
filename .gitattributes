@@ -1,0 +1,10 @@
+# Line endings
+*.sh    text eol=lf
+*.md    text eol=lf
+*.json  text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+
+# CoreAiWorkspaces/ is dev-only — never merge into master
+# Requires: git config merge.ours.driver true  (run once per machine)
+CoreAiWorkspaces/**  merge=ours
