@@ -48,6 +48,95 @@ CoreAiWorkspaces/
 
 ---
 
+## Package Concept — Template ติดตั้งแล้วลบทิ้งได้
+
+Template ทำงานแบบ "package" — ติดตั้งครั้งเดียวแล้วแจกจ่ายไปยังตำแหน่งที่ถูกต้อง จากนั้นลบได้เลย
+
+### โครงสร้าง Template Package (สิ่งที่ดาวน์โหลด)
+
+```
+_template/
+├── core/                       ← 22 AI reading templates
+│   ├── 00-ai-bootstrap-master-template.md
+│   ├── 01-folder-structure-template.md
+│   └── ... (00–21)
+│
+├── platforms/claude-code/
+│   ├── CLAUDE.md               ← จะถูก install → project root
+│   └── skills/
+│       ├── caw-session-end.md  ┐
+│       ├── caw-adr-create.md   │ จะถูก install →
+│       ├── caw-compliance-check.md  │ .claude/commands/
+│       └── ... (10 commands)   ┘
+│
+├── scripts/
+│   ├── new-project.sh          ← bootstrap script
+│   └── validate-commit.sh      ← จะถูก install → .git/hooks/
+│
+└── skills/game/                ← optional game skill pack
+```
+
+### สิ่งที่ `new-project.sh` แจกจ่ายไปยังโปรเจ็กต์
+
+```
+new-project.sh อ่านจาก _template/ แล้วติดตั้ง:
+
+CLAUDE.md           → [project root]/CLAUDE.md
+                       (Claude Code โหลดอัตโนมัติทุก session)
+
+skills/caw-*.md     → [project root]/.claude/commands/
+                       (slash commands พร้อมใช้ทันที)
+
+validate-commit.sh  → [project root]/.git/hooks/validate-commit
+                       (ตรวจ deprecated entities ก่อน commit)
+
+[templates]         → [project root]/CoreAiWorkspaces/
+                       (สร้าง workspace structure ใหม่)
+```
+
+### โครงสร้างโปรเจ็กต์หลัง Bootstrap + ลบ _template/
+
+```
+my-project/
+│
+├── CLAUDE.md                       ← Claude Code อ่านทุก session
+│
+├── .claude/
+│   └── commands/                   ← slash commands ของระบบนี้
+│       ├── caw-session-end.md      /caw-session-end
+│       ├── caw-adr-create.md       /caw-adr-create
+│       ├── caw-compliance-check.md /caw-compliance-check
+│       ├── caw-scope-check.md      /caw-scope-check
+│       ├── caw-fdd-create.md       /caw-fdd-create
+│       ├── caw-launch-check.md     /caw-launch-check
+│       └── caw-archive-logs.md     /caw-archive-logs
+│
+├── .git/hooks/
+│   └── validate-commit             ← ตรวจก่อน commit อัตโนมัติ
+│
+├── CoreAiWorkspaces/               ← AI working folder
+│   ├── 00-source/                  source of truth documents
+│   ├── 01-plan/
+│   │   └── work-status.md          *** อ่านทุก session ***
+│   ├── 02-task/
+│   │   └── task-board.md
+│   ├── 03-log/
+│   │   └── work-log-index.md
+│   ├── 04-way-of-work/
+│   │   ├── way-of-work.md
+│   │   ├── ai-decision-protocol.md
+│   │   └── compliance.md
+│   └── 07-decisions/
+│       ├── README.md               ADR index
+│       └── entity-register.md
+│
+└── [source code ของโปรเจ็กต์]     ← ไม่ถูกแตะโดย template
+```
+
+**หลักการ:** `_template/` ทำหน้าที่แล้วหายไป — `CoreAiWorkspaces/` ที่สร้างอยู่ด้วยตัวเองได้โดยไม่ต้องพึ่ง template อีกต่อไป
+
+---
+
 ## AI-CONTEXT Block — หัวใจของระบบ
 
 ทุกไฟล์หลักมี AI-CONTEXT block ที่ด้านบน — เป็น YAML comment ที่ AI อ่านเพื่อรู้สถานะล่าสุดโดยไม่ต้องอ่านทั้งไฟล์

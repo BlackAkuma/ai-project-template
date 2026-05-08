@@ -97,10 +97,31 @@ git_prod_branch: master
 **ห้าม AI merge ไป master โดยไม่ได้รับอนุญาต** — ผู้ใช้ต้อง approve เสมอ:
 
 ```bash
-# ผู้ใช้ทำเอง:
+# ผู้ใช้ทำเอง — merge แบบ no-commit เพื่อกัน CoreAiWorkspaces/ ออก:
 git checkout master
-git merge dev
+git merge --no-commit --no-ff dev
+git rm -r CoreAiWorkspaces/ 2>/dev/null || true  # ลบ dev-only tracking
+git commit -m "release: vX.Y.Z — [description]"
 git push origin master
+git tag -a vX.Y.Z -m "vX.Y.Z — [description]"
+```
+
+> **ทำไมต้องใช้ `--no-commit`?**
+>
+> `CoreAiWorkspaces/` คือ workspace tracking ของ dev branch — ไม่ควรอยู่ใน master ที่เป็น clean package สำหรับ user ดาวน์โหลด
+>
+> `.gitattributes` ตั้งค่า `merge=ours` สำหรับ `CoreAiWorkspaces/**` ไว้แล้ว แต่ใช้ได้เฉพาะไฟล์ที่เคยมีใน master และถูกลบไปแล้ว — ไฟล์ **ใหม่** ที่ dev เพิ่มเข้ามาจะยังถูก merge เข้ามาด้วย ดังนั้นต้อง remove ด้วยมือทุกครั้ง
+
+### หลัง merge master → dev (sync back)
+
+```bash
+git checkout dev
+git merge master  # sync .gitattributes, CHANGELOG, etc.
+
+# merge=ours ทำงานสองทาง — CoreAiWorkspaces/ จะถูกลบบน dev ด้วย
+# restore ทันที:
+git checkout HEAD~1 -- CoreAiWorkspaces/
+git commit -m "chore: restore CoreAiWorkspaces/ after master sync"
 ```
 
 ---
