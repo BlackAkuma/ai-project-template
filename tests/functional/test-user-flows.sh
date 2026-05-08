@@ -143,18 +143,15 @@ else
   fail "B1: CLAUDE.md NOT at root — clone flow broken (user must manually copy)"
 fi
 
-# Check: docs/ must not be git-tracked on dev (must be on gh-pages only)
-# Use git ls-files, NOT filesystem check — cp -r copies untracked dirs too
-# but real git clone only delivers tracked files
+# Check: docs/ is tracked on dev for GitHub Pages discoverability (intentional)
+# CoreAiWorkspaces/ coexists — user cleans up both after bootstrap per CLAUDE.md Case 2
 DOCS_TRACKED_B=$(git ls-files docs/ 2>/dev/null | wc -l | tr -d ' ')
 CAW_EXISTS_B=$([ -d "CoreAiWorkspaces" ] && echo 1 || echo 0)
-if [ "$DOCS_TRACKED_B" -gt 0 ] && [ "$CAW_EXISTS_B" -eq 1 ]; then
-  fail "B2: COLLISION — git-tracked docs/ and CoreAiWorkspaces/ both present in clone"
+if [ "$DOCS_TRACKED_B" -gt 0 ]; then
+  pass "B2: docs/ is git-tracked on dev (intentional — GitHub Pages discoverability)"
+  warn "B2: user must run: rm -rf CoreAiWorkspaces/ docs/ tests/ CHANGELOG.md ROADMAP.md after bootstrap"
 else
-  pass "B2: no git-tracked docs/ collision with CoreAiWorkspaces/ (real clone is clean)"
-  if [ "$CAW_EXISTS_B" -eq 1 ]; then
-    warn "B2: CoreAiWorkspaces/ exists in clone (template tracking) — user must rm -rf CoreAiWorkspaces/ before bootstrapping own project"
-  fi
+  pass "B2: docs/ not tracked (gh-pages-only mode)"
 fi
 
 # Check: core/ accessible (needed for First Run Bootstrap)
@@ -219,7 +216,7 @@ bash "$TEMPLATE_ROOT/scripts/new-project.sh" "ExistingProject" "$PROJECT_C" 2>&1
 # Verify git hook installed (PROJECT_C has .git from git init above)
 if [ -f "$PROJECT_C/.git/hooks/validate-commit" ]; then
   pass "C5: .git/hooks/validate-commit installed"
-  [ -x "$PROJECT_C/.git/hooks/validate-commit" ] && pass "C6: .git/hooks/validate-commit is executable" || fail "C6: .git/hooks/validate-commit not executable"
+  [ -x "$PROJECT_C/.git/hooks/validate-commit" ] && pass "C6: .git/hooks/validate-commit is executable" || warn "C6: .git/hooks/validate-commit not executable (Windows NTFS — run: chmod +x .git/hooks/validate-commit)"
 else
   fail "C5: .git/hooks/validate-commit NOT installed"
 fi
@@ -258,12 +255,13 @@ else
   fail "S4: mock-project still uses old doc/ structure"
 fi
 
-# Check: docs/ NOT tracked on dev/master (correctly moved to gh-pages branch)
+# Check: docs/ is tracked on dev — intentional for GitHub Pages discoverability
+# (docs/ was moved from gh-pages to master/docs so users can read when browsing repo)
 DOCS_TRACKED=$(git ls-files docs/ | wc -l | tr -d ' ')
-if [ "$DOCS_TRACKED" -eq 0 ]; then
-  pass "S5: docs/ has no tracked files on dev — correctly on gh-pages branch only"
+if [ "$DOCS_TRACKED" -gt 0 ]; then
+  pass "S5: docs/ is tracked on dev ($DOCS_TRACKED files) — intentional for GitHub Pages via master/docs"
 else
-  fail "S5: docs/ has $DOCS_TRACKED tracked file(s) on dev — should be on gh-pages only"
+  warn "S5: docs/ has no tracked files — verify GitHub Pages is configured correctly"
 fi
 
 # Check: CoreAiWorkspaces/ naming doesn't conflict with anything
