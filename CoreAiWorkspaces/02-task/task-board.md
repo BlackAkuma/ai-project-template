@@ -1,8 +1,8 @@
 <!-- AI-CONTEXT
-total_tasks: 25
+total_tasks: 27
 in_progress: []
 blocked: []
-done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022,T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031]
+done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022,T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031,T-032,T-033]
 last_updated: 2026-05-08
 -->
 
@@ -36,3 +36,7 @@ last_updated: 2026-05-08
 | T-029 | rename slash commands: add caw- prefix (CoreAiWorkspaces abbreviation) | 2026-05-08 |
 | T-030 | docs update: fix claude.ai URLs, remove manual copy steps, add caw- explanation | 2026-05-08 |
 | T-031 | tests update: 35 → 43 tests, add A8–A13 (CLAUDE.md + commands), update B2/S5/C6 | 2026-05-08 |
+| T-023 | merge dev → master: v1.3.0 release | 2026-05-08 |
+| T-025 | .gitattributes: CoreAiWorkspaces/ merge=ours + line endings | 2026-05-08 |
+| T-032 | docs: Package Concept diagrams + merge workflow notes → master | 2026-05-08 |
+| T-033 | feat: --update-commands flag + /caw-update slash command | 2026-05-08 |

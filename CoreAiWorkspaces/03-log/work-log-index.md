@@ -1,10 +1,10 @@
 ﻿<!-- AI-CONTEXT
 last_session: 2026-05-08
 tool: Claude Code
-completed: [T-010,T-011,T-012,T-013,T-014,bootstrap-ai,T-020,T-021]
+completed: [T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031,T-032,T-033]
 checkpoint: none
-next_from_last: merge dev → master (T-023, needs user permission)
-notes: all tasks done except merge, docs corrected from field test
+next_from_last: none — ระบบ stable รอ feature request ถัดไป
+notes: v1.3.0 released on master. /caw-update + --update-commands added.
 deep_context: none
 -->
 
@@ -19,6 +19,22 @@ deep_context: none
 | M3: Release Prep (ROADMAP, CHANGELOG, merge to master) | 🔄 todo | — |
 
 ## Recent Sessions
+
+### 2026-05-08 — [v1.3.0 Release + /caw-update]
+
+**สิ่งที่ทำ:**
+- Merge dev → master: v1.3.0 (caw- prefix, package install flow, docs)
+- Merge docs: Package Concept diagrams + merge workflow notes → master → GitHub Pages live
+- feat: `--update-commands` flag ใน new-project.sh — อัปเดต commands ไม่แตะ CoreAiWorkspaces/
+- feat: `/caw-update` slash command — สั่งอัปเดตจาก AI ได้โดยตรง
+- tests: 43 → 44 (เพิ่ม caw-update.md ใน SLASH_FILES check)
+- อัปเดต platforms/claude-code/README.md + CLAUDE.md ให้รู้จัก /caw-update
+
+**ผล:** 44/44 tests passing, dev pushed, ระบบ stable
+**Next:** รอ feature request ถัดไป
+
+---
+
 
 ### 2026-05-07 — [Structural Restructure + MemPalace + CoreAiWorkspaces/ Bootstrap]
 

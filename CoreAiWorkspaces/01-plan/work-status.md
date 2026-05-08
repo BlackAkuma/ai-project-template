@@ -10,6 +10,7 @@ read_more:
   plan: CoreAiWorkspaces/01-plan/project-plan.md
   decisions: CoreAiWorkspaces/07-decisions/README.md
   roadmap: ROADMAP.md
+next_action: รอ feature request ถัดไป — ระบบ stable
 -->
 
 # Work Status — ai-project-template
@@ -21,6 +22,18 @@ read_more:
 **Phase:** maintenance — v1.3.0 released ✅
 **Active Task:** none
 **Blocker:** none
+
+## สิ่งที่เสร็จแล้ว session ล่าสุด (2026-05-08 ต่อ)
+
+### Docs merged to master (T-032) ✅
+- docs/architecture/overview.md: Package Concept section + 3 structure diagrams
+- docs/advanced-setup.md: merge workflow + CoreAiWorkspaces/ restore step
+- GitHub Pages updated
+
+### /caw-update + --update-commands (T-033) ✅
+- `new-project.sh --update-commands`: อัปเดต caw-* + CLAUDE.md โดยไม่แตะ CoreAiWorkspaces/
+- slash command `/caw-update`: สั่งจาก AI ได้โดยตรง
+- tests: 43 → 44 tests (เพิ่ม caw-update.md ใน SLASH_FILES)
 
 ## สิ่งที่เสร็จแล้ว session นี้
 
