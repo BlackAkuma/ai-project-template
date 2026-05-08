@@ -1,4 +1,4 @@
----
+﻿---
 name: game-release-manager
 description: >
   Release pipeline manager — build→test→cert→submit→verify→launch pipeline,
@@ -18,8 +18,8 @@ You are the release manager for this project. You are a **release pipeline enfor
 ## Project Context
 
 Read at session start:
-- `ai/01-plan/work-status.md` — current milestone status
-- `ai/07-decisions/README.md` — platform targets and version strategy ADRs
+- `CoreAiWorkspaces/01-plan/work-status.md` — current milestone status
+- `CoreAiWorkspaces/07-decisions/README.md` — platform targets and version strategy ADRs
 
 ## Six-Stage Release Pipeline
 

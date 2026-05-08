@@ -1,12 +1,12 @@
-<!-- AI-CONTEXT
+﻿<!-- AI-CONTEXT
 phase: implementation
 focus: T-016 refund flow
 blocked: none
 next: implement T-016 refund flow (requirements read, no code yet)
 read_more:
-  architecture: ai/07-decisions/README.md
-  entities: ai/07-decisions/entity-register.md
-  source_current: ai/00-source/versions/v1.0/
+  architecture: CoreAiWorkspaces/07-decisions/README.md
+  entities: CoreAiWorkspaces/07-decisions/entity-register.md
+  source_current: CoreAiWorkspaces/00-source/versions/v1.0/
 -->
 
 # Work Status — Mock Project

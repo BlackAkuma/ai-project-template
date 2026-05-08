@@ -1,4 +1,4 @@
-# Reader Test — Feature 6: Memory Scope Protocol
+﻿# Reader Test — Feature 6: Memory Scope Protocol
 
 ## Scenario P: New information → correct storage decision via Scenario K
 
@@ -31,7 +31,7 @@ Then: is any item ambiguous — does it go in multiple places?
 
 ### สิ่งที่ต้องเกิดขึ้น (ผ่าน)
 
-- [ ] Item 1 (PostgreSQL decision): AI ระบุว่าต้อง → ADR ใน `ai/07-decisions/ADR-NNN-*.md` + อัปเดต entity-register
+- [ ] Item 1 (PostgreSQL decision): AI ระบุว่าต้อง → ADR ใน `CoreAiWorkspaces/07-decisions/ADR-NNN-*.md` + อัปเดต entity-register
 - [ ] Item 2 (date-fns + Moment deprecated): AI ระบุว่าต้อง → entity-register (date-fns active, Moment deprecated) + ADR ถ้าเป็น architectural choice
 - [ ] Item 3 (cross-project pattern): AI ระบุว่าต้อง → `~/ai-workspace/cross-project-memory.md` **แต่ต้องถามผู้ใช้ก่อน**
 - [ ] Item 4 (T-015 done): AI ระบุว่าต้อง → task-board + work-log-index + agent diary
@@ -63,7 +63,7 @@ Walk through Scenario K decision tree step by step.
 
 - [ ] AI เดิน through Scenario K ทีละขั้นอย่างชัดเจน ไม่ข้าม
 - [ ] AI ระบุว่าไม่ใช่ architectural decision ระดับ ADR (ไม่มี trade-off ระหว่าง options)
-- [ ] AI ระบุว่าเป็น project convention → เหมาะกับ `ai/04-way-of-work/way-of-work.md` (Language Policy section)
+- [ ] AI ระบุว่าเป็น project convention → เหมาะกับ `CoreAiWorkspaces/04-way-of-work/way-of-work.md` (Language Policy section)
 - [ ] ถ้า AI ไม่แน่ใจ → ระบุว่า "เก็บลง work-log ก่อน แล้วระบุว่ายังไม่แน่ใจ" ตาม fallback rule
 
 ### สิ่งที่ต้องไม่เกิดขึ้น (fail ถ้าเกิด)

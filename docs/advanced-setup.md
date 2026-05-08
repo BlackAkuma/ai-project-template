@@ -1,4 +1,4 @@
----
+﻿---
 title: Advanced Setup — Existing Projects & Teams
 ---
 
@@ -20,7 +20,7 @@ title: Advanced Setup — Existing Projects & Teams
 # ตรวจว่า project มี git init แล้วหรือยัง
 git status
 
-# ตรวจว่ามี ai/ อยู่แล้วหรือเปล่า (ถ้ามีต้องระวัง)
+# ตรวจว่ามี CoreAiWorkspaces/ อยู่แล้วหรือเปล่า (ถ้ามีต้องระวัง)
 ls -la | grep "^d"
 ```
 
@@ -41,17 +41,17 @@ bash _template/scripts/new-project.sh "ชื่อโปรเจ็กต์" 
 ```
 
 Script นี้จะ:
-- สร้าง `ai/` พร้อมไฟล์ทั้งหมด
+- สร้าง `CoreAiWorkspaces/` พร้อมไฟล์ทั้งหมด
 - **ไม่แตะ** source code, `.gitignore`, หรือไฟล์ที่มีอยู่แล้ว
-- หยุดถ้าเจอ `ai/` อยู่แล้ว (ป้องกัน overwrite)
+- หยุดถ้าเจอ `CoreAiWorkspaces/` อยู่แล้ว (ป้องกัน overwrite)
 
 ### ขั้น 4: Populate source docs
 
-เพิ่ม source documents ของโปรเจ็กต์เข้า `ai/00-source/`:
+เพิ่ม source documents ของโปรเจ็กต์เข้า `CoreAiWorkspaces/00-source/`:
 ```bash
 # copy PRD, design docs, spec sheets ที่มีอยู่แล้วเข้าไป
-cp docs/requirements.md ai/00-source/
-cp docs/design-spec.md ai/00-source/
+cp docs/requirements.md CoreAiWorkspaces/00-source/
+cp docs/design-spec.md CoreAiWorkspaces/00-source/
 ```
 
 ### ขั้น 5: ลบ _template/ และ commit
@@ -59,7 +59,7 @@ cp docs/design-spec.md ai/00-source/
 ```bash
 rm -rf _template/
 cp platforms/claude-code/CLAUDE.md ./CLAUDE.md
-git add ai/ CLAUDE.md
+git add CoreAiWorkspaces/ CLAUDE.md
 git commit -m "chore: add AI collaboration system"
 ```
 
@@ -77,7 +77,7 @@ feature/*     ← feature branches (optional สำหรับทีม)
 
 ### ตั้งค่าใน work-status.md
 
-เปิด `ai/01-plan/work-status.md` และตั้งค่า AI-CONTEXT block:
+เปิด `CoreAiWorkspaces/01-plan/work-status.md` และตั้งค่า AI-CONTEXT block:
 
 ```yaml
 <!-- AI-CONTEXT
@@ -127,7 +127,7 @@ Source doc update → Human อนุมัติก่อน AI เขียน
 ### Scenario: AI ต้องการตัดสินใจ architecture
 
 แทนที่จะตัดสินใจเอง AI จะ:
-1. สร้างไฟล์ `ai/07-decisions/ADR-NNN-title.md` พร้อม status: **Proposed**
+1. สร้างไฟล์ `CoreAiWorkspaces/07-decisions/ADR-NNN-title.md` พร้อม status: **Proposed**
 2. mark task เป็น `[BLOCKED: NEEDS ADR REVIEW]`
 3. แจ้งใน work-status ว่าต้องการ human review
 
@@ -147,7 +147,7 @@ git pull origin dev
 claude .  # Claude อ่านไฟล์ที่ sync มาแล้ว
 ```
 
-**สำคัญ:** ไม่ควรให้ AI tool สองตัวทำงานพร้อมกันบน branch เดียว — merge conflicts ใน `ai/` ไฟล์แก้ยาก
+**สำคัญ:** ไม่ควรให้ AI tool สองตัวทำงานพร้อมกันบน branch เดียว — merge conflicts ใน `CoreAiWorkspaces/` ไฟล์แก้ยาก
 
 ---
 
@@ -157,12 +157,12 @@ claude .  # Claude อ่านไฟล์ที่ sync มาแล้ว
 
 ### ตั้งค่า Agent Diary
 
-สร้าง `ai/03-log/agents/` folder:
+สร้าง `CoreAiWorkspaces/03-log/agents/` folder:
 
 ```bash
-mkdir -p ai/03-log/agents/
-touch ai/03-log/agents/claude-code.md
-touch ai/03-log/agents/claude-ai.md
+mkdir -p CoreAiWorkspaces/03-log/agents/
+touch CoreAiWorkspaces/03-log/agents/claude-code.md
+touch CoreAiWorkspaces/03-log/agents/claude-ai.md
 ```
 
 รูปแบบของ diary:
@@ -196,7 +196,7 @@ bash _template/scripts/new-project.sh "ชื่อโปรเจ็กต์" 
 หรือบอก AI ตอน First Run Bootstrap ว่าโปรเจ็กต์เป็น game — Claude จะโหลด `skills/game/` เพิ่มเติมเองและสร้าง:
 
 ```
-ai/
+CoreAiWorkspaces/
 └── 08-design/          ← Game Design Documents
     ├── gdd-main.md
     ├── balance/
@@ -209,13 +209,13 @@ Skill commands ที่จะได้เพิ่ม:
 
 ---
 
-## ย้ายจาก doc/ (legacy) ไป ai/
+## ย้ายจาก doc/ (legacy) ไป CoreAiWorkspaces/
 
 ถ้าเคยใช้ version เก่าที่ยังใช้ `doc/` folder:
 
 ```bash
 # rename folder
-mv doc/ ai/
+mv doc/ CoreAiWorkspaces/
 
 # update references ใน key files
 # (ระบบมี migration script ใน scripts/migrate-doc-to-ai.sh ถ้ามี)
@@ -223,8 +223,8 @@ mv doc/ ai/
 
 ตรวจ references ที่ต้องอัปเดต:
 - `CLAUDE.md` — ทุก path ที่ชี้ไป `doc/`
-- `ai/04-way-of-work/compliance.md`
-- `ai/04-way-of-work/way-of-work.md`
+- `CoreAiWorkspaces/04-way-of-work/compliance.md`
+- `CoreAiWorkspaces/04-way-of-work/way-of-work.md`
 
 ---
 

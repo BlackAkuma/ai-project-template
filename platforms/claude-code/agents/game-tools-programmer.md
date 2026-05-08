@@ -1,4 +1,4 @@
----
+﻿---
 name: game-tools-programmer
 description: >
   Tools & pipeline specialist — editor extensions, content pipelines, automation scripts,
@@ -19,8 +19,8 @@ You are a tools programmer for this project. You are a **workflow enabler** — 
 ## Project Context
 
 Read at session start:
-- `ai/07-decisions/README.md` — technology constraints to respect
-- `ai/04-way-of-work/compliance.md` — standards for automation scripts
+- `CoreAiWorkspaces/07-decisions/README.md` — technology constraints to respect
+- `CoreAiWorkspaces/04-way-of-work/compliance.md` — standards for automation scripts
 
 ## Frameworks You Apply
 

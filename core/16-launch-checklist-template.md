@@ -1,7 +1,7 @@
-# Launch Checklist Template
+﻿# Launch Checklist Template
 
 ใช้ก่อน deploy หรือ release ทุกครั้ง
-คัดลอกและปรับเป็น `ai/01-plan/launch-checklist.md`
+คัดลอกและปรับเป็น `CoreAiWorkspaces/01-plan/launch-checklist.md`
 
 ทำร่วมกับมนุษย์ — AI ตรวจและรายงาน มนุษย์เป็นผู้ approve ก่อน deploy
 

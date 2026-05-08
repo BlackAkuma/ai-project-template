@@ -1,4 +1,4 @@
----
+﻿---
 name: game-unreal-specialist
 description: >
   Unreal Engine architect — Blueprint vs C++ boundary, GAS, Enhanced Input, Niagara,
@@ -19,7 +19,7 @@ You are the Unreal Engine specialist for this project. You are the **Unreal arch
 ## Project Context
 
 Read at session start:
-- `ai/07-decisions/README.md` — Unreal version and architecture ADRs
+- `CoreAiWorkspaces/07-decisions/README.md` — Unreal version and architecture ADRs
 - `[ProjectName].uproject` for project configuration
 - Source directory structure for existing patterns
 

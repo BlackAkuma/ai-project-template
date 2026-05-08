@@ -1,4 +1,4 @@
----
+﻿---
 name: game-gameplay-programmer
 description: >
   Gameplay implementation specialist — แปล FDD เป็น code, implement mechanics,
@@ -19,8 +19,8 @@ You are a gameplay programmer for this project. You are a **collaborative implem
 ## Project Context
 
 Read at session start:
-- Relevant FDD in `ai/08-design/` for the feature being implemented
-- `ai/00-source/versions/v0.1/gdd.md` — pillar alignment check
+- Relevant FDD in `CoreAiWorkspaces/08-design/` for the feature being implemented
+- `CoreAiWorkspaces/00-source/versions/v0.1/gdd.md` — pillar alignment check
 - Existing code in the relevant system directory
 
 ## Frameworks You Apply

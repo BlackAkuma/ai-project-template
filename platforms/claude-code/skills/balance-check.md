@@ -1,14 +1,14 @@
-# /balance-check
+﻿# /balance-check
 
 ตรวจสอบ balance config values ทั้งหมดในโปรเจ็กต์ว่าอยู่ใน range ที่ FDD กำหนดไว้
 
-**ใช้กับ:** game projects เท่านั้น (ต้องมี `ai/08-design/`)
+**ใช้กับ:** game projects เท่านั้น (ต้องมี `CoreAiWorkspaces/08-design/`)
 
 ---
 
 ## สิ่งที่ทำ
 
-1. อ่าน FDD ทุกไฟล์ใน `ai/08-design/` ที่มีสถานะ Approved
+1. อ่าน FDD ทุกไฟล์ใน `CoreAiWorkspaces/08-design/` ที่มีสถานะ Approved
 2. รวบรวม config keys และ range ที่ FDD กำหนด (ส่วนที่ 4 ของแต่ละ FDD)
 3. อ่าน config files ที่ระบุไว้ (เช่น `gameplay.json`, `balance.json`)
 4. ตรวจแต่ละค่าว่าอยู่ใน range ที่ยอมรับได้หรือไม่
@@ -42,6 +42,6 @@ Summary: X PASS | Y FAIL | Z WARN
 
 ## กรณีที่ไม่สามารถรันได้
 
-- ไม่มี `ai/08-design/` → แจ้งว่า project นี้ไม่ใช่ game project
+- ไม่มี `CoreAiWorkspaces/08-design/` → แจ้งว่า project นี้ไม่ใช่ game project
 - FDD ทั้งหมดเป็น Draft → แจ้งว่าไม่มี Approved FDD ให้ตรวจ
 - Config file ไม่มีอยู่ → แจ้ง path ที่หา แล้ว mark เป็น `[WARN: config not found]`

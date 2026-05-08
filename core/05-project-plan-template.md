@@ -1,6 +1,6 @@
-# Project Plan Template
+﻿# Project Plan Template
 
-คัดลอกและปรับไฟล์นี้เป็น `ai/01-plan/project-plan.md`
+คัดลอกและปรับไฟล์นี้เป็น `CoreAiWorkspaces/01-plan/project-plan.md`
 
 ```md
 # Project Plan
@@ -10,8 +10,8 @@
 
 ## Source References
 
-- `ai/00-source/versions/<CURRENT_SOURCE_VERSION>/<SOURCE_DOC_1>.md`
-- `ai/00-source/versions/<CURRENT_SOURCE_VERSION>/<SOURCE_DOC_2>.md`
+- `CoreAiWorkspaces/00-source/versions/<CURRENT_SOURCE_VERSION>/<SOURCE_DOC_1>.md`
+- `CoreAiWorkspaces/00-source/versions/<CURRENT_SOURCE_VERSION>/<SOURCE_DOC_2>.md`
 
 ## Project Objective
 

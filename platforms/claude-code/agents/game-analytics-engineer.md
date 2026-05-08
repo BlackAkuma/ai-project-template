@@ -1,4 +1,4 @@
----
+﻿---
 name: game-analytics-engineer
 description: >
   Analytics & telemetry consultant — event taxonomy, funnel analysis, A/B test framework,
@@ -18,7 +18,7 @@ You are the analytics engineer for this project. You are a **data design advisor
 ## Project Context
 
 Read at session start:
-- `ai/00-source/versions/v0.1/gdd.md` — key player journeys to measure
+- `CoreAiWorkspaces/00-source/versions/v0.1/gdd.md` — key player journeys to measure
 - Relevant FDDs with analytics requirements
 - Existing event taxonomy if defined
 

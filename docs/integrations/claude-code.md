@@ -1,4 +1,4 @@
----
+﻿---
 title: Claude Code Integration
 ---
 
@@ -28,7 +28,7 @@ title: Claude Code Integration
 ### ขั้น 1: ติดตั้ง Claude Code
 
 ```bash
-# ดูคำสั่งติดตั้งล่าสุดที่ claude.ai/code
+# ดูคำสั่งติดตั้งล่าสุดที่ claude.CoreAiWorkspaces/code
 npm install -g @anthropic-ai/claude-code
 # หรือดูวิธีติดตั้งอื่นๆ ที่ official docs
 ```
@@ -56,16 +56,16 @@ claude .
 
 ```markdown
 ## Session Start Protocol
-1. อ่าน ai/01-plan/work-status.md
-2. อ่าน ai/03-log/work-log-index.md
-3. อ่าน ai/02-task/task-board.md
+1. อ่าน CoreAiWorkspaces/01-plan/work-status.md
+2. อ่าน CoreAiWorkspaces/03-log/work-log-index.md
+3. อ่าน CoreAiWorkspaces/02-task/task-board.md
 → รายงานสถานะ
 
 ## Session End Protocol
 /session-end → sync ทุกไฟล์
 ```
 
-**อย่าแก้ไข CLAUDE.md โดยตรง** ถ้าต้องการ customize ให้แก้ที่ `ai/04-way-of-work/way-of-work.md` แทน — CLAUDE.md load มาจาก platforms/ และอาจถูก update จาก template ได้
+**อย่าแก้ไข CLAUDE.md โดยตรง** ถ้าต้องการ customize ให้แก้ที่ `CoreAiWorkspaces/04-way-of-work/way-of-work.md` แทน — CLAUDE.md load มาจาก platforms/ และอาจถูก update จาก template ได้
 
 ---
 
@@ -95,7 +95,7 @@ Sync ทุกไฟล์ก่อนจบ session ในคำสั่งเ
 - มี tasks ที่ไม่มี source reference ไหม (C-01)
 - มี decisions ที่ไม่มี ADR ไหม (C-04)
 - มี deprecated entities ในไฟล์ที่กำลังทำงานไหม (C-14)
-- ถ้า vector_memory: enabled — ai/ เปลี่ยนแล้ว re-index หรือยัง (C-20)
+- ถ้า vector_memory: enabled — CoreAiWorkspaces/ เปลี่ยนแล้ว re-index หรือยัง (C-20)
 - มี tasks ที่ BLOCKED นานเกินไปไหม
 
 ผลลัพธ์: รายการ violations + warnings + ข้อแนะนำ
@@ -113,8 +113,8 @@ Claude จะถาม:
 4. Source reference ที่เกี่ยวข้อง?
 
 แล้วสร้าง:
-- `ai/07-decisions/ADR-NNN-title.md` พร้อม ID ถัดไปอัตโนมัติ
-- อัปเดต ADR index ใน `ai/07-decisions/README.md`
+- `CoreAiWorkspaces/07-decisions/ADR-NNN-title.md` พร้อม ID ถัดไปอัตโนมัติ
+- อัปเดต ADR index ใน `CoreAiWorkspaces/07-decisions/README.md`
 - Mark task ที่รอ decision นี้เป็น `[BLOCKED: NEEDS ADR REVIEW]`
 
 ---
@@ -123,7 +123,7 @@ Claude จะถาม:
 
 สร้าง Feature Design Document template สำหรับ feature ใหม่
 
-Output: ไฟล์ `ai/00-source/features/FDD-[name].md` พร้อมโครงสร้าง:
+Output: ไฟล์ `CoreAiWorkspaces/00-source/features/FDD-[name].md` พร้อมโครงสร้าง:
 - Feature Overview + Acceptance Criteria
 - Technical Approach
 - Edge Cases
@@ -163,7 +163,7 @@ Compress session logs เก่าเป็น monthly archive
 
 ทำ:
 - รวม entries เก่ากว่า 30 วันจาก `work-log-index.md`
-- สร้าง `ai/03-log/archives/YYYY-MM.md`
+- สร้าง `CoreAiWorkspaces/03-log/archives/YYYY-MM.md`
 - อัปเดต work-log-index เก็บแค่ entries ล่าสุด
 
 ช่วยลด context ที่ต้องโหลดทุก session
@@ -205,7 +205,7 @@ chmod +x .git/hooks/pre-commit
 
 ### ตั้งค่า git mode
 
-ใน `ai/01-plan/work-status.md` AI-CONTEXT block:
+ใน `CoreAiWorkspaces/01-plan/work-status.md` AI-CONTEXT block:
 
 ```yaml
 git_mode: branch-separated     # หรือ single-branch
@@ -224,7 +224,7 @@ vector_wing: my-project-name
 
 ### ตั้งค่า language
 
-ใน `ai/04-way-of-work/way-of-work.md`:
+ใน `CoreAiWorkspaces/04-way-of-work/way-of-work.md`:
 ```
 สื่อสารกัน: ภาษาไทย
 Code และ identifiers: English

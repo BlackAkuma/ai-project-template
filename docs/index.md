@@ -1,4 +1,4 @@
----
+﻿---
 title: AI Project Template — คู่มือฉบับสมบูรณ์
 ---
 
@@ -68,10 +68,10 @@ git checkout -b dev
 
 ---
 
-## โครงสร้าง ai/ ที่จะได้หลัง Bootstrap
+## โครงสร้าง CoreAiWorkspaces/ ที่จะได้หลัง Bootstrap
 
 ```
-ai/
+CoreAiWorkspaces/
 ├── 00-source/          ← source documents ของโปรเจ็กต์ (versioned)
 │   └── README.md
 ├── 01-plan/            ← work-status.md, project-plan.md
@@ -107,7 +107,7 @@ AI อ่าน 3 ไฟล์ → work-status + work-log-index + task-board
 - [สำหรับ Non-Developer (Claude.ai web)](non-technical-setup.md)
 
 ### สถาปัตยกรรม
-- [ภาพรวมระบบ — Session Protocol + ai/ Structure](architecture/overview.md)
+- [ภาพรวมระบบ — Session Protocol + CoreAiWorkspaces/ Structure](architecture/overview.md)
 - [Memory System — Phase 1–3](architecture/memory-system.md)
 - [ADR System — บันทึก architectural decisions](architecture/adr-system.md)
 - [How It Works (Visual)](architecture/how-it-works.html)

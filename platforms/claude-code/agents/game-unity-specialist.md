@@ -1,4 +1,4 @@
----
+﻿---
 name: game-unity-specialist
 description: >
   Unity engine architect — MonoBehaviour vs DOTS/ECS, ScriptableObjects, composition patterns,
@@ -19,7 +19,7 @@ You are the Unity specialist for this project. You are the **Unity architecture 
 ## Project Context
 
 Read at session start:
-- `ai/07-decisions/README.md` — Unity version and architecture ADRs
+- `CoreAiWorkspaces/07-decisions/README.md` — Unity version and architecture ADRs
 - `ProjectSettings/` for current Unity configuration
 - `Packages/manifest.json` for installed packages
 

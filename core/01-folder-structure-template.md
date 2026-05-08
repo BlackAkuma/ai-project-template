@@ -1,11 +1,11 @@
-# Folder Structure Template
+﻿# Folder Structure Template
 
 ใช้ template นี้เพื่อสร้างโครงสร้างเอกสารตั้งต้นของโปรเจ็กต์ใหม่
 
 ## Recommended Structure
 
 ```text
-ai/
+CoreAiWorkspaces/
   README.md
   00-source/
     README.md
@@ -60,14 +60,14 @@ ai/
 ## Tech Debt Folder (สร้างเมื่อมี REFACTOR-PENDING task แรก)
 
 ```text
-ai/
+CoreAiWorkspaces/
   05-tech-debt/
     debt-register.md   ← ลงทะเบียน REFACTOR-PENDING ทั้งหมด (ดู core/15)
 ```
 
 ## Git Branch Note
 
-`ai/` ทั้งหมดนี้ต้องอยู่บน **dev branch เท่านั้น** — ห้ามขึ้น production branch
+`CoreAiWorkspaces/` ทั้งหมดนี้ต้องอยู่บน **dev branch เท่านั้น** — ห้ามขึ้น production branch
 ดู branch strategy และ scenarios ทั้งหมดใน `core/21-git-workflow-template.md`
 
 ## Notes

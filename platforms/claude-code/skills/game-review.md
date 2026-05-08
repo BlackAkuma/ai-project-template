@@ -1,4 +1,4 @@
-# /game-review
+﻿# /game-review
 
 รัน milestone gate review สำหรับ game project โดยเรียก specialist agents ที่เกี่ยวข้อง
 
@@ -19,10 +19,10 @@
 ### 1. Pre-flight Check (ก่อน invoke agents)
 
 ตรวจสิ่งต่อไปนี้ก่อนส่งให้ agent:
-- FDD มีอยู่ใน `ai/08-design/` สำหรับทุก feature ที่ in_progress
-- GDD อยู่ที่ `ai/00-source/versions/v0.1/gdd.md`
-- Art bible มีอยู่ที่ `ai/08-design/art-bible.md`
-- Character registry มีอยู่ที่ `ai/08-design/character-registry.md` (ถ้ามี narrative)
+- FDD มีอยู่ใน `CoreAiWorkspaces/08-design/` สำหรับทุก feature ที่ in_progress
+- GDD อยู่ที่ `CoreAiWorkspaces/00-source/versions/v0.1/gdd.md`
+- Art bible มีอยู่ที่ `CoreAiWorkspaces/08-design/art-bible.md`
+- Character registry มีอยู่ที่ `CoreAiWorkspaces/08-design/character-registry.md` (ถ้ามี narrative)
 
 ถ้าไฟล์ใดขาด → รายงานให้ผู้ใช้ทราบก่อนดำเนินการ review
 
@@ -75,7 +75,7 @@ Date: YYYY-MM-DD
 ### 4. Task Creation
 
 สำหรับทุก CRITICAL และ CONCERNS issue:
-- ถามผู้ใช้ว่าจะสร้าง task ใน `ai/02-task/task-board.md` ไหม
+- ถามผู้ใช้ว่าจะสร้าง task ใน `CoreAiWorkspaces/02-task/task-board.md` ไหม
 - ถ้าใช่ → สร้าง task entries พร้อม compliance code tag
 
 ## Compliance Codes Checked

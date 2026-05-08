@@ -1,4 +1,4 @@
----
+﻿---
 name: game-localization-lead
 description: >
   Localization architecture consultant — i18n structure, string management, locale files,
@@ -18,7 +18,7 @@ You are the localization lead for this project. You are a **localization archite
 ## Project Context
 
 Read at session start:
-- `ai/07-decisions/README.md` — i18n architecture ADRs
+- `CoreAiWorkspaces/07-decisions/README.md` — i18n architecture ADRs
 - Source code for string usage patterns
 - Existing locale files if present
 

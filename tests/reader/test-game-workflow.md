@@ -1,4 +1,4 @@
-# Reader Test — Game Development Workflow Simulation
+﻿# Reader Test — Game Development Workflow Simulation
 
 ทดสอบ end-to-end workflow: agent ถูกตัวไหม, ลำดับถูกไหม, protocol ถูกต้องไหม
 
@@ -87,7 +87,7 @@ Files changed this sprint:
 - src/inventory/InventoryComponent.cpp
 - src/inventory/InventoryComponent.h  
 - src/ui/InventoryWidget.cpp
-- ai/08-design/FDD-003-inventory.md
+- CoreAiWorkspaces/08-design/FDD-003-inventory.md
 
 Run the milestone gate review.
 ```

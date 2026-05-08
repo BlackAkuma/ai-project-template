@@ -1,7 +1,7 @@
-# UX / HUD Screen Spec Template
+﻿# UX / HUD Screen Spec Template
 
 ออกแบบ screen หรือ HUD element ทุกชิ้นก่อน implement
-เก็บใน `ai/08-design/ux-[screen-name].md`
+เก็บใน `CoreAiWorkspaces/08-design/ux-[screen-name].md`
 
 **หลักการ:** Screen มีไว้รับใช้ผู้เล่น ไม่ใช่แสดงข้อมูลระบบ — ถามว่า "ผู้เล่นต้องการอะไร" ก่อนถาม "จะแสดงอะไร"
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+﻿#!/bin/bash
 # Hook: session-start
 # รันอัตโนมัติเมื่อเริ่ม Claude Code session
 # Event: PreToolUse (ก่อน tool แรกของ session)
@@ -8,9 +8,9 @@ DOC_DIR="$PROJECT_ROOT/ai"
 
 echo "=== Session Start Check ==="
 
-# ตรวจว่า ai/ มีอยู่
+# ตรวจว่า CoreAiWorkspaces/ มีอยู่
 if [ ! -d "$DOC_DIR" ]; then
-  echo "[WARN] ai/ not found at $DOC_DIR"
+  echo "[WARN] CoreAiWorkspaces/ not found at $DOC_DIR"
   echo "       Run bootstrap setup first"
   exit 0
 fi

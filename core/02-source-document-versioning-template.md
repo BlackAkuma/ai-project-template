@@ -1,4 +1,4 @@
-# Source Document Versioning Template
+﻿# Source Document Versioning Template
 
 ใช้ template นี้เพื่อวางระบบ source docs ของโปรเจ็กต์
 
@@ -9,8 +9,8 @@
 ## Rules
 
 - source docs revision เดิมห้ามถูกเขียนทับแบบเงียบ ๆ
-- revision จริงเก็บใต้ `ai/00-source/versions/`
-- ไฟล์ชื่อหลักใน `ai/00-source/` เป็น pointer/index เท่านั้น
+- revision จริงเก็บใต้ `CoreAiWorkspaces/00-source/versions/`
+- ไฟล์ชื่อหลักใน `CoreAiWorkspaces/00-source/` เป็น pointer/index เท่านั้น
 - planning docs ต้องอ้างอิง version ที่ใช้อยู่เสมอ
 
 ## Example Index File
@@ -21,11 +21,11 @@
 ## Current Version
 
 - `v0.2`
-- ไฟล์หลัก: `ai/00-source/versions/v0.2/02-PRD.md`
+- ไฟล์หลัก: `CoreAiWorkspaces/00-source/versions/v0.2/02-PRD.md`
 
 ## Previous Versions
 
-- `v0.1`: `ai/00-source/versions/v0.1/02-PRD.md`
+- `v0.1`: `CoreAiWorkspaces/00-source/versions/v0.1/02-PRD.md`
 
 ## Version Note
 

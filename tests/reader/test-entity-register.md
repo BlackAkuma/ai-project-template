@@ -1,4 +1,4 @@
-# Reader Test — Entity Register: Bootstrap & Maintenance
+﻿# Reader Test — Entity Register: Bootstrap & Maintenance
 
 ## Scenario ER-1: Bootstrap สร้าง entity-register.md
 
@@ -14,7 +14,7 @@ Tech stack confirmed:
 - date-fns (date utilities) — no ADR yet
 - Moment.js — was used in prototype, now deprecated in favor of date-fns — no ADR yet
 
-Create ai/07-decisions/entity-register.md following core/17-entity-register-template.md
+Create CoreAiWorkspaces/07-decisions/entity-register.md following core/17-entity-register-template.md
 ```
 
 ### สิ่งที่ต้องเกิดขึ้น (ผ่าน)

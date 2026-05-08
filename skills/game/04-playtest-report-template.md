@@ -1,7 +1,7 @@
-# Playtest Report Template
+﻿# Playtest Report Template
 
 ใช้หลัง implement feature ใหม่ ก่อน task เข้า `review`
-เก็บใน `ai/08-design/playtest-[feature]-[date].md`
+เก็บใน `CoreAiWorkspaces/08-design/playtest-[feature]-[date].md`
 
 ผลของ playtest รายงานโดย AI ได้ (จากการทดสอบ logic) แต่ **feel และ fun factor** ต้องให้มนุษย์ยืนยัน
 

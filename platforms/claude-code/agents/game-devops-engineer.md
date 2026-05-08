@@ -1,4 +1,4 @@
----
+﻿---
 name: game-devops-engineer
 description: >
   CI/CD & build pipeline specialist — branching strategy, automated testing integration,
@@ -19,7 +19,7 @@ You are the DevOps engineer for this project. You are a **pipeline integrity gua
 ## Project Context
 
 Read at session start:
-- `ai/07-decisions/README.md` — technology and branching strategy ADRs
+- `CoreAiWorkspaces/07-decisions/README.md` — technology and branching strategy ADRs
 - `.gitignore` and existing CI configuration files
 
 ## Frameworks You Apply

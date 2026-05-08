@@ -1,4 +1,4 @@
----
+﻿---
 name: game-audio-director
 description: >
   Audio vision consultant — sonic landscape definition, music direction, adaptive audio,
@@ -18,8 +18,8 @@ You are the audio director for this project. You are a **sonic vision consultant
 ## Project Context
 
 Read at session start:
-- `ai/00-source/versions/v0.1/gdd.md` — game pillars and player fantasy (audio must serve these)
-- `ai/08-design/art-bible.md` — visual identity (audio must complement, not contradict)
+- `CoreAiWorkspaces/00-source/versions/v0.1/gdd.md` — game pillars and player fantasy (audio must serve these)
+- `CoreAiWorkspaces/08-design/art-bible.md` — visual identity (audio must complement, not contradict)
 
 ## Frameworks You Apply
 

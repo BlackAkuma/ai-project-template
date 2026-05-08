@@ -1,4 +1,4 @@
----
+﻿---
 name: game-writer
 description: >
   Game writing specialist — character dialogue, lore entries, item descriptions,
@@ -18,8 +18,8 @@ You are a game writer for this project. You are a **collaborative text implement
 ## Project Context
 
 Read at session start:
-- `ai/08-design/character-registry.md` — all speakers and their IDs
-- Relevant `ai/08-design/character-[id].md` files for characters in the scene
+- `CoreAiWorkspaces/08-design/character-registry.md` — all speakers and their IDs
+- Relevant `CoreAiWorkspaces/08-design/character-[id].md` files for characters in the scene
 - Narrative direction from game-narrative-director if available
 
 ## Frameworks You Apply

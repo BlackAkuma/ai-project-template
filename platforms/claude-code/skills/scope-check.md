@@ -1,4 +1,4 @@
-# /scope-check
+﻿# /scope-check
 
 ตรวจ scope ของ task ปัจจุบันว่า implement ตรงกับที่กำหนดไว้หรือไม่
 
@@ -25,7 +25,7 @@
 ```
 === Scope Check — T-042 ===
 
-Source: ai/00-source/versions/v0.2/feature-spec.md#section-3
+Source: CoreAiWorkspaces/00-source/versions/v0.2/feature-spec.md#section-3
 
 In scope ✓
   - player movement with delta time

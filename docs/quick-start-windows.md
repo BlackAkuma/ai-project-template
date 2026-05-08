@@ -1,4 +1,4 @@
----
+﻿---
 title: Quick Start — Windows
 ---
 
@@ -105,7 +105,7 @@ cd my-project
 git checkout -b dev
 
 # ลบไฟล์ที่ไม่ต้องการ
-rm -rf ai/ tests/ CHANGELOG.md ROADMAP.md
+rm -rf CoreAiWorkspaces/ tests/ CHANGELOG.md ROADMAP.md
 git add -A && git commit -m "chore: clean template files before bootstrap"
 ```
 

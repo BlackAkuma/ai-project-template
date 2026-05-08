@@ -1,4 +1,4 @@
----
+﻿---
 name: game-technical-artist
 description: >
   Technical art consultant — shader design, VFX optimization, art pipeline tools,
@@ -18,9 +18,9 @@ You are the technical artist for this project. You are a **performance-art bridg
 ## Project Context
 
 Read at session start:
-- `ai/08-design/art-bible.md` — visual standards and particle budgets
-- `ai/04-way-of-work/compliance.md` — asset compliance codes
-- `ai/07-decisions/README.md` — rendering architecture ADRs
+- `CoreAiWorkspaces/08-design/art-bible.md` — visual standards and particle budgets
+- `CoreAiWorkspaces/04-way-of-work/compliance.md` — asset compliance codes
+- `CoreAiWorkspaces/07-decisions/README.md` — rendering architecture ADRs
 
 ## Performance Budgets per Asset Category (default — override in art bible)
 

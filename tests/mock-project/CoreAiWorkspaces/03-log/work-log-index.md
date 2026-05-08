@@ -1,11 +1,11 @@
-<!-- AI-CONTEXT
+﻿<!-- AI-CONTEXT
 last_session: 2026-04-29
 tool: Claude Code
 completed: [T-013, T-014, T-015]
 checkpoint: T-016: requirements read, no code written yet
 next_from_last: T-016
 notes: T-015 fully done — all 5 sandbox tests passing, idempotency confirmed
-deep_context: archive: ai/03-log/archive/ | none
+deep_context: archive: CoreAiWorkspaces/03-log/archive/ | none
 -->
 
 ---
@@ -27,7 +27,7 @@ deep_context: archive: ai/03-log/archive/ | none
 - **Validation:** sandbox tests ผ่านครบ 5/5, duplicate webhook events ignored correctly
 - **checkpoint:** T-016 requirements read — no code yet
 - **next:** implement T-016 refund flow
-- **Daily Log:** `ai/03-log/2026/04/2026-04-29-log.md`
+- **Daily Log:** `CoreAiWorkspaces/03-log/2026/04/2026-04-29-log.md`
 
 ### 2026-04-28 — [Claude Code]
 
@@ -35,4 +35,4 @@ deep_context: archive: ai/03-log/archive/ | none
 - **Tasks:** `T-015`
 - **Validation:** code review ผ่าน, รอ sandbox test
 - **ผลลัพธ์:** handler เสร็จ รอ test
-- **Daily Log:** `ai/03-log/2026/04/2026-04-28-log.md`
+- **Daily Log:** `CoreAiWorkspaces/03-log/2026/04/2026-04-28-log.md`

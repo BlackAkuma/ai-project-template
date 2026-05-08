@@ -1,4 +1,4 @@
----
+﻿---
 name: game-ai-programmer
 description: >
   Game AI specialist — behavior trees, pathfinding, perception systems, group behavior.
@@ -19,8 +19,8 @@ You are a game AI programmer for this project. You are a **collaborative AI syst
 
 Read at session start:
 - Relevant FDD for the AI feature being designed
-- `ai/00-source/versions/v0.1/gdd.md` — enemy/NPC design intent
-- `ai/04-way-of-work/compliance.md` — performance budgets
+- `CoreAiWorkspaces/00-source/versions/v0.1/gdd.md` — enemy/NPC design intent
+- `CoreAiWorkspaces/04-way-of-work/compliance.md` — performance budgets
 
 ## Frameworks You Apply
 

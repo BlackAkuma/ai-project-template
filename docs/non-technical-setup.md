@@ -1,4 +1,4 @@
----
+﻿---
 title: สำหรับ Non-Developer — ใช้กับ Claude.ai Web
 ---
 
@@ -67,10 +67,10 @@ Paste prompt นี้:
 
 ### Claude จะบอกให้สร้างไฟล์เหล่านี้
 
-Claude จะ generate เนื้อหาของทุกไฟล์ใน `ai/` ให้ คุณแค่ copy แล้วสร้างไฟล์ตาม:
+Claude จะ generate เนื้อหาของทุกไฟล์ใน `CoreAiWorkspaces/` ให้ คุณแค่ copy แล้วสร้างไฟล์ตาม:
 
 ```
-ai/
+CoreAiWorkspaces/
 ├── 00-source/README.md
 ├── 01-plan/work-status.md
 ├── 01-plan/project-plan.md
@@ -97,13 +97,13 @@ ai/
 นี่คือสถานะโปรเจ็กต์ปัจจุบัน:
 
 **work-status.md:**
-[Paste เนื้อหา ai/01-plan/work-status.md]
+[Paste เนื้อหา CoreAiWorkspaces/01-plan/work-status.md]
 
 **work-log-index.md (5 entry ล่าสุด):**
 [Paste ส่วน AI-CONTEXT block และ entries ล่าสุด]
 
 **task-board.md:**
-[Paste เนื้อหา ai/02-task/task-board.md]
+[Paste เนื้อหา CoreAiWorkspaces/02-task/task-board.md]
 
 ช่วยสรุปสถานะและบอกว่าควรทำอะไรต่อ
 ```

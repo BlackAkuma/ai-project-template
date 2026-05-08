@@ -1,7 +1,7 @@
-# Retrospective Template
+﻿# Retrospective Template
 
 ใช้ทบทวนการทำงานร่วมกันระหว่างทีมและ AI ในช่วงเวลาหนึ่ง
-เก็บไว้ใน `ai/05-summary/YYYY/YYYY-MM-retrospective.md` หรือ `ai/05-summary/YYYY/MM/`
+เก็บไว้ใน `CoreAiWorkspaces/05-summary/YYYY/YYYY-MM-retrospective.md` หรือ `CoreAiWorkspaces/05-summary/YYYY/MM/`
 
 ควรทำทุก milestone หรือทุก sprint หรืออย่างน้อยทุกเดือน
 
