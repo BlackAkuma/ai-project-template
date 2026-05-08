@@ -65,6 +65,37 @@ git commit -m "chore: add AI collaboration system"
 
 ---
 
+## อัปเดต Commands — ไม่ต้อง Bootstrap ใหม่
+
+เมื่อ template ออก version ใหม่และต้องการอัปเดต `caw-*` commands หรือ `CLAUDE.md` โดยไม่แตะโครงสร้างโปรเจ็กต์:
+
+### วิธีที่ 1 — สั่งจาก Claude Code (แนะนำ)
+
+```
+/caw-update
+```
+
+Claude จะแนะนำขั้นตอน download template ใหม่และรัน update
+
+### วิธีที่ 2 — รัน script โดยตรง
+
+```bash
+# วาง template ใหม่ใน _template/
+mkdir _template
+cp -r /path/to/ai-project-template-main/. _template/
+
+# รัน update — ไม่แตะ CoreAiWorkspaces/ หรือ source code
+bash _template/scripts/new-project.sh "ชื่อโปรเจ็กต์" . --update-commands
+
+# ลบ _template/ หลังเสร็จ
+rm -rf _template/
+```
+
+**สิ่งที่อัปเดต:** `.claude/commands/caw-*.md` + `CLAUDE.md`
+**สิ่งที่ไม่แตะ:** `CoreAiWorkspaces/`, source docs, source code ทุกไฟล์
+
+---
+
 ## Git Workflow — Branch Strategy
 
 ระบบนี้ออกแบบมาสำหรับ branch-separated workflow:

@@ -190,6 +190,7 @@ my-project/
 /caw-fdd-create        ← สร้าง feature design document
 /caw-launch-check      ← checklist ก่อน deploy
 /caw-archive-logs      ← compress session logs เก่า
+/caw-update            ← อัปเดต commands และ CLAUDE.md เป็น version ใหม่
 ```
 
 ---
