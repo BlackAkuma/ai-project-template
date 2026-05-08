@@ -323,6 +323,15 @@ echo "  created: $TARGET/CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md
 } > "$TARGET/CoreAiWorkspaces/04-way-of-work/compliance.md"
 echo "  created: $TARGET/CoreAiWorkspaces/04-way-of-work/compliance.md (from core/15)"
 
+# tacp: copy from core/22, strip template meta-header (AI-CONTEXT block)
+{
+  tail -n +5 "$TEMPLATE_ROOT/core/22-tacp-template.md" \
+    | sed \
+        -e "s/<PROJECT_NAME>/$PROJECT_NAME/g" \
+        -e "s/<CURRENT_DATE>/$DATE/g"
+} > "$TARGET/CoreAiWorkspaces/04-way-of-work/tacp.md"
+echo "  created: $TARGET/CoreAiWorkspaces/04-way-of-work/tacp.md (from core/22)"
+
 make_file "$TARGET/CoreAiWorkspaces/04-way-of-work/coding-standards.md" \
 "# Coding Standards — $PROJECT_NAME
 
@@ -573,6 +582,7 @@ REQUIRED=(
   "CoreAiWorkspaces/04-way-of-work/coding-standards.md"
   "CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md"
   "CoreAiWorkspaces/04-way-of-work/compliance.md"
+  "CoreAiWorkspaces/04-way-of-work/tacp.md"
   "CoreAiWorkspaces/05-summary/README.md"
   "CoreAiWorkspaces/05-summary/templates.md"
   "CoreAiWorkspaces/06-extensions/README.md"

@@ -1,8 +1,18 @@
-﻿# /caw-balance-check
+<!-- AI-CONTEXT
+cmd: caw-balance-check
+requires: CoreAiWorkspaces/08-design/ (game projects only)
+steps: [read_approved_fdds, collect_config_keys_and_ranges, read_config_files, check_each_value, report_pass_fail_warn]
+block_condition: FAIL → status=[BLOCKED: balance out of range], task stays in_progress
+compliance_rule: G-07
+output_layer: L2
+-->
+<!-- HUMAN-CONTEXT lang=th
+# /caw-balance-check
 
 ตรวจสอบ balance config values ทั้งหมดในโปรเจ็กต์ว่าอยู่ใน range ที่ FDD กำหนดไว้
 
 **ใช้กับ:** game projects เท่านั้น (ต้องมี `CoreAiWorkspaces/08-design/`)
+-->
 
 ---
 
@@ -34,9 +44,9 @@ Summary: X PASS | Y FAIL | Z WARN
 
 ## Compliance Rule
 
-ตรวจสอบตาม **G-07** (balance check ก่อน playtest) จาก `skills/game/05-balance-check-template.md`
+ตรวจสอบตาม **G-07** จาก `skills/game/05-balance-check-template.md`
 
-ถ้ามี FAIL → อัปเดต work-status เป็น `[BLOCKED: balance out of range]` และอย่าเปลี่ยน task จาก `in_progress` ไป `playtest` จนกว่าจะแก้ไขค่าให้อยู่ใน range
+ถ้ามี FAIL → อัปเดต work-status เป็น `[BLOCKED: balance out of range]` และอย่าเปลี่ยน task จาก `in_progress` ไป `playtest` จนกว่าจะแก้ไข
 
 ---
 

@@ -1,7 +1,18 @@
-﻿# /caw-archive-logs
+<!-- AI-CONTEXT
+cmd: caw-archive-logs
+trigger: C-12 | C-13 violation | manual
+flags: [--logs-only, --tasks-only]
+steps_log: [read_recent_sessions, create_monthly_archive_files, update_milestone_summary, trim_to_10_recent, sync_log_context]
+steps_task: [find_done_tasks_older_30d, move_to_archive, keep_5_recent, sync_task_context]
+protected: [milestone_summary, ai_context_blocks, archive_files]
+output_layer: L2
+-->
+<!-- HUMAN-CONTEXT lang=th
+# /caw-archive-logs
 
 Compress session entries เก่าใน work-log-index และ task-board
 ใช้เมื่อ AI แจ้ง C-12 หรือ C-13 หรือสั่งเองเมื่อต้องการ
+-->
 
 ## วิธีใช้
 
@@ -14,7 +25,7 @@ Compress session entries เก่าใน work-log-index และ task-board
 ## สิ่งที่ทำ — Log Archive
 
 1. อ่าน Recent Sessions ทั้งหมดใน work-log-index
-2. สร้าง `CoreAiWorkspaces/03-log/archive/YYYY-MM-sessions.md` สำหรับแต่ละเดือนที่ archive
+2. สร้าง `CoreAiWorkspaces/03-log/archive/YYYY-MM-sessions.md` สำหรับแต่ละเดือน
    - บันทึก: งานที่เสร็จ, decisions สำคัญ, สิ่งที่ยกไปต่อ, task references
 3. อัปเดต **Milestone Summary** ใน work-log-index ให้ครอบคลุม session ที่ archive
 4. ลบ session entry เก่าออก เหลือแค่ 10 session ล่าสุด
@@ -40,12 +51,9 @@ Compress session entries เก่าใน work-log-index และ task-board
 
 Log archive:
   สร้าง CoreAiWorkspaces/03-log/archive/2026-01-sessions.md (23 sessions)
-  สร้าง CoreAiWorkspaces/03-log/archive/2026-02-sessions.md (18 sessions)
   work-log-index: 340 บรรทัด → 87 บรรทัด
 
 Task archive:
   ย้าย 12 done tasks → CoreAiWorkspaces/02-task/archive/done-2026-01.md
   task-board done section: 15 รายการ → 5 รายการ
-
-Milestone Summary อัปเดตแล้ว — AI session ใหม่จะยังรู้ว่าทำอะไรไปแล้ว
 ```

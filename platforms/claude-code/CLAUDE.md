@@ -93,11 +93,29 @@
 
 ---
 
+## Token-Aware Communication Protocol (TACP)
+
+AI ใช้ 3-layer model — destination กำหนด format อัตโนมัติ:
+
+| Layer | Destination | Language | Format |
+|-------|-------------|----------|--------|
+| **L1** | AI-CONTEXT blocks, internal logic | English only | Dense key-value, no prose |
+| **L2** | Chat output to user | L2_LANG (`th`) | Compressed Thai, verbosity V1–V5 |
+| **L3** | Shared files (caw-*.md, templates) | Dual-block | AI-CONTEXT (L1) + HUMAN-CONTEXT (L2) |
+
+**Verbosity scale:** V1=ยืนยัน · V2=รายการสั้น · V3=อธิบาย · V4=เสนอ design · V5=warning/destructive
+
+**Thai compression (L2):** one polite anchor per message block · drop redundant particles · noun phrases in lists · English for tech terms
+
+อ้างอิง protocol เต็ม: `CoreAiWorkspaces/04-way-of-work/tacp.md`
+
+---
+
 ## Language Policy
 
-- Internal reasoning: English (token-efficient)
-- Output to user: ภาษาที่ตกลงกันไว้ใน `CoreAiWorkspaces/04-way-of-work/way-of-work.md`
-- AI-CONTEXT blocks: English เสมอ
+- AI-internal reasoning: English
+- Output to user: ตาม `tacp.L2_LANG` ใน `CoreAiWorkspaces/04-way-of-work/way-of-work.md` (default: `th`)
+- AI-CONTEXT blocks: English เสมอ (L1)
 - Code / identifiers: English เสมอ
 
 ---

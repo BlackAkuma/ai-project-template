@@ -1,7 +1,17 @@
-﻿# /caw-fdd-create
+<!-- AI-CONTEXT
+cmd: caw-fdd-create
+trigger: before implementing any new feature (game projects)
+steps: [get_feature_name, read_fdd_index, create_fdd_from_template, fill_id_name_date_task_ref, write_section1_only, wait_approve, update_fdd_index]
+template_src: skills/game/01-fdd-template.md
+output_path: CoreAiWorkspaces/08-design/[feature-name].md
+output_layer: L2
+-->
+<!-- HUMAN-CONTEXT lang=th
+# /caw-fdd-create
 
 สร้าง Feature Design Document ใหม่จาก template
 บันทึกใน `CoreAiWorkspaces/08-design/[feature-name].md`
+-->
 
 ## วิธีใช้
 

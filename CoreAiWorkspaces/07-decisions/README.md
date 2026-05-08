@@ -1,6 +1,6 @@
 ﻿<!-- AI-CONTEXT
-total_adrs: 3
-accepted: [ADR-001,ADR-002,ADR-003]
+total_adrs: 5
+accepted: [ADR-001,ADR-002,ADR-003,ADR-004,ADR-005]
 proposed: []
 last_updated: 2026-05-07
 -->
@@ -33,3 +33,4 @@ ADR ที่ถูก accept แล้วถือเป็น source of truth 
 | ADR-002 | MemPalace เป็น Phase 3 vector memory implementation | Accepted | 2026-05-07 | — |
 | ADR-003 | docs/ web pages อยู่บน gh-pages branch เท่านั้น | Accepted | 2026-05-07 | — |
 | ADR-004 | Versioning strategy — single release + layer separation | Accepted | 2026-05-08 | — |
+| ADR-005 | Token-Aware Communication Protocol (TACP) | Accepted | 2026-05-08 | — |

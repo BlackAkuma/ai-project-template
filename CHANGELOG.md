@@ -1,5 +1,34 @@
 ﻿# Changelog
 
+## v1.5.0 — 2026-05-08
+
+### Token-Aware Communication Protocol (TACP)
+
+- **`CoreAiWorkspaces/04-way-of-work/tacp.md`** — Protocol anchor: 3-layer model (L1/L2/L3), verbosity scale V1–V5, Thai compression rules P-01 to P-06
+- **`CLAUDE.md` + `platforms/claude-code/CLAUDE.md`** — TACP section เพิ่ม: layer table, verbosity scale, compression summary, L2_LANG reference
+- **`way-of-work.md`** — เพิ่ม TACP configuration block (`tacp.L2_LANG`, `verbosity_default`, `politeness_level`)
+- **Dual-block format** — caw-*.md ทั้ง 11 ไฟล์ migrate เป็น AI-CONTEXT (L1) + HUMAN-CONTEXT (L2) format ทำให้ AI อ่าน L1 block เท่านั้นแทน Thai full text
+- **ADR-005** — บันทึก TACP architectural decision: 3-layer model vs alternatives
+
+#### Layer Summary
+
+| Layer | Destination | Before | After | Savings |
+|-------|-------------|--------|-------|---------|
+| L1 | AI-CONTEXT blocks | Thai prose | English key-value | 65–70% |
+| L2 | Chat output | Verbose Thai | Compressed + V1–V5 | 30–90% by type |
+| L3 | caw-*.md | Thai only | Dual-block | 86% AI read path |
+
+### Benchmark
+
+- **`tests/token-savings/tacp-benchmark.md`** — 15 test cases พร้อมตัวเลขก่อน/หลัง:
+  - Session orientation reads: 93.4% savings
+  - Simple ack (V1): 88.8% savings
+  - Design proposal (V4): 52.2% savings  
+  - Warning (V5): 0% (correct — no compression on warnings)
+  - **Typical session weighted average: ~54% savings**
+
+---
+
 ## v1.4.0 — 2026-05-08
 
 ### Versioning System

@@ -84,6 +84,7 @@ REQUIRED_A=(
   "CoreAiWorkspaces/04-way-of-work/way-of-work.md"
   "CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md"
   "CoreAiWorkspaces/04-way-of-work/compliance.md"
+  "CoreAiWorkspaces/04-way-of-work/tacp.md"
   "CoreAiWorkspaces/07-decisions/README.md"
   "CoreAiWorkspaces/07-decisions/entity-register.md"
 )
@@ -277,6 +278,80 @@ if [ ! -d "doc" ]; then
   pass "S6: no legacy doc/ folder on dev branch"
 else
   fail "S6: legacy doc/ folder found on dev — rename incomplete"
+fi
+
+# =============================================================================
+# TACP CHECKS
+# =============================================================================
+
+section "TACP — Token-Aware Communication Protocol"
+
+cd "$TEMPLATE_ROOT"
+
+# Check: core/22-tacp-template.md exists
+[ -f "core/22-tacp-template.md" ] && pass "T1: core/22-tacp-template.md exists" || fail "T1: core/22-tacp-template.md missing"
+
+# Check: CLAUDE.md has TACP section
+if grep -q "Token-Aware Communication Protocol" "CLAUDE.md" 2>/dev/null; then
+  pass "T2: root CLAUDE.md has TACP section"
+else
+  fail "T2: root CLAUDE.md missing TACP section"
+fi
+
+# Check: platforms/claude-code/CLAUDE.md has TACP section
+if grep -q "Token-Aware Communication Protocol" "platforms/claude-code/CLAUDE.md" 2>/dev/null; then
+  pass "T3: platforms/claude-code/CLAUDE.md has TACP section"
+else
+  fail "T3: platforms/claude-code/CLAUDE.md missing TACP section"
+fi
+
+# Check: all caw-*.md files have AI-CONTEXT dual-block header
+CAW_FILES=(
+  "platforms/claude-code/skills/caw-session-end.md"
+  "platforms/claude-code/skills/caw-adr-create.md"
+  "platforms/claude-code/skills/caw-compliance-check.md"
+  "platforms/claude-code/skills/caw-scope-check.md"
+  "platforms/claude-code/skills/caw-fdd-create.md"
+  "platforms/claude-code/skills/caw-archive-logs.md"
+  "platforms/claude-code/skills/caw-launch-check.md"
+  "platforms/claude-code/skills/caw-update.md"
+  "platforms/claude-code/skills/caw-balance-check.md"
+  "platforms/claude-code/skills/caw-playtest-report.md"
+  "platforms/claude-code/skills/caw-game-review.md"
+)
+
+for caw_file in "${CAW_FILES[@]}"; do
+  if grep -q "^<!-- AI-CONTEXT" "$caw_file" 2>/dev/null && grep -q "^<!-- HUMAN-CONTEXT" "$caw_file" 2>/dev/null; then
+    pass "T4: $caw_file has dual-block format (L3)"
+  else
+    fail "T4: $caw_file missing dual-block format (AI-CONTEXT + HUMAN-CONTEXT)"
+  fi
+done
+
+# Check: way-of-work.md has tacp config block
+if grep -q "tacp:" "CoreAiWorkspaces/04-way-of-work/way-of-work.md" 2>/dev/null && grep -q "L2_LANG" "CoreAiWorkspaces/04-way-of-work/way-of-work.md" 2>/dev/null; then
+  pass "T5: way-of-work.md has tacp config block with L2_LANG"
+else
+  fail "T5: way-of-work.md missing tacp config block"
+fi
+
+# Check: tacp.md exists in CoreAiWorkspaces/
+[ -f "CoreAiWorkspaces/04-way-of-work/tacp.md" ] && pass "T6: CoreAiWorkspaces/04-way-of-work/tacp.md exists" || fail "T6: CoreAiWorkspaces/04-way-of-work/tacp.md missing"
+
+# Check: ADR-005 exists
+[ -f "CoreAiWorkspaces/07-decisions/ADR-005-tacp-token-aware-communication-protocol.md" ] && pass "T7: ADR-005-tacp exists" || fail "T7: ADR-005-tacp missing"
+
+# Check: benchmark test document exists
+[ -f "tests/token-savings/tacp-benchmark.md" ] && pass "T8: tacp-benchmark.md exists" || fail "T8: tacp-benchmark.md missing"
+
+# Check: bootstrapped project gets tacp.md (Flow A already ran above — check PROJECT_A)
+[ -f "$PROJECT_A/CoreAiWorkspaces/04-way-of-work/tacp.md" ] && pass "T9: tacp.md bootstrapped in new project (Flow A)" || fail "T9: tacp.md not bootstrapped in new project"
+
+# Check: tacp.md in bootstrapped project has L2_LANG content
+if grep -q "L2_LANG" "$PROJECT_A/CoreAiWorkspaces/04-way-of-work/tacp.md" 2>/dev/null; then
+  pass "T10: bootstrapped tacp.md has L2_LANG config"
+else
+  fail "T10: bootstrapped tacp.md missing L2_LANG config"
 fi
 
 # =============================================================================
