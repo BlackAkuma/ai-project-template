@@ -581,7 +581,7 @@ section{padding:80px 32px}
         </div>
         <div class="pc-item">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="var(--green)" style="flex-shrink:0;margin-top:2px"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg>
-          <span><strong>เปลี่ยน AI tool ได้ตลอด</strong> — ai/ ยังอยู่ ระบบไม่หยุด</span>
+          <span><strong>เปลี่ยน AI tool ได้ตลอด</strong> — CoreAiWorkspaces/ ยังอยู่ ระบบไม่หยุด</span>
         </div>
       </div>
     </div>
@@ -634,7 +634,7 @@ section{padding:80px 32px}
         <div class="sim-doc-wrap">
           <div class="sim-panel-bar">
             <span style="font-size:13px">📄</span>
-            <span class="sim-bar-title" id="sim-doc-title">ai/</span>
+            <span class="sim-bar-title" id="sim-doc-title">CoreAiWorkspaces/</span>
           </div>
           <div class="sim-doc-body" id="sim-doc"></div>
         </div>
@@ -696,7 +696,7 @@ section{padding:80px 32px}
         <div class="tier-body">
           <div class="tier-files">
             <div class="tfile"><span class="tfile-num">00</span><div><div class="tfile-name">Bootstrap Master</div><div class="tfile-desc">กฎและขั้นตอน setup ทั้งหมด</div></div></div>
-            <div class="tfile"><span class="tfile-num">01</span><div><div class="tfile-name">Folder Structure</div><div class="tfile-desc">โครงสร้าง ai/ มาตรฐาน</div></div></div>
+            <div class="tfile"><span class="tfile-num">01</span><div><div class="tfile-name">Folder Structure</div><div class="tfile-desc">โครงสร้าง CoreAiWorkspaces/ มาตรฐาน</div></div></div>
             <div class="tfile"><span class="tfile-num">02</span><div><div class="tfile-name">Source Doc Versioning</div><div class="tfile-desc">requirement ที่แก้ไม่ได้ตรงๆ</div></div></div>
             <div class="tfile"><span class="tfile-num">03</span><div><div class="tfile-name">Way of Work</div><div class="tfile-desc">Session protocol · start/end checklist</div></div></div>
             <div class="tfile"><span class="tfile-num">06</span><div><div class="tfile-name">Work Status</div><div class="tfile-desc">สถานะโปรเจ็กต์ + AI-CONTEXT block</div></div></div>
@@ -804,8 +804,8 @@ section{padding:80px 32px}
             <div class="step-card-bar"></div>
             <div class="step-n">3</div>
             <div class="step-content">
-              <div class="step-title">สร้าง ai/ structure ทั้งหมด</div>
-              <div class="step-body">AI สร้างโฟลเดอร์และไฟล์ตาม template: <code>ai/01-plan/work-status.md</code> · <code>ai/02-task/task-board.md</code> · <code>ai/03-log/work-log-index.md</code> · <code>ai/07-decisions/entity-register.md</code> + ADR index พร้อม AI-CONTEXT block ในทุกไฟล์</div>
+              <div class="step-title">สร้าง CoreAiWorkspaces/ structure ทั้งหมด</div>
+              <div class="step-body">AI สร้างโฟลเดอร์และไฟล์ตาม template: <code>CoreAiWorkspaces/01-plan/work-status.md</code> · <code>CoreAiWorkspaces/02-task/task-board.md</code> · <code>CoreAiWorkspaces/03-log/work-log-index.md</code> · <code>CoreAiWorkspaces/07-decisions/entity-register.md</code> + ADR index พร้อม AI-CONTEXT block ในทุกไฟล์</div>
             </div>
           </div>
         </div>
@@ -835,7 +835,7 @@ section{padding:80px 32px}
             <div class="step-n">5</div>
             <div class="step-content">
               <div class="step-title">ตาม read-more hints — โหลดเฉพาะที่ต้องการ</div>
-              <div class="step-body">ใน AI-CONTEXT ของ work-status มี <code>read_more</code> hints บอกว่าถ้า task ปัจจุบันเกี่ยวกับ architecture → ไปอ่าน <code>ai/07-decisions/README.md</code> ถ้าเกี่ยวกับ entity → อ่าน <code>entity-register.md</code> <strong>ไม่ scan ทั้งโปรเจ็กต์</strong> — โหลดเฉพาะที่ task นี้จริงๆ ต้องการ</div>
+              <div class="step-body">ใน AI-CONTEXT ของ work-status มี <code>read_more</code> hints บอกว่าถ้า task ปัจจุบันเกี่ยวกับ architecture → ไปอ่าน <code>CoreAiWorkspaces/07-decisions/README.md</code> ถ้าเกี่ยวกับ entity → อ่าน <code>entity-register.md</code> <strong>ไม่ scan ทั้งโปรเจ็กต์</strong> — โหลดเฉพาะที่ task นี้จริงๆ ต้องการ</div>
             </div>
           </div>
           <div class="step-card">
@@ -894,7 +894,7 @@ section{padding:80px 32px}
             <div class="step-n">9</div>
             <div class="step-content">
               <div class="step-title">เขียน Agent Diary (ถ้าใช้หลาย AI tool)</div>
-              <div class="step-body">ถ้ามีหลาย AI tool ทำงานบนโปรเจ็กต์เดียวกัน ทุก tool เขียน diary ของตัวเองใน <code>ai/03-log/agents/[tool-name].md</code> เฉพาะ tool ของตัวเอง ห้าม cross-write เพื่อแยก log ให้ชัด</div>
+              <div class="step-body">ถ้ามีหลาย AI tool ทำงานบนโปรเจ็กต์เดียวกัน ทุก tool เขียน diary ของตัวเองใน <code>CoreAiWorkspaces/03-log/agents/[tool-name].md</code> เฉพาะ tool ของตัวเอง ห้าม cross-write เพื่อแยก log ให้ชัด</div>
             </div>
           </div>
           <div class="step-card">
@@ -1134,7 +1134,7 @@ section{padding:80px 32px}
           <div class="mem-content">
             <div class="mem-block">
               <div class="mb-title">📍 read_more ใน AI-CONTEXT</div>
-              <div class="mb-body">ใน work-status.md จะมี hints บอกว่าถ้า task ปัจจุบันต้องการ context เรื่องอะไร ให้ไปอ่านที่ไหน:<br><br><code>architecture: ai/07-decisions/README.md</code><br><code>entities: ai/07-decisions/entity-register.md</code><br><code>source: ai/00-source/versions/v1.2/</code></div>
+              <div class="mb-body">ใน work-status.md จะมี hints บอกว่าถ้า task ปัจจุบันต้องการ context เรื่องอะไร ให้ไปอ่านที่ไหน:<br><br><code>architecture: CoreAiWorkspaces/07-decisions/README.md</code><br><code>entities: CoreAiWorkspaces/07-decisions/entity-register.md</code><br><code>source: CoreAiWorkspaces/00-source/versions/v1.2/</code></div>
               <span class="rule-pill">อ่านเฉพาะ section ที่ task ต้องการ — ประหยัด token มาก</span>
             </div>
             <div class="mem-block">
@@ -1159,7 +1159,7 @@ section{padding:80px 32px}
           <div class="mem-content">
             <div class="mem-block">
               <div class="mb-title">📓 Agent Diary</div>
-              <div class="mb-body">ถ้าใช้หลาย AI tool บน project เดียว work-log จะปนกัน แก้ด้วย <code>ai/03-log/agents/</code> folder:<br><br><code>agents/claude-code.md</code> — diary ของ Claude Code<br><code>agents/claude-ai.md</code> — diary ของ Claude.ai<br><br><strong>กฎ: แต่ละ tool เขียน diary ตัวเองเท่านั้น ห้าม cross-write</strong></div>
+              <div class="mb-body">ถ้าใช้หลาย AI tool บน project เดียว work-log จะปนกัน แก้ด้วย <code>CoreAiWorkspaces/03-log/agents/</code> folder:<br><br><code>agents/claude-code.md</code> — diary ของ Claude Code<br><code>agents/claude-ai.md</code> — diary ของ Claude.ai<br><br><strong>กฎ: แต่ละ tool เขียน diary ตัวเองเท่านั้น ห้าม cross-write</strong></div>
               <span class="rule-pill">ใช้ tool เดียว? ไม่ต้องสร้าง agents/ folder</span>
             </div>
             <div class="mem-block">
@@ -1180,7 +1180,7 @@ section{padding:80px 32px}
         <div style="display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 20px">
           <div style="font-size:11px;font-weight:700;background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd);padding:3px 10px;border-radius:20px;white-space:nowrap">Architectural decision?</div>
           <div style="color:var(--t3);font-size:18px">→</div>
-          <div style="font-size:14px;font-weight:600;color:var(--t1)">ADR file ใน <code style="font-size:12px;color:#c4b5fd;background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px">ai/07-decisions/</code></div>
+          <div style="font-size:14px;font-weight:600;color:var(--t1)">ADR file ใน <code style="font-size:12px;color:#c4b5fd;background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px">CoreAiWorkspaces/07-decisions/</code></div>
         </div>
         <div style="display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 20px">
           <div style="font-size:11px;font-weight:700;background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd);padding:3px 10px;border-radius:20px;white-space:nowrap">Entity ใหม่ / status เปลี่ยน?</div>
@@ -1281,7 +1281,7 @@ section{padding:80px 32px}
           </div>
           <div class="sfdown"></div>
           <div class="sfb sfb-dim">
-            <div class="sfb-hd"><span class="sfb-ico">📂</span><span class="sfb-nm">ai/ per project</span><span class="sfb-hint">สร้างต่อโปรเจ็กต์</span></div>
+            <div class="sfb-hd"><span class="sfb-ico">📂</span><span class="sfb-nm">CoreAiWorkspaces/ per project</span><span class="sfb-hint">สร้างต่อโปรเจ็กต์</span></div>
             <div class="sfb-body">
               <span class="sft sft-dim">work-status · task-board</span>
               <span class="sft sft-dim">work-log · entity-register</span>
@@ -1301,9 +1301,9 @@ section{padding:80px 32px}
               <div class="fv-nd nd-teal">💻 platforms/<div class="fv-sub">ถ้าใช้<br>specific tool</div></div>
             </div>
             <div class="fv-arr"></div>
-            <div class="fv-nd nd-amber">🚀 Bootstrap — AI สร้าง ai/ structure<div class="fv-sub">ถามภาษา · อ่าน cross-project-memory · สร้างไฟล์ทั้งหมด</div></div>
+            <div class="fv-nd nd-amber">🚀 Bootstrap — AI สร้าง CoreAiWorkspaces/ structure<div class="fv-sub">ถามภาษา · อ่าน cross-project-memory · สร้างไฟล์ทั้งหมด</div></div>
             <div class="fv-arr"></div>
-            <div class="fv-nd nd-dim">📂 ai/ per project (อยู่ใต้ git โปรเจ็กต์)<div class="fv-sub">work-status · task-board · work-log · entity-register · decisions/</div></div>
+            <div class="fv-nd nd-dim">📂 CoreAiWorkspaces/ per project (อยู่ใต้ git โปรเจ็กต์)<div class="fv-sub">work-status · task-board · work-log · entity-register · decisions/</div></div>
             <div class="fv-arr"></div>
             <div class="fv-nd nd-end">🔄 เข้าสู่ Session Loop</div>
           </div>
@@ -1323,7 +1323,7 @@ section{padding:80px 32px}
               <span class="sft sft-blue">อ่าน cross-project-memory</span>
               <span class="sft sft-blue">ถามภาษา + project type</span>
               <span class="sft sft-purple">Game? → load skills/game/</span>
-              <span class="sft sft-blue">สร้าง ai/ structure</span>
+              <span class="sft sft-blue">สร้าง CoreAiWorkspaces/ structure</span>
             </div>
           </div>
           <div class="sfdown"></div>
@@ -1366,9 +1366,9 @@ section{padding:80px 32px}
           <div class="fv">
             <div class="fv-nd nd-start">🚀 เริ่ม session</div>
             <div class="fv-arr"></div>
-            <div class="fv-nd nd-dec nd-blue">First session? (ยังไม่มี ai/)<div class="fv-sub">ใช่ → Bootstrap ก่อน · ไม่ใช่ → ข้ามไป Session Start</div></div>
+            <div class="fv-nd nd-dec nd-blue">First session? (ยังไม่มี CoreAiWorkspaces/)<div class="fv-sub">ใช่ → Bootstrap ก่อน · ไม่ใช่ → ข้ามไป Session Start</div></div>
             <div class="fv-arr"></div>
-            <div class="fv-nd nd-blue">🚀 Bootstrap <small style="font-weight:400;opacity:.55">(ครั้งแรกเท่านั้น)</small><div class="fv-sub">อ่าน cross-project-memory · ถามภาษา + project type<br>Game? → โหลด skills/game/ · สร้าง ai/ ทั้งหมด</div></div>
+            <div class="fv-nd nd-blue">🚀 Bootstrap <small style="font-weight:400;opacity:.55">(ครั้งแรกเท่านั้น)</small><div class="fv-sub">อ่าน cross-project-memory · ถามภาษา + project type<br>Game? → โหลด skills/game/ · สร้าง CoreAiWorkspaces/ ทั้งหมด</div></div>
             <div class="fv-arr"></div>
             <div class="fv-nd nd-green">📖 Session Start<div class="fv-sub">① อ่าน work-status → รู้ AI-CONTEXT + current sprint<br>② อ่าน work-log → รู้ว่า session ก่อนหยุดตรงไหน<br>③ อ่าน task-board → รู้ task focus + ที่ blocked<br>ตาม read-more hints · compliance scan C-01…C-14</div></div>
             <div class="fv-arr"></div>
@@ -1583,7 +1583,7 @@ section{padding:80px 32px}
           <div class="sfb sfb-amber">
             <div class="sfb-hd"><span class="sfb-ico">📓</span><span class="sfb-nm">Layer 3 — Agent + Cross-Project</span></div>
             <div class="sfb-body">
-              <span class="sft sft-amber">Agent Diary · ai/03-log/agents/</span>
+              <span class="sft sft-amber">Agent Diary · CoreAiWorkspaces/03-log/agents/</span>
               <span class="sft sft-amber">แยกต่อ tool · ห้าม cross-write</span>
               <span class="sft sft-amber">cross-project-memory.md · ai-workspace/</span>
             </div>
@@ -1614,7 +1614,7 @@ section{padding:80px 32px}
             <div style="background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.25);border-radius:10px;padding:14px 18px;width:100%;max-width:460px;box-sizing:border-box">
               <div class="fv-layer-hd" style="color:#fdba74">📓 Layer 3 — Agent + Cross-Project</div>
               <div class="fv-layer-body">
-                <strong>Agent Diary</strong> · ai/03-log/agents/ · แยกต่อ tool · ห้าม cross-write<br>
+                <strong>Agent Diary</strong> · CoreAiWorkspaces/03-log/agents/ · แยกต่อ tool · ห้าม cross-write<br>
                 <strong>cross-project-memory.md</strong> · ai-workspace/ (นอก git ปกติ)<br>
                 <span style="color:#fdba74">Bootstrap อ่าน cross-project-memory → AI รู้ทุกโปรเจ็กต์ที่เคยทำ</span>
               </div>
@@ -1707,7 +1707,7 @@ const SIM_FRAMES = [
       {c:'tl-ok',   t:'✓  entity-register.md พบแล้ว'},
       {c:'tl-info', t:'▶  เริ่ม session...'},
     ],
-    docFile:'ai/01-plan/work-status.md',
+    docFile:'CoreAiWorkspaces/01-plan/work-status.md',
     doc:[
       {t:'<!-- AI-CONTEXT'},
       {t:'phase: implementation',         hi:'hi-blue'},
@@ -1715,7 +1715,7 @@ const SIM_FRAMES = [
       {t:'focus: T-023 payment-flow',     hi:'hi-blue'},
       {t:'blocked: none',                 hi:'hi-green'},
       {t:'read_more:'},
-      {t:'  entities: ai/07-decisions/entity-register.md'},
+      {t:'  entities: CoreAiWorkspaces/07-decisions/entity-register.md'},
       {t:'-->'},
     ],
     nar:'<strong>AI เปิด session</strong> บน ecommerce-shop Claude Code อ่าน CLAUDE.md อัตโนมัติ โหลด core templates ทั้ง 19 ไฟล์ และตรวจพบ entity-register',
@@ -1729,7 +1729,7 @@ const SIM_FRAMES = [
       {c:'tl-ok',   t:'✓  Blocked: ไม่มี'},
       {c:'tl-accent',t:'→  โหลด entity-register ตาม read_more hint'},
     ],
-    docFile:'ai/01-plan/work-status.md',
+    docFile:'CoreAiWorkspaces/01-plan/work-status.md',
     doc:[
       {t:'<!-- AI-CONTEXT'},
       {t:'phase: implementation',         hi:'hi-blue'},
@@ -1754,7 +1754,7 @@ const SIM_FRAMES = [
       {c:'tl-ok',   t:'✓  T-023 เริ่มแล้ว: Stripe SDK connected'},
       {c:'tl-ok',   t:'✓  Checkpoint: ถึง checkout step'},
     ],
-    docFile:'ai/03-log/work-log-index.md',
+    docFile:'CoreAiWorkspaces/03-log/work-log-index.md',
     doc:[
       {t:'<!-- AI-CONTEXT'},
       {t:'last_session: 2026-05-05',      hi:'hi-blue'},
@@ -1780,7 +1780,7 @@ const SIM_FRAMES = [
       {c:'tl-ok',   t:'✓  Compliance scan: ผ่าน C-01–C-14'},
       {c:'tl-accent',t:'→  พร้อมทำงาน'},
     ],
-    docFile:'ai/02-task/task-board.md',
+    docFile:'CoreAiWorkspaces/02-task/task-board.md',
     doc:[
       {t:'## In Progress'},
       {t:'T-023 | payment-flow | in_progress', hi:'hi-blue'},
@@ -1806,7 +1806,7 @@ const SIM_FRAMES = [
       {c:'tl-ok',    t:'   เขียน checkout.ts...'},
       {c:'tl-ok',    t:'   เขียน payment-webhook.ts...'},
     ],
-    docFile:'ai/07-decisions/entity-register.md',
+    docFile:'CoreAiWorkspaces/07-decisions/entity-register.md',
     doc:[
       {t:'| Entity    | Type | Status | ADR     |'},
       {t:'|-----------|------|--------|---------|'},
@@ -1829,7 +1829,7 @@ const SIM_FRAMES = [
       {c:'tl-info', t:'   ทำ scope เดิมต่อ'},
       {c:'tl-info', t:'   log refund เป็น task ใหม่'},
     ],
-    docFile:'ai/02-task/task-board.md',
+    docFile:'CoreAiWorkspaces/02-task/task-board.md',
     doc:[
       {t:'## Todo (เพิ่งเพิ่ม)'},
       {t:'T-026 | refund-flow | todo',          hi:'hi-amber'},
@@ -1852,7 +1852,7 @@ const SIM_FRAMES = [
       {c:'tl-ok',    t:'✓  compliance check: C-01–C-14 ผ่าน'},
       {c:'tl-accent', t:'→  T-023 status: in_progress → review'},
     ],
-    docFile:'ai/02-task/task-board.md',
+    docFile:'CoreAiWorkspaces/02-task/task-board.md',
     doc:[
       {t:'## Review'},
       {t:'T-023 | payment-flow | review',  hi:'hi-green'},
@@ -1876,7 +1876,7 @@ const SIM_FRAMES = [
       {c:'tl-ok',    t:'✓  entity-register: ไม่มีการเปลี่ยนแปลง'},
       {c:'tl-ok',    t:'✓  cross-project pattern: ไม่มีในรอบนี้'},
     ],
-    docFile:'ai/01-plan/work-status.md',
+    docFile:'CoreAiWorkspaces/01-plan/work-status.md',
     doc:[
       {t:'<!-- AI-CONTEXT'},
       {t:'phase: implementation'},
@@ -1900,7 +1900,7 @@ const SIM_FRAMES = [
       {c:'tl-ok',    t:'✓  checkpoint: T-024 next session'},
       {c:'tl-accent', t:'→  Session สิ้นสุด'},
     ],
-    docFile:'ai/03-log/work-log-index.md',
+    docFile:'CoreAiWorkspaces/03-log/work-log-index.md',
     doc:[
       {t:'<!-- AI-CONTEXT'},
       {t:'last_session: 2026-05-06',      hi:'hi-blue'},
@@ -1926,7 +1926,7 @@ const SIM_FRAMES = [
       {c:'tl-ok',    t:'✓  next: T-024 order-email'},
       {c:'tl-accent', t:'→  พร้อมทำงานต่อทันที (ไม่ต้องอธิบายซ้ำ)'},
     ],
-    docFile:'ai/02-task/task-board.md',
+    docFile:'CoreAiWorkspaces/02-task/task-board.md',
     doc:[
       {t:'## In Progress'},
       {t:'T-024 | order-email | in_progress', hi:'hi-blue'},
@@ -2240,7 +2240,7 @@ const EN_SEC = {
   <div class="pc-item">${_SVG_OK}<span><strong>Decision log</strong> records every architectural choice permanently</span></div>
   <div class="pc-item">${_SVG_OK}<span>AI follows the protocol — <strong>stops and flags</strong> instead of guessing when uncertain</span></div>
   <div class="pc-item">${_SVG_OK}<span><strong>Task board</strong> + <strong>work-log</strong> track status across sessions automatically</span></div>
-  <div class="pc-item">${_SVG_OK}<span><strong>Switch AI tools anytime</strong> — ai/ stays, the system never stops</span></div>
+  <div class="pc-item">${_SVG_OK}<span><strong>Switch AI tools anytime</strong> — CoreAiWorkspaces/ stays, the system never stops</span></div>
 </div>`,
 
 'tiers-stack': `
@@ -2262,7 +2262,7 @@ const EN_SEC = {
   </div>
   <div class="tier-body"><div class="tier-files">
     <div class="tfile"><span class="tfile-num">00</span><div><div class="tfile-name">Bootstrap Master</div><div class="tfile-desc">All setup rules and procedures</div></div></div>
-    <div class="tfile"><span class="tfile-num">01</span><div><div class="tfile-name">Folder Structure</div><div class="tfile-desc">Standard ai/ folder layout</div></div></div>
+    <div class="tfile"><span class="tfile-num">01</span><div><div class="tfile-name">Folder Structure</div><div class="tfile-desc">Standard CoreAiWorkspaces/ folder layout</div></div></div>
     <div class="tfile"><span class="tfile-num">02</span><div><div class="tfile-name">Source Doc Versioning</div><div class="tfile-desc">Requirements that can't be edited directly</div></div></div>
     <div class="tfile"><span class="tfile-num">03</span><div><div class="tfile-name">Way of Work</div><div class="tfile-desc">Session protocol · start/end checklist</div></div></div>
     <div class="tfile"><span class="tfile-num">06</span><div><div class="tfile-name">Work Status</div><div class="tfile-desc">Project status + AI-CONTEXT block</div></div></div>
@@ -2344,8 +2344,8 @@ const EN_SEC = {
       <div class="step-card-bar"></div>
       <div class="step-n">3</div>
       <div class="step-content">
-        <div class="step-title">Create Full ai/ Structure</div>
-        <div class="step-body">AI creates folders and files from the template: <code>ai/01-plan/work-status.md</code> · <code>ai/02-task/task-board.md</code> · <code>ai/03-log/work-log-index.md</code> · <code>ai/07-decisions/entity-register.md</code> + ADR index, with AI-CONTEXT blocks at the top of every file.</div>
+        <div class="step-title">Create Full CoreAiWorkspaces/ Structure</div>
+        <div class="step-body">AI creates folders and files from the template: <code>CoreAiWorkspaces/01-plan/work-status.md</code> · <code>CoreAiWorkspaces/02-task/task-board.md</code> · <code>CoreAiWorkspaces/03-log/work-log-index.md</code> · <code>CoreAiWorkspaces/07-decisions/entity-register.md</code> + ADR index, with AI-CONTEXT blocks at the top of every file.</div>
       </div>
     </div>
   </div>
@@ -2372,7 +2372,7 @@ const EN_SEC = {
       <div class="step-n">5</div>
       <div class="step-content">
         <div class="step-title">Follow read-more Hints — Load Only What's Needed</div>
-        <div class="step-body">The AI-CONTEXT in work-status contains <code>read_more</code> hints: if the current task is about architecture → read <code>ai/07-decisions/README.md</code>. If about entities → read <code>entity-register.md</code>. <strong>No full-project scanning</strong> — load only what this task actually needs.</div>
+        <div class="step-body">The AI-CONTEXT in work-status contains <code>read_more</code> hints: if the current task is about architecture → read <code>CoreAiWorkspaces/07-decisions/README.md</code>. If about entities → read <code>entity-register.md</code>. <strong>No full-project scanning</strong> — load only what this task actually needs.</div>
       </div>
     </div>
     <div class="step-card">
@@ -2425,7 +2425,7 @@ const EN_SEC = {
       <div class="step-n">9</div>
       <div class="step-content">
         <div class="step-title">Write Agent Diary (If Using Multiple AI Tools)</div>
-        <div class="step-body">If multiple AI tools are working on the same project, each tool writes its own diary in <code>ai/03-log/agents/[tool-name].md</code>. Each tool writes only to its own file — no cross-writing. Keeps logs cleanly separated.</div>
+        <div class="step-body">If multiple AI tools are working on the same project, each tool writes its own diary in <code>CoreAiWorkspaces/03-log/agents/[tool-name].md</code>. Each tool writes only to its own file — no cross-writing. Keeps logs cleanly separated.</div>
       </div>
     </div>
     <div class="step-card">
@@ -2613,7 +2613,7 @@ const EN_SEC = {
     <div class="mem-content">
       <div class="mem-block">
         <div class="mb-title">📍 read_more in AI-CONTEXT</div>
-        <div class="mb-body">work-status.md contains hints telling AI where to load context based on the current task:<br><br><code>architecture: ai/07-decisions/README.md</code><br><code>entities: ai/07-decisions/entity-register.md</code><br><code>source: ai/00-source/versions/v1.2/</code></div>
+        <div class="mb-body">work-status.md contains hints telling AI where to load context based on the current task:<br><br><code>architecture: CoreAiWorkspaces/07-decisions/README.md</code><br><code>entities: CoreAiWorkspaces/07-decisions/entity-register.md</code><br><code>source: CoreAiWorkspaces/00-source/versions/v1.2/</code></div>
         <span class="rule-pill">Read only what the task needs — saves a lot of tokens</span>
       </div>
       <div class="mem-block">
@@ -2637,7 +2637,7 @@ const EN_SEC = {
     <div class="mem-content">
       <div class="mem-block">
         <div class="mb-title">📓 Agent Diary</div>
-        <div class="mb-body">Using multiple AI tools on one project makes work-logs mix together. Fix this with the <code>ai/03-log/agents/</code> folder:<br><br><code>agents/claude-code.md</code> — Claude Code's diary<br><code>agents/claude-ai.md</code> — Claude.ai's diary<br><br><strong>Rule: each tool writes only its own diary. No cross-writing.</strong></div>
+        <div class="mb-body">Using multiple AI tools on one project makes work-logs mix together. Fix this with the <code>CoreAiWorkspaces/03-log/agents/</code> folder:<br><br><code>agents/claude-code.md</code> — Claude Code's diary<br><code>agents/claude-ai.md</code> — Claude.ai's diary<br><br><strong>Rule: each tool writes only its own diary. No cross-writing.</strong></div>
         <span class="rule-pill">Single tool? No need to create agents/ folder</span>
       </div>
       <div class="mem-block">
@@ -2655,7 +2655,7 @@ const EN_SEC = {
   <div style="display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 20px">
     <div style="font-size:11px;font-weight:700;background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd);padding:3px 10px;border-radius:20px;white-space:nowrap">Architectural decision?</div>
     <div style="color:var(--t3);font-size:18px">→</div>
-    <div style="font-size:14px;font-weight:600;color:var(--t1)">ADR file in <code style="font-size:12px;color:#c4b5fd;background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px">ai/07-decisions/</code></div>
+    <div style="font-size:14px;font-weight:600;color:var(--t1)">ADR file in <code style="font-size:12px;color:#c4b5fd;background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px">CoreAiWorkspaces/07-decisions/</code></div>
   </div>
   <div style="display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 20px">
     <div style="font-size:11px;font-weight:700;background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd);padding:3px 10px;border-radius:20px;white-space:nowrap">New entity / status changed?</div>

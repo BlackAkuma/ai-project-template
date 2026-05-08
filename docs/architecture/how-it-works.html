@@ -279,7 +279,7 @@
       <div class="tier-game">
         <div style="font-size:2rem;margin-bottom:12px">🎮</div>
         <h3 style="color:var(--green);margin-bottom:6px"><span class="th">+ skills/game/ — นักพัฒนาเกม</span><span class="en">+ skills/game/ — Game Devs</span></h3>
-        <p class="muted" style="font-size:.85rem;margin-bottom:16px"><span class="th">เปิดอัตโนมัติเมื่อโปรเจ็กต์มี <code>ai/08-design/</code></span><span class="en">Auto-activated when project has <code>ai/08-design/</code></span></p>
+        <p class="muted" style="font-size:.85rem;margin-bottom:16px"><span class="th">เปิดอัตโนมัติเมื่อโปรเจ็กต์มี <code>CoreAiWorkspaces/08-design/</code></span><span class="en">Auto-activated when project has <code>CoreAiWorkspaces/08-design/</code></span></p>
         <ul class="checklist">
           <li><span class="check-icon" style="color:var(--green)">✓</span> <span class="th">FDD — design ก่อน code ทุกครั้ง</span><span class="en">FDD — design before code, every time</span></li>
           <li><span class="check-icon" style="color:var(--green)">✓</span> <span class="th">Balance check อัตโนมัติ</span><span class="en">Automatic balance checks</span></li>
@@ -366,11 +366,11 @@
             <div class="step-line" style="background:linear-gradient(var(--indigo),var(--blue))"></div>
           </div>
           <div class="step-content">
-            <h3><span class="th">Clone template + copy ไปโปรเจ็กต์</span><span class="en">Clone template + copy to your project</span></h3>
-            <p><span class="th">copy <code>core/</code> ไปไว้ใน project root — ใช้ครั้งเดียว ลบทิ้งหลัง setup</span><span class="en">copy <code>core/</code> to project root — used once, delete after setup</span></p>
+            <h3><span class="th">ดาวน์โหลด ZIP + รัน Bootstrap Script</span><span class="en">Download ZIP + run Bootstrap Script</span></h3>
+            <p><span class="th">วาง template ไว้ใน <code>_template/</code> แล้วรัน script — ทำครั้งเดียว ลบทิ้งหลัง setup</span><span class="en">Put template in <code>_template/</code> and run script — done once, delete after setup</span></p>
             <div class="code-block" style="margin-top:12px">
               <div class="code-header"><span class="code-dot" style="background:#ff5f57"></span><span class="code-dot" style="background:#febc2e"></span><span class="code-dot" style="background:#28c840"></span> Terminal</div>
-              <div class="code-body" style="color:var(--green)">git clone ai-project-template.git<br>cp -r ai-project-template/core/ ./my-calculator/</div>
+              <div class="code-body" style="color:var(--green)">mkdir _template && cp -r ai-project-template/. _template/<br>bash _template/scripts/new-project.sh "My Calculator" .<br>rm -rf _template/</div>
             </div>
           </div>
         </div>
@@ -399,8 +399,8 @@
             <div class="step-line" style="background:linear-gradient(var(--green),var(--amber))"></div>
           </div>
           <div class="step-content">
-            <h3><span class="th">AI อ่าน core/ ทั้งหมด + สร้าง ai/</span><span class="en">AI reads all core/ + creates ai/</span></h3>
-            <p><span class="th">อ่าน 19 template files → เข้าใจระบบทั้งหมด → สร้างโครงสร้างให้</span><span class="en">Reads 19 template files → understands the full system → creates structure for you</span></p>
+            <h3><span class="th">AI อ่าน core/ ทั้งหมด + สร้าง CoreAiWorkspaces/</span><span class="en">AI reads all core/ + creates CoreAiWorkspaces/</span></h3>
+            <p><span class="th">อ่าน 22+ template files → เข้าใจระบบทั้งหมด รวมถึง TACP → สร้างโครงสร้างให้</span><span class="en">Reads 22+ template files including TACP → understands full system → creates structure for you</span></p>
           </div>
         </div>
 
@@ -414,7 +414,7 @@
             <p><span class="th">AI รัน checklist ใน core/10 — ถ้าผ่านครบ setup เสร็จ ลบ core/ ทิ้งได้</span><span class="en">AI runs core/10 checklist — if all pass, setup is done and core/ can be deleted</span></p>
             <div class="notif notif-green" style="margin-top:12px">
               <span class="th">✅ Bootstrap checklist ผ่านครบ 8 หัวข้อ</span><span class="en">✅ Bootstrap checklist passed — all 8 items</span><br>
-              <span style="color:var(--muted)"><span class="th">ai/ พร้อมใช้งาน · ลบ core/ ออกจาก git ได้แล้ว</span><span class="en">ai/ ready · core/ can be removed from git</span></span>
+              <span style="color:var(--muted)"><span class="th">CoreAiWorkspaces/ พร้อมใช้งาน · _template/ ถูกลบแล้ว</span><span class="en">CoreAiWorkspaces/ ready · _template/ deleted</span></span>
             </div>
           </div>
         </div>
@@ -424,7 +424,7 @@
     <div>
       <p class="muted" style="font-size:.8rem;margin-bottom:8px"><span class="th">📁 โครงสร้างที่ AI สร้างให้ — ครั้งเดียวจบ</span><span class="en">📁 Structure AI creates for you — once and done</span></p>
       <div class="file-tree">
-        <div><span class="ft-folder">ai/</span></div>
+        <div><span class="ft-folder">CoreAiWorkspaces/</span></div>
         <div class="ft-indent"><span class="ft-new">README.md</span></div>
         <div class="ft-indent"><span class="ft-folder">00-source/</span> <span class="ft-comment"><span class="th">← PRD ของคุณ</span><span class="en">← your PRD</span></span></div>
         <div class="ft-indent2"><span class="ft-new">versions/v0.1/prd.md</span></div>
@@ -439,6 +439,7 @@
         <div class="ft-indent2"><span class="ft-new">way-of-work.md</span></div>
         <div class="ft-indent2"><span class="ft-new">ai-decision-protocol.md</span></div>
         <div class="ft-indent2"><span class="ft-new">compliance.md</span></div>
+        <div class="ft-indent2"><span class="ft-new">tacp.md</span> <span class="ft-comment"><span class="th">← Token savings config</span><span class="en">← Token savings config</span></span></div>
         <div class="ft-indent"><span class="ft-folder">07-decisions/</span></div>
         <div class="ft-indent2"><span class="ft-new">README.md</span> <span class="ft-comment">← ADR index</span></div>
         <div class="ft-indent2"><span class="ft-new">entity-register.md</span></div>
@@ -447,7 +448,7 @@
       <div style="margin-top:16px">
         <p class="muted" style="font-size:.8rem;margin-bottom:8px"><span class="th">🔑 หัวใจของระบบ — AI-CONTEXT block</span><span class="en">🔑 Heart of the system — AI-CONTEXT block</span></p>
         <div class="code-block">
-          <div class="code-header"><span class="code-dot" style="background:#ff5f57"></span><span class="code-dot" style="background:#febc2e"></span><span class="code-dot" style="background:#28c840"></span> ai/01-plan/work-status.md</div>
+          <div class="code-header"><span class="code-dot" style="background:#ff5f57"></span><span class="code-dot" style="background:#febc2e"></span><span class="code-dot" style="background:#28c840"></span> CoreAiWorkspaces/01-plan/work-status.md</div>
           <div class="code-body">
             <span class="c-comment">&lt;!-- AI-CONTEXT</span><br>
             <span class="c-key">phase:</span> <span class="c-val">setup</span><br>
@@ -455,8 +456,8 @@
             <span class="c-key">blocked:</span> <span class="c-val">none</span><br>
             <span class="c-key">next:</span> <span class="c-val">implement +/- buttons</span><br>
             <span class="c-key">read_more:</span><br>
-            &nbsp; <span class="c-key">architecture:</span> <span class="c-val">ai/07-decisions/README.md</span><br>
-            &nbsp; <span class="c-key">entities:</span> <span class="c-val">ai/07-decisions/entity-register.md</span><br>
+            &nbsp; <span class="c-key">architecture:</span> <span class="c-val">CoreAiWorkspaces/07-decisions/README.md</span><br>
+            &nbsp; <span class="c-key">entities:</span> <span class="c-val">CoreAiWorkspaces/07-decisions/entity-register.md</span><br>
             <span class="c-comment">--&gt;</span><br>
             <br>
             <span class="c-comment"><span class="th"># AI อ่าน block นี้ก่อนเสมอ</span><span class="en"># AI reads this block first, always</span></span><br>
@@ -499,7 +500,7 @@
           <div class="tl-item">
             <div class="tl-time">Step 4 · ตรวจ agent diary (ถ้ามี)</div>
             <div class="card-sm">
-              <p style="font-size:.85rem">ถ้าโปรเจ็กต์ใช้หลาย AI tool → อ่าน <code>ai/03-log/agents/claude-code.md</code> เพื่อรับ checkpoint จาก session ก่อน</p>
+              <p style="font-size:.85rem">ถ้าโปรเจ็กต์ใช้หลาย AI tool → อ่าน <code>CoreAiWorkspaces/03-log/agents/claude-code.md</code> เพื่อรับ checkpoint จาก session ก่อน</p>
             </div>
           </div>
           <div class="tl-item">
@@ -630,7 +631,7 @@
               <span style="color:var(--indigo)">1.</span> มี task คล้ายที่เสร็จแล้วไหม? → T-002 (ปุ่ม 0-9) — ดูรูปแบบ
             </div>
             <div class="card-sm" style="font-size:.85rem">
-              <span style="color:var(--indigo)">2.</span> มีใน PRD ไหม? → อ่าน <code>ai/00-source/versions/v0.1/prd.md</code>
+              <span style="color:var(--indigo)">2.</span> มีใน PRD ไหม? → อ่าน <code>CoreAiWorkspaces/00-source/versions/v0.1/prd.md</code>
             </div>
             <div class="card-sm" style="font-size:.85rem;border-color:rgba(251,191,36,.3)">
               <span style="color:var(--amber)">3.</span> ยังไม่ชัด? → mark <code>[BLOCKED: ต้องการ spec ว่า "1.5" หรือ "1.50"?]</code> อัปเดต work-status รอมนุษย์
@@ -680,7 +681,7 @@
         </div>
         <div>
           <div class="code-block">
-            <div class="code-header"><span class="code-dot" style="background:#ff5f57"></span> ai/07-decisions/ADR-003-state-management.md</div>
+            <div class="code-header"><span class="code-dot" style="background:#ff5f57"></span> CoreAiWorkspaces/07-decisions/ADR-003-state-management.md</div>
             <div class="code-body" style="font-size:.78rem">
               <span class="c-key">Status:</span> <span class="c-val">Accepted</span><br>
               <span class="c-key">Options:</span><br>
@@ -815,10 +816,10 @@
               <span style="background:rgba(96,165,250,.15);color:var(--blue);padding:2px 10px;border-radius:999px;font-size:.72rem;font-weight:600">🤖 AI ทำ</span>
             </div>
             <div class="card-sm" style="font-size:.82rem;line-height:1.9">
-              <div>📖 อ่าน CLAUDE.md → โหลด core/ 19 templates</div>
+              <div>📖 อ่าน CLAUDE.md → โหลด core/ 22+ templates รวม TACP</div>
               <div>❓ ถาม: "จะสื่อสารภาษาอะไร?"</div>
-              <div>📁 สร้าง <code style="color:var(--cyan)">ai/</code> ทั้งโครงสร้าง</div>
-              <div>✍️ draft PRD v0.1 ใส่ใน <code style="color:var(--cyan)">ai/00-source/</code></div>
+              <div>📁 สร้าง <code style="color:var(--cyan)">CoreAiWorkspaces/</code> ทั้งโครงสร้าง</div>
+              <div>✍️ draft PRD v0.1 ใส่ใน <code style="color:var(--cyan)">CoreAiWorkspaces/00-source/</code></div>
               <div>📋 สร้าง task board: T-001, T-002, T-003</div>
               <div>✅ รายงาน: "Bootstrap เสร็จ พร้อมทำงาน"</div>
             </div>
@@ -827,7 +828,7 @@
         <div>
           <div style="font-size:.75rem;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">ไฟล์ที่สร้าง</div>
           <div class="card-sm" style="font-family:monospace;font-size:.78rem;line-height:2">
-            <div style="color:var(--indigo)">📁 ai/</div>
+            <div style="color:var(--indigo)">📁 CoreAiWorkspaces/</div>
             <div style="padding-left:16px;color:var(--muted)">📁 00-source/versions/v0.1/</div>
             <div style="padding-left:32px;color:var(--cyan)">PRD.md <span style="color:var(--green);font-size:.7rem">← requirement ทั้งหมด</span></div>
             <div style="padding-left:16px;color:var(--muted)">📁 01-plan/</div>
@@ -838,6 +839,7 @@
             <div style="padding-left:32px;color:var(--cyan)">work-log-index.md</div>
             <div style="padding-left:16px;color:var(--muted)">📁 04-way-of-work/</div>
             <div style="padding-left:32px;color:var(--cyan)">way-of-work.md</div>
+            <div style="padding-left:32px;color:var(--cyan)">tacp.md <span style="color:var(--amber);font-size:.7rem">← ~52% token savings</span></div>
           </div>
           <div class="card-sm" style="margin-top:12px;font-size:.8rem">
             <div style="color:var(--green);font-weight:600;margin-bottom:6px">work-status.md (ตอนนี้)</div>
@@ -1125,6 +1127,98 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════
+     TACP — TOKEN SAVINGS
+═══════════════════════════════════════════════════════════ -->
+<div class="full-width reveal">
+  <div>
+    <div style="text-align:center;margin-bottom:48px">
+      <p class="muted tag" style="margin-bottom:12px;background:rgba(251,191,36,.1);color:var(--amber)">v1.5.0 — NEW</p>
+      <h2><span class="th">TACP — ประหยัด Token ~52% ทุก Session</span><span class="en">TACP — ~52% Token Savings Every Session</span></h2>
+      <p class="muted" style="margin-top:8px"><span class="th">Token-Aware Communication Protocol — ออกแบบมาสำหรับทั้งภาษาไทยและภาษาอังกฤษ</span><span class="en">Token-Aware Communication Protocol — designed for both Thai and English projects</span></p>
+    </div>
+
+    <div class="grid-2" style="gap:32px;margin-bottom:40px">
+      <div>
+        <h3 style="color:var(--amber);margin-bottom:16px"><span class="th">ทำไมภาษาไทยแพงกว่า?</span><span class="en">Why does Thai cost more?</span></h3>
+        <div class="card-sm" style="font-size:.9rem;line-height:1.8">
+          <p><span class="th">AI tokenizers ตัดภาษาไทยที่ 1–3 ตัวอักษร/token ขณะที่ภาษาอังกฤษ 4–5 ตัวอักษร/token</span><span class="en">AI tokenizers cut Thai at 1–3 chars/token, while English is 4–5 chars/token</span></p>
+          <p style="margin-top:8px;color:var(--amber)"><span class="th">→ ภาษาไทยแพงกว่า 2–4 เท่าต่อความหมายเท่ากัน</span><span class="en">→ Thai costs 2–4x more per unit of meaning</span></p>
+        </div>
+        <div style="margin-top:16px">
+          <p style="font-size:.82rem;color:var(--muted);margin-bottom:8px"><span class="th">ก่อน TACP (ไทยใน AI-CONTEXT)</span><span class="en">Before TACP (Thai in AI-CONTEXT)</span></p>
+          <div class="code-block">
+            <div class="code-body" style="font-size:.78rem">
+              <span style="color:var(--muted)"><!-- AI-CONTEXT</span><br>
+              <span style="color:var(--rose)">กำลังทำงานอยู่ในเฟส 3 ซึ่งเป็นการพัฒนา feature ใหม่<br>
+              งานที่กำลังทำอยู่คือ T-042 ซึ่งเกี่ยวกับ payment flow<br>
+              งานถัดไปคือการ implement payment gateway<br></span>
+              <span style="color:var(--muted)">--></span>
+              <div style="margin-top:8px;color:var(--rose);font-size:.75rem">~52 tokens</div>
+            </div>
+          </div>
+          <p style="font-size:.82rem;color:var(--muted);margin:8px 0"><span class="th">หลัง TACP (English key-value)</span><span class="en">After TACP (English key-value)</span></p>
+          <div class="code-block">
+            <div class="code-body" style="font-size:.78rem">
+              <span style="color:var(--muted)"><!-- AI-CONTEXT</span><br>
+              <span style="color:var(--green)">phase: 3<br>
+              active: T-042 (payment flow)<br>
+              next: implement payment gateway<br></span>
+              <span style="color:var(--muted)">--></span>
+              <div style="margin-top:8px;color:var(--green);font-size:.75rem">~19 tokens — ประหยัด 63%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="color:var(--green);margin-bottom:16px"><span class="th">3 Layer ที่ทำงานร่วมกัน</span><span class="en">3 Layers Working Together</span></h3>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="card-sm" style="border-color:rgba(129,140,248,.3)">
+            <div style="font-size:.72rem;font-weight:700;color:var(--indigo);letter-spacing:.06em;margin-bottom:6px">L1 — AI อ่าน (Machine-Facing)</div>
+            <p style="font-size:.85rem"><span class="th">AI-CONTEXT blocks ทุกอันเป็น English key-value เสมอ ไม่ว่าโปรเจ็กต์จะใช้ภาษาใด</span><span class="en">All AI-CONTEXT blocks are always English key-value, regardless of project language</span></p>
+          </div>
+          <div class="card-sm" style="border-color:rgba(96,165,250,.3)">
+            <div style="font-size:.72rem;font-weight:700;color:var(--blue);letter-spacing:.06em;margin-bottom:6px">L2 — User อ่าน (Human-Facing)</div>
+            <p style="font-size:.85rem"><span class="th">AI คุยกับคนด้วยภาษาที่ตั้งค่าไว้ พร้อม Verbosity Scale V1–V5 (V1=ยืนยัน, V5=คำเตือน)</span><span class="en">AI communicates in configured language with Verbosity Scale V1–V5 (V1=confirm, V5=warning)</span></p>
+          </div>
+          <div class="card-sm" style="border-color:rgba(74,222,128,.3)">
+            <div style="font-size:.72rem;font-weight:700;color:var(--green);letter-spacing:.06em;margin-bottom:6px">L3 — Shared Files (Dual-Block)</div>
+            <p style="font-size:.85rem"><span class="th">caw-*.md มีสองส่วน: AI-CONTEXT (L1) สำหรับ AI + HUMAN-CONTEXT (L2) สำหรับคน ในไฟล์เดียว</span><span class="en">caw-*.md has two parts: AI-CONTEXT (L1) for AI + HUMAN-CONTEXT (L2) for humans — in one file</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:16px;padding:32px">
+      <h3 style="text-align:center;margin-bottom:24px"><span class="th">ตัวเลขจาก Benchmark จริง</span><span class="en">Numbers from Real Benchmark</span></h3>
+      <div class="grid-3" style="gap:16px;margin-bottom:20px">
+        <div class="stat">
+          <div class="stat-num" style="color:var(--green)">93%</div>
+          <div class="stat-label"><span class="th">Session start<br>(อ่าน AI-CONTEXT 4 ไฟล์)</span><span class="en">Session start<br>(read 4 AI-CONTEXT files)</span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" style="color:var(--green)">89%</div>
+          <div class="stat-label"><span class="th">Simple confirm<br>(V1 message)</span><span class="en">Simple confirm<br>(V1 message)</span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" style="color:var(--amber)">~52%</div>
+          <div class="stat-label"><span class="th">Session รวม<br>(100 messages)</span><span class="en">Full session<br>(100 messages)</span></div>
+        </div>
+      </div>
+      <div style="text-align:center">
+        <div style="display:inline-flex;align-items:center;gap:12px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:10px;padding:12px 24px">
+          <span style="font-size:1.5rem">💡</span>
+          <span style="font-size:.9rem"><span class="th">ตั้งค่าแค่บรรทัดเดียว: <code>L2_LANG: th</code> (ไทย) หรือ <code>L2_LANG: en</code> (อังกฤษ) ใน way-of-work.md</span><span class="en">One-line config: <code>L2_LANG: th</code> (Thai) or <code>L2_LANG: en</code> (English) in way-of-work.md</span></span>
+        </div>
+      </div>
+      <p style="text-align:center;margin-top:16px;font-size:.82rem;color:var(--muted)">
+        <a href="tacp.md" style="color:var(--blue)"><span class="th">อ่านรายละเอียด TACP + benchmark ครบ →</span><span class="en">Read full TACP details + benchmark →</span></a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
      QUICK START CTA
 ═══════════════════════════════════════════════════════════ -->
 <section class="reveal" style="text-align:center">
@@ -1134,15 +1228,15 @@
     <div class="card" style="text-align:left;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;border-color:rgba(129,140,248,.3)">
       <div style="font-size:2rem">🧩</div>
       <div>
-        <h3 style="color:var(--indigo)"><span class="th">ใช้ AI ทั่วไป (Claude.ai, ChatGPT ฯลฯ)</span><span class="en">Use any AI (Claude.ai, ChatGPT, etc.)</span></h3>
-        <p class="muted" style="font-size:.85rem"><span class="th">Clone → copy core/ ไปโปรเจ็กต์ → paste <code>00-ai-bootstrap-master-template.md</code> ให้ AI → Setup เสร็จ</span><span class="en">Clone → copy core/ to project → paste <code>00-ai-bootstrap-master-template.md</code> to AI → Setup done</span></p>
+        <h3 style="color:var(--indigo)"><span class="th">ใช้ AI tool ทั่วไป (Claude.ai, ChatGPT ฯลฯ)</span><span class="en">Use any AI tool (Claude.ai, ChatGPT, etc.)</span></h3>
+        <p class="muted" style="font-size:.85rem"><span class="th">ดาวน์โหลด ZIP → รัน <code>new-project.sh</code> → Paste CLAUDE.md ใน chat แรก → Setup เสร็จ</span><span class="en">Download ZIP → run <code>new-project.sh</code> → Paste CLAUDE.md in first chat → Setup done</span></p>
       </div>
     </div>
     <div class="card" style="text-align:left;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;border-color:rgba(96,165,250,.3)">
       <div style="font-size:2rem">⚡</div>
       <div>
-        <h3 style="color:var(--blue)"><span class="th">ใช้ Claude Code (แนะนำ)</span><span class="en">Use Claude Code (Recommended)</span></h3>
-        <p class="muted" style="font-size:.85rem"><span class="th">Clone → copy CLAUDE.md ไป root → Claude Code โหลดอัตโนมัติทุก session ไม่ต้อง paste อะไรอีก</span><span class="en">Clone → copy CLAUDE.md to root → Claude Code auto-loads every session, no more pasting</span></p>
+        <h3 style="color:var(--blue)"><span class="th">ใช้ Claude Code (automation เต็มรูปแบบ)</span><span class="en">Use Claude Code (full automation)</span></h3>
+        <p class="muted" style="font-size:.85rem"><span class="th">ดาวน์โหลด ZIP → รัน <code>new-project.sh</code> → Claude Code โหลด CLAUDE.md อัตโนมัติทุก session + slash commands พร้อมใช้ทันที</span><span class="en">Download ZIP → run <code>new-project.sh</code> → Claude Code auto-loads CLAUDE.md every session + slash commands ready immediately</span></p>
       </div>
     </div>
   </div>
