@@ -1,6 +1,6 @@
 <!-- AI-CONTEXT
-phase: pre-release
-active_task: T-025
+phase: maintenance
+active_task: none
 blocker: none
 last_updated: 2026-05-08
 git_mode: branch-separated
@@ -18,8 +18,8 @@ read_more:
 
 ## สถานะปัจจุบัน
 
-**Phase:** pre-release — เตรียม merge dev → master (v1.3.0)
-**Active Task:** T-025 — gitattributes กัน CoreAiWorkspaces/ ออกจาก master
+**Phase:** maintenance — v1.3.0 released ✅
+**Active Task:** none
 **Blocker:** none
 
 ## สิ่งที่เสร็จแล้ว session นี้
@@ -49,8 +49,8 @@ read_more:
 
 ## Next Actions
 
-1. **T-025** — setup `.gitattributes` merge=ours บน master กัน CoreAiWorkspaces/ ออก
-2. **T-023** — merge dev → master, rm CoreAiWorkspaces/, tag v1.3.0
+- ระบบ stable — รอ feature request ถัดไป
+- Note: `merge=ours` ใน `.gitattributes` ทำงานสองทาง — เมื่อ merge master→dev ต้อง `git checkout HEAD~1 -- CoreAiWorkspaces/` เพื่อ restore
 
 ## สถานะ Tests
 

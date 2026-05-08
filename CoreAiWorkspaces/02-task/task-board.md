@@ -1,8 +1,8 @@
 <!-- AI-CONTEXT
 total_tasks: 25
-in_progress: [T-025,T-023]
+in_progress: []
 blocked: []
-done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022,T-024,T-026,T-027,T-028,T-029,T-030,T-031]
+done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022,T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031]
 last_updated: 2026-05-08
 -->
 
@@ -10,10 +10,7 @@ last_updated: 2026-05-08
 
 ## In Progress
 
-| Task | Description | Status |
-|------|-------------|--------|
-| T-025 | gitattributes: กัน CoreAiWorkspaces/ ออกจาก master | next |
-| T-023 | Merge dev → master (v1.3.0) | blocked by T-025 |
+*(ไม่มี — ระบบ stable)*
 
 ## Todo
 
