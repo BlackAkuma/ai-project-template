@@ -1,4 +1,4 @@
-# /launch-check
+﻿# /caw-launch-check
 
 รัน launch checklist ก่อน deploy หรือ release milestone
 ใช้ร่วมกับ `core/16-launch-checklist-template.md`
@@ -6,14 +6,14 @@
 ## วิธีใช้
 
 ```
-/launch-check
-/launch-check --game     ← รวม game-specific checks
-/launch-check v1.2.0     ← ระบุ version ใน report
+/caw-launch-check
+/caw-launch-check --game     ← รวม game-specific checks
+/caw-launch-check v1.2.0     ← ระบุ version ใน report
 ```
 
 ## สิ่งที่ทำ
 
-1. รัน compliance scan ครบทุก rule (เทียบกับ /compliance-check)
+1. รัน compliance scan ครบทุก rule (เทียบกับ /caw-compliance-check)
 2. ตรวจ task-board: ทุก task ใน scope นี้อยู่ใน done หรือมี task สำหรับ blocked
 3. ตรวจ ADR index: ทุก architectural decision ใน milestone นี้มีบันทึก
 4. ตรวจ placeholder ค้างในทุกไฟล์

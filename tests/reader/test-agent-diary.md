@@ -42,7 +42,7 @@ You are finishing a Claude Code session. You have just completed:
 - Started scoping T-016 (refund flow)
 
 The project has CoreAiWorkspaces/03-log/agents/claude-code.md already.
-Run /session-end with summary "sandbox tests passed, T-015 done, starting T-016".
+Run /caw-session-end with summary "sandbox tests passed, T-015 done, starting T-016".
 ```
 
 ### สิ่งที่ต้องเกิดขึ้น (ผ่าน)

@@ -1,4 +1,4 @@
-﻿# /adr-create
+﻿# /caw-adr-create
 
 สร้าง Architecture Decision Record ใหม่
 บันทึกใน `CoreAiWorkspaces/07-decisions/ADR-NNN-[title].md`
@@ -6,8 +6,8 @@
 ## วิธีใช้
 
 ```
-/adr-create
-/adr-create "ชื่อ decision"
+/caw-adr-create
+/caw-adr-create "ชื่อ decision"
 ```
 
 ## สิ่งที่ทำ

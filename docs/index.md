@@ -93,7 +93,7 @@ AI อ่าน 3 ไฟล์ → work-status + work-log-index + task-board
 
 **จบ session:**
 ```
-/session-end → sync work-status + log + task-board ครั้งเดียว
+/caw-session-end → sync work-status + log + task-board ครั้งเดียว
 ```
 
 ---
@@ -125,8 +125,8 @@ AI อ่าน 3 ไฟล์ → work-status + work-log-index + task-board
 ถ้าโปรเจ็กต์เป็น game ให้บอก AI ตอน bootstrap — ระบบจะโหลด `skills/game/` เพิ่มเติมอัตโนมัติ ซึ่งรวมถึง:
 
 - Game Design Document (GDD) template
-- Balance check system (`/balance-check`)
-- Playtesting report (`/playtest-report`)
+- Balance check system (`/caw-balance-check`)
+- Playtesting report (`/caw-playtest-report`)
 - Level design standards
 
 ---

@@ -1,14 +1,14 @@
-# /compliance-check
+﻿# /caw-compliance-check
 
 รัน compliance scan ทันที ออก report ตาม core/15 format
 
 ## วิธีใช้
 
 ```
-/compliance-check
-/compliance-check src/game/player.ts    ← scan เฉพาะไฟล์
-/compliance-check --refactor-only       ← แสดงเฉพาะ REFACTOR-PENDING
-/compliance-check --security-only       ← แสดงเฉพาะ C-11
+/caw-compliance-check
+/caw-compliance-check src/game/player.ts    ← scan เฉพาะไฟล์
+/caw-compliance-check --refactor-only       ← แสดงเฉพาะ REFACTOR-PENDING
+/caw-compliance-check --security-only       ← แสดงเฉพาะ C-11
 ```
 
 ## สิ่งที่ทำ

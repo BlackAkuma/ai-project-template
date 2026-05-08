@@ -1,17 +1,17 @@
-﻿# /game-review
+﻿# /caw-game-review
 
 รัน milestone gate review สำหรับ game project โดยเรียก specialist agents ที่เกี่ยวข้อง
 
 ## วิธีใช้
 
 ```
-/game-review                    ← full review (design + art + narrative + ux + performance)
-/game-review --design           ← เฉพาะ game-designer gate
-/game-review --art              ← เฉพาะ game-art-director gate
-/game-review --narrative        ← เฉพาะ game-narrative-director gate
-/game-review --ux               ← เฉพาะ game-ux-designer gate
-/game-review --performance      ← เฉพาะ game-performance-analyst gate
-/game-review feature/jump       ← review เฉพาะ feature ที่ระบุ
+/caw-game-review                    ← full review (design + art + narrative + ux + performance)
+/caw-game-review --design           ← เฉพาะ game-designer gate
+/caw-game-review --art              ← เฉพาะ game-art-director gate
+/caw-game-review --narrative        ← เฉพาะ game-narrative-director gate
+/caw-game-review --ux               ← เฉพาะ game-ux-designer gate
+/caw-game-review --performance      ← เฉพาะ game-performance-analyst gate
+/caw-game-review feature/jump       ← review เฉพาะ feature ที่ระบุ
 ```
 
 ## สิ่งที่ทำ

@@ -147,7 +147,7 @@ Claude อ่าน 3 ไฟล์:
 
 **Session End (~2 นาที):**
 ```
-พิมพ์: /session-end
+พิมพ์: /caw-session-end
 Claude จะ sync work-status + work-log + task-board ให้ครบ
 ```
 

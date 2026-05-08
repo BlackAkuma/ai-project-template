@@ -86,7 +86,7 @@ rm -rf CoreAiWorkspaces/ docs/ tests/ CHANGELOG.md ROADMAP.md
 
 ## Session End Protocol
 
-ก่อนจบ session ทุกครั้ง — รัน `/session-end` หรือทำตามลำดับ:
+ก่อนจบ session ทุกครั้ง — รัน `/caw-session-end` หรือทำตามลำดับ:
 
 1. อัปเดต `work-status` — body **และ** AI-CONTEXT block
 2. เพิ่ม entry ใน `work-log-index` — body **และ** AI-CONTEXT block
@@ -137,11 +137,11 @@ rm -rf CoreAiWorkspaces/ docs/ tests/ CHANGELOG.md ROADMAP.md
 ## Available Slash Commands
 
 ```
-/compliance-check   รัน compliance scan ทันที
-/fdd-create         สร้าง FDD template สำหรับ feature ใหม่
-/adr-create         สร้าง ADR สำหรับ architectural decision
-/session-end        sync work-status + log + task-board ครบในคำสั่งเดียว
-/scope-check        ตรวจ scope ของ task ปัจจุบัน
-/launch-check       รัน launch checklist ก่อน deploy
-/archive-logs       compress session เก่าเป็น monthly archive
+/caw-compliance-check   รัน compliance scan ทันที
+/caw-fdd-create         สร้าง FDD template สำหรับ feature ใหม่
+/caw-adr-create         สร้าง ADR สำหรับ architectural decision
+/caw-session-end        sync work-status + log + task-board ครบในคำสั่งเดียว
+/caw-scope-check        ตรวจ scope ของ task ปัจจุบัน
+/caw-launch-check       รัน launch checklist ก่อน deploy
+/caw-archive-logs       compress session เก่าเป็น monthly archive
 ```

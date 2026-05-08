@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+﻿#!/usr/bin/env bash
 # =============================================================================
 # test-user-flows.sh — End-to-end test for both user installation flows
 #
@@ -117,7 +117,7 @@ rm -rf "$PROJECT_A/_template"
 # Verify .claude/commands/ installed with slash command files
 if [ -d "$PROJECT_A/.claude/commands" ]; then
   pass "A12: .claude/commands/ created"
-  SLASH_FILES=("session-end.md" "adr-create.md" "compliance-check.md" "scope-check.md" "fdd-create.md" "archive-logs.md")
+  SLASH_FILES=("caw-session-end.md" "caw-adr-create.md" "caw-compliance-check.md" "caw-scope-check.md" "caw-fdd-create.md" "caw-archive-logs.md")
   for sf in "${SLASH_FILES[@]}"; do
     [ -f "$PROJECT_A/.claude/commands/$sf" ] && pass "A13: .claude/commands/$sf installed" || fail "A13: .claude/commands/$sf missing"
   done

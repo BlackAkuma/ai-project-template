@@ -1,4 +1,4 @@
-﻿# /fdd-create
+﻿# /caw-fdd-create
 
 สร้าง Feature Design Document ใหม่จาก template
 บันทึกใน `CoreAiWorkspaces/08-design/[feature-name].md`
@@ -6,8 +6,8 @@
 ## วิธีใช้
 
 ```
-/fdd-create
-/fdd-create "ชื่อ feature"
+/caw-fdd-create
+/caw-fdd-create "ชื่อ feature"
 ```
 
 ## สิ่งที่ทำ

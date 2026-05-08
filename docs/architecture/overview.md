@@ -127,7 +127,7 @@ AI รายงาน:
 
 ## Session End Protocol
 
-ก่อนจบ session ทุกครั้ง — รัน `/session-end` หรือทำด้วยมือ:
+ก่อนจบ session ทุกครั้ง — รัน `/caw-session-end` หรือทำด้วยมือ:
 
 ### 1. อัปเดต work-status.md
 
@@ -221,7 +221,7 @@ Rules หลักที่ AI ตรวจทุก session:
 - **C-14:** เจอ `[ENTITY:deprecated]` → ตรวจ entity-register ก่อนใช้
 - **C-20:** ถ้า vector_memory: enabled และ CoreAiWorkspaces/ เปลี่ยน → re-index ก่อนจบ
 
-รัน compliance scan ด้วย: `/compliance-check`
+รัน compliance scan ด้วย: `/caw-compliance-check`
 
 ---
 

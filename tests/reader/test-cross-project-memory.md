@@ -1,4 +1,4 @@
-# Reader Test — Feature 5: Cross-Project Memory Bridge
+﻿# Reader Test — Feature 5: Cross-Project Memory Bridge
 
 ## Scenario N: Bootstrap reads cross-project-memory before starting
 
@@ -42,7 +42,7 @@ You are finishing a session on a project. During this session you:
   to prevent duplicate webhook processing (tested in production-equivalent sandbox)
 - This pattern could be useful for other projects with payment webhooks
 
-Run /session-end, then handle the cross-project memory step correctly.
+Run /caw-session-end, then handle the cross-project memory step correctly.
 ```
 
 ### สิ่งที่ต้องเกิดขึ้น (ผ่าน)

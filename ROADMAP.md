@@ -74,7 +74,7 @@ AI ที่ทำงานถูกต้อง (workflow) AND จำได้ 
 - CLAUDE.md — auto-load bootstrap, First Run detection, session protocols
 - Hooks — session-start/stop, pre-compact, validate-commit, detect-gaps
 - Rules — path-scoped coding standards (src/, CoreAiWorkspaces/, tests/, src/game/)
-- Skills — /compliance-check, /session-end, /fdd-create, /adr-create, /scope-check, /launch-check, /archive-logs
+- Skills — /caw-compliance-check, /caw-session-end, /caw-fdd-create, /caw-adr-create, /caw-scope-check, /caw-launch-check, /caw-archive-logs
 
 **Game Skill Pack**
 - FDD System — Feature Design Documents พร้อม section-by-section approval
@@ -226,7 +226,7 @@ checkpoint: finished payment hook, pending webhook test
 - ~~template ไฟล์ `CoreAiWorkspaces/03-log/agents/[tool].md` ใน core/08~~ ✅
 - ~~อัปเดต core/03 way-of-work ให้ระบุว่า tool ไหนรับผิดชอบ section ไหน~~ ✅
 - ~~อัปเดต CLAUDE.md Session Start Protocol: ถ้ามี agents/ folder ให้อ่าน diary ของ tool นั้นก่อน~~ ✅
-- ~~อัปเดต /session-end skill ให้ write ลง agent diary ด้วย~~ ✅
+- ~~อัปเดต /caw-session-end skill ให้ write ลง agent diary ด้วย~~ ✅
 
 ---
 
@@ -264,7 +264,7 @@ AI อ่านไฟล์นี้ตอน bootstrap แทนการเร
 **สิ่งที่ต้องสร้าง**
 - ~~template ไฟล์ cross-project-memory.md ใน core/ หรือ platforms/claude-code/~~ ✅ core/18
 - ~~อัปเดต CLAUDE.md First Run Bootstrap: ถ้ามี `~/ai-workspace/cross-project-memory.md` ให้อ่านก่อน bootstrap~~ ✅
-- ~~/session-end skill เพิ่ม optional step: "มี pattern ที่ควรบันทึกข้ามโปรเจ็กต์ไหม?"~~ ✅
+- ~~/caw-session-end skill เพิ่ม optional step: "มี pattern ที่ควรบันทึกข้ามโปรเจ็กต์ไหม?"~~ ✅
 
 ---
 

@@ -1,12 +1,12 @@
-﻿# /scope-check
+﻿# /caw-scope-check
 
 ตรวจ scope ของ task ปัจจุบันว่า implement ตรงกับที่กำหนดไว้หรือไม่
 
 ## วิธีใช้
 
 ```
-/scope-check
-/scope-check T-042
+/caw-scope-check
+/caw-scope-check T-042
 ```
 
 ## สิ่งที่ทำ

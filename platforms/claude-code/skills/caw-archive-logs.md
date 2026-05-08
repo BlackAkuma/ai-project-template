@@ -1,4 +1,4 @@
-﻿# /archive-logs
+﻿# /caw-archive-logs
 
 Compress session entries เก่าใน work-log-index และ task-board
 ใช้เมื่อ AI แจ้ง C-12 หรือ C-13 หรือสั่งเองเมื่อต้องการ
@@ -6,9 +6,9 @@ Compress session entries เก่าใน work-log-index และ task-board
 ## วิธีใช้
 
 ```
-/archive-logs              ← archive ทั้ง log และ task-board
-/archive-logs --logs-only  ← archive เฉพาะ work-log-index
-/archive-logs --tasks-only ← archive เฉพาะ task-board done section
+/caw-archive-logs              ← archive ทั้ง log และ task-board
+/caw-archive-logs --logs-only  ← archive เฉพาะ work-log-index
+/caw-archive-logs --tasks-only ← archive เฉพาะ task-board done section
 ```
 
 ## สิ่งที่ทำ — Log Archive

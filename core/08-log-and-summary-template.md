@@ -83,7 +83,7 @@ CoreAiWorkspaces/03-log/
 
 ```
 [INFO] work-log-index มี 340 บรรทัด (threshold: 300)
-       พิมพ์ "archive logs" หรือ /archive-logs เพื่อ compress session เก่า
+       พิมพ์ "archive logs" หรือ /caw-archive-logs เพื่อ compress session เก่า
        หรือ "ข้ามได้" ถ้าอยากทำงานต่อก่อน
 ```
 

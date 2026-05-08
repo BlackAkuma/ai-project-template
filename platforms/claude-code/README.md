@@ -35,12 +35,12 @@ platforms/claude-code/
     gameplay-code.md  ← src/game/** (game projects)
     test-standards.md ← tests/**
   skills/
-    /compliance-check
-    /session-end
-    /fdd-create
-    /adr-create
-    /scope-check
-    /launch-check
+    /caw-compliance-check
+    /caw-session-end
+    /caw-fdd-create
+    /caw-adr-create
+    /caw-scope-check
+    /caw-launch-check
 ```
 
 ---

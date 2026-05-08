@@ -177,7 +177,7 @@ assert_file "C-14: rules/gameplay-code.md" "platforms/claude-code/rules/gameplay
 assert_file "C-15: rules/test-standards.md" "platforms/claude-code/rules/test-standards.md"
 
 # Skills (core 7)
-for skill in compliance-check fdd-create adr-create session-end scope-check launch-check archive-logs; do
+for skill in caw-compliance-check caw-fdd-create caw-adr-create caw-session-end caw-scope-check caw-launch-check caw-archive-logs; do
   assert_file "C-16: skills/$skill.md" "platforms/claude-code/skills/$skill.md"
 done
 

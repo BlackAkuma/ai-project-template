@@ -1,4 +1,4 @@
-﻿# /playtest-report
+﻿# /caw-playtest-report
 
 สร้าง playtest report template สำหรับ feature ที่อยู่ในขั้น `playtest`
 

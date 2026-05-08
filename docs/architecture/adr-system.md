@@ -152,7 +152,7 @@ AI ต้องสร้าง ADR draft เสมอเมื่อ:
 ถ้าใช้ Claude Code:
 
 ```
-/adr-create
+/caw-adr-create
 ```
 
 Claude จะถาม:

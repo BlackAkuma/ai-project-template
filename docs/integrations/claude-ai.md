@@ -93,7 +93,7 @@ mkdir -p CoreAiWorkspaces/03-log/agents/
 
 ```
 # เมื่อจบ Claude Code session
-/session-end
+/caw-session-end
 
 # เปิด Claude.ai แล้ว paste:
 "ฉันเพิ่งจบ Claude Code session ที่ทำ [สรุปสิ่งที่ทำ]

@@ -1,4 +1,4 @@
-﻿# /balance-check
+﻿# /caw-balance-check
 
 ตรวจสอบ balance config values ทั้งหมดในโปรเจ็กต์ว่าอยู่ใน range ที่ FDD กำหนดไว้
 

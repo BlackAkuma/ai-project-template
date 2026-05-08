@@ -24,7 +24,7 @@ Branch: test/phase-2
 
 **Scenario:** จบ session — T-015 sandbox tests ผ่าน, T-015 done, เริ่ม scope T-016
 
-**ผล:** ✅ PASS — AI ทำ /session-end ถูกต้องครบทุก step:
+**ผล:** ✅ PASS — AI ทำ /caw-session-end ถูกต้องครบทุก step:
 - Steps 1–6 (sync 3 ไฟล์หลัก) ครบและถูกต้อง
 - Step 7: เพิ่ม entry ใหม่ใน `agents/claude-code.md` ที่มีอยู่แล้ว — ไม่สร้างไฟล์ใหม่ ✅
 - Entry ใหม่มีครบ: งานที่ทำ, decisions, blocked, next

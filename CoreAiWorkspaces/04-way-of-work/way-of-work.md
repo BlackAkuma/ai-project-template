@@ -30,7 +30,7 @@ template system — ระบบ template สำหรับ AI-human collaborat
 5. รัน compliance scan
 
 **Session End:**
-- รัน `/session-end` หรือ Session End Protocol ด้วยมือ
+- รัน `/caw-session-end` หรือ Session End Protocol ด้วยมือ
 - Push ไปที่ `dev` branch
 
 ## Git Workflow
