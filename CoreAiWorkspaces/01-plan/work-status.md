@@ -1,16 +1,17 @@
 <!-- AI-CONTEXT
-phase: maintenance
-active_task: none
+phase: feature-complete
+active_task: T-035 done (feat/savetoken — await merge approval)
 blocker: none
 last_updated: 2026-05-08
 git_mode: branch-separated
 git_dev_branch: dev
 git_prod_branch: master
+active_branch: feat/savetoken
 read_more:
   plan: CoreAiWorkspaces/01-plan/project-plan.md
   decisions: CoreAiWorkspaces/07-decisions/README.md
   roadmap: ROADMAP.md
-next_action: รอ feature request ถัดไป — ระบบ stable
+next_action: รอ user อนุมัติ merge feat/savetoken → dev → master (v1.5.0)
 -->
 
 # Work Status — ai-project-template
@@ -19,9 +20,25 @@ next_action: รอ feature request ถัดไป — ระบบ stable
 
 ## สถานะปัจจุบัน
 
-**Phase:** maintenance — v1.3.0 released ✅
-**Active Task:** none
+**Phase:** feature-complete — TACP v1.5.0 พร้อม merge ✅
+**Active Task:** T-035 (feat/savetoken) — done, await merge approval
 **Blocker:** none
+
+## สิ่งที่เสร็จแล้ว session นี้ (2026-05-08 TACP)
+
+### TACP — Token-Aware Communication Protocol (T-035) ✅
+
+- `core/22-tacp-template.md` — template ใหม่ distribute ไปยัง new projects
+- `CoreAiWorkspaces/04-way-of-work/tacp.md` — protocol anchor เต็ม
+- `CLAUDE.md` + `platforms/claude-code/CLAUDE.md` — TACP section
+- `way-of-work.md` — tacp config block (L2_LANG, verbosity_default)
+- 11 caw-*.md → dual-block format (L3: AI-CONTEXT + HUMAN-CONTEXT)
+- `new-project.sh` — bootstrap tacp.md ไปยัง new projects
+- `ADR-005` — architectural decision record
+- `tests/token-savings/tacp-benchmark.md` — 15 test cases, ~54% session savings
+- tests: 46 → 67 (+21 TACP tests)
+- VERSION: 1.4.0 → 1.5.0
+- Branch: feat/savetoken — pushed
 
 ## สิ่งที่เสร็จแล้ว session ล่าสุด (2026-05-08 ต่อ)
 
@@ -62,16 +79,17 @@ next_action: รอ feature request ถัดไป — ระบบ stable
 
 ## Next Actions
 
-- ระบบ stable — รอ feature request ถัดไป
+- รอ user อนุมัติ merge feat/savetoken → dev → master (v1.5.0)
 - Note: `merge=ours` ใน `.gitattributes` ทำงานสองทาง — เมื่อ merge master→dev ต้อง `git checkout HEAD~1 -- CoreAiWorkspaces/` เพื่อ restore
 
 ## สถานะ Tests
 
-**43/43 passing** — tests/functional/test-user-flows.sh
+**67/67 passing** — tests/functional/test-user-flows.sh
 
 ## Branch State
 
 ```
-master  ← v1.2.0 (09fe310) — stable package
-dev     ← v1.3.0-rc (193de20) — 7 commits ahead
+master  ← v1.4.0 (stable)
+dev     ← v1.4.0 (in sync with master)
+feat/savetoken ← v1.5.0 (TACP — b80cc35) — ready for merge
 ```

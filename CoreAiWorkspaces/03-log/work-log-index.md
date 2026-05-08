@@ -1,11 +1,11 @@
 ﻿<!-- AI-CONTEXT
 last_session: 2026-05-08
 tool: Claude Code
-completed: [T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031,T-032,T-033]
+completed: [T-034,T-035]
 checkpoint: none
-next_from_last: none — ระบบ stable รอ feature request ถัดไป
-notes: v1.3.0 released on master. /caw-update + --update-commands added.
-deep_context: none
+next_from_last: merge feat/savetoken → dev → master (await user approval for v1.5.0)
+notes: TACP implemented on feat/savetoken. 67/67 tests pass. v1.5.0 ready.
+deep_context: CoreAiWorkspaces/04-way-of-work/tacp.md
 -->
 
 # Work Log Index — ai-project-template
@@ -19,6 +19,25 @@ deep_context: none
 | M3: Release Prep (ROADMAP, CHANGELOG, merge to master) | 🔄 todo | — |
 
 ## Recent Sessions
+
+### 2026-05-08 — [TACP v1.5.0 — Token-Aware Communication Protocol]
+
+**สิ่งที่ทำ:**
+- วิเคราะห์ pordee Thai compression concepts → absorbed เป็น protocol rules (P-01 to P-06)
+- ออกแบบ 3-layer model: L1 (machine), L2 (user), L3 (shared/dual-block)
+- สร้าง `core/22-tacp-template.md` + `CoreAiWorkspaces/04-way-of-work/tacp.md`
+- อัปเดต CLAUDE.md (root + platforms) เพิ่ม TACP section + verbosity scale V1-V5
+- อัปเดต way-of-work.md เพิ่ม tacp config block (L2_LANG)
+- convert caw-*.md ทั้ง 11 ไฟล์ → dual-block format (AI-CONTEXT L1 + HUMAN-CONTEXT L2)
+- อัปเดต new-project.sh bootstrap tacp.md ไปยัง new projects
+- สร้าง ADR-005, tests/token-savings/tacp-benchmark.md (15 test cases)
+- tests: 46 → 67 (เพิ่ม T1-T10 TACP checks + A6 tacp.md required file)
+- VERSION 1.4.0 → 1.5.0, commit b80cc35, push feat/savetoken
+
+**ผล:** 67/67 tests passing. TACP complete. Estimated ~54% token savings typical session.
+**Next:** รอ user อนุมัติ merge feat/savetoken → dev → master (v1.5.0)
+
+---
 
 ### 2026-05-08 — [v1.3.0 Release + /caw-update]
 

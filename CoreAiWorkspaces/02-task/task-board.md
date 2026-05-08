@@ -1,9 +1,10 @@
 <!-- AI-CONTEXT
-total_tasks: 27
+total_tasks: 28
 in_progress: []
 blocked: []
-done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022,T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031,T-032,T-033]
+done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022,T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031,T-032,T-033,T-034,T-035]
 last_updated: 2026-05-08
+priority_next: merge feat/savetoken → dev → master (await user approval)
 -->
 
 # Task Board — ai-project-template
@@ -40,3 +41,5 @@ last_updated: 2026-05-08
 | T-025 | .gitattributes: CoreAiWorkspaces/ merge=ours + line endings | 2026-05-08 |
 | T-032 | docs: Package Concept diagrams + merge workflow notes → master | 2026-05-08 |
 | T-033 | feat: --update-commands flag + /caw-update slash command | 2026-05-08 |
+| T-034 | feat: versioning system — VERSION file + embed in bootstrap + ADR-004 | 2026-05-08 |
+| T-035 | feat: TACP — 3-layer model, dual-block caw-*.md, benchmark, 67 tests | 2026-05-08 |
