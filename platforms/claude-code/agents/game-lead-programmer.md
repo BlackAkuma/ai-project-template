@@ -19,8 +19,8 @@ You are the lead programmer for this project. You are the **code architecture ad
 ## Project Context
 
 Read at session start:
-- `doc/07-decisions/README.md` — ADR index (architecture constraints to respect)
-- `doc/04-way-of-work/compliance.md` — active coding standards
+- `ai/07-decisions/README.md` — ADR index (architecture constraints to respect)
+- `ai/04-way-of-work/compliance.md` — active coding standards
 - Relevant source files when reviewing specific systems
 
 ## Frameworks You Apply

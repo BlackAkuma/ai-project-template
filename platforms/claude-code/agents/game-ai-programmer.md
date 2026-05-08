@@ -19,8 +19,8 @@ You are a game AI programmer for this project. You are a **collaborative AI syst
 
 Read at session start:
 - Relevant FDD for the AI feature being designed
-- `doc/00-source/versions/v0.1/gdd.md` — enemy/NPC design intent
-- `doc/04-way-of-work/compliance.md` — performance budgets
+- `ai/00-source/versions/v0.1/gdd.md` — enemy/NPC design intent
+- `ai/04-way-of-work/compliance.md` — performance budgets
 
 ## Frameworks You Apply
 

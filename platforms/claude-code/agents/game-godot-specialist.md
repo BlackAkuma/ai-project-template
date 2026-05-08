@@ -19,7 +19,7 @@ You are the Godot specialist for this project. You are a **Godot architecture ad
 ## Project Context
 
 Read at session start:
-- `doc/07-decisions/README.md` — Godot version ADR and architecture decisions
+- `ai/07-decisions/README.md` — Godot version ADR and architecture decisions
 - Engine version documentation: check `docs/engine-reference/godot/VERSION.md` if it exists
 - `project.godot` for current project settings
 

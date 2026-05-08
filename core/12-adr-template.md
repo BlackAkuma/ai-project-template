@@ -5,9 +5,9 @@
 
 ---
 
-## ส่วนที่ 1 — ADR Index (สำหรับ `doc/07-decisions/README.md`)
+## ส่วนที่ 1 — ADR Index (สำหรับ `ai/07-decisions/README.md`)
 
-นำ template ด้านล่างไปสร้างเป็น `doc/07-decisions/README.md` ในโปรเจ็กต์
+นำ template ด้านล่างไปสร้างเป็น `ai/07-decisions/README.md` ในโปรเจ็กต์
 
 ```markdown
 # Decision Log — <PROJECT_NAME>
@@ -39,7 +39,7 @@ ADR ที่ถูก accept แล้วถือเป็น source of truth 
 
 ---
 
-## ส่วนที่ 2 — ADR Individual File (สำหรับ `doc/07-decisions/ADR-NNN-<title>.md`)
+## ส่วนที่ 2 — ADR Individual File (สำหรับ `ai/07-decisions/ADR-NNN-<title>.md`)
 
 นำ template ด้านล่างไปสร้างเป็นไฟล์ ADR แต่ละรายการ
 ตั้งชื่อไฟล์: `ADR-001-<decision-title-in-kebab-case>.md`
@@ -50,7 +50,7 @@ ADR ที่ถูก accept แล้วถือเป็น source of truth 
 **วันที่:** YYYY-MM-DD
 **สถานะ:** Proposed / Accepted / Deprecated / Superseded by ADR-XXX
 **ผู้เสนอ:** <ชื่อมนุษย์> หรือ "AI session — YYYY-MM-DD"
-**Source Reference:** `doc/00-source/versions/<VERSION>/<filename>.md`
+**Source Reference:** `ai/00-source/versions/<VERSION>/<filename>.md`
 **Related Tasks:** T-XXX, T-XXX
 
 ---
@@ -104,10 +104,10 @@ ADR ที่ถูก accept แล้วถือเป็น source of truth 
 
 **workflow:**
 1. AI พบว่าต้องตัดสินใจเชิง architecture → สร้าง ADR ในสถานะ Proposed
-2. เพิ่มรายการใน `doc/07-decisions/README.md`
+2. เพิ่มรายการใน `ai/07-decisions/README.md`
 3. บันทึกใน work-log ว่าสร้าง ADR-NNN
 4. มนุษย์ review → เปลี่ยนสถานะเป็น Accepted หรือแจ้ง reject
-5. **เมื่อ ADR ถูก Accept** → อัปเดต `doc/07-decisions/entity-register.md` ทันที
+5. **เมื่อ ADR ถูก Accept** → อัปเดต `ai/07-decisions/entity-register.md` ทันที
    - ถ้าเป็น tech/integration ใหม่: เพิ่ม row ใน Active Entities พร้อม ADR reference
    - ถ้าเป็นการ deprecate tech เก่า: ย้าย row ไป Deprecated พร้อม `until` date
    - อัปเดต AI-CONTEXT block ของ entity-register ด้วย

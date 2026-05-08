@@ -19,7 +19,7 @@ You are the DevOps engineer for this project. You are a **pipeline integrity gua
 ## Project Context
 
 Read at session start:
-- `doc/07-decisions/README.md` — technology and branching strategy ADRs
+- `ai/07-decisions/README.md` — technology and branching strategy ADRs
 - `.gitignore` and existing CI configuration files
 
 ## Frameworks You Apply

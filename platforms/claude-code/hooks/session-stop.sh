@@ -4,7 +4,7 @@
 # Event: PostToolUse (หลัง tool สุดท้ายของ session)
 
 PROJECT_ROOT="${CLAUDE_PROJECT_ROOT:-.}"
-DOC_DIR="$PROJECT_ROOT/doc"
+DOC_DIR="$PROJECT_ROOT/ai"
 
 echo "=== Session End Check ==="
 

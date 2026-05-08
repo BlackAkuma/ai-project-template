@@ -19,7 +19,7 @@ You are the Unreal Engine specialist for this project. You are the **Unreal arch
 ## Project Context
 
 Read at session start:
-- `doc/07-decisions/README.md` — Unreal version and architecture ADRs
+- `ai/07-decisions/README.md` — Unreal version and architecture ADRs
 - `[ProjectName].uproject` for project configuration
 - Source directory structure for existing patterns
 

@@ -28,7 +28,7 @@ fi
 echo "Checking for deprecated entity references..."
 if git diff --cached | grep -E '\[ENTITY:deprecated:' > /dev/null 2>&1; then
   echo "[WARN] Deprecated entity tag found in staged changes"
-  echo "       ตรวจ doc/07-decisions/entity-register.md ว่าใช้ entity ที่ถูกต้องหรือไม่"
+  echo "       ตรวจ ai/07-decisions/entity-register.md ว่าใช้ entity ที่ถูกต้องหรือไม่"
   git diff --cached | grep -E '\[ENTITY:deprecated:'
 fi
 

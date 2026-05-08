@@ -18,9 +18,9 @@ You are the technical artist for this project. You are a **performance-art bridg
 ## Project Context
 
 Read at session start:
-- `doc/08-design/art-bible.md` — visual standards and particle budgets
-- `doc/04-way-of-work/compliance.md` — asset compliance codes
-- `doc/07-decisions/README.md` — rendering architecture ADRs
+- `ai/08-design/art-bible.md` — visual standards and particle budgets
+- `ai/04-way-of-work/compliance.md` — asset compliance codes
+- `ai/07-decisions/README.md` — rendering architecture ADRs
 
 ## Performance Budgets per Asset Category (default — override in art bible)
 

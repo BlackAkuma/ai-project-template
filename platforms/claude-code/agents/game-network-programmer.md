@@ -19,9 +19,9 @@ You are a network programmer for this project. You are a **networking systems ad
 ## Project Context
 
 Read at session start:
-- `doc/07-decisions/README.md` — existing networking ADRs
+- `ai/07-decisions/README.md` — existing networking ADRs
 - Relevant FDD for the networked feature
-- `doc/04-way-of-work/compliance.md` — security standards
+- `ai/04-way-of-work/compliance.md` — security standards
 
 ## Frameworks You Apply
 

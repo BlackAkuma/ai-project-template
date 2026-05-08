@@ -23,7 +23,7 @@ Working with AI across multiple sessions breaks down fast:
 A set of **19 template files** that any AI can read once and follow forever.
 
 ```
-doc/
+ai/
   00-source/      ← versioned requirements (never edited directly)
   01-plan/        ← work-status with AI-CONTEXT block
   02-task/        ← task board with full traceability
@@ -66,14 +66,14 @@ chmod +x your-project/.claude/hooks/*.sh
 Open Claude Code in your project and type — **once only**:
 
 ```
-Setup doc/ system for this project.
+Setup ai/ system for this project.
 - Name: [PROJECT_NAME]
 - Type: [app / web / game / mobile]
 - Source docs: [attach files / none yet]
 - Goal: [PROJECT_GOAL_SUMMARY]
 ```
 
-Claude Code reads `CLAUDE.md` + all of `core/` + `skills/game/` (if game) and builds `doc/` for you.
+Claude Code reads `CLAUDE.md` + all of `core/` + `skills/game/` (if game) and builds `ai/` for you.
 **Every future session loads automatically** — no prompts needed.
 
 ---
@@ -87,7 +87,7 @@ You are setting up a documentation system for a new software project.
 
 Project details:
 - Name: [PROJECT_NAME]
-- Path to create doc/ at: [PROJECT_ROOT_PATH]
+- Path to create ai/ at: [PROJECT_ROOT_PATH]
 - Type: [app / web / game / mobile]
 - Source docs: [attach files / none yet]
 - Goal: [PROJECT_GOAL_SUMMARY]
@@ -96,7 +96,7 @@ Steps:
 1. Ask what language to use for communication — wait before proceeding
 2. Read all files in core/ in order (00 → 18)
 3. If the project is a game or web game, also read skills/game/ (00 → 06)
-4. Create the doc/ structure at the path above
+4. Create the ai/ structure at the path above
 5. Fill in available info — use clear placeholders where missing, never guess
 6. Verify against core/10-bootstrap-checklist-template.md before declaring done
 ```
@@ -107,7 +107,7 @@ Steps:
 
 ### After Setup
 
-Once AI confirms the bootstrap checklist passes — delete the template folder. What remains is `doc/` in your project (and `.claude/` if using Claude Code).
+Once AI confirms the bootstrap checklist passes — delete the template folder. What remains is `ai/` in your project (and `.claude/` if using Claude Code).
 
 > Full walkthrough: [QUICKSTART.md](QUICKSTART.md) · Visual guide: [How It Works](https://blackakuma.github.io/ai-project-template/how-it-works.html)
 
@@ -118,7 +118,7 @@ Once AI confirms the bootstrap checklist passes — delete the template folder. 
 | File | Purpose |
 |------|---------|
 | `00` Bootstrap Master | Full setup rules, steps, and skill detection |
-| `01` Folder Structure | Standard `doc/` directory layout |
+| `01` Folder Structure | Standard `ai/` directory layout |
 | `02` Source Doc Versioning | Versioned, immutable requirements |
 | `03` Way of Work | Session protocol · start/stop checklists · pre/post-compact |
 | `04` Coding Standards | Code and workflow standards |
@@ -155,7 +155,7 @@ Once AI confirms the bootstrap checklist passes — delete the template folder. 
 
 | Scenario | Total tokens |
 |----------|-------------|
-| First setup (core 19 files + build doc/) | ~18,000 |
+| First setup (core 19 files + build ai/) | ~18,000 |
 | Setup + game skill pack | ~23,000 |
 | Normal session (AI-CONTEXT + work) | ~4,000–10,000 |
 | Light session (orient only) | ~1,000–1,500 |
@@ -199,7 +199,7 @@ If this saves you time, consider sponsoring:
 **19 template files** ที่ AI อ่านครั้งเดียวแล้วทำตามได้ตลอดโปรเจ็กต์
 
 ```
-doc/
+ai/
   00-source/      ← requirements แบบ versioned (ห้ามแก้โดยตรง)
   01-plan/        ← work-status พร้อม AI-CONTEXT block
   02-task/        ← task board พร้อม traceability เต็มรูปแบบ
@@ -242,14 +242,14 @@ chmod +x your-project/.claude/hooks/*.sh
 เปิด Claude Code แล้วพิมพ์ — **ครั้งเดียวเท่านั้น**:
 
 ```
-Setup doc/ system for this project.
+Setup ai/ system for this project.
 - Name: [ชื่อโปรเจ็กต์]
 - Type: [app / web / game / mobile]
 - Source docs: [แนบไฟล์ / none yet]
 - Goal: [สรุปเป้าหมายโปรเจ็กต์]
 ```
 
-Claude Code อ่าน `CLAUDE.md` + `core/` ทั้งหมด + `skills/game/` (ถ้าเป็นเกม) แล้วสร้าง `doc/` ให้
+Claude Code อ่าน `CLAUDE.md` + `core/` ทั้งหมด + `skills/game/` (ถ้าเป็นเกม) แล้วสร้าง `ai/` ให้
 **Session ถัดไปโหลดอัตโนมัติ** — ไม่ต้อง prompt ซ้ำ
 
 ---
@@ -263,7 +263,7 @@ Copy `core/` ไปที่ root โปรเจ็กต์ แล้วส่
 
 ข้อมูลโปรเจ็กต์:
 - ชื่อ: [PROJECT_NAME]
-- Path ที่จะสร้าง doc/: [PROJECT_ROOT_PATH]
+- Path ที่จะสร้าง ai/: [PROJECT_ROOT_PATH]
 - ประเภท: [app / web / game / mobile]
 - Source docs: [แนบไฟล์ / ยังไม่มี]
 - เป้าหมาย: [PROJECT_GOAL_SUMMARY]
@@ -272,7 +272,7 @@ Copy `core/` ไปที่ root โปรเจ็กต์ แล้วส่
 1. ถามว่าจะสื่อสารกันเป็นภาษาอะไร รอคำตอบก่อน
 2. อ่านไฟล์ทุกไฟล์ใน core/ ตามลำดับ (00 → 18)
 3. ถ้าโปรเจ็กต์เป็น game หรือ web game ให้อ่าน skills/game/ ต่อด้วย (00 → 06)
-4. สร้างโครงสร้าง doc/ ที่ path ด้านบน
+4. สร้างโครงสร้าง ai/ ที่ path ด้านบน
 5. กรอกข้อมูลที่มี — ใส่ placeholder ชัดเจนถ้าไม่พอ ห้ามเดา
 6. ตรวจสอบกับ core/10-bootstrap-checklist-template.md ก่อนประกาศว่าเสร็จ
 ```
@@ -283,7 +283,7 @@ Copy `core/` ไปที่ root โปรเจ็กต์ แล้วส่
 
 ### หลัง Setup
 
-เมื่อ AI ยืนยันว่า bootstrap checklist ผ่านแล้ว — ลบ template folder ทิ้ง เหลือแค่ `doc/` ในโปรเจ็กต์ (และ `.claude/` ถ้าใช้ Claude Code)
+เมื่อ AI ยืนยันว่า bootstrap checklist ผ่านแล้ว — ลบ template folder ทิ้ง เหลือแค่ `ai/` ในโปรเจ็กต์ (และ `.claude/` ถ้าใช้ Claude Code)
 
 > คู่มือเต็ม: [QUICKSTART.md](QUICKSTART.md) · Visual guide: [How It Works](https://blackakuma.github.io/ai-project-template/how-it-works.html)
 
@@ -294,7 +294,7 @@ Copy `core/` ไปที่ root โปรเจ็กต์ แล้วส่
 | ไฟล์ | หน้าที่ |
 |------|---------|
 | `00` Bootstrap Master | กฎ setup ทั้งหมด ขั้นตอน และการตรวจ skill |
-| `01` Folder Structure | โครงสร้าง `doc/` มาตรฐาน |
+| `01` Folder Structure | โครงสร้าง `ai/` มาตรฐาน |
 | `02` Source Doc Versioning | Requirements แบบ versioned ห้ามแก้ย้อนหลัง |
 | `03` Way of Work | Session protocol · checklist เริ่ม/หยุด · pre/post-compact |
 | `04` Coding Standards | มาตรฐาน code และ workflow |
@@ -331,7 +331,7 @@ Copy `core/` ไปที่ root โปรเจ็กต์ แล้วส่
 
 | สถานการณ์ | Token ทั้งหมด |
 |-----------|-------------|
-| Setup ครั้งแรก (core 19 ไฟล์ + สร้าง doc/) | ~18,000 |
+| Setup ครั้งแรก (core 19 ไฟล์ + สร้าง ai/) | ~18,000 |
 | Setup + game skill pack | ~23,000 |
 | Session ปกติ (AI-CONTEXT + งาน) | ~4,000–10,000 |
 | Session เบา (orient only) | ~1,000–1,500 |

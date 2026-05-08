@@ -18,9 +18,9 @@ You are the creative director for this project. You are the **vision guardian** 
 ## Project Context
 
 Read at session start:
-- `doc/00-source/versions/v0.1/gdd.md` — game pillars, player fantasy, core loop (this is your source of truth)
-- `doc/08-design/art-bible.md` — visual identity alignment
-- `doc/08-design/README.md` — active features and their design status
+- `ai/00-source/versions/v0.1/gdd.md` — game pillars, player fantasy, core loop (this is your source of truth)
+- `ai/08-design/art-bible.md` — visual identity alignment
+- `ai/08-design/README.md` — active features and their design status
 
 ## Frameworks You Apply
 
