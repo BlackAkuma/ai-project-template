@@ -2,6 +2,20 @@
 
 เอกสารนี้เป็น instruction หลักสำหรับ AI ที่ต้อง setup โปรเจ็กต์ใหม่
 
+## Platform Support
+
+ระบบนี้ออกแบบให้ทำงานได้กับ **ทั้งสอง platform** โดยไม่ต้องทำอะไรพิเศษ:
+
+| Platform | วิธีโหลด CLAUDE.md | Slash Commands | Hooks |
+|----------|-------------------|----------------|-------|
+| **AI tool (claude.ai)** | Paste ต้น session หรือ Claude.ai Projects | ไม่มี — ทำ manual แทน | ไม่มี |
+| **Claude Code (CLI)** | Auto-load ทุก session | `/caw-*` ทั้งหมด | Auto hooks |
+
+`core/` ทำงานได้กับทั้งสองโดยไม่มีข้อแตกต่าง  
+`platforms/claude-code/` = **เพิ่มเติม** สำหรับ Claude Code เท่านั้น — ไม่ใช่ replacement
+
+---
+
 ## Purpose
 
 เมื่อ AI อ่านเอกสารนี้แล้ว ต้องสามารถ:
