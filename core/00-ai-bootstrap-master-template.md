@@ -2,17 +2,37 @@
 
 เอกสารนี้เป็น instruction หลักสำหรับ AI ที่ต้อง setup โปรเจ็กต์ใหม่
 
+## สถาปัตยกรรมของระบบ — อ่านก่อน
+
+```
+core/                   ← กฎกลางสำหรับทุก AI tool ทุกเจ้า
+                          เมื่อ bootstrap → copy ไปเป็น CoreAiWorkspaces/04-way-of-work/
+                          ถ้าจะเพิ่มกฎใหม่ → ใส่ที่นี่เท่านั้น
+
+platforms/universal/    ← AI.md: entry point สำหรับ switch ระหว่าง AI tools
+                          อ่านไฟล์นี้เพื่อ orient ตัวเองก่อน session
+
+platforms/[tool]/       ← tool-specific wiring เท่านั้น
+                          เช่น slash commands, hooks, agents ของ tool นั้นๆ
+                          ❌ ห้ามซ้ำกฎที่มีใน core/ เด็ดขาด
+
+CoreAiWorkspaces/       ← single source of truth ของโปรเจ็กต์นั้นๆ
+                          ทุก AI tool อ่าน/เขียนที่นี่ร่วมกัน
+```
+
+**กฎสำคัญ:** ถ้ากฎใช้กับทุก AI tool → ต้องอยู่ใน `core/` เท่านั้น · `platforms/` แค่ชี้กลับมา
+
 ## Platform Support
 
-ระบบนี้ออกแบบให้ทำงานได้กับ **ทั้งสอง platform** โดยไม่ต้องทำอะไรพิเศษ:
+ระบบนี้ออกแบบให้ทำงานได้กับทุก AI tool โดยไม่ต้องทำอะไรพิเศษ:
 
-| Platform | วิธีโหลด CLAUDE.md | Slash Commands | Hooks |
-|----------|-------------------|----------------|-------|
-| **AI tool (claude.ai)** | Paste ต้น session หรือ Claude.ai Projects | ไม่มี — ทำ manual แทน | ไม่มี |
-| **Claude Code (CLI)** | Auto-load ทุก session | `/caw-*` ทั้งหมด | Auto hooks |
+| Platform | entry point | Slash Commands | Hooks |
+|----------|-------------|----------------|-------|
+| **AI tool ทั่วไป** (claude.ai, Cursor, Windsurf ฯลฯ) | `AI.md` | ไม่มี — ทำ manual แทน | ไม่มี |
+| **Claude Code (CLI)** | `CLAUDE.md` (auto-load) + `AI.md` | `/caw-*` ทั้งหมด | Auto hooks |
 
-`core/` ทำงานได้กับทั้งสองโดยไม่มีข้อแตกต่าง  
-`platforms/claude-code/` = **เพิ่มเติม** สำหรับ Claude Code เท่านั้น — ไม่ใช่ replacement
+`core/` ทำงานได้กับทุก tool โดยไม่มีข้อแตกต่าง  
+`platforms/[tool]/` = **เพิ่มเติม** สำหรับ tool นั้นเท่านั้น — ไม่ใช่ replacement ของ core/
 
 ---
 
