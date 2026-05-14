@@ -623,8 +623,4 @@ echo "  Next steps:"
 echo "  1. เพิ่ม source docs ใน CoreAiWorkspaces/00-source/versions/v0.1/"
 echo "  2. กรอก project-plan.md"
 if [ $IS_GAME -eq 1 ]; then
-  echo "  3. รัน /fdd-create เพื่อสร้าง FDD แรก"
-else
-  echo "  3. สร้าง task แรกใน task-board.md"
-fi
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "  3. รัน /fdd-create เพื่อสร้าง
