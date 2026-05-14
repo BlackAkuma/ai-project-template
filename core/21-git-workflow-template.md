@@ -34,6 +34,100 @@
 
 ---
 
+## Feature Branch Workflow
+
+### กฎ 9 ข้อ (บังคับ)
+
+| # | กฎ | AI ทำ |
+|---|----|----|
+| 1 | เริ่มจาก dev เสมอ | ตรวจ branch ก่อนทุกครั้ง — ถ้าไม่ใช่ dev ให้แจ้งก่อน |
+| 2 | งานใหม่ / bug / feature → แยก branch จาก dev **ก่อนแตะโค้ด** | `git checkout dev && git checkout -b feature/<task-id>-<name>` |
+| 3 | เฉพาะงานใหญ่เท่านั้นที่ต้องแยก (ดูเกณฑ์ด้านล่าง) | งานเล็กขอบเขตชัด → ทำบน dev ได้ตรง |
+| 4 | ทำงาน → commit → push บน feature branch | checkpoint ทุก task สำคัญ |
+| 5 | เทสครบ → merge กลับ dev → ลบ feature branch | ยืนยันกับ user ก่อนลบ |
+| 6 | ถ้ามี feature branch ค้างอยู่ → ห้ามแตก branch ใหม่ | ตรวจ `git branch --list` ก่อนสร้างใหม่ |
+| 7 | หลัง merge กลับ dev → **รอ user สั่ง** ว่าจะ promote ขั้นไหน | ไม่ promote เอง ไม่มีข้อยกเว้น |
+| 8 | บางโปรเจ็กต์ไม่มี SIT/UAT → user สั่งขึ้น main/prod ตรงได้ | ปฏิบัติตามคำสั่ง user |
+| 9 | ห้าม session จบโดยไม่ commit + push | Session End Protocol push เสมอ |
+
+---
+
+### เมื่อไหร่ต้องแยก Branch
+
+**ต้องแยก branch เสมอ (งานใหญ่):**
+- Feature ใหม่ (คาดว่า > 1 commit)
+- Architecture change หรือ refactor หลายไฟล์
+- งาน ADR-level (ต้องสร้าง ADR ก่อน implement)
+- Cross-module change
+
+**ทำบน dev ตรงได้ (งานเล็ก):**
+- Bug fix 1 จุด ขอบเขตชัดเจน
+- Doc edit / comment fix
+- Trivial cleanup / polish
+
+> **ถ้าไม่แน่ใจว่าใหญ่หรือเล็ก → แยก branch ไว้ก่อน ปลอดภัยกว่า**
+
+---
+
+### Branch Naming Convention
+
+```
+feature/<task-id>-<short-name>    เช่น  feature/T-012-payment-integration
+fix/<task-id>-<short-name>        เช่น  fix/T-034-login-redirect
+chore/<short-name>                เช่น  chore/upgrade-deps
+```
+
+---
+
+### Promotion Pipeline
+
+AI ต้องถามตอน bootstrap ว่าโปรเจ็กต์ใช้ pipeline แบบไหน และบันทึกใน work-status:
+
+**Pipeline มี SIT/UAT:**
+```
+feature/* → dev → SIT → UAT → main/prod
+```
+
+**Pipeline ไม่มี SIT/UAT:**
+```
+feature/* → dev → main/prod
+```
+
+AI รอ user สั่งทุกขั้นของ promotion — ไม่ promote เอง
+
+---
+
+### Scenario: Feature Branch ค้างอยู่
+
+ถ้า user ขอสร้าง branch ใหม่ แต่ยังมี feature branch ค้างอยู่:
+
+```
+ตรวจ: git branch --list "feature/*" "fix/*"
+พบ: feature/T-012-payment-integration (ยังไม่ merge)
+
+แจ้งผู้ใช้:
+"มี branch ค้างอยู่: feature/T-012-payment-integration
+ตาม workflow ต้องทำ branch นี้ให้จบก่อน
+
+เลือก:
+A) ทำ feature/T-012 ให้จบก่อน (แนะนำ)
+B) สร้าง branch ใหม่ต่อไป — รับทราบว่ามี branch ค้าง"
+```
+
+รอคำตอบก่อนดำเนินการต่อ
+
+---
+
+### Session End — Feature Branch Checklist
+
+```
+□ commit + push ทุก branch ที่กำลังทำงานอยู่ (ห้ามจบ session โดยไม่ push)
+□ ถ้า feature เสร็จแล้ว → merge กลับ dev + ลบ feature branch (ถ้า user ยืนยัน)
+□ ไม่ promote dev → SIT/UAT/prod ถ้า user ไม่ได้สั่ง
+```
+
+---
+
 ## AI ต้องทำ: Branch Check ก่อน Bootstrap
 
 **ทำก่อนขั้นตอนอื่นทั้งหมด — ก่อนถามภาษา ก่อนสร้างไฟล์ใดๆ**
@@ -231,6 +325,7 @@ ai-workspace/
 git_prod_branch: main          # branch ที่ deploy — ห้าม commit CoreAiWorkspaces/ ที่นี่
 git_dev_branch: dev            # branch ที่ AI ทำงาน — CoreAiWorkspaces/ อยู่ที่นี่
 git_mode: branch-separated     # หรือ single-branch
+git_pipeline: dev->main        # หรือ dev->sit->uat->main ตามโปรเจ็กต์
 ```
 
 **AI อ่าน field นี้ทุก session start** — ถ้าไม่มี field นี้ใน work-status ให้ถามผู้ใช้และเพิ่มทันที
@@ -257,3 +352,6 @@ git_mode: branch-separated     # หรือ single-branch
 - ❌ ลบ branch ใดๆ โดยไม่ได้รับคำสั่งชัดเจนจากผู้ใช้
 - ❌ force push ใดๆ โดยไม่ได้รับคำสั่งชัดเจนจากผู้ใช้
 - ❌ สร้าง branch ใหม่โดยไม่แจ้งผู้ใช้ก่อน (ยกเว้นเฉพาะ dev branch หลังผู้ใช้เลือก A ใน Scenario 1)
+- ❌ สร้าง feature branch ใหม่โดยไม่ตรวจว่ามี branch ค้างอยู่ก่อน
+- ❌ promote dev → SIT/UAT/prod โดยไม่ได้รับคำสั่งจาก user — รอสั่งทุกขั้น
+- ❌ จบ session โดยไม่ commit + push บน branch ที่กำลังทำงาน
