@@ -1,3 +1,16 @@
+<!-- AI-CONTEXT
+cmd: caw-tool-clean
+trigger: manual | user wants single-tool setup
+steps: [scan_tool_configs, ask_keep_which, show_preview, confirm_yes, delete_configs, report]
+protected: [AI.md, CoreAiWorkspaces/]
+output_layer: L2
+-->
+<!-- HUMAN-CONTEXT lang=th
+# /caw-tool-clean
+ลบ config ของ AI tool ที่ไม่ใช้แล้ว — ต้องยืนยันก่อนลบทุกครั้ง
+AI.md และ CoreAiWorkspaces/ ไม่ถูกแตะเด็ดขาด
+-->
+
 # /caw-tool-clean — Clean Up Unused AI Tool Config Files
 
 ลบ config ไฟล์ของ AI tool ที่ไม่ใช้แล้ว เหลือเฉพาะ tool ที่ต้องการ
