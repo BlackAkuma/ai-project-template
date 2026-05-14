@@ -96,8 +96,11 @@ done
 # Verify no docs/ conflict (docs/ should NOT appear in user project)
 [ ! -d "$PROJECT_A/docs" ] && pass "A7: no docs/ conflict in user project" || fail "A7: docs/ appeared in user project — conflict exists"
 
+# Verify AI.md (universal protocol) was auto-installed by new-project.sh
+[ -f "$PROJECT_A/AI.md" ] && pass "A8a: AI.md auto-installed at root by new-project.sh" || fail "A8a: AI.md not installed at root"
+
 # Verify CLAUDE.md was auto-installed by new-project.sh (no manual copy needed)
-[ -f "$PROJECT_A/CLAUDE.md" ] && pass "A8: CLAUDE.md auto-installed at root by new-project.sh" || fail "A8: CLAUDE.md not installed at root"
+[ -f "$PROJECT_A/CLAUDE.md" ] && pass "A8b: CLAUDE.md auto-installed at root by new-project.sh" || fail "A8b: CLAUDE.md not installed at root"
 
 # Verify CLAUDE.md references CoreAiWorkspaces/ (not doc/)
 if grep -q "CoreAiWorkspaces/" "$PROJECT_A/CLAUDE.md" && ! grep -q "doc/" "$PROJECT_A/CLAUDE.md"; then
@@ -118,7 +121,7 @@ rm -rf "$PROJECT_A/_template"
 # Verify .claude/commands/ installed with slash command files
 if [ -d "$PROJECT_A/.claude/commands" ]; then
   pass "A12: .claude/commands/ created"
-  SLASH_FILES=("caw-session-end.md" "caw-adr-create.md" "caw-compliance-check.md" "caw-scope-check.md" "caw-fdd-create.md" "caw-archive-logs.md" "caw-update.md")
+  SLASH_FILES=("caw-session-end.md" "caw-adr-create.md" "caw-compliance-check.md" "caw-scope-check.md" "caw-fdd-create.md" "caw-archive-logs.md" "caw-tool-clean.md" "caw-update.md")
   for sf in "${SLASH_FILES[@]}"; do
     [ -f "$PROJECT_A/.claude/commands/$sf" ] && pass "A13: .claude/commands/$sf installed" || fail "A13: .claude/commands/$sf missing"
   done
