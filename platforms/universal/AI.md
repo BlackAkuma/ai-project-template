@@ -7,6 +7,41 @@
 
 ---
 
+## ความเป็นเจ้าของไฟล์ — อ่านก่อน ห้ามข้าม
+
+กฎนี้ป้องกันไม่ให้ AI tool ใดแก้ไฟล์ที่ไม่ใช่ของตัวเอง
+
+### Shared Files — ทุก tool อ่านและเขียนได้
+
+| ไฟล์/โฟลเดอร์ | หน้าที่ |
+|--------------|--------|
+| `CoreAiWorkspaces/01-plan/work-status.md` | สถานะโปรเจ็กต์ปัจจุบัน |
+| `CoreAiWorkspaces/02-task/task-board.md` | task ทั้งหมด |
+| `CoreAiWorkspaces/03-log/work-log-index.md` | log รวมทุก session |
+| `CoreAiWorkspaces/07-decisions/` | ADR + entity register |
+| `CoreAiWorkspaces/06-extensions/` | extension docs |
+
+### Tool-Specific Files — เจ้าของเท่านั้นเขียนได้
+
+| ไฟล์ | เจ้าของ | Tool อื่นทำได้ |
+|------|--------|--------------|
+| `CLAUDE.md` | Claude Code | อ่านได้ ห้ามแก้ |
+| `.cursorrules` | Cursor | อ่านได้ ห้ามแก้ |
+| `.windsurfrules` | Windsurf | อ่านได้ ห้ามแก้ |
+| `.gemini/instructions.md` | Gemini CLI | อ่านได้ ห้ามแก้ |
+| `.github/copilot-instructions.md` | GitHub Copilot | อ่านได้ ห้ามแก้ |
+| `CoreAiWorkspaces/03-log/agents/[tool-name].md` | tool นั้นๆ | อ่านได้ ห้ามเขียนทับ |
+
+### System Files — ห้ามแก้ไขหรือลบ
+
+| ไฟล์ | เหตุผล |
+|------|--------|
+| `AI.md` | universal protocol — แก้โดย human เท่านั้น |
+| `CoreAiWorkspaces/04-way-of-work/` | กฎโปรเจ็กต์ — แก้โดย human เท่านั้น |
+| `CoreAiWorkspaces/00-source/` | source docs — ห้ามแก้โดยตรง |
+
+---
+
 ## ขั้น 1 — ตรวจสอบตัวเอง
 
 ตรวจไฟล์เหล่านี้ใน project root — มี config ของ tool ฉันอยู่แล้วไหม?
@@ -37,6 +72,7 @@
 4. `CoreAiWorkspaces/04-way-of-work/way-of-work.md` — กฎการทำงาน + ภาษาที่ใช้
 5. `CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md` — เมื่อไหร่หยุด เมื่อไหร่ทำเองได้
 6. `CoreAiWorkspaces/07-decisions/README.md` — decisions ที่ตัดสินใจไปแล้ว
+7. `CoreAiWorkspaces/03-log/agents/` — ถ้ามีไฟล์ tool อื่นอยู่ → อ่าน AI-CONTEXT block เพื่อรู้ว่า tool นั้นทำอะไรไว้
 
 ### 2.2 สร้าง config ไฟล์ของตัวเอง
 
@@ -63,6 +99,7 @@
 - ห้าม implement โดยไม่รู้ source reference
 - บอก plan ก่อนเขียน code — รอยืนยันก่อน implement
 - ห้ามตัดสินใจ architecture โดยไม่สร้าง ADR draft
+- ห้ามแก้ไฟล์ของ tool อื่น (ดู "ความเป็นเจ้าของไฟล์" ใน AI.md)
 - ถ้าไม่แน่ใจ: Do less, document more
 ```
 
@@ -136,6 +173,44 @@ Next action: [สิ่งที่ tool ถัดไปต้องทำก่
 
 บอก AI ใหม่ว่า: **"อ่าน AI.md แล้ว setup ตัวเองให้พร้อมทำงาน"**
 → AI จะทำขั้น 1-3 เองโดยอัตโนมัติ อ่าน handoff note แล้วทำงานต่อได้ทันที
+
+### กลับมาใช้ tool เดิม (returning tool)
+
+ถ้า config ไฟล์มีอยู่แล้ว → **ไม่ต้อง setup ใหม่**
+แค่ทำขั้น 3 (Session Start) ตามปกติ — work-status จะบอกว่าค้างไว้ที่ไหน
+
+---
+
+## Clean Protocol — เมื่อต้องการใช้ tool เดียว
+
+ถ้าตัดสินใจใช้ AI tool เจ้าเดียวและต้องการเคลียร์ tool อื่น:
+
+### สิ่งที่ลบได้ (tool config ของ tool ที่ไม่ใช้แล้ว)
+
+```
+CLAUDE.md                          ← ถ้าไม่ใช้ Claude Code อีกต่อไป
+.cursorrules                       ← ถ้าไม่ใช้ Cursor อีกต่อไป
+.windsurfrules                     ← ถ้าไม่ใช้ Windsurf อีกต่อไป
+.gemini/instructions.md            ← ถ้าไม่ใช้ Gemini CLI อีกต่อไป
+.github/copilot-instructions.md    ← ถ้าไม่ใช้ Copilot อีกต่อไป
+CoreAiWorkspaces/03-log/agents/[tool-name].md  ← diary ของ tool ที่ไม่ใช้
+```
+
+### สิ่งที่ห้ามลบเด็ดขาด
+
+```
+AI.md                              ← universal protocol — tool ใหม่ยังต้องใช้
+CoreAiWorkspaces/                  ← ข้อมูลโปรเจ็กต์ทั้งหมด
+```
+
+### วิธี clean (ทำเองหรือบอก AI ให้ทำ)
+
+1. ระบุว่าจะเก็บ tool ไหน: `"ฉันจะใช้แค่ [tool-name] ต่อจากนี้"`
+2. AI แสดงรายการไฟล์ที่จะลบก่อน รอยืนยัน
+3. ลบเฉพาะ tool config ของ tool ที่ไม่ใช้
+4. `CoreAiWorkspaces/` และ `AI.md` ไม่ถูกแตะ
+
+> Claude Code: รัน `/caw-tool-clean` เพื่อทำขั้นตอนนี้แบบ guided
 
 ---
 
