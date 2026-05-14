@@ -1,7 +1,9 @@
-﻿# CLAUDE.md — Project Bootstrap
+﻿# CLAUDE.md — Project Bootstrap (Claude Code)
 
 ไฟล์นี้ถูกโหลดอัตโนมัติทุก session โดย Claude Code
-แทน copy-paste prompt ที่ใช้กับ AI tool ทั่วไป
+Protocol หลักอยู่ใน `AI.md` — ไฟล์นี้เพิ่ม Claude-specific features เข้ามา
+
+> **เปลี่ยนมาจาก AI tool อื่น?** → อ่าน `AI.md` แทน (universal protocol สำหรับทุก tool)
 
 ---
 

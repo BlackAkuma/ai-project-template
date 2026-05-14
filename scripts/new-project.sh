@@ -559,9 +559,13 @@ if [ -d "$TARGET/.git" ]; then
   echo "  installed: .git/hooks/validate-commit"
 fi
 
+# Copy AI.md (universal protocol) to root
+cp "$TEMPLATE_ROOT/platforms/universal/AI.md" "$TARGET/AI.md"
+echo "  installed: AI.md → root (universal — ใช้กับ AI tool ทุกเจ้า)"
+
 # Copy CLAUDE.md to root
 cp "$TEMPLATE_ROOT/platforms/claude-code/CLAUDE.md" "$TARGET/CLAUDE.md"
-echo "  installed: CLAUDE.md → root"
+echo "  installed: CLAUDE.md → root (Claude Code)"
 
 # ── 11. Summary ───────────────────────────────────────────────────────────────
 
@@ -569,6 +573,7 @@ echo ""
 echo "[$([ $IS_GAME -eq 1 ] && echo '5' || echo '4')/6] Verifying output..."
 
 REQUIRED=(
+  "AI.md"
   "CoreAiWorkspaces/README.md"
   "CoreAiWorkspaces/00-source/README.md"
   "CoreAiWorkspaces/00-source/versions/v0.1/README.md"
