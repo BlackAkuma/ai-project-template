@@ -54,12 +54,15 @@ rm -rf CoreAiWorkspaces/ docs/ tests/ CHANGELOG.md ROADMAP.md
 
 ทำครั้งเดียวตอนสร้างโปรเจ็กต์ใหม่:
 
-1. ถามผู้ใช้ว่าจะสื่อสารกันเป็นภาษาอะไร รอคำตอบก่อน
+1. ถามผู้ใช้ 2 เรื่องพร้อมกัน รอคำตอบก่อน:
+   - ภาษาที่จะสื่อสารกัน
+   - Promotion pipeline: `dev→main` / `dev→sit→uat→main` / อื่นๆ (ให้ระบุ)
 2. ตรวจว่ามี `~/ai-workspace/cross-project-memory.md` ไหม — ถ้ามีให้อ่านก่อน
 3. อ่านไฟล์ใน `core/` ทั้งหมดตามลำดับ (00 → 21)
 4. ถ้าโปรเจ็กต์เป็น game หรือ web game → อ่าน `skills/game/` ต่อด้วย (00 → 11)
 5. สร้างโครงสร้าง `CoreAiWorkspaces/` ตาม core/01 template
 6. กรอกข้อมูลโปรเจ็กต์จาก context ที่มี — ใส่ placeholder ชัดเจนถ้าไม่พอ ห้ามเดา
+   บันทึก `git_pipeline` ที่ได้จากข้อ 1 ใน work-status AI-CONTEXT block ด้วย
 7. เพิ่มโปรเจ็กต์นี้ลงใน `~/ai-workspace/cross-project-memory.md` (ถ้ามีไฟล์นั้นอยู่)
 8. ตรวจสอบกับ `core/10-bootstrap-checklist-template.md` ก่อนประกาศว่าเสร็จ
 
