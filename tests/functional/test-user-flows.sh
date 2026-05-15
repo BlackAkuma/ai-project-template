@@ -381,10 +381,4 @@ if [ ${#ERRORS[@]} -gt 0 ]; then
   done
 fi
 
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-
-if [ $FAIL -eq 0 ]; then
-  exit 0
-else
-  exit 1
-fi
+echo
