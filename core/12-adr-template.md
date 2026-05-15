@@ -106,8 +106,12 @@ ADR ที่ถูก accept แล้วถือเป็น source of truth 
 1. AI พบว่าต้องตัดสินใจเชิง architecture → สร้าง ADR ในสถานะ Proposed
 2. เพิ่มรายการใน `CoreAiWorkspaces/07-decisions/README.md`
 3. บันทึกใน work-log ว่าสร้าง ADR-NNN
-4. มนุษย์ review → เปลี่ยนสถานะเป็น Accepted หรือแจ้ง reject
-5. **เมื่อ ADR ถูก Accept** → อัปเดต `CoreAiWorkspaces/07-decisions/entity-register.md` ทันที
+4. **⛔ STOP — ห้าม implement จนกว่าผู้ใช้จะ Approve**
+   - แจ้งผู้ใช้ว่า ADR-NNN อยู่ใน Proposed — รอ review
+   - ไม่มี ADR ใน Proposed ที่ถูก implement โดยที่ผู้ใช้ไม่ได้ Approve ก่อน
+   - "ทำต่อ" หรือ "ได้เลย" ที่พูดก่อนเห็น ADR ไม่นับเป็น approval
+5. มนุษย์ review → เปลี่ยนสถานะเป็น Accepted หรือแจ้ง reject
+6. **เมื่อ ADR ถูก Accept** → อัปเดต `CoreAiWorkspaces/07-decisions/entity-register.md` ทันที
    - ถ้าเป็น tech/integration ใหม่: เพิ่ม row ใน Active Entities พร้อม ADR reference
    - ถ้าเป็นการ deprecate tech เก่า: ย้าย row ไป Deprecated พร้อม `until` date
    - อัปเดต AI-CONTEXT block ของ entity-register ด้วย
