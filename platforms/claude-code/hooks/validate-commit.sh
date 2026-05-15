@@ -45,6 +45,22 @@ if [[ "$CURRENT_BRANCH" == "main" || "$CURRENT_BRANCH" == "master" ]]; then
   fi
 fi
 
+# Doc Sync Check — ถ้า commit มี code files แต่ core docs มี unstaged changes
+CODE_STAGED=$(git diff --cached --name-only | grep -v "^CoreAiWorkspaces/" | grep -c "." 2>/dev/null || echo 0)
+DOCS_DIRTY=$(git diff --name-only -- \
+  "CoreAiWorkspaces/01-plan/work-status.md" \
+  "CoreAiWorkspaces/02-task/task-board.md" \
+  "CoreAiWorkspaces/03-log/work-log-index.md" 2>/dev/null | wc -l | tr -d ' ')
+
+if [ "$CODE_STAGED" -gt 0 ] && [ "$DOCS_DIRTY" -gt 0 ]; then
+  echo "[WARN] Code staged but CoreAiWorkspaces docs have pending changes:"
+  git diff --name-only -- \
+    "CoreAiWorkspaces/01-plan/work-status.md" \
+    "CoreAiWorkspaces/02-task/task-board.md" \
+    "CoreAiWorkspaces/03-log/work-log-index.md" 2>/dev/null
+  echo "       รัน /caw-session-end เพื่อ sync docs ก่อน push"
+fi
+
 if [ $FAIL -gt 0 ]; then
   echo ""
   echo "[BLOCKED] $FAIL critical issue(s) must be resolved before commit"
