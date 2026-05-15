@@ -502,6 +502,30 @@ else
   fail "H6: validate-commit.sh doc-sync warning doesn't point to /caw-session-end"
 fi
 
+# H7: validate-commit.sh escape valve logs to work-log-index.md (not just terminal)
+if grep -q "SKIP_DOC_SYNC" "platforms/claude-code/hooks/validate-commit.sh" 2>/dev/null && \
+   grep -q "work-log-index.md" "platforms/claude-code/hooks/validate-commit.sh" 2>/dev/null; then
+  pass "H7: validate-commit.sh SKIP_DOC_SYNC escape valve logs to work-log-index.md"
+else
+  fail "H7: validate-commit.sh escape valve missing or doesn't log to work-log-index.md — skip leaves no audit trail"
+fi
+
+# =============================================================================
+# PROTOCOL CHECKS (PART 2)
+# =============================================================================
+
+section "Protocol content — HARD RULE marker"
+
+cd "$TEMPLATE_ROOT"
+
+# P11: core/03 has HARD RULE classification table with ⛔ marker
+if grep -q "HARD RULE" "core/03-way-of-work-template.md" 2>/dev/null && \
+   grep -q "⛔" "core/03-way-of-work-template.md" 2>/dev/null; then
+  pass "P11: core/03 has HARD RULE classification (⛔ marker) — AI knows what cannot be bypassed"
+else
+  fail "P11: core/03 missing HARD RULE classification — all rules appear equal weight to AI"
+fi
+
 # =============================================================================
 # UNIVERSAL AI.md CHECKS
 # =============================================================================
