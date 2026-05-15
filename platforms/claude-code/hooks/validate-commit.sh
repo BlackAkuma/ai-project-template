@@ -53,12 +53,26 @@ DOCS_DIRTY=$(git diff --name-only -- \
   "CoreAiWorkspaces/03-log/work-log-index.md" 2>/dev/null | wc -l | tr -d ' ')
 
 if [ "$CODE_STAGED" -gt 0 ] && [ "$DOCS_DIRTY" -gt 0 ]; then
-  echo "[WARN] Code staged but CoreAiWorkspaces docs have pending changes:"
-  git diff --name-only -- \
-    "CoreAiWorkspaces/01-plan/work-status.md" \
-    "CoreAiWorkspaces/02-task/task-board.md" \
-    "CoreAiWorkspaces/03-log/work-log-index.md" 2>/dev/null
-  echo "       รัน /caw-session-end เพื่อ sync docs ก่อน push"
+  # Escape valve: SKIP_DOC_SYNC=1 git commit ... อนุญาตให้ข้ามได้ แต่ต้อง log ไว้เสมอ
+  if [ "${SKIP_DOC_SYNC:-0}" = "1" ]; then
+    echo "[SKIP] Doc sync check bypassed via SKIP_DOC_SYNC=1"
+    LOG_FILE="CoreAiWorkspaces/03-log/work-log-index.md"
+    if [ -f "$LOG_FILE" ]; then
+      SKIP_ENTRY="- [SKIP_DOC_SYNC] $(date '+%Y-%m-%d %H:%M') — doc sync check bypassed; docs still dirty at commit"
+      echo "$SKIP_ENTRY" >> "$LOG_FILE"
+      echo "       Logged skip entry to $LOG_FILE"
+    else
+      echo "[WARN] work-log-index.md not found — skip not logged (audit trail missing)"
+    fi
+  else
+    echo "[WARN] Code staged but CoreAiWorkspaces docs have pending changes:"
+    git diff --name-only -- \
+      "CoreAiWorkspaces/01-plan/work-status.md" \
+      "CoreAiWorkspaces/02-task/task-board.md" \
+      "CoreAiWorkspaces/03-log/work-log-index.md" 2>/dev/null
+    echo "       รัน /caw-session-end เพื่อ sync docs ก่อน push"
+    echo "       (หรือใช้ SKIP_DOC_SYNC=1 git commit ... เพื่อข้าม — จะ log ไว้ใน work-log-index.md)"
+  fi
 fi
 
 if [ $FAIL -gt 0 ]; then
