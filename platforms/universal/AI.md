@@ -132,6 +132,9 @@ current_task: [อ่านจาก task-board]
 2. `CoreAiWorkspaces/03-log/work-log-index.md`
 3. `CoreAiWorkspaces/02-task/task-board.md`
 
+**ก่อนแตะโค้ดทุกครั้ง** → รัน Scenario M ใน `CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md`
+(ตรวจ branch, uncommitted changes, feature ค้าง, ขนาดงาน, source reference)
+
 แล้วรายงานผู้ใช้:
 - phase ปัจจุบัน
 - task ที่ active + status
