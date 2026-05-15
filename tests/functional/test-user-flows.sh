@@ -366,6 +366,176 @@ else
 fi
 
 # =============================================================================
+# PROTOCOL CONTENT CHECKS — ตรวจ content ของ decision protocol + rules
+# =============================================================================
+
+section "Protocol Content — Decision Scenarios"
+
+cd "$TEMPLATE_ROOT"
+
+# P1: Scenario N exists in core/11
+if grep -q "Scenario N" "core/11-ai-decision-protocol-template.md" 2>/dev/null; then
+  pass "P1: Scenario N (ทำต่อ = per-task approval) exists in core/11"
+else
+  fail "P1: Scenario N missing from core/11 — blanket approval trap unaddressed"
+fi
+
+# P2: Scenario M has scope-check (step 7)
+if grep -q "scope check" "core/11-ai-decision-protocol-template.md" 2>/dev/null; then
+  pass "P2: Scenario M has scope-check step (entity/mechanic not in source docs)"
+else
+  fail "P2: Scenario M missing scope-check — scope expansion not caught"
+fi
+
+# P3: Scenario N is in Escalation table Level 2
+if grep -q "Level 2" "core/11-ai-decision-protocol-template.md" 2>/dev/null && \
+   grep -A2 "Level 2" "core/11-ai-decision-protocol-template.md" | grep -q "N"; then
+  pass "P3: Scenario N added to Escalation Level 2 table"
+else
+  fail "P3: Scenario N not in Escalation table"
+fi
+
+# P4: ADR workflow has explicit blocking gate (STOP before implement)
+if grep -q "STOP" "core/12-adr-template.md" 2>/dev/null && \
+   grep -q "ห้าม implement" "core/12-adr-template.md" 2>/dev/null; then
+  pass "P4: ADR workflow has blocking gate (STOP — ห้าม implement ก่อน Approve)"
+else
+  fail "P4: ADR workflow missing blocking gate — draft+implement collapse still possible"
+fi
+
+# P5: CLAUDE.md has Batch Checkpoint section
+if grep -q "Batch Checkpoint" "platforms/claude-code/CLAUDE.md" 2>/dev/null; then
+  pass "P5: CLAUDE.md has Batch Checkpoint section"
+else
+  fail "P5: CLAUDE.md missing Batch Checkpoint section"
+fi
+
+# P6: CLAUDE.md Key Rules has blanket-approval guard
+if grep -q "ทำต่อ.*approve.*task" "platforms/claude-code/CLAUDE.md" 2>/dev/null || \
+   grep -q "approve.*task.*ปัจจุบัน" "platforms/claude-code/CLAUDE.md" 2>/dev/null; then
+  pass "P6: CLAUDE.md Key Rules has per-task approval rule (ทำต่อ ≠ blanket)"
+else
+  fail "P6: CLAUDE.md missing per-task approval guard in Key Rules"
+fi
+
+# P7: CLAUDE.md Branching section is reference-only (not full rules duplicated from core/21)
+BRANCHING_LINES=$(grep -c "." "platforms/claude-code/CLAUDE.md" 2>/dev/null | tr -d ' ' || echo 0)
+# Check that the full 9-rule table is NOT in CLAUDE.md (it should be in core/21 only)
+if grep -q "| 1 |.*ก่อนเริ่มทุก task" "platforms/claude-code/CLAUDE.md" 2>/dev/null; then
+  fail "P7: CLAUDE.md has duplicated 9-rule branching table — should reference core/21 only"
+else
+  pass "P7: CLAUDE.md Branching section is reference-only (no rule duplication)"
+fi
+
+# P8: Full branching rules exist in core/21 (the actual source)
+if grep -q "Feature Branch Workflow" "core/21-git-workflow-template.md" 2>/dev/null && \
+   grep -q "Promotion Pipeline" "core/21-git-workflow-template.md" 2>/dev/null; then
+  pass "P8: Full branching rules exist in core/21 (single source of truth)"
+else
+  fail "P8: core/21 missing Feature Branch Workflow content"
+fi
+
+# P9: core/03 has Batch Checkpoint Rule
+if grep -q "Batch Checkpoint" "core/03-way-of-work-template.md" 2>/dev/null; then
+  pass "P9: core/03 way-of-work has Batch Checkpoint Rule (bootstraps to all projects)"
+else
+  fail "P9: core/03 missing Batch Checkpoint Rule"
+fi
+
+# P10: core/03 has body-first rule (body = source of truth, not AI-CONTEXT block)
+if grep -q "body.*source of truth" "core/03-way-of-work-template.md" 2>/dev/null || \
+   grep -q "body ของไฟล์คือ source of truth" "core/03-way-of-work-template.md" 2>/dev/null; then
+  pass "P10: core/03 has body-first rule (body = source of truth, not block)"
+else
+  fail "P10: core/03 missing body-first rule — AI-CONTEXT reverse update still possible"
+fi
+
+# =============================================================================
+# HOOK CONTENT CHECKS — ตรวจว่า hooks ทำงานถูกต้อง
+# =============================================================================
+
+section "Hook Content — session-stop + validate-commit"
+
+cd "$TEMPLATE_ROOT"
+
+# H1: session-stop.sh uses CoreAiWorkspaces/ not old ai/ path
+if grep -q 'CoreAiWorkspaces' "platforms/claude-code/hooks/session-stop.sh" 2>/dev/null && \
+   ! grep -q 'PROJECT_ROOT}/ai"' "platforms/claude-code/hooks/session-stop.sh" 2>/dev/null; then
+  pass "H1: session-stop.sh uses CoreAiWorkspaces/ (not legacy ai/ path)"
+else
+  fail "H1: session-stop.sh still uses legacy ai/ path — checks will never find files"
+fi
+
+# H2: session-stop.sh checks task-board.md
+if grep -q "task-board" "platforms/claude-code/hooks/session-stop.sh" 2>/dev/null; then
+  pass "H2: session-stop.sh checks task-board.md"
+else
+  fail "H2: session-stop.sh does not check task-board.md — 3-file sync incomplete"
+fi
+
+# H3: session-stop.sh references /caw-session-end (not old /session-end)
+if grep -q "caw-session-end" "platforms/claude-code/hooks/session-stop.sh" 2>/dev/null && \
+   ! grep -q '"/session-end"' "platforms/claude-code/hooks/session-stop.sh" 2>/dev/null; then
+  pass "H3: session-stop.sh references /caw-session-end (not old /session-end)"
+else
+  fail "H3: session-stop.sh references wrong command (/session-end instead of /caw-session-end)"
+fi
+
+# H4: session-stop.sh checks uncommitted changes (not just date)
+if grep -q "DOCS_DIRTY\|diff --name-only" "platforms/claude-code/hooks/session-stop.sh" 2>/dev/null; then
+  pass "H4: session-stop.sh checks uncommitted doc changes (not just date stamp)"
+else
+  fail "H4: session-stop.sh only checks date — uncommitted docs not caught"
+fi
+
+# H5: validate-commit.sh has doc-sync warning
+if grep -q "CODE_STAGED\|DOCS_DIRTY" "platforms/claude-code/hooks/validate-commit.sh" 2>/dev/null; then
+  pass "H5: validate-commit.sh has doc-sync check (warns when code staged but docs dirty)"
+else
+  fail "H5: validate-commit.sh missing doc-sync check — code commit without docs goes unwarned"
+fi
+
+# H6: validate-commit.sh references /caw-session-end in its warning
+if grep -q "caw-session-end" "platforms/claude-code/hooks/validate-commit.sh" 2>/dev/null; then
+  pass "H6: validate-commit.sh warns to run /caw-session-end"
+else
+  fail "H6: validate-commit.sh doc-sync warning doesn't point to /caw-session-end"
+fi
+
+# =============================================================================
+# UNIVERSAL AI.md CHECKS
+# =============================================================================
+
+section "Universal AI.md — entry point completeness"
+
+cd "$TEMPLATE_ROOT"
+
+# U1: AI.md exists
+[ -f "platforms/universal/AI.md" ] && pass "U1: platforms/universal/AI.md exists" || fail "U1: AI.md missing"
+
+# U2: AI.md references Scenario M
+if grep -q "Scenario M" "platforms/universal/AI.md" 2>/dev/null; then
+  pass "U2: AI.md references Scenario M (pre-code checklist) in Session Start"
+else
+  fail "U2: AI.md missing Scenario M reference — new tools won't know about pre-code check"
+fi
+
+# U3: AI.md has file ownership table
+if grep -q "Tool-Specific" "platforms/universal/AI.md" 2>/dev/null && \
+   grep -q "System Files" "platforms/universal/AI.md" 2>/dev/null; then
+  pass "U3: AI.md has file ownership table (Shared / Tool-Specific / System)"
+else
+  fail "U3: AI.md missing file ownership table"
+fi
+
+# U4: core/00 has architecture diagram (core/=rules, platforms/=wiring)
+if grep -q "สถาปัตยกรรมของระบบ" "core/00-ai-bootstrap-master-template.md" 2>/dev/null; then
+  pass "U4: core/00 has architecture diagram explaining core/ vs platforms/ roles"
+else
+  fail "U4: core/00 missing architecture diagram — AI may duplicate rules in platforms/"
+fi
+
+# =============================================================================
 # RESULTS
 # =============================================================================
 
@@ -381,4 +551,10 @@ if [ ${#ERRORS[@]} -gt 0 ]; then
   done
 fi
 
-echo
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+if [ $FAIL -eq 0 ]; then
+  exit 0
+else
+  exit 1
+fi
