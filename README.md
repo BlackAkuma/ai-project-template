@@ -20,7 +20,7 @@ Working with AI across multiple sessions breaks down fast:
 
 ## The Solution
 
-A set of **19 template files** that any AI can read once and follow forever.
+A set of **template files** that any AI can read once and follow consistently — including when it wants to take shortcuts.
 
 ```
 CoreAiWorkspaces/
@@ -33,6 +33,16 @@ CoreAiWorkspaces/
 ```
 
 AI reads 3 files at the start of every session → knows exactly what to do. No re-explaining. No repeated decisions. No silent scope creep.
+
+**Built from real failure patterns** — every protocol in this system was added because something went wrong in actual use:
+
+| Failure | Protocol added |
+|---------|---------------|
+| AI implements without checking if it should | Challenge-Necessity (Scenario M step 0 + 3-lens) |
+| "ทำต่อ" becomes blanket approval for everything | Scenario N — per-task approval only |
+| Code committed, docs never updated | Doc-sync gate in commit hook + Batch Checkpoint rule |
+| Task marked done without proof it works | Task Close Gate — prereq before closing any task |
+| AI reverses architecture decisions made last session | ADR blocking gate — Proposed → human approve → implement |
 
 ---
 
@@ -123,11 +133,11 @@ Once AI confirms the bootstrap checklist passes — delete the template folder. 
 | `08` Log & Summary | Session logs · daily/monthly summaries · agent diary |
 | `09` Extension Doc | Extension docs + reverse-document protocol |
 | `10` Bootstrap Checklist | Verify setup before starting work |
-| `11` AI Decision Protocol | 11 scenarios (A–K) · responsibility matrix |
-| `12` ADR | Architecture Decision Records — never deleted |
+| `11` AI Decision Protocol | 15 scenarios (A–N) · challenge-necessity · responsibility matrix |
+| `12` ADR | Architecture Decision Records — blocking gate before implement |
 | `13` Retrospective | Periodic collaboration review |
 | `14` Anti-Patterns | What not to do, and why |
-| `15` Compliance Check | C-01–C-14 + tech debt register |
+| `15` Compliance Check | C-01–C-14 + Task Close Gate + tech debt register |
 | `16` Launch Checklist | Pre-release checklist |
 | `17` Entity Register | Track active/deprecated entities across the project |
 | `18` Cross-Project Memory | Patterns and lessons across multiple projects |
@@ -143,6 +153,9 @@ Once AI confirms the bootstrap checklist passes — delete the template folder. 
 | **Do less, document more** | A well-documented stop beats a silent wrong decision |
 | **Progressive enhancement** | `core/` works alone — add tiers only when you need them |
 | **Memory Scope Protocol** | 5-step rule for where to store new information (task board / log / ADR / entity register / cross-project memory) |
+| **Challenge-Necessity** | Before any code: state what it achieves, cite source, confirm no simpler path — then run Expert/Technical/Contrarian lenses |
+| **HARD RULE** | ⛔ marker = cannot be bypassed by momentum, "ทำต่อ", or obvious-seeming tasks |
+| **Task Close Gate** | Prereq check before marking DONE: work-log entry + task-board update + validation evidence |
 
 ---
 
@@ -191,7 +204,7 @@ If this saves you time, consider sponsoring:
 
 ## วิธีแก้
 
-**19 template files** ที่ AI อ่านครั้งเดียวแล้วทำตามได้ตลอดโปรเจ็กต์
+**Template files** ที่ AI อ่านครั้งเดียวแล้วทำตามได้ตลอดโปรเจ็กต์ — รวมถึงตอนที่ AI อยาก shortcut
 
 ```
 CoreAiWorkspaces/
@@ -294,11 +307,11 @@ Copy `core/` ไปที่ root โปรเจ็กต์ แล้วส่
 | `08` Log & Summary | Session log · daily/monthly summary · agent diary |
 | `09` Extension Doc | Extension docs + reverse-document protocol |
 | `10` Bootstrap Checklist | ตรวจ setup ก่อนเริ่มทำงานจริง |
-| `11` AI Decision Protocol | 11 scenarios (A–K) · responsibility matrix |
-| `12` ADR | Architecture Decision Records — ห้ามลบ |
+| `11` AI Decision Protocol | 15 scenarios (A–N) · challenge-necessity · responsibility matrix |
+| `12` ADR | Architecture Decision Records — blocking gate ก่อน implement |
 | `13` Retrospective | ทบทวนการทำงานร่วมกันเป็นระยะ |
 | `14` Anti-Patterns | สิ่งที่ไม่ควรทำ และเหตุผล |
-| `15` Compliance Check | C-01–C-14 + tech debt register |
+| `15` Compliance Check | C-01–C-14 + Task Close Gate + tech debt register |
 | `16` Launch Checklist | Checklist ก่อน release |
 | `17` Entity Register | ติดตาม entity ที่ active/deprecated ทั่วโปรเจ็กต์ |
 | `18` Cross-Project Memory | Pattern และ lesson ข้ามหลายโปรเจ็กต์ |
@@ -314,6 +327,9 @@ Copy `core/` ไปที่ root โปรเจ็กต์ แล้วส่
 | **Do less, document more** | หยุดพร้อมบันทึกชัดเจน ดีกว่าตัดสินใจเงียบ ๆ แล้วผิดพลาด |
 | **Progressive enhancement** | `core/` ใช้คนเดียวได้เลย — เพิ่ม tier เมื่อต้องการ |
 | **Memory Scope Protocol** | กฎ 5 ขั้นสำหรับตัดสินใจว่าข้อมูลใหม่ควรเก็บที่ไหน |
+| **Challenge-Necessity** | ก่อน code: ระบุเป้าหมาย cite source ยืนยันว่าไม่มีทางที่ง่ายกว่า แล้วรัน 3-lens (Expert/Technical/Contrarian) |
+| **HARD RULE** | ⛔ marker = ห้ามข้าม แม้จะมี momentum หรือ "ทำต่อ" |
+| **Task Close Gate** | ตรวจก่อนปิด task: work-log + task-board + validation evidence ต้องครบ |
 
 ---
 

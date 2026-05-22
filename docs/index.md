@@ -13,10 +13,12 @@ title: AI Project Template — คู่มือฉบับสมบูรณ�
 | ปัญหาที่เจอ | สิ่งที่ระบบนี้ทำ |
 |------------|----------------|
 | AI เริ่มจากศูนย์ทุก session — ต้องอธิบายทุกอย่างใหม่ | AI อ่าน 3 ไฟล์ → รู้ phase, task active, และสิ่งที่รอทำทันที |
-| Decision ที่เคยตัดสินใจถูกย้อนกลับโดยไม่รู้ตัว | ADR system บันทึก "ทำไม" ไว้ — AI ตรวจก่อนตัดสินใจทุกครั้ง |
+| Decision ที่เคยตัดสินใจถูกย้อนกลับโดยไม่รู้ตัว | ADR system + blocking gate — Proposed ต้องผ่าน human approve ก่อน implement |
 | AI ตัดสินใจเรื่อง architecture เองโดยไม่แจ้ง | Decision protocol กำหนดชัดว่าอะไร AI ทำได้ อะไรต้องหยุดถาม |
 | ทุก session ซ้ำงานกันเพราะไม่มี handoff | Session end protocol sync ทุกไฟล์ก่อนปิด — session ต่อไปเริ่มได้ทันที |
 | Source doc เก่าขัดแย้งกับ code ปัจจุบัน | Traceability system — ทุก task อ้างอิง source reference |
+| "ทำต่อ" กลายเป็น AI ทำทุกอย่างโดยไม่ถาม | Challenge-Necessity ก่อน code + Scenario N per-task approval |
+| Code commit แต่ docs ไม่อัปเดต | Commit hook เตือน + Task Close Gate บล็อกก่อน mark done |
 
 ---
 
