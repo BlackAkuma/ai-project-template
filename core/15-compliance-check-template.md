@@ -32,13 +32,28 @@ Protocol สำหรับตรวจสอบ code quality และ document
 
 ## สิ่งที่ตรวจ
 
+### ⛔ Task Close Gate — ต้องผ่านก่อนปิด task เป็น DONE เสมอ
+
+ก่อน mark task ใด ๆ เป็น `done` ต้องมีครบทั้ง 3 ข้อนี้ก่อน — ขาดข้อใดข้อหนึ่งไม่ได้:
+
+| # | เงื่อนไข | วิธีตรวจ |
+|---|---------|---------|
+| 1 | work-log มี entry สำหรับ task นี้ | grep task ID ใน work-log-index.md |
+| 2 | task-board อัปเดต status แล้ว | ตรวจ status ใน task-board.md |
+| 3 | validation evidence ระบุไว้ (code tasks) | work-log บอกว่าตรวจสอบอย่างไร — test ผ่าน, ทดสอบ scenario ใด |
+
+→ ถ้าขาดข้อใด: ห้ามปิด — mark เป็น `[IN_PROGRESS: pending close — <ระบุว่าขาดอะไร>]`
+→ non-code task (เช่น doc update, ADR draft): ข้อ 3 ใช้ "human reviewed" หรือ "no code changed" แทน
+
+---
+
 ### ระดับ 1 — Fix Now หรือ Defer (ต้องตัดสินใจ)
 
 | Code | สิ่งที่ตรวจ | เกณฑ์ |
 |------|-----------|-------|
 | C-01 | File size | > 500 บรรทัด |
 | C-02 | Task ไม่มี source reference | ทุก task ที่ไม่มี `CoreAiWorkspaces/00-source/...` |
-| C-03 | Task `done` ไม่มี validation evidence | ไม่มีบันทึกว่าตรวจสอบอย่างไร |
+| C-03 | Task `done` ไม่มี validation evidence | ไม่มีบันทึกว่าตรวจสอบอย่างไร — ดู Task Close Gate ด้านบน |
 | C-04 | Placeholder ยังค้างในไฟล์ | `<PROJECT_NAME>`, `<NEEDS_CLARIFICATION>` ฯลฯ |
 
 ### ระดับ 2 — Defer เสมอ พร้อม tag ในโค้ด
