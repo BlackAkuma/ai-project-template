@@ -220,9 +220,21 @@ Gap: 4 tasks ที่กำลังทำอยู่อาจต้องแ�
 
 เกิดเมื่อ: กำลังจะเริ่มแตะโค้ด หรือสร้าง commit ใหม่ในทุก task
 
-**6-Step Pre-Code Checklist (บังคับทุก task):**
+**Pre-Code Checklist (บังคับทุก task):**
 
 ```
+0. ⛔ challenge necessity — ทำก่อนทุกขั้น ไม่ข้าม
+
+   ระบุให้ชัดสามข้อนี้ก่อน:
+   (a) task นี้ทำเพื่ออะไร — ผลลัพธ์ที่ต้องการคืออะไร?
+   (b) source requirement ที่กำหนดให้ทำคืออะไร? — cite ไฟล์และ section
+   (c) มีวิธีที่เล็กกว่า ง่ายกว่า หรือใช้ของที่มีอยู่แล้วแทนได้ไหม?
+
+   → ถ้า (b) ไม่มี source reference: STOP — กลับไป Scenario A หรือ F ก่อน
+   → ถ้า (c) ตอบว่า "ใช่": เสนอทางเลือกนั้นก่อน ห้าม implement วิธีที่ซับซ้อนกว่า
+     โดยไม่ชี้แจงเหตุผลว่าทำไมทางเลือกนั้นไม่ได้
+   → ถ้าตอบครบทั้งสาม: ดำเนินต่อขั้น 1–7
+
 1. git status
    → มี uncommitted changes จาก task ก่อนไหม?
    → ถ้ามี: commit หรือ stash ก่อน — ห้ามปนกับงานใหม่
@@ -254,7 +266,7 @@ Gap: 4 tasks ที่กำลังทำอยู่อาจต้องแ�
    → "ทำต่อ" จาก task ก่อนหน้าไม่นับเป็น approval สำหรับ scope ใหม่
 ```
 
-**ผลลัพธ์ที่ต้องการ:** ก่อนแตะโค้ดแต่ละ task — branch ถูก, ไม่มี uncommitted ค้าง, ไม่มี feature branch ซ้อน, task มี ID, scope ชัด, ไม่มี scope expansion ที่ยังไม่ได้รับ explicit approval
+**ผลลัพธ์ที่ต้องการ:** ก่อนแตะโค้ดแต่ละ task — necessity ถูก challenged แล้ว, branch ถูก, ไม่มี uncommitted ค้าง, ไม่มี feature branch ซ้อน, task มี ID, scope ชัด, ไม่มี scope expansion ที่ยังไม่ได้รับ explicit approval
 
 ---
 

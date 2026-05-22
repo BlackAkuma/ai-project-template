@@ -526,6 +526,22 @@ else
   fail "P11: core/03 missing HARD RULE classification — all rules appear equal weight to AI"
 fi
 
+# P12: Scenario M has challenge-necessity step (step 0) before technical checks
+if grep -q "challenge necessity" "core/11-ai-decision-protocol-template.md" 2>/dev/null && \
+   grep -q "source requirement" "core/11-ai-decision-protocol-template.md" 2>/dev/null; then
+  pass "P12: Scenario M has challenge-necessity step — AI must justify task before checking git/branch"
+else
+  fail "P12: Scenario M missing challenge-necessity — AI can implement without verifying task should exist"
+fi
+
+# P13: core/15 has Task Close Gate (prereq gate before marking task done)
+if grep -q "Task Close Gate" "core/15-compliance-check-template.md" 2>/dev/null && \
+   grep -q "pending close" "core/15-compliance-check-template.md" 2>/dev/null; then
+  pass "P13: core/15 has Task Close Gate — task cannot be closed without work-log + validation evidence"
+else
+  fail "P13: core/15 missing Task Close Gate — tasks can be marked done without proof of completion"
+fi
+
 # =============================================================================
 # UNIVERSAL AI.md CHECKS
 # =============================================================================
