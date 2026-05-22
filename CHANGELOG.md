@@ -1,6 +1,6 @@
 ﻿# Changelog
 
-## v1.10.0 — 2026-05-22 (dev — ยังไม่ merge master)
+## v1.10.0 — 2026-05-22
 
 ### Challenge-Necessity Protocol
 
