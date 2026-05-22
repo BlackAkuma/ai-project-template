@@ -148,6 +148,8 @@ AI ใช้ 3-layer model — destination กำหนด format อัตโ�
 
 ## Key Rules
 
+- ⛔ **ก่อนแตะโค้ดทุกครั้ง — รัน Scenario M step 0 (challenge-necessity) ก่อนเสมอ**
+  "ทำต่อ" / "ได้เลย" / task ที่ดูชัดเจน **ไม่ยกเว้น** — ต้องตอบ (a)(b)(c) + 3-lens ก่อนทุกครั้ง
 - ห้าม implement โดยไม่รู้ source reference
 - **บอก plan ก่อนเขียน code เสมอ** — อธิบายว่าจะทำอะไร ทำไม แล้วรอยืนยันก่อน implement
 - ห้ามแก้ requirement โดยตรง — ต้อง version ใหม่หรือ extension doc
@@ -174,4 +176,5 @@ AI ใช้ 3-layer model — destination กำหนด format อัตโ�
 /caw-launch-check       รัน launch checklist ก่อน deploy
 /caw-archive-logs       compress session เก่าเป็น monthly archive
 /caw-update             อัปเดต caw-* commands และ CLAUDE.md เป็น version ใหม่
+/caw-debug              รัน 4-step debug-mantra checklist อัตโนมัติ
 ```
