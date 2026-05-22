@@ -526,12 +526,14 @@ else
   fail "P11: core/03 missing HARD RULE classification — all rules appear equal weight to AI"
 fi
 
-# P12: Scenario M has challenge-necessity step (step 0) before technical checks
+# P12: Scenario M has challenge-necessity step (step 0) with 3-lens internal challenge
 if grep -q "challenge necessity" "core/11-ai-decision-protocol-template.md" 2>/dev/null && \
-   grep -q "source requirement" "core/11-ai-decision-protocol-template.md" 2>/dev/null; then
-  pass "P12: Scenario M has challenge-necessity step — AI must justify task before checking git/branch"
+   grep -q "source requirement" "core/11-ai-decision-protocol-template.md" 2>/dev/null && \
+   grep -q "Contrarian lens" "core/11-ai-decision-protocol-template.md" 2>/dev/null && \
+   grep -q "Expert lens" "core/11-ai-decision-protocol-template.md" 2>/dev/null; then
+  pass "P12: Scenario M has challenge-necessity + 3-lens challenge (Expert/Technical/Contrarian)"
 else
-  fail "P12: Scenario M missing challenge-necessity — AI can implement without verifying task should exist"
+  fail "P12: Scenario M missing challenge-necessity or 3-lens structure"
 fi
 
 # P13: core/15 has Task Close Gate (prereq gate before marking task done)
