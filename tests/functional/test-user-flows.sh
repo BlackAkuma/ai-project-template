@@ -536,6 +536,23 @@ else
   fail "P12: Scenario M missing challenge-necessity or 3-lens structure"
 fi
 
+# P14: root CLAUDE.md Key Rules explicitly blocks "ทำต่อ" from bypassing challenge-necessity
+if grep -q "challenge-necessity" "CLAUDE.md" 2>/dev/null && \
+   grep -q "ทำต่อ" "CLAUDE.md" 2>/dev/null && \
+   grep -q "ไม่ยกเว้น" "CLAUDE.md" 2>/dev/null; then
+  pass "P14: root CLAUDE.md Key Rules: ทำต่อ cannot bypass challenge-necessity (entry-point enforcement)"
+else
+  fail "P14: root CLAUDE.md missing challenge-necessity guard — momentum can still bypass it"
+fi
+
+# P15: platforms CLAUDE.md also has challenge-necessity guard (Claude Code specific)
+if grep -q "challenge-necessity" "platforms/claude-code/CLAUDE.md" 2>/dev/null && \
+   grep -q "ไม่ยกเว้น" "platforms/claude-code/CLAUDE.md" 2>/dev/null; then
+  pass "P15: platforms/claude-code/CLAUDE.md has challenge-necessity guard at entry point"
+else
+  fail "P15: platforms CLAUDE.md missing challenge-necessity guard"
+fi
+
 # P13: core/15 has Task Close Gate (prereq gate before marking task done)
 if grep -q "Task Close Gate" "core/15-compliance-check-template.md" 2>/dev/null && \
    grep -q "pending close" "core/15-compliance-check-template.md" 2>/dev/null; then
