@@ -1,11 +1,12 @@
 ﻿<!-- AI-CONTEXT
-last_session: 2026-05-08
+last_session: 2026-06-05
 tool: Claude Code
-completed: [T-034,T-035]
+completed: [T-040]
 checkpoint: none
-next_from_last: merge feat/savetoken → dev → master (await user approval for v1.5.0)
-notes: TACP implemented on feat/savetoken. 67/67 tests pass. v1.5.0 ready.
-deep_context: CoreAiWorkspaces/04-way-of-work/tacp.md
+next_from_last: human approve ADR-006 (Stage 2 direction) → P0-A housekeeping + A1 schema
+notes: Odysseus analysis → Stage-2 vision "Governed Project Memory". 5 exploration docs + ADR-006..009 Proposed. Started dogfooding methodology (was bypassed since v1.5.0).
+released_since_log: v1.6.0–v1.10.0 (HARD RULE, escape valve, challenge-necessity, task close gate, behavioral tests)
+deep_context: exploration/master-plan.md
 -->
 
 # Work Log Index — ai-project-template
@@ -19,6 +20,27 @@ deep_context: CoreAiWorkspaces/04-way-of-work/tacp.md
 | M3: Release Prep (ROADMAP, CHANGELOG, merge to master) | 🔄 todo | — |
 
 ## Recent Sessions
+
+### 2026-06-05 — [Odysseus Analysis → Stage 2 Vision "Governed Project Memory"]
+
+**สิ่งที่ทำ:**
+- วิเคราะห์ Odysseus (52k-star self-hosted AI workspace) เชิงลึก — feasibility, differentiation, tech stack
+- ตกผลึก vision 3-layer: Substrate (template/สมอง) → Engine (governance machine-enforced) → Shell (แอบ project-centric)
+- thesis: "AI capability = context engineering ไม่ใช่ตัว model" — Odysseus พิสูจน์ว่า body = commodity
+- gap audit ภายใน (อ่าน repo จริง): 3 รอยร้าวลึก — truth ใน prose, "done" เป็นคำพูด, ไม่มี concurrency; + housekeeping (core 00-22 vs docs, missing compliance-codes file, C-15..19)
+- market research: four-way intersection (project-centric + enforced-governance + multi-agent + multi-repo) ยังว่าง; threats = Cursor/Factory/Cognition/MS
+- 4 market corrections: governance risk-tiered (Gartner), multi-agent reframe (parallel เท่านั้น), อย่า out-index, compose underneath (LiteLLM/OPA), interoperate AGENTS.md
+- master plan: 11 phase, critical path ~14-15 สัปดาห์ถึง ship (P6), bottleneck = P3 interception, 6 decision gates, 5 stop points
+- schema architecture: CORE (process, invariant) + PROFILE (product, variant, compose ได้)
+- **dogfood methodology กลับมาใช้** — สร้าง ADR-006..009 (Proposed), update work-status/task-board/log
+
+**Artifacts:** `exploration/` 5 ไฟล์ (odysseus-analysis, north-star-vision, development-plan, what-it-should-be, master-plan) + ADR-006..009
+**Decisions (Proposed):** ADR-006 Stage-2 direction · ADR-007 dual-authority · ADR-008 risk-tiered governance · ADR-009 schema CORE+PROFILE
+**ผล:** vision + plan เป็น durable state แล้ว (ไม่ใช่แค่ในแชท)
+**Next:** ⏳ human approve ADR-006 → P0-A housekeeping (T-041..044) + A1 schema (T-045)
+**Branch:** explore/odysseus-analysis (pushed)
+
+---
 
 ### 2026-05-08 — [TACP v1.5.0 — Token-Aware Communication Protocol]
 

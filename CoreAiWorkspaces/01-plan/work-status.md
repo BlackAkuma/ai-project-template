@@ -1,95 +1,60 @@
 <!-- AI-CONTEXT
-phase: feature-complete
-active_task: T-035 done (feat/savetoken — await merge approval)
-blocker: none
-last_updated: 2026-05-08
+phase: stage2-design (exploration → schema design)
+active_task: T-040 done (Odysseus analysis + Stage-2 exploration); next T-045 (A1 core schema)
+blocker: ADR-006 Proposed — await human approve before building Engine
+last_updated: 2026-06-05
 git_mode: branch-separated
 git_dev_branch: dev
 git_prod_branch: master
-active_branch: feat/savetoken
+active_branch: explore/odysseus-analysis
+released: v1.10.0 (challenge-necessity + task close gate + behavioral tests)
 read_more:
-  plan: CoreAiWorkspaces/01-plan/project-plan.md
-  decisions: CoreAiWorkspaces/07-decisions/README.md
-  roadmap: ROADMAP.md
-next_action: รอ user อนุมัติ merge feat/savetoken → dev → master (v1.5.0)
+  vision: exploration/north-star-vision.md
+  market+gap: exploration/what-it-should-be.md
+  plan: exploration/master-plan.md
+  decisions: CoreAiWorkspaces/07-decisions/README.md (ADR-006..009 Proposed)
+next_action: human approve ADR-006 (Stage 2 direction) → เริ่ม P0-A housekeeping + A1 schema
 -->
 
 # Work Status — ai-project-template
 
-อัปเดตล่าสุด: 2026-05-08
+อัปเดตล่าสุด: 2026-06-05
 
 ## สถานะปัจจุบัน
 
-**Phase:** feature-complete — TACP v1.5.0 พร้อม merge ✅
-**Active Task:** T-035 (feat/savetoken) — done, await merge approval
-**Blocker:** none
+**Phase:** Stage-2 design — exploration เสร็จ กำลังเข้าสู่ schema design
+**Active branch:** `explore/odysseus-analysis`
+**Released:** v1.10.0 (challenge-necessity + task close gate + behavioral tests) — merged master
+**Blocker:** ⏳ ADR-006 (Stage 2 direction) = Proposed → รอ human approve ก่อนเริ่ม build Engine
 
-## สิ่งที่เสร็จแล้ว session นี้ (2026-05-08 TACP)
+## สิ่งที่เสร็จ session นี้ (2026-06-05 — Odysseus → Stage 2)
 
-### TACP — Token-Aware Communication Protocol (T-035) ✅
-
-- `core/22-tacp-template.md` — template ใหม่ distribute ไปยัง new projects
-- `CoreAiWorkspaces/04-way-of-work/tacp.md` — protocol anchor เต็ม
-- `CLAUDE.md` + `platforms/claude-code/CLAUDE.md` — TACP section
-- `way-of-work.md` — tacp config block (L2_LANG, verbosity_default)
-- 11 caw-*.md → dual-block format (L3: AI-CONTEXT + HUMAN-CONTEXT)
-- `new-project.sh` — bootstrap tacp.md ไปยัง new projects
-- `ADR-005` — architectural decision record
-- `tests/token-savings/tacp-benchmark.md` — 15 test cases, ~54% session savings
-- tests: 46 → 67 (+21 TACP tests)
-- VERSION: 1.4.0 → 1.5.0
-- Branch: feat/savetoken — pushed
-
-## สิ่งที่เสร็จแล้ว session ล่าสุด (2026-05-08 ต่อ)
-
-### Docs merged to master (T-032) ✅
-- docs/architecture/overview.md: Package Concept section + 3 structure diagrams
-- docs/advanced-setup.md: merge workflow + CoreAiWorkspaces/ restore step
-- GitHub Pages updated
-
-### /caw-update + --update-commands (T-033) ✅
-- `new-project.sh --update-commands`: อัปเดต caw-* + CLAUDE.md โดยไม่แตะ CoreAiWorkspaces/
-- slash command `/caw-update`: สั่งจาก AI ได้โดยตรง
-- tests: 43 → 44 tests (เพิ่ม caw-update.md ใน SLASH_FILES)
-
-## สิ่งที่เสร็จแล้ว session นี้
-
-### Package Install Flow (T-028) ✅
-- `new-project.sh` upgrade: auto-install CLAUDE.md + `.claude/commands/` + `.git/hooks/validate-commit`
-- user ลบ `_template/` ได้ทันทีหลัง bootstrap — ไม่ต้อง copy อะไรเอง
-
-### Slash Commands — caw- prefix (T-029) ✅
-- rename 10 files: `session-end.md` → `caw-session-end.md` ฯลฯ
-- `caw-` = CoreAiWorkspaces abbreviation — ป้องกัน namespace collision
-- อัปเดต 29 files + tests ครบ
-
-### Documentation (T-026, T-030) ✅
-- docs/ 14 files: web pages + architecture + integrations
-- แก้ `claude.CoreAiWorkspaces/code` URL bugs
-- ลบ manual copy steps ทุกที่ → สอน script flow แทน
-- เพิ่มคำอธิบาย caw- ทุก touchpoint
-
-### Tests (T-031) ✅
-- 35 → 43 tests: เพิ่ม A8–A13 (CLAUDE.md auto-install, slash commands)
-- แก้ B2/S5: docs/ tracked on dev = intentional (GitHub Pages)
-- C6: chmod failure → warning (Windows NTFS limitation)
-
-### verify-install.sh (T-027) ✅
-- post-install check script: 6 sections, ตรวจทุก artifact ที่ new-project.sh สร้าง
+- วิเคราะห์ Odysseus เชิงลึก (feasibility + differentiation + stack) → `exploration/odysseus-analysis.md`
+- ตกผลึก vision 3-layer (Substrate→Engine→Shell) → `exploration/north-star-vision.md`
+- gap audit (internal, อ่าน repo จริง) + market research (competitors + trends) → `exploration/what-it-should-be.md`
+- positioning refined: **"Governed Project Memory"** (4 market corrections: risk-tiered, multi-agent reframe, อย่า out-index, compose underneath)
+- master plan: 11 phase, critical path ~14-15 สัปดาห์ถึง ship, 6 decision gates, 5 stop points → `exploration/master-plan.md`
+- schema architecture ตกผลึก: CORE (process) + PROFILE (product), compose ได้
+- บันทึก decision เป็น ADR-006..009 (Proposed) + dogfood methodology (งานนี้)
 
 ## Next Actions
 
-- รอ user อนุมัติ merge feat/savetoken → dev → master (v1.5.0)
-- Note: `merge=ours` ใน `.gitattributes` ทำงานสองทาง — เมื่อ merge master→dev ต้อง `git checkout HEAD~1 -- CoreAiWorkspaces/` เพื่อ restore
+1. ⏳ **human approve ADR-006** (Stage 2 direction) — gate ก่อนทุกอย่าง
+2. P0-A housekeeping (safe, reversible): T-041 core-count, T-042 missing compliance-codes, T-043 git_pipeline, T-044 C-15..19
+3. เคาะ G0 (canonical inversion → dual-authority ADR-007)
+4. A1 core schema (T-045) — ร่าง entities/fields/types เป็นเอกสารจริง
+5. A5 retrofit schema กับ repo นี้ + เคสเกม → validate ก่อน build
 
-## สถานะ Tests
-
-**67/67 passing** — tests/functional/test-user-flows.sh
-
-## Branch State
+## Stage 2 Roadmap (สรุป)
 
 ```
-master  ← v1.4.0 (stable)
-dev     ← v1.4.0 (in sync with master)
-feat/savetoken ← v1.5.0 (TACP — b80cc35) — ready for merge
+P0 Substrate Fixes ← เริ่มหลัง ADR-006 approve
+P1 config-driven validator → P2 CLI evaluator ← MVW (governance linter)
+P3 tool-call interception ← bottleneck → P4 canonical store
+P5 read-only Cockpit → P6 governed agent + Decision Inbox ← SHIP / MVP
+P7-P10 model-agnostic → specialists → multi-repo → vector
 ```
+
+## Note: Dogfooding gap ที่พบ
+
+methodology (CoreAiWorkspaces) ถูก bypass ตั้งแต่ v1.5.0 — work-status/task-board ค้างที่ 2026-05-08 ไม่สะท้อน v1.6-1.10 หรือ exploration นี้ → เริ่มใช้จริงอีกครั้ง session นี้ (= บททดสอบว่า substrate พร้อมเป็นฐาน Engine มั้ย)
