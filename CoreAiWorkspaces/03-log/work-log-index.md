@@ -2,7 +2,7 @@
 last_session: 2026-06-05
 tool: Claude Code
 completed: [T-040]
-checkpoint: P1-2/P2-1/P2-4 done — engine/check.py runs, 8 resolvers, risk-tier verdict, verified on real state; next P1-3 wire hook
+checkpoint: BRD loop active — v0.2 (panel-1 3/3 PASS, consensus gaps fixed), re-review iteration 2 running; parallel: engine P1-2/P2-1/P2-4 done
 next_from_last: T-049 full retrofit + T-056/057 (A1 findings); then P1 validator
 notes: ADR-006..009 Accepted (panel 2/3). Scenario O codified. P0-A done. A1 core schema drafted (exploration/a1-core-schema.md) — retrofit เจอ 2 gap จริง (spike source_ref, work-status field reconcile).
 released_since_log: v1.6.0–v1.10.0 (HARD RULE, escape valve, challenge-necessity, task close gate, behavioral tests)
