@@ -2,10 +2,10 @@
 total_tasks: 45
 in_progress: []
 blocked: []
-done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022,T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031,T-032,T-033,T-034,T-035,T-040,T-041,T-042,T-043,T-044]
-todo: [T-044b,T-045,T-046,T-047,T-048,T-049,T-050,T-051,T-052,T-053,T-054,T-055]
+done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022,T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031,T-032,T-033,T-034,T-035,T-040,T-041,T-042,T-043,T-044,T-045]
+todo: [T-044b,T-046,T-047,T-048,T-049,T-050,T-051,T-052,T-053,T-054,T-055,T-056,T-057]
 last_updated: 2026-06-05
-priority_next: A1 core schema (T-045) — P0-A housekeeping done
+priority_next: T-049 A5 retrofit (domain ห่าง) + T-056/057 (findings จาก A1 retrofit)
 note: T-051..053 = carry-over กระทบ core ที่ ship แล้ว → รอ whole-project review round
 -->
 
@@ -27,11 +27,13 @@ note: T-051..053 = carry-over กระทบ core ที่ ship แล้ว �
 | T-044 | core/15: note C-15–C-19 reserved + flag run-audit collision | ✅ |
 | T-044b | rename run-audit.sh test-ID "C-15".."C-19" → prefix อื่น (กัน namespace ชน) | todo |
 
-### Stage A — Design & Validate Contract (paper-first, no code) ← next: T-045
+### Stage A — Design & Validate Contract (paper-first, no code)
 
 | Task | Description | Decision | Source |
 |------|-------------|----------|--------|
-| T-045 | A1 core schema (entities/fields/types) | ADR-009 | master-plan §2 |
+| T-045 | ✅ A1 core schema (entities/fields/types) → `exploration/a1-core-schema.md` | ADR-009 | master-plan §2 |
+| T-056 | source_ref สำหรับ spike/exploration task (A1 retrofit finding #1) | — | a1-core-schema §5 |
+| T-057 | reconcile work-status field จริง vs core/06 template → typed schema เดียว (finding #2 = Critical gap #2 ตัวจริง) | ADR-007 | a1-core-schema §5 |
 | T-046 | A2 task lifecycle + profile stage extension | D1 (ADR-009) | master-plan |
 | T-047 | A3 evidence model (machine-verifiable vs human-attested) | D2 (ADR-009) | master-plan |
 | T-048 | A4 profile/extension mechanism + compose | D3 (ADR-009) | master-plan |

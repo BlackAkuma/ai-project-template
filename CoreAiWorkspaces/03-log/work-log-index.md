@@ -3,8 +3,8 @@ last_session: 2026-06-05
 tool: Claude Code
 completed: [T-040]
 checkpoint: none
-next_from_last: A1 core schema (T-045)
-notes: ADR-006..009 Accepted via 3-lens panel (2/3). 008/009 revised. Scenario O codified. P0-A housekeeping done (T-041..044). carry-over T-051/052/053 + T-044b deferred.
+next_from_last: T-049 full retrofit + T-056/057 (A1 findings); then P1 validator
+notes: ADR-006..009 Accepted (panel 2/3). Scenario O codified. P0-A done. A1 core schema drafted (exploration/a1-core-schema.md) — retrofit เจอ 2 gap จริง (spike source_ref, work-status field reconcile).
 released_since_log: v1.6.0–v1.10.0 (HARD RULE, escape valve, challenge-necessity, task close gate, behavioral tests)
 deep_context: exploration/master-plan.md
 -->
@@ -43,7 +43,14 @@ deep_context: exploration/master-plan.md
 - T-042 ✅ สร้าง `skills/game/12-compliance-codes.md` (consolidated G/A/N/U/L index); เจอ bonus gap: 00-overview table แถว 04/05 ผิด (อ้าง compliance-codes/game-session-end ที่ไม่มี) → sync ให้ตรงไฟล์จริง (playtest-report/balance-check). หมายเหตุ: เดิมตั้งชื่อ 04 ชนกับ playtest-report → rename เป็น 12
 - T-043 ✅ git_pipeline เข้า core/06 (field table + template block)
 - T-044 ✅ core/15 note C-15–C-19 reserved + flag run-audit collision (T-044b ตามมา)
-**Next:** A1 core schema (T-045)
+
+**T-045 ✅ A1 core schema (Stage A, paper-first):**
+- ร่าง CORE 11 entities (Project/Requirement/Task/Evidence/Decision/TeamMember/Gate/Repo/Entity/Event) + fields/types
+- lifecycle (D1), evidence model machine vs attested (D2), AI-CONTEXT schema เดียว (Critical gap #2), profile hook + game (D3, defer compose engine ตาม panel guidance)
+- schema_version 0.1, additive-only
+- **A5 lite retrofit กับ state จริง → เจอ 2 gap (paper-first ได้ผล):** #1 source_ref บังคับไม่ได้กับ spike/exploration (T-056) · #2 work-status field จริง ≠ core/06 template = Critical gap #2 ตัวจริง (T-057)
+- → `exploration/a1-core-schema.md`
+**Next:** T-049 full retrofit (domain ห่าง) + T-056/057 → P1 validator
 **Branch:** explore/odysseus-analysis
 
 ---
