@@ -5,9 +5,9 @@ blocked: []
 done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022,T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031,T-032,T-033,T-034,T-035,T-040,T-041,T-042,T-043,T-044,T-045,T-049,T-056,T-058]
 todo: [T-044b,T-046,T-047,T-048,T-050,T-051,T-052,T-053,T-054,T-055,T-057,P1-*,P2-*]
 last_updated: 2026-06-05
-priority_next: FLOW per flow-plan.md → T-057a/b/c → P1-1..5 → P2-1..5 (stop เฉพาะ G1)
+priority_next: P1-2 (predicate resolver lib) → P1-3..5 → P2 (stop เฉพาะ G1)
 backlog: exploration/flow-plan.md §3 (granular micro-tasks + flow-gate policy)
-note: Stage A design complete (schema validated 4 domains); flow-first policy active
+note: Stage A design done · P1-1 done (engine/ + grammar + 3 gates as data) · flow-first active · T-057 apply batched w/ P0-B
 note: T-051..053 = carry-over กระทบ core ที่ ship แล้ว → รอ whole-project review round
 -->
 

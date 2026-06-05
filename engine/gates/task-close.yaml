@@ -1,0 +1,27 @@
+id: task_close_gate
+version: 1
+description: Task Close Gate — ก่อน mark task = done ต้องครบ 3 (core/15)
+trigger:
+  action: task.transition
+  to: done
+risk_level: 2                 # ต้อง verify → decision-inbox ถ้าไม่ครบ (ADR-008 Level 2)
+requires:
+  - check: entry_exists       # work-log มี entry ของ task นี้
+    class: machine
+    file: CoreAiWorkspaces/03-log/work-log-index.md
+    key: "$args.task_id"
+  - check: status_equals      # task-board อัปเดต status แล้ว
+    class: machine
+    file: CoreAiWorkspaces/02-task/task-board.md
+    key: "$args.task_id"
+    value: done
+  - check: evidence_count_gte # validation evidence ≥ 1 (code task)
+    class: machine
+    task: "$args.task_id"
+    n: 1
+on_fail:
+  effect: decision-inbox
+  message: "ปิด {task_id} ไม่ได้ — ขาด: {failed_checks}. ดู Task Close Gate (core/15)"
+on_pass:
+  - do: audit
+    event: task_closed
