@@ -5,9 +5,9 @@ blocked: []
 done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022,T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031,T-032,T-033,T-034,T-035,T-040,T-041,T-042,T-043,T-044,T-045,T-049,T-056,T-058]
 todo: [T-044b,T-046,T-047,T-048,T-050,T-051,T-052,T-053,T-054,T-055,T-057,P1-*,P2-*]
 last_updated: 2026-06-05
-priority_next: P2 (P2-3 challenge-necessity JSON validator + P2-5 CI) → G1 (STOP: ship linter vs P3)
+priority_next: P3 interception (constitutive, protected critical path) + soft-ship prep (README+adversarial note, timeboxed)
 backlog: exploration/flow-plan.md §3 (granular micro-tasks + flow-gate policy)
-note: P1 DONE — engine/ 5 gates(data) + 8 resolvers + 11/11 smoke tests + wired hook(advisory). BRD v1.0 locked (ADR-010)
+note: MVW done (P1+P2: 6 gates, 9 resolvers, 14/14 tests, CI). G1=C-conservative (ADR-011). BRD v1.0 (ADR-010)
 note: T-051..053 = carry-over กระทบ core ที่ ship แล้ว → รอ whole-project review round
 -->
 

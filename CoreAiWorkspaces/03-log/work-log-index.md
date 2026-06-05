@@ -2,7 +2,7 @@
 last_session: 2026-06-05
 tool: Claude Code
 completed: [T-040]
-checkpoint: P1 DONE (P1-1..5) — engine/ 5 gates as data + 8 resolvers + 11/11 smoke tests + wired into hook (advisory). next P2 (challenge-necessity validator + CI) → G1. BRD v1.0 locked
+checkpoint: MVW reached (P1+P2: 6 gates, 9 resolvers, 14/14 tests, CI, challenge validator). G1 decided=C-conservative (ADR-011, user, panel 2/3). next: P3 interception (protected critical path) + soft-ship prep (timeboxed)
 next_from_last: T-049 full retrofit + T-056/057 (A1 findings); then P1 validator
 notes: ADR-006..009 Accepted (panel 2/3). Scenario O codified. P0-A done. A1 core schema drafted (exploration/a1-core-schema.md) — retrofit เจอ 2 gap จริง (spike source_ref, work-status field reconcile).
 released_since_log: v1.6.0–v1.10.0 (HARD RULE, escape valve, challenge-necessity, task close gate, behavioral tests)
@@ -20,6 +20,21 @@ deep_context: exploration/master-plan.md
 | M3: Release Prep (ROADMAP, CHANGELOG, merge to master) | 🔄 todo | — |
 
 ## Recent Sessions
+
+### 2026-06-06 — [MVW reached + G1 decided (C-conservative) + engine build P1-P2]
+
+**สิ่งที่ทำ:**
+- build engine/ ครบ MVW: P1 (5→6 gates as data, 8→9 resolvers, smoke tests, wired hook) + P2 (CLI, risk-tier, challenge-necessity validator, CI workflow) — รัน+verify จริงทุกขั้น
+- fixed 2 hook bugs ระหว่างทาง (BOM shebang, grep-c integer error)
+- **G1 decision panel** (3-lens vote + marketing): C2/B1 → C; user เลือก **C-conservative** → ADR-011
+- contrarian (B) dissent บันทึกครบ: solo focus risk → mitigation (timebox launch, P3 single-threaded, internal go/no-go)
+
+**Decisions:** G1=C-conservative (ADR-011) — soft-ship OSS + protect P3 + เลื่อน loud launch
+**ผล:** governance linter (MVW) ship-able + dogfooded; engine ชั้น 2 มีชีวิต
+**Next:** P3 interception (constitutive, moat — protected critical path) + soft-ship prep timeboxed
+**Branch:** explore/odysseus-analysis
+
+---
 
 ### 2026-06-05 — [BRD v1.0 ACCEPTED via 3-iteration panel (+ marketing)]
 

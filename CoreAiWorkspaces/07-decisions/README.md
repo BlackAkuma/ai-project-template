@@ -1,8 +1,8 @@
 ﻿<!-- AI-CONTEXT
-total_adrs: 10
-accepted: [ADR-001,ADR-002,ADR-003,ADR-004,ADR-005,ADR-006,ADR-007,ADR-008,ADR-009,ADR-010]
+total_adrs: 11
+accepted: [ADR-001,ADR-002,ADR-003,ADR-004,ADR-005,ADR-006,ADR-007,ADR-008,ADR-009,ADR-010,ADR-011]
 proposed: []
-last_updated: 2026-06-05
+last_updated: 2026-06-06
 note: ADR-006..009 Accepted 2026-06-05 via 3-lens panel (2/3 rule); 008+009 revised per contrarian FAIL before accept
 review_method: adr-review-panel workflow (see way-of-work)
 -->
@@ -41,6 +41,7 @@ ADR ที่ถูก accept แล้วถือเป็น source of truth 
 | ADR-008 | Risk-Tiered Governance (not uniform gates) | Accepted | 2026-06-05 | — |
 | ADR-009 | Schema Architecture — CORE + PROFILE | Accepted | 2026-06-05 | — |
 | ADR-010 | BRD v1.0 Accepted (Governed Project Memory) | Accepted | 2026-06-05 | — |
+| ADR-011 | G1 Decision — C-conservative (soft-ship + protect P3) | Accepted | 2026-06-06 | — |
 
 ## ✅ Stage 2 — Accepted 2026-06-05 (via 3-lens panel)
 
