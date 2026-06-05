@@ -172,7 +172,7 @@ AI ใช้ 3-layer model — destination กำหนด format อัตโ�
 
 ## Skill Pack Detection
 
-ถ้าโปรเจ็กต์มี `CoreAiWorkspaces/08-design/` → โหลด game skill standards อัตโนมัติ (skills/game/ 00–11):
+ถ้าโปรเจ็กต์มี `CoreAiWorkspaces/08-design/` → โหลด game skill standards อัตโนมัติ (skills/game/ 00–12):
 - ทุก feature ใหม่ต้องมี FDD ก่อน implement
 - task lifecycle: todo → design_validate → in_progress → playtest → review → done
 - compliance rules G-01 ถึง G-10, A-01 ถึง A-07, N-01 ถึง N-04, U-01 ถึง U-03, L-01 ถึง L-02 บังคับใช้

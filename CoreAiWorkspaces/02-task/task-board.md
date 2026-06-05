@@ -1,11 +1,12 @@
 <!-- AI-CONTEXT
-total_tasks: 45
+total_tasks: 48
 in_progress: []
 blocked: []
-done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022,T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031,T-032,T-033,T-034,T-035,T-040,T-041,T-042,T-043,T-044,T-045]
-todo: [T-044b,T-046,T-047,T-048,T-049,T-050,T-051,T-052,T-053,T-054,T-055,T-056,T-057]
+done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022,T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031,T-032,T-033,T-034,T-035,T-040,T-041,T-042,T-043,T-044,T-045,T-056]
+todo: [T-044b,T-046,T-047,T-048,T-049,T-050,T-051,T-052,T-053,T-054,T-055,T-057,T-058]
 last_updated: 2026-06-05
-priority_next: T-049 A5 retrofit (domain ห่าง) + T-056/057 (findings จาก A1 retrofit)
+priority_next: T-057 apply unified work-status schema (P0-B step1) + T-049 retrofit domain ห่าง
+note: T-057 design done (A1 §3), apply pending; verification pass แก้ 5 defect แล้ว
 note: T-051..053 = carry-over กระทบ core ที่ ship แล้ว → รอ whole-project review round
 -->
 
@@ -32,8 +33,9 @@ note: T-051..053 = carry-over กระทบ core ที่ ship แล้ว �
 | Task | Description | Decision | Source |
 |------|-------------|----------|--------|
 | T-045 | ✅ A1 core schema (entities/fields/types) → `exploration/a1-core-schema.md` | ADR-009 | master-plan §2 |
-| T-056 | source_ref สำหรับ spike/exploration task (A1 retrofit finding #1) | — | a1-core-schema §5 |
-| T-057 | reconcile work-status field จริง vs core/06 template → typed schema เดียว (finding #2 = Critical gap #2 ตัวจริง) | ADR-007 | a1-core-schema §5 |
+| T-056 | ✅ source_ref สำหรับ spike/exploration (`source_ref: spike:<note>`) | — | a1-core-schema §1 |
+| T-057 | unified work-status schema — **design done (A1 §3)**, apply กับ core/06 + ไฟล์จริง = P0-B step1 (pending) | ADR-007 | a1-core-schema §3 |
+| T-058 | reconcile game playtest: state vs sub-gate (verification finding) — เลือก sub-gate | ADR-009 | a1-core-schema §2 |
 | T-046 | A2 task lifecycle + profile stage extension | D1 (ADR-009) | master-plan |
 | T-047 | A3 evidence model (machine-verifiable vs human-attested) | D2 (ADR-009) | master-plan |
 | T-048 | A4 profile/extension mechanism + compose | D3 (ADR-009) | master-plan |
@@ -86,3 +88,8 @@ note: T-051..053 = carry-over กระทบ core ที่ ship แล้ว �
 | T-034 | feat: versioning system — VERSION file + embed in bootstrap + ADR-004 | 2026-05-08 |
 | T-035 | feat: TACP — 3-layer model, dual-block caw-*.md, benchmark, 67 tests | 2026-05-08 |
 | T-040 | Odysseus analysis + Stage-2 exploration (5 exploration docs + ADR-006..009) | 2026-06-05 |
+| T-041 | P0-A: core-count fix (core 00–22, skills 00–12) root+platforms CLAUDE.md | 2026-06-05 |
+| T-042 | P0-A: สร้าง skills/game/12-compliance-codes.md + sync 00-overview table | 2026-06-05 |
+| T-043 | P0-A: git_pipeline เข้า core/06 schema | 2026-06-05 |
+| T-044 | P0-A: core/15 C-15–C-19 reserved note | 2026-06-05 |
+| T-045 | A1 core schema draft + retrofit (exploration/a1-core-schema.md) | 2026-06-05 |

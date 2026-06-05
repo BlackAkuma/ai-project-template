@@ -45,7 +45,7 @@ Task:
   id: string                    # required (T-XXX)
   title: string                 # required
   status: enum(todo|design_validate|in_progress|review|done|blocked)  # lifecycle §2
-  source_ref: requirement_id    # required — ห้าม implement ไม่มี source (C-02)
+  source_ref: requirement_id | "spike:<note>"   # required; spike/exploration ใช้ spike: prefix (T-056 resolved)
   owner: { kind: enum(human|ai), ref: string }
   risk_level: enum(0|1|2|3)     # Engine-determined (ADR-008), default unknown→2
   evidence: [evidence_id]       # required ก่อน done (Task Close Gate)
@@ -128,6 +128,8 @@ todo → design_validate → in_progress → review → done
 **Profile sub-gate (ไม่เพิ่ม state ในแกน):** profile แทรกเงื่อนไข *ภายใน* stage
 - เช่น game: `review → done` ต้องมี evidence class=playtest เพิ่ม
 
+> ⚠️ **reconcile note (verification finding):** `skills/game/00-overview` + CLAUDE.md ปัจจุบัน model game lifecycle ว่ามี state `playtest` แยก (`in_progress → playtest → review`) แต่ A1/ADR-009 model เป็น *sub-gate* ใน review → ต้อง reconcile ตอน T-046/T-048 (profile design) ให้ตรงกัน — เลือกแบบ sub-gate (แกนคงที่)
+
 ---
 
 ## 3. AI-CONTEXT block schema (แก้ Critical gap #2 — schema เดียว)
@@ -140,7 +142,27 @@ ai_context:
   # fields ตาม file_kind — typed, ไม่ ad-hoc
   # generated จาก canonical store (ADR-007) — ไม่เขียนมือหลัง P4
 ```
-> P0-B step1: นิยาม field set ต่อ file_kind เป็น typed schema · normalize list delimiter · เพิ่ม schema_version
+
+### Unified work-status fields (T-057 — แก้ field จริง vs core/06 template ที่ต่างกัน)
+canonical (typed) + mapping จาก 2 ชุดที่มีอยู่:
+
+| canonical field | type | จาก template (core/06) | จากไฟล์จริง | หมายเหตุ |
+|-----------------|------|------------------------|-------------|---------|
+| `schema_version` | string | — | — | **ใหม่ required** |
+| `phase` | string | phase | phase | ตรงกัน ✅ |
+| `active_tasks` | [task_id] | focus | active_task | **collision → canonical: `active_tasks`** |
+| `blocker` | string\|none | blocked | blocker | unify เป็น `blocker` |
+| `next` | string | next | next_action | unify เป็น `next` |
+| `updated` | date | updated | last_updated | unify เป็น `updated` |
+| `src` | string | src | (ขาด) | เพิ่มเข้าไฟล์จริง |
+| `adr` | [adr_id] | adr | (ขาด) | เพิ่ม |
+| `risk` | string\|none | risk | (ขาด) | เพิ่ม |
+| `active_branch` | string | (ขาด) | active_branch | เพิ่มเข้า template |
+| `git_*` / `git_pipeline` | string | ✅ (มี git_pipeline แล้ว T-043) | ✅ | ตรงกัน |
+| `read_more` | map | read_more | read_more | ตรงกัน ✅ |
+
+> **กฎ delimiter:** list ใช้ `[a, b]` เสมอ (เลิกปนกับ space-list)
+> P0-B step1: apply schema นี้กับ core/06 template + ไฟล์จริง พร้อมกัน (= งาน implement ของ T-057)
 
 ---
 
@@ -175,9 +197,10 @@ Profile:
 | ADR panel votes | Decision.panel_record | ✅ fit |
 
 **Findings จาก retrofit:**
-1. 🟠 **source_ref บังคับไม่ได้กับ exploration/spike task** → เพิ่ม Requirement.kind=`spike` หรือ allow `source_ref: spike:<note>`
-2. 🟠 **work-status field จริง ≠ core/06 template** (active_task vs focus, blocker vs blocked, last_updated vs updated) → P0-B step1 ต้อง reconcile ให้เป็น schema เดียว (นี่คือ Critical gap #2 ตัวจริงที่ retrofit เผย)
+1. ✅ **source_ref บังคับไม่ได้กับ exploration/spike task** → resolved (T-056): allow `source_ref: spike:<note>` ใน §1 Task
+2. ✅ **work-status field จริง ≠ core/06 template** → resolved (T-057): unified field table ใน §3; apply = P0-B step1
 3. 🟢 Decision/Evidence/Task แกนหลัก fit ดี
+4. 🟠 (verification) playtest modeling ขัดกัน (overview=state vs A1=sub-gate) → reconcile ตอน T-046/048 (note §2)
 
 ---
 

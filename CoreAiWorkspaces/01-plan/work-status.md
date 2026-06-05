@@ -23,10 +23,10 @@ next_action: T-049 full retrofit (research/industrial domain) + T-056/057 (A1 fi
 
 ## สถานะปัจจุบัน
 
-**Phase:** Stage-2 design — exploration เสร็จ กำลังเข้าสู่ schema design
+**Phase:** Stage-2 design — ADR-006..009 Accepted, P0-A done, A1 schema drafted
 **Active branch:** `explore/odysseus-analysis`
 **Released:** v1.10.0 (challenge-necessity + task close gate + behavioral tests) — merged master
-**Blocker:** ⏳ ADR-006 (Stage 2 direction) = Proposed → รอ human approve ก่อนเริ่ม build Engine
+**Blocker:** none (carry-over T-051/052/053 = core ที่ ship แล้ว → รอ whole-project review)
 
 ## สิ่งที่เสร็จ session นี้ (2026-06-05 — Odysseus → Stage 2)
 
@@ -36,7 +36,9 @@ next_action: T-049 full retrofit (research/industrial domain) + T-056/057 (A1 fi
 - positioning refined: **"Governed Project Memory"** (4 market corrections: risk-tiered, multi-agent reframe, อย่า out-index, compose underneath)
 - master plan: 11 phase, critical path ~14-15 สัปดาห์ถึง ship, 6 decision gates, 5 stop points → `exploration/master-plan.md`
 - schema architecture ตกผลึก: CORE (process) + PROFILE (product), compose ได้
-- บันทึก decision เป็น ADR-006..009 (Proposed) + dogfood methodology (งานนี้)
+- ADR-006..009 **Accepted** via 3-lens panel (2/3); 008/009 revised แก้ contrarian FAIL ก่อน accept
+- Scenario O (ADR review panel) codified · P0-A housekeeping done · A1 core schema drafted
+- verification pass (independent agent) → แก้ 5 defect (total_tasks, stale 00–11 ×2, Done table, body)
 
 ## Next Actions
 

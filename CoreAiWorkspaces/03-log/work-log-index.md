@@ -53,6 +53,13 @@ deep_context: exploration/master-plan.md
 **Next:** T-049 full retrofit (domain ห่าง) + T-056/057 → P1 validator
 **Branch:** explore/odysseus-analysis
 
+**ตรวจสอบซ้ำ — independent verification pass (2026-06-05):**
+- spawn verification agent อิสระ audit ทั้งสาย (ADR + A1 schema + housekeeping + tracking)
+- เจอ + แก้ 5 defect: [HIGH] total_tasks 45→48 (math ผิด) · [MED] stale "00–11" ใน CLAUDE.md Skill Pack Detection ×2 (T-041 พลาด) · [LOW] Done table lag (เพิ่ม T-041..045) · [LOW] work-status body stale (ADR Proposed→Accepted) · [LOW] playtest state vs sub-gate (T-058)
+- confirmed correct: cross-ADR consistency, risk_level dependency, carry-over tasks, source cites, A1 soundness, Scenario O
+- T-056 resolved (spike source_ref), T-057 design done (unified work-status schema A1 §3, apply=P0-B)
+- → ตรวจสอบซ้ำได้ผล: paper + verify จับ error ก่อน propagate
+
 ---
 
 ### 2026-06-05 — [Odysseus Analysis → Stage 2 Vision "Governed Project Memory"]
