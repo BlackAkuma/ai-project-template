@@ -2,7 +2,7 @@
 last_session: 2026-06-05
 tool: Claude Code
 completed: [T-040]
-checkpoint: BRD loop active — v0.2 (panel-1 3/3 PASS, consensus gaps fixed), re-review iteration 2 running; parallel: engine P1-2/P2-1/P2-4 done
+checkpoint: BRD v1.0 ACCEPTED (ADR-010, 3-iteration panel 2/3 x3 converged); next = build P1-3 wire hook + OD panels at gates. engine P1-2/P2-1/P2-4 done
 next_from_last: T-049 full retrofit + T-056/057 (A1 findings); then P1 validator
 notes: ADR-006..009 Accepted (panel 2/3). Scenario O codified. P0-A done. A1 core schema drafted (exploration/a1-core-schema.md) — retrofit เจอ 2 gap จริง (spike source_ref, work-status field reconcile).
 released_since_log: v1.6.0–v1.10.0 (HARD RULE, escape valve, challenge-necessity, task close gate, behavioral tests)
@@ -20,6 +20,25 @@ deep_context: exploration/master-plan.md
 | M3: Release Prep (ROADMAP, CHANGELOG, merge to master) | 🔄 todo | — |
 
 ## Recent Sessions
+
+### 2026-06-05 — [BRD v1.0 ACCEPTED via 3-iteration panel (+ marketing)]
+
+**สิ่งที่ทำ:**
+- ร่าง BRD (00-source) = source-of-truth requirements ของ "Governed Project Memory"
+- รัน brd-review-panel 3 รอบ (3 voting lens 2/3 + marketing advisory), log ทุกรอบ:
+  - iter1 v0.1 → 3/3 PASS (contra .60 borderline) → consensus gaps (acceptance criteria/metrics/Plan/GTM ฯลฯ)
+  - iter2 v0.2 → 2/3 PASS (contra FAIL .66, defect จริง: scope/MoSCoW, X placeholder, OD-1 dep) → แก้
+  - iter3 v0.3/v0.4 → 2/3 PASS (contra FAIL .63 บน named-deferrals) → **CONVERGED → LOCK**
+- เคารพ contrarian: iterate ไม่ override; lock เมื่อ contrarian self-acknowledged "named-deferral != incompleteness"
+- marketing ทุกรอบ = viable (thesis/trend แรง, ต้อง GTM/hero-demo/monetization)
+- lock BRD v1.0 = ADR-010 (โปร่งใส, reopenable); OD-1..4 ผูก gate รอ panel เมื่อถึง phase
+
+**Decisions:** BRD v1.0 Accepted (ADR-010) · all reviews logged ใน BRD §13 (อ่านย้อนได้)
+**ผล:** governing requirements doc พร้อม — ขับ build P1+ ได้
+**Next:** P1-3 wire engine→hook (build) + OD panels at gates
+**Branch:** explore/odysseus-analysis
+
+---
 
 ### 2026-06-05 — [ADR Review Panel → Accept ADR-006..009 + codify Scenario O]
 

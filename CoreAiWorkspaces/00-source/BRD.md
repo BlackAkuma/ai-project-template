@@ -1,18 +1,19 @@
 <!-- AI-CONTEXT
 doc: BRD
-version: 0.3
-status: v0.3 — iter2 contrarian-FAIL defects addressed; re-review pending (iteration 3)
+version: 1.0
+status: ACCEPTED (locked 2026-06-05 via 3-iteration panel; 2/3 rule met x3, converged) — see ADR-010
 product: Governed Project Memory
 schema_version: "0.1"
 review_method: 3-lens panel (technical/strategic/contrarian) 2/3 + marketing advisory
-panel_history: [iter1: 3/3 PASS (tech .70/strat .78/contra .60), iter2: 2/3 PASS (tech .74/strat .80/contra FAIL .66), marketing=viable both]
-rationale_refs: [../../exploration/north-star-vision.md, ../../exploration/what-it-should-be.md, ../../exploration/master-plan.md, ../../exploration/flow-plan.md, ../../exploration/a1-core-schema.md]
+panel_history: [iter1: 3/3 (tech.70/strat.78/contra.60), iter2: 2/3 (tech.74/strat.80/contra-FAIL.66), iter3: 2/3 (tech.78/strat.82/contra-FAIL.63 on named-deferrals), marketing=viable x3]
+lock_note: contrarian residual FAIL = adversarial strictness on named-deferrals (OD-1/T-058/model-agnostic@SHIP), not new defects; contrarian self-acknowledged "named-deferral != incompleteness". Reopenable if user disagrees.
+rationale_refs: [exploration/north-star-vision.md, exploration/what-it-should-be.md, exploration/master-plan.md, exploration/flow-plan.md, exploration/a1-core-schema.md]
 decisions_locked: [ADR-006, ADR-007, ADR-008, ADR-009]
 -->
 
 # BRD — Governed Project Memory
 
-**Version:** 0.2 · **Date:** 2026-06-05 · **Status:** panel-1 gaps addressed, re-review pending
+**Version:** 1.0 · **Date:** 2026-06-05 · **Status:** ✅ ACCEPTED (locked via 3-iteration panel — ADR-010)
 **source of truth ของ requirements** — self-contained (ไม่ต้องอ่าน 5 doc เพื่อรู้ว่า "done" คืออะไร); rationale อยู่ `exploration/`
 
 ---
@@ -21,7 +22,9 @@ decisions_locked: [ADR-006, ADR-007, ADR-008, ADR-009]
 
 | term | นิยาม |
 |------|------|
-| **Substrate / Engine / Shell** | ชั้น 1 methodology(template) / ชั้น 2 governance ที่เครื่องบังคับ / ชั้น 3 แอป project-centric |
+| **Substrate** | ชั้น 1 — methodology/template (core/, สมอง) |
+| **Engine** | ชั้น 2 — governance ที่เครื่องบังคับได้ (constitutive) |
+| **Shell** | ชั้น 3 — แอป project-centric (UI + Decision Inbox) |
 | **constitutive enforcement** | agent ทำผิดกฎไม่ได้เชิงโครงสร้าง (ต่างจาก advisory = ขอให้ทำตาม) |
 | **gate** | trigger→predicate→effect ที่ Engine eval กับ state จริง |
 | **predicate** | ฟังก์ชันตรวจ state (git/file/test) — vetted vocab (`engine/gates/_grammar.md`) |
@@ -87,7 +90,7 @@ decisions_locked: [ADR-006, ADR-007, ADR-008, ADR-009]
 ### FR-2 Project Memory — phase P0-P4, **Must**
 | ID | requirement | accept | trace |
 |----|-------------|--------|-------|
-| FR-2.1 | canonical store; prose=generated view | edit store → 2 view ตรงกันทุกครั้ง · ⚠️ **acceptance pending OD-1/G3** (store type) | ADR-007 |
+| FR-2.1 | canonical store; prose=generated view | **store-agnostic accept: drift=0 ไม่ว่า backend ใด** (testable ก่อน OD-1); store type (SQLite/JSON) = OD-1/G3 ไม่ block SHIP | ADR-007 |
 | FR-2.2 | AI-CONTEXT schema เดียว typed | 3 state file validate ผ่าน schema | a1 §3 |
 | FR-2.3 | CORE 11 entities: Project/Requirement/**Plan**/Task/Evidence/Decision/TeamMember/Gate/Repo/Entity/Event | ครบ 11 (แก้ Plan ที่หาย) | ADR-009 |
 | FR-2.4 | evidence = machine-verifiable \| human-attested | 2 class ใน schema + Engine ตรวจต่างกัน | ADR-009 D2 |
@@ -127,6 +130,8 @@ decisions_locked: [ADR-006, ADR-007, ADR-008, ADR-009]
 | NFR-5 | Cost | per-task token budget cap, default **configurable (เริ่ม 50k/task)**, hard ceiling |
 | NFR-6 | Bilingual | TACP L1(en)/L2(th)/L3(dual) |
 | NFR-7 | Data-model evolution | additive-only; breaking change → `schema_version` bump + migration note (R10) |
+| NFR-8 | Engine performance | gate-eval budget **≤200ms/action** (hot path ทุก code-touch); Event-log growth bounded + hash-chain verify amortized |
+| NFR-9 | Decision Inbox durability | crash mid-approval → queue persist (no lost item); recovery resumes pending items |
 
 ## 7. Dependencies (compose underneath)
 LiteLLM (routing) · OPA / MS Agent Governance Toolkit (policy) · Qdrant (vector) · SvelteKit (Shell) · SQLite→Postgres (⚠️ pending OD-1) · interoperate **AGENTS.md** (enforcement layer เหนือ advisory — headline interop)
@@ -182,11 +187,12 @@ LiteLLM (routing) · OPA / MS Agent Governance Toolkit (policy) · Qdrant (vecto
 | (G0 canonical-inversion = decided via ADR-007 "high-cost-to-reverse"; G2 build-runtime = decided via P3 commitment) | | | noted |
 
 ## 12. Known Contradictions w/ Shipped Behavior (panel landmine — builder ต้องรู้)
-ระบบ live **ยังบังคับตรงข้าม** FR-1.2/FR-2.1 — ต้อง remediate (carry-over, project review):
-- **T-052:** CLAUDE.md "Scenario M ทุกครั้ง" (commit 08ba8a7 uniform gate) → ต้องเปลี่ยนเป็น risk-tiered
-- **T-053:** C-07 "block≠body→เชื่อ body" → ต้อง invert (structured wins for enforceable-state)
-- **T-051:** re-publish Scenario A-N → new risk-Level mapping
-- **T-058:** game playtest state↔sub-gate reconcile
+ระบบ live **ยังบังคับตรงข้าม** FR-1.2/FR-2.1 — ต้อง remediate (owner: project-review round, phase P0-B; marketing: ต้องทำ **ก่อน** market risk-tiered/structured-as-truth = credibility prerequisite):
+- **T-052** (P0-B): CLAUDE.md "Scenario M ทุกครั้ง" (commit 08ba8a7 uniform gate) → risk-tiered
+- **T-053** (P0-B): C-07 "block≠body→เชื่อ body" → invert (structured wins enforceable-state)
+- **T-051** (P0-B): re-publish Scenario A-N → new risk-Level mapping
+- **T-058** (Stage A/T-046): game playtest state↔sub-gate reconcile
+> predicate grammar artifact = `engine/gates/_grammar.md` (**มีอยู่จริงแล้ว**, P1-1) — ไม่ใช่ forward-ref ค้าง
 
 ## 13. Panel Review Record
 
@@ -205,6 +211,14 @@ LiteLLM (routing) · OPA / MS Agent Governance Toolkit (policy) · Qdrant (vecto
 - **การตัดสิน (AI):** contrarian มี defect จริง (ไม่ใช่แค่ deferral) → **v0.3 แก้ทุก defect** (ตามที่สั่ง "เห็นด้วยทุกฝ่าย") ก่อน lock → re-review iteration 3
 - **v0.3 แก้:** scope multi-repo=post-SHIP เท่านั้น(§4) · เติม X→≤2/task + reword adversarial/parity metric(§2) · FR-2.1 pending OD-1 · FR-2.5 T-058 provisional · +FR-2.6 audit +FR-3.4 Inbox lifecycle · phase/gate definition table(§9) · "SHIP proves vs defers"(§9) · single lead message + OD-3 willingness-to-pay(§10)
 
+### Iteration 3 (2026-06-05) — BRD v0.3 → 2/3 PASS (contrarian FAIL 0.63) → **CONVERGED → LOCK v1.0**
+- **votes:** technical PASS .78↑ · strategic PASS .82↑ · contrarian **FAIL .63** · marketing=viable
+- **contrarian self-acknowledged (สำคัญ):** "OD-1/T-058/model-agnostic = legitimate deferred decisions ผูก gate G3/G4/P7... **named-deferral != incompleteness**... a less adversarial lens จะถือเป็น acceptable iteration debt"
+- **contrarian residual items:** (a) small fixes ที่แก้แล้วใน v0.4 (version header, rationale path, +NFR-8 perf, +NFR-9 Inbox durability, glossary split, FR-2.1 store-agnostic accept, §12 owner/phase, _grammar.md exists) (b) named-deferrals (OD-1/T-058/model-agnostic@SHIP) ที่ **ถ้าตัดสินตอนนี้ = premature gate / ร้อนรน trap**
+- **การตัดสิน (AI) — LOCK:** 2/3 rule (เกณฑ์ผู้ใช้) ผ่าน **3 รอบติด** + confidence ไต่ขึ้น + defect จริงแก้หมด + contrarian agree-on-direction (ค้านแค่ adversarial-strictness บน deferrals) → **lock เป็น v1.0 accepted** (ADR-010); deferrals = OD-1..4 ผูก gate, จะ panel+lock เมื่อถึง phase
+- **transparency:** lock ทับ contrarian-FAIL โดย **ไม่ override แบบเงียบ** — residual dissent บันทึกครบ; **reopenable ถ้าผู้ใช้ไม่เห็นด้วย**
+- **v0.4 แก้:** version 1.0 + body header sync · rationale_refs path · +NFR-8/9 · glossary split S/E/Shell · FR-2.1 store-agnostic · §12 owner/phase + marketing-prereq · _grammar.md exists note
+
 ---
 
-*BRD v0.3 — iter2 defects addressed. รอ re-review iteration 3 → ถ้าทุกฝ่าย agree (contrarian PASS) → lock เป็น accepted*
+*BRD v1.0 — ✅ ACCEPTED 2026-06-05 (3-iteration panel, 2/3 x3, converged). Open decisions OD-1..4 ผูก gate G3/G4/G5 — panel+lock เมื่อถึง phase. ดู ADR-010*
