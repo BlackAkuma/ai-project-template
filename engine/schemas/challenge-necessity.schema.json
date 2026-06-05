@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "challenge-necessity record (Scenario M step 0)",
+  "description": "Presence/structure contract — Engine ตรวจว่า field ครบ+ไม่ trivial; ไม่ตัดสิน quality (ADR-008, enforce presence not quality)",
+  "type": "object",
+  "required": ["necessity"],
+  "properties": {
+    "necessity": {
+      "type": "object",
+      "required": ["a_why", "b_source", "c_simpler", "lenses"],
+      "properties": {
+        "a_why": { "type": "string", "minLength": 10, "description": "task นี้ทำเพื่ออะไร" },
+        "b_source": { "type": "string", "minLength": 5, "description": "source reference (file:section) หรือ spike:<note>" },
+        "c_simpler": { "type": "string", "minLength": 10, "description": "มีทางที่เล็ก/ง่ายกว่าไหม" },
+        "lenses": {
+          "type": "object",
+          "required": ["expert", "technical", "contrarian"],
+          "properties": {
+            "expert": { "type": "string", "minLength": 10 },
+            "technical": { "type": "string", "minLength": 10 },
+            "contrarian": { "type": "string", "minLength": 10, "description": "เหตุผลแข็งแกร่งที่สุดที่ไม่ควรทำ — บังคับ ห้าม 'ไม่มี'" }
+          }
+        }
+      }
+    }
+  }
+}

@@ -91,3 +91,35 @@ def evidence_count_gte(ctx, task=None, n=1, **_):
 @resolver("human_signoff")
 def human_signoff(ctx, ref=None, **_):
     return False  # stub — needs Decision Inbox (P6)
+
+
+@resolver("challenge_record_valid")
+def challenge_record_valid(ctx, record=None, min_len=10, **_):
+    """P2-3: validate challenge-necessity record presence/structure (not quality).
+    `record` = dict (inline) or path to JSON. Required: a_why/b_source/c_simpler + 3 lenses;
+    contrarian lens must be non-trivial (บังคับ produce real objection)."""
+    import json as _json
+    rec = record
+    if isinstance(record, str):
+        p = os.path.join(ctx["root"], record)
+        if not os.path.exists(p):
+            return False
+        try:
+            rec = _json.load(open(p, encoding="utf-8"))
+        except Exception:
+            return False
+    if not isinstance(rec, dict):
+        return False
+    nec = rec.get("necessity", rec)
+
+    def ok(v, n=min_len):
+        return isinstance(v, str) and len(v.strip()) >= n
+
+    if not all(ok(nec.get(k)) for k in ("a_why", "c_simpler")):
+        return False
+    if not ok(nec.get("b_source"), 5):
+        return False
+    lenses = nec.get("lenses", {})
+    if not all(ok(lenses.get(k)) for k in ("expert", "technical", "contrarian")):
+        return False
+    return True

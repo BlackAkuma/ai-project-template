@@ -9,6 +9,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from resolvers import (  # noqa: E402
     secret_absent, placeholder_absent, file_exists, entry_exists,
     status_equals, evidence_count_gte, git_staged_clean_of,
+    challenge_record_valid,
 )
 
 
@@ -44,6 +45,17 @@ with tempfile.TemporaryDirectory() as d:
     check("file_exists missing -> False", file_exists(ctx(root=d), path="nope.md") is False)
     check("entry_exists -> True", entry_exists(ctx(root=d), file="x.md", key="T-001") is True)
     check("entry_exists missing key -> False", entry_exists(ctx(root=d), file="x.md", key="T-999") is False)
+
+# challenge_record_valid (P2-3) — presence/structure
+_good = {"necessity": {"a_why": "build the engine validator", "b_source": "BRD FR-1.1",
+         "c_simpler": "reuse validate-commit.sh generalized",
+         "lenses": {"expert": "similar pattern exists in hooks", "technical": "low complexity reversible",
+                    "contrarian": "could be advisory-only and skipped by weak model"}}}
+check("challenge valid -> True", challenge_record_valid(ctx(), record=_good) is True)
+_nocontra = {"necessity": dict(_good["necessity"], lenses={"expert": "x"*12, "technical": "y"*12, "contrarian": "no"})}
+check("challenge trivial contrarian -> False", challenge_record_valid(ctx(), record=_nocontra) is False)
+_nosrc = {"necessity": dict(_good["necessity"], b_source="")}
+check("challenge no source -> False", challenge_record_valid(ctx(), record=_nosrc) is False)
 
 failed = [n for n, ok in cases if not ok]
 for n, ok in cases:
