@@ -2,7 +2,7 @@
 last_session: 2026-06-05
 tool: Claude Code
 completed: [T-040]
-checkpoint: MVW reached (P1+P2: 6 gates, 9 resolvers, 14/14 tests, CI, challenge validator). G1 decided=C-conservative (ADR-011, user, panel 2/3). next: P3 interception (protected critical path) + soft-ship prep (timeboxed)
+checkpoint: P3-1 done — Event log + hash-chain tamper-evidence (engine/events.py, 3/3 tamper tests: fake/delete/reorder all DETECTED) = first constitutive piece + adversarial proof. soft-ship DEMO.md done. next P3-2 gated mark_done tool. G1=C-conservative (ADR-011)
 next_from_last: T-049 full retrofit + T-056/057 (A1 findings); then P1 validator
 notes: ADR-006..009 Accepted (panel 2/3). Scenario O codified. P0-A done. A1 core schema drafted (exploration/a1-core-schema.md) — retrofit เจอ 2 gap จริง (spike source_ref, work-status field reconcile).
 released_since_log: v1.6.0–v1.10.0 (HARD RULE, escape valve, challenge-necessity, task close gate, behavioral tests)
