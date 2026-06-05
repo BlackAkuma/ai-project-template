@@ -200,7 +200,19 @@ Profile:
 1. ✅ **source_ref บังคับไม่ได้กับ exploration/spike task** → resolved (T-056): allow `source_ref: spike:<note>` ใน §1 Task
 2. ✅ **work-status field จริง ≠ core/06 template** → resolved (T-057): unified field table ใน §3; apply = P0-B step1
 3. 🟢 Decision/Evidence/Task แกนหลัก fit ดี
-4. 🟠 (verification) playtest modeling ขัดกัน (overview=state vs A1=sub-gate) → reconcile ตอน T-046/048 (note §2)
+4. ✅ (verification) playtest modeling → **เลือก sub-gate** (T-058, note §2); align game docs ตอน T-046
+
+### T-049 — retrofit domain ห่าง (research + industrial) เพื่อ stress-test core/profile line
+
+| domain | map เข้า CORE | profile (variant) | fit? |
+|--------|--------------|-------------------|------|
+| **Research** | Requirement=hypothesis/question · Task=experiment/analysis · Evidence=reproduced_result/dataset_validated · lifecycle: design_validate=hypothesis review, review=peer review | research: evidence_kinds[reproduced_result, dataset_validated], roles[researcher, reviewer], toolchain[notebook/compute], doc_types[research-plan, results] | 🟢 CORE fit · hypothesis fuzzy → `spike:` (T-056) ครอบ |
+| **Industrial/embedded** | Requirement=safety-spec · Task=control-module · Evidence=hil_test(machine)+safety_cert(human-attested+external) · lifecycle: design_validate=safety review | industrial: evidence_kinds[hil_test, safety_cert, compliance_audit], roles[safety-engineer], toolchain[PLC/simulator], doc_types[FMEA, safety-spec] | 🟢 CORE fit · ยืนยัน D2 machine/attested split ถูก |
+
+**Findings T-049:**
+- ✅ **process layer (CORE) ครอบ 2 domain ห่างได้** — Project/Task/Evidence/Decision/Gate ไม่ต้องแตะ
+- 🟠 industrial เพิ่ม **evidence subtype `external-cert`** (cert จาก regulator ภายนอก) → เป็น human-attested ชนิดพิเศษ (Engine ตรวจ presence + cert-id) → เพิ่มใน Evidence.type enum (additive)
+- 🟢 core/profile line ผ่าน stress-test → ยืนยัน Option C (ADR-009) ถูก; ไม่เจอ domain ที่ใส่กรอบ process ไม่ได้
 
 ---
 
