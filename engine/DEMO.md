@@ -29,6 +29,15 @@ $ python engine/test_events.py
 ```
 agent แก้ไฟล์ state เพื่อโกง → **chain แตก = ตรวจจับได้** (ยังไม่ใช่ full interception แต่คือ data-level constitutive)
 
+## Demo 3 — gated mutation + faked-done detection (P3-2)
+```bash
+$ python engine/test_govern.py
+  PASS  legit mark_done ok                          # ผ่าน gate → done + signed event
+  PASS  missing-evidence mark_done blocked          # ไม่มีหลักฐาน → block → Decision Inbox
+  PASS  ADVERSARIAL: faked T-999 (direct edit) DETECTED   # ← แกล้ง done ตรงๆ → audit จับได้
+```
+**ทางเดียวที่ legit ที่จะ mark done = ผ่าน gate (มีหลักฐาน) + บันทึก signed Event** · แก้ board ตรงๆ เพื่อโกง → audit เจอ done-without-event → **โกงไม่ได้เชิงโครงสร้าง**
+
 ## Risk-tiered (ไม่ใช่ uniform — กัน approval fatigue)
 L0 triage(always) · L1 auto-log · L2 → Decision Inbox · L3 hard-stop · classification = Engine-determined
 
