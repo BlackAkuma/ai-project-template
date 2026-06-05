@@ -39,6 +39,15 @@ Requirement:
   supersedes: id?
 ```
 
+### Plan (panel fix — หายไปจาก draft แรก, ADR-009 มี)
+```yaml
+Plan:
+  id: string
+  milestones: [{ id, title, target_date, status }]
+  dependencies: [{ from: task_id|milestone_id, to: task_id|milestone_id }]
+  phase_map: { phase_id: [task_id] }   # FR→phase (MoSCoW)
+```
+
 ### Task
 ```yaml
 Task:
