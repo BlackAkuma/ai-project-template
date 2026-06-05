@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 # Hook: validate-commit
 # รันอัตโนมัติก่อน git commit
 # Event: PreToolUse (Bash tool ที่มี "git commit")
@@ -46,7 +46,8 @@ if [[ "$CURRENT_BRANCH" == "main" || "$CURRENT_BRANCH" == "master" ]]; then
 fi
 
 # Doc Sync Check — ถ้า commit มี code files แต่ core docs มี unstaged changes
-CODE_STAGED=$(git diff --cached --name-only | grep -v "^CoreAiWorkspaces/" | grep -c "." 2>/dev/null || echo 0)
+CODE_STAGED=$(git diff --cached --name-only | grep -v "^CoreAiWorkspaces/" | grep -c "." 2>/dev/null)
+CODE_STAGED=${CODE_STAGED:-0}
 DOCS_DIRTY=$(git diff --name-only -- \
   "CoreAiWorkspaces/01-plan/work-status.md" \
   "CoreAiWorkspaces/02-task/task-board.md" \
@@ -73,6 +74,19 @@ if [ "$CODE_STAGED" -gt 0 ] && [ "$DOCS_DIRTY" -gt 0 ]; then
     echo "       รัน /caw-session-end เพื่อ sync docs ก่อน push"
     echo "       (หรือใช้ SKIP_DOC_SYNC=1 git commit ... เพื่อข้าม — จะ log ไว้ใน work-log-index.md)"
   fi
+fi
+
+# Engine integration (P1-3) — data-driven gates (engine/gates/*.yaml) as ADVISORY cross-check.
+# Inline logic above stays authoritative until P1-5 parity is verified.
+# Wrapped so the Engine can NEVER block a commit (engine error/missing → skip, never fail).
+if command -v python >/dev/null 2>&1 && [ -f engine/check.py ]; then
+  echo "--- Engine (rules-as-data) advisory ---"
+  for g in secret-scan doc-sync; do
+    if [ -f "engine/gates/$g.yaml" ]; then
+      OUT=$(python engine/check.py "$g" 2>&1 || true)
+      echo "[ENGINE:$g] $(printf '%s' "$OUT" | head -n1)"
+    fi
+  done
 fi
 
 if [ $FAIL -gt 0 ]; then

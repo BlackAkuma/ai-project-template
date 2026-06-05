@@ -5,9 +5,9 @@ blocked: []
 done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022,T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031,T-032,T-033,T-034,T-035,T-040,T-041,T-042,T-043,T-044,T-045,T-049,T-056,T-058]
 todo: [T-044b,T-046,T-047,T-048,T-050,T-051,T-052,T-053,T-054,T-055,T-057,P1-*,P2-*]
 last_updated: 2026-06-05
-priority_next: P1-3 wire engine/check.py → validate-commit.sh → P1-4/5 parity → P2-2/3/5 → G1
+priority_next: P1-4 migrate remaining checks → data → P1-5 parity → P2-2/3/5 → G1
 backlog: exploration/flow-plan.md §3 (granular micro-tasks + flow-gate policy)
-note: P1-2/P2-1/P2-4 done — engine/check.py works+verified (8 resolvers, risk-tier). evidence_count heuristic conservative (real structured evidence=P4)
+note: P1-3 done (engine wired into hook as advisory, never-block; +fixed 2 hook bugs BOM/integer). BRD v1.0 locked (ADR-010). engine/check.py works (8 resolvers, risk-tier)
 note: T-051..053 = carry-over กระทบ core ที่ ship แล้ว → รอ whole-project review round
 -->
 

@@ -2,7 +2,7 @@
 last_session: 2026-06-05
 tool: Claude Code
 completed: [T-040]
-checkpoint: BRD v1.0 ACCEPTED (ADR-010, 3-iteration panel 2/3 x3 converged); next = build P1-3 wire hook + OD panels at gates. engine P1-2/P2-1/P2-4 done
+checkpoint: P1-3 done — engine wired into validate-commit.sh (advisory, never-block) + fixed 2 hook bugs (BOM shebang, grep-c integer error); tested. next P1-4/5 parity. BRD v1.0 locked (ADR-010)
 next_from_last: T-049 full retrofit + T-056/057 (A1 findings); then P1 validator
 notes: ADR-006..009 Accepted (panel 2/3). Scenario O codified. P0-A done. A1 core schema drafted (exploration/a1-core-schema.md) — retrofit เจอ 2 gap จริง (spike source_ref, work-status field reconcile).
 released_since_log: v1.6.0–v1.10.0 (HARD RULE, escape valve, challenge-necessity, task close gate, behavioral tests)
