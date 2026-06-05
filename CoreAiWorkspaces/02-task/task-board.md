@@ -1,11 +1,11 @@
 <!-- AI-CONTEXT
-total_tasks: 44
+total_tasks: 45
 in_progress: []
 blocked: []
-done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022,T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031,T-032,T-033,T-034,T-035,T-040]
-todo: [T-041,T-042,T-043,T-044,T-045,T-046,T-047,T-048,T-049,T-050,T-051,T-052,T-053,T-054,T-055]
+done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022,T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031,T-032,T-033,T-034,T-035,T-040,T-041,T-042,T-043,T-044]
+todo: [T-044b,T-045,T-046,T-047,T-048,T-049,T-050,T-051,T-052,T-053,T-054,T-055]
 last_updated: 2026-06-05
-priority_next: P0-A housekeeping (T-041..044, safe) — ADR-006..009 Accepted, unblocked
+priority_next: A1 core schema (T-045) — P0-A housekeeping done
 note: T-051..053 = carry-over กระทบ core ที่ ship แล้ว → รอ whole-project review round
 -->
 
@@ -17,16 +17,17 @@ note: T-051..053 = carry-over กระทบ core ที่ ship แล้ว �
 
 ## Todo (unblocked — ADR-006..009 Accepted 2026-06-05)
 
-### P0-A — Housekeeping (safe, reversible — ทำได้เลย)
+### ✅ P0-A — Housekeeping (DONE 2026-06-05)
 
-| Task | Description | Source | Risk |
-|------|-------------|--------|------|
-| T-041 | แก้ core-count contradiction (docs บอก 00–18/21 จริง 00–22) | what-it-should-be §3 | L1 |
-| T-042 | สร้าง `skills/game/04-compliance-codes.md` ที่หาย (อ้าง ~20×) | what-it-should-be §3 | L1 |
-| T-043 | เพิ่ม `git_pipeline` เข้า core/06 work-status schema | what-it-should-be §3 | L1 |
-| T-044 | define/rename C-15..C-19 (undefined + ชนกับ run-audit test ID) | what-it-should-be §3 | L1 |
+| Task | Description | ผล |
+|------|-------------|-----|
+| T-041 | แก้ core-count (root+platforms CLAUDE.md → core 00–22, skills 00–12) | ✅ |
+| T-042 | สร้าง `skills/game/12-compliance-codes.md` (consolidated index) + sync 00-overview table (04/05 ผิด) | ✅ |
+| T-043 | เพิ่ม `git_pipeline` เข้า core/06 schema (field table + template block) | ✅ |
+| T-044 | core/15: note C-15–C-19 reserved + flag run-audit collision | ✅ |
+| T-044b | rename run-audit.sh test-ID "C-15".."C-19" → prefix อื่น (กัน namespace ชน) | todo |
 
-### Stage A — Design & Validate Contract (paper-first, no code)
+### Stage A — Design & Validate Contract (paper-first, no code) ← next: T-045
 
 | Task | Description | Decision | Source |
 |------|-------------|----------|--------|

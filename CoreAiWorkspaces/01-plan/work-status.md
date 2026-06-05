@@ -1,6 +1,6 @@
 <!-- AI-CONTEXT
-phase: stage2-design (ADRs accepted → P0-A housekeeping next)
-active_task: ADR-006..009 Accepted via panel; next P0-A (T-041..044, safe housekeeping)
+phase: stage2-design (ADRs accepted, P0-A done → Stage A schema next)
+active_task: P0-A housekeeping done (T-041..044); next T-045 (A1 core schema)
 blocker: none (carry-over T-051..053 deferred to whole-project review)
 last_updated: 2026-06-05
 git_mode: branch-separated
@@ -14,7 +14,7 @@ read_more:
   plan: exploration/master-plan.md
   decisions: CoreAiWorkspaces/07-decisions/README.md (ADR-006..009 Accepted)
   adr_panel: CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md §7 (Scenario O)
-next_action: P0-A housekeeping T-041..044 (safe, ทำได้เลย)
+next_action: A1 core schema (T-045) — P0-A housekeeping done
 -->
 
 # Work Status — ai-project-template

@@ -3,8 +3,8 @@ last_session: 2026-06-05
 tool: Claude Code
 completed: [T-040]
 checkpoint: none
-next_from_last: P0-A housekeeping (T-041..044)
-notes: ADR-006..009 Accepted via 3-lens panel (2/3). 008/009 revised per contrarian FAIL. Scenario O (ADR review panel) codified. carry-over T-051/052/053 deferred to project review.
+next_from_last: A1 core schema (T-045)
+notes: ADR-006..009 Accepted via 3-lens panel (2/3). 008/009 revised. Scenario O codified. P0-A housekeeping done (T-041..044). carry-over T-051/052/053 + T-044b deferred.
 released_since_log: v1.6.0–v1.10.0 (HARD RULE, escape valve, challenge-necessity, task close gate, behavioral tests)
 deep_context: exploration/master-plan.md
 -->
@@ -37,7 +37,13 @@ deep_context: exploration/master-plan.md
 **Decisions:** ADR-006..009 Accepted · Scenario O = standing protocol (every ADR → panel → 2/3 → log)
 **AI autonomy used:** revise เรื่องเล็ก/safe เอง + log; เรื่องใหญ่ (core ที่ ship) → task รอ review
 **ผล:** governance pattern จาก product vision = ใช้จริงด้วยมือแล้ว (dogfood ขั้นสุด)
-**Next:** P0-A housekeeping T-041..044
+
+**P0-A housekeeping (ทำต่อในรอบเดียวกัน — delegated small tasks):**
+- T-041 ✅ core-count: root+platforms CLAUDE.md → core 00–22, skills 00–12
+- T-042 ✅ สร้าง `skills/game/12-compliance-codes.md` (consolidated G/A/N/U/L index); เจอ bonus gap: 00-overview table แถว 04/05 ผิด (อ้าง compliance-codes/game-session-end ที่ไม่มี) → sync ให้ตรงไฟล์จริง (playtest-report/balance-check). หมายเหตุ: เดิมตั้งชื่อ 04 ชนกับ playtest-report → rename เป็น 12
+- T-043 ✅ git_pipeline เข้า core/06 (field table + template block)
+- T-044 ✅ core/15 note C-15–C-19 reserved + flag run-audit collision (T-044b ตามมา)
+**Next:** A1 core schema (T-045)
 **Branch:** explore/odysseus-analysis
 
 ---

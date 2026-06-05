@@ -76,6 +76,9 @@ Protocol สำหรับตรวจสอบ code quality และ document
 | C-13 | task-board done section ใหญ่เกิน | > 15 รายการ — แนะนำ archive |
 | C-14 | entity-register ไม่ได้อัปเดตเมื่อ tech เปลี่ยน | task ที่ deprecated/เพิ่ม tech ใหม่ แต่ entity-register ไม่เปลี่ยน |
 
+> **C-15–C-19 = reserved (ยังไม่ใช้)** — compliance code ถัดไปคือ C-20–C-22 ใน `core/19` (memory architecture)
+> ⚠️ `tests/audit/run-audit.sh` ใช้ label "C-15".."C-19" เป็น *test-assertion ID* (คนละ namespace) → ควร rename เป็น prefix อื่น (task T-044b)
+
 ---
 
 ---
