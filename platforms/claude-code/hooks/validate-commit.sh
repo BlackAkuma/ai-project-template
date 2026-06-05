@@ -81,7 +81,7 @@ fi
 # Wrapped so the Engine can NEVER block a commit (engine error/missing → skip, never fail).
 if command -v python >/dev/null 2>&1 && [ -f engine/check.py ]; then
   echo "--- Engine (rules-as-data) advisory ---"
-  for g in secret-scan doc-sync; do
+  for g in secret-scan doc-sync placeholder-scan prototype-scan; do
     if [ -f "engine/gates/$g.yaml" ]; then
       OUT=$(python engine/check.py "$g" 2>&1 || true)
       echo "[ENGINE:$g] $(printf '%s' "$OUT" | head -n1)"

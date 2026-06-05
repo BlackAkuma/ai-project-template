@@ -1,0 +1,16 @@
+id: placeholder_scan
+version: 1
+description: ไม่มี unresolved placeholder ใน staged diff (C-04)
+trigger:
+  action: commit
+risk_level: 1                 # reversible → warn (ADR-008 L1)
+requires:
+  - check: placeholder_absent
+    class: machine
+    patterns:
+      - "<NEEDS_CLARIFICATION"
+      - "<PROJECT_NAME>"
+      - "<CURRENT_DATE>"
+on_fail:
+  effect: warn
+  message: "พบ unresolved placeholder ใน staged — review ก่อน commit (C-04)"

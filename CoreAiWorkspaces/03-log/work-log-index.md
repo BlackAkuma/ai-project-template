@@ -2,7 +2,7 @@
 last_session: 2026-06-05
 tool: Claude Code
 completed: [T-040]
-checkpoint: P1-3 done — engine wired into validate-commit.sh (advisory, never-block) + fixed 2 hook bugs (BOM shebang, grep-c integer error); tested. next P1-4/5 parity. BRD v1.0 locked (ADR-010)
+checkpoint: P1 DONE (P1-1..5) — engine/ 5 gates as data + 8 resolvers + 11/11 smoke tests + wired into hook (advisory). next P2 (challenge-necessity validator + CI) → G1. BRD v1.0 locked
 next_from_last: T-049 full retrofit + T-056/057 (A1 findings); then P1 validator
 notes: ADR-006..009 Accepted (panel 2/3). Scenario O codified. P0-A done. A1 core schema drafted (exploration/a1-core-schema.md) — retrofit เจอ 2 gap จริง (spike source_ref, work-status field reconcile).
 released_since_log: v1.6.0–v1.10.0 (HARD RULE, escape valve, challenge-necessity, task close gate, behavioral tests)
