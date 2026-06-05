@@ -1,11 +1,11 @@
 <!-- AI-CONTEXT
 doc: BRD
-version: 0.2
-status: v0.2 — panel-1 consensus gaps addressed; re-review pending (iteration 2)
+version: 0.3
+status: v0.3 — iter2 contrarian-FAIL defects addressed; re-review pending (iteration 3)
 product: Governed Project Memory
 schema_version: "0.1"
 review_method: 3-lens panel (technical/strategic/contrarian) 2/3 + marketing advisory
-panel_history: [iter1: 3/3 PASS (tech .70/strat .78/contra .60 borderline), marketing=viable]
+panel_history: [iter1: 3/3 PASS (tech .70/strat .78/contra .60), iter2: 2/3 PASS (tech .74/strat .80/contra FAIL .66), marketing=viable both]
 rationale_refs: [../../exploration/north-star-vision.md, ../../exploration/what-it-should-be.md, ../../exploration/master-plan.md, ../../exploration/flow-plan.md, ../../exploration/a1-core-schema.md]
 decisions_locked: [ADR-006, ADR-007, ADR-008, ADR-009]
 -->
@@ -40,11 +40,11 @@ decisions_locked: [ADR-006, ADR-007, ADR-008, ADR-009]
 
 | Goal | Metric (target + method) |
 |------|--------------------------|
-| Governance enforce จริง | adversarial bypass blocked = **100%** (suite: agent พยายาม `echo>>task-board` mark done ฯลฯ, N≥10 เคส, 0 bypass) |
+| Governance enforce จริง | bypass blocked = **100% ของ maintained adversarial suite** (N≥10, expandable +cases/release, fuzz/red-team) — "known attack classes" ชัดเจน |
 | Context ไม่ drift | block↔body mismatch = **0** (generated จาก store; CI check) |
-| Model-agnostic | swap frontier↔local 7B → governance test pass **เท่าเดิม** (regression suite) |
-| ลด review load | **Level-1 auto-pass ≥70%** ของ action · Decision Inbox ≤ X/task (วัดจาก event log) |
-| Multi-repo | cross-repo impact detect **100%** ของ declared dependency change |
+| Model-agnostic (≥floor) | swap frontier↔local 7B (**at-or-above floor**) → governance test pass เท่าเดิม (regression) |
+| ลด review load | **Level-1 auto-pass ≥70%** · **Decision Inbox ≤2/task** (median, จาก event log) |
+| Multi-repo *(post-SHIP, P9)* | cross-repo impact detect 100% ของ declared dependency change — **ไม่ใช่ SHIP metric** |
 
 ## 3. Target Users & Competitive Position
 
@@ -63,8 +63,9 @@ decisions_locked: [ADR-006, ADR-007, ADR-008, ADR-009]
 
 ## 4. Scope
 
-**In:** Substrate · Engine · Shell · CORE + **game profile เดียว (deep) + extension hook** · self-hosted, model-agnostic, multi-repo orchestration
-> ⚠️ reconcile (ADR-009 guidance): substrate phase = game profile เดียว; **compose-engine (web-game) defer post-SHIP** (แก้ scope ที่ panel ชี้ว่ากว้างเกิน)
+**In (at SHIP/P6):** Substrate · Engine · Shell · CORE + **game profile เดียว (deep) + extension hook** · self-hosted, model-agnostic
+**In (post-SHIP):** multi-repo orchestration (P9) · compose-engine web-game (post-SHIP) · specialists (P8)
+> ⚠️ reconcile (panel iter2 — scope/MoSCoW contradiction แก้): multi-repo = **post-SHIP เท่านั้น**, ที่ SHIP ไม่มี (ไม่ In + Could + metric-bound พร้อมกันอีก); substrate = game profile เดียว, compose-engine defer (ADR-009)
 
 **Out:** ❌ out-index Sourcegraph · ❌ out-orchestrate LangGraph · ❌ out-gateway Portkey · ❌ reinvent AGENTS.md · ❌ atomic cross-repo refactor · ❌ headline "swarm"
 
@@ -86,11 +87,12 @@ decisions_locked: [ADR-006, ADR-007, ADR-008, ADR-009]
 ### FR-2 Project Memory — phase P0-P4, **Must**
 | ID | requirement | accept | trace |
 |----|-------------|--------|-------|
-| FR-2.1 | canonical store; prose=generated view | edit store → 2 view ตรงกันทุกครั้ง | ADR-007 |
+| FR-2.1 | canonical store; prose=generated view | edit store → 2 view ตรงกันทุกครั้ง · ⚠️ **acceptance pending OD-1/G3** (store type) | ADR-007 |
 | FR-2.2 | AI-CONTEXT schema เดียว typed | 3 state file validate ผ่าน schema | a1 §3 |
 | FR-2.3 | CORE 11 entities: Project/Requirement/**Plan**/Task/Evidence/Decision/TeamMember/Gate/Repo/Entity/Event | ครบ 11 (แก้ Plan ที่หาย) | ADR-009 |
 | FR-2.4 | evidence = machine-verifiable \| human-attested | 2 class ใน schema + Engine ตรวจต่างกัน | ADR-009 D2 |
-| FR-2.5 | lifecycle todo→design_validate→in_progress→review→done + profile sub-gate | state machine + guard (done ต้องมี evidence) | a1 §2 |
+| FR-2.5 | lifecycle todo→design_validate→in_progress→review→done + profile sub-gate | state machine + guard (done ต้องมี evidence) · ⚠️ game playtest=sub-gate **provisional pending T-058** | a1 §2 |
+| FR-2.6 | audit/observability: Event log queryable + tamper-evidence (prev_hash verify) | inspect audit trail + detect tampered chain (test) | NFR-4 |
 
 ### FR-3 Decision Inbox — phase P6, **Must**
 | ID | requirement | accept | trace |
@@ -98,6 +100,7 @@ decisions_locked: [ADR-006, ADR-007, ADR-008, ADR-009]
 | FR-3.1 | Level 2-3 → durable project-level Inbox item | card persist ข้าม session | ADR-006 |
 | FR-3.2 | ADR Proposed → Scenario O panel 2/3 + dissent → human | panel รัน + log ทุก ADR | Scenario O |
 | FR-3.3 | ทุก review = Panel Review Record (เหตุผล+โหวต+ตัดสิน) | อ่านย้อนได้ใน ADR/BRD | Scenario O |
+| FR-3.4 | Inbox item lifecycle: expiry/escalation/SLA (กัน Level 2-3 ค้างนาน) | item เกิน SLA → escalate/flag (test) | R7 |
 
 ### FR-4 Model-agnostic + Self-hosted — phase P4/P7, **Should**
 | ID | requirement | accept | trace |
@@ -144,15 +147,29 @@ LiteLLM (routing) · OPA / MS Agent Governance Toolkit (policy) · Qdrant (vecto
 | R11 | key custody honeypot | H | encrypt+LiteLLM egress (FR-4.3) |
 | R12 | frontend underestimate | L | bits-ui, timebox |
 
-## 9. Roadmap (flow-plan granular)
-Substrate(✅partial) → **P1-P2 Engine (MVW: governance linter)** → P3 interception → P4 store → P5 Cockpit → **P6 SHIP** → P7 model-agnostic → P8 specialists → P9 multi-repo → P10 vector
+## 9. Roadmap + Phase/Gate Definitions (self-contained)
 
-## 10. GTM & Value-Capture (panel/marketing: ขาดทั้งหมด → เพิ่ม)
-- **Distribution:** OSS-core bottom-up (motion เดียวที่สู้ install-base ของ Cursor/Factory ได้สำหรับ self-hosted) — proof: Odysseus 52k stars
-- **Hero demo (highest-ROI):** <10-min first-run → gate บล็อก bad-agent-action จริง + Decision Inbox item โผล่ (commit SHA/failing test เป็นหลักฐาน)
-- **Lead message:** *"enforcement layer เหนือ AGENTS.md — gate ตรวจ state จริง + project-level Decision Inbox"* (ไม่ใช่ 5 pillar นามธรรม) · headline = risk-tiered reliability, disavow swarm
-- **Value-capture hypothesis:** OSS-core (linter) ฟรี → paid: hosted Decision Inbox / team ACLs / compliance reporting (ผูกกับ OD-3/OD-4)
-- **Category:** ปัก "Governed Project Memory" + publish adversarial-bypass test result เป็น credibility — **ก่อน P6 SHIP**
+| Phase | entry → exit | Gate (pass criteria, status) |
+|-------|-------------|------------------------------|
+| P0 Substrate | docs inconsistent → machine-ready schema | G0 canonical-inversion = **decided** (ADR-007, high-cost-to-reverse) |
+| P1-P2 Engine MVW | gate-as-data → `engine check` CLI + CI (governance linter) | **G1** ship-CLI vs go-P3 = **open** (after P2) |
+| P3 interception | advisory → constitutive (agent can't bypass) | **G2** build-runtime = decided-by-commitment |
+| P4 store | drift-possible → canonical+generated views | **G3** SQLite vs JSON-in-git = **open** (OD-1) |
+| P5 Cockpit | no-UI → read-only dashboard | — |
+| **P6 SHIP** | → governed single-agent + Decision Inbox | **G4** build-Shell vs stop-Engine = **open** (OD-3) |
+| P7-P10 | model-agnostic → specialists → multi-repo → vector | **G5** universal vs own-tool = **deferred** (OD-4) |
+
+**What SHIP (P6) proves vs defers** (panel: honest scoping):
+- ✅ **proves at SHIP:** enforced-governance-as-state · Decision Inbox · project-memory (3 of 4 differentiators' core)
+- ⏳ **defers (roadmap):** model-agnostic (P7) · multi-repo (P9) · specialists (P8) → **ห้าม headline เป็น shipped differentiator**
+
+## 10. GTM & Value-Capture (panel/marketing)
+- **Single lead message = category name (1 ประโยค):** *"Governed Project Memory — enforcement เหนือ AGENTS.md พร้อม durable project Decision Inbox"* (เลิกมี 2 tagline แข่งกัน; lead ด้วยแค่ของที่ ship จริง: enforced-state + Decision Inbox + project-memory)
+- **Distribution:** OSS-core bottom-up (motion เดียวที่สู้ install-base Cursor/Factory ได้) — proof: Odysseus 52k stars · ต้องมี launch surface (HN/GitHub Show) + content engine
+- **Hero demo (highest-ROI):** <10-min first-run → gate บล็อก "agent แกล้ง mark done" จริง + Decision Inbox item โผล่ (commit SHA/failing test) = asset ที่ Cursor/Factory เลียนแบบ cheap ไม่ได้
+- **Value-capture:** OSS-core (linter) ฟรี → paid: hosted Decision Inbox / team ACLs / compliance reporting · **OD-3 ต้อง gate บน willingness-to-pay signal (≥1 design-partner) ก่อน build Shell** ไม่ใช่แค่ build/no-build
+- **Onboarding (Day-2):** path จาก clone → governing real project; import AGENTS.md/CLAUDE.md; **จัดการ local-7B sub-floor first-run friction** (FR-4.2 อาจ confuse) ต้องมี story
+- **Category:** ปัก "Governed Project Memory" + publish adversarial-bypass result — **ก่อน P6 SHIP** (window ปิด, Cursor decision-ledger fast-follow = นาฬิกาเดิน)
 
 ## 11. Open Decisions (panel + user vote → lock เป็น ADR; reconcile กับ gate G0-G5)
 
@@ -180,6 +197,14 @@ Substrate(✅partial) → **P1-P2 Engine (MVW: governance linter)** → P3 inter
 - **การตัดสิน (AI):** ผ่าน 2/3 แต่ contrarian borderline + consensus ชัด → **revise เป็น v0.2 แก้ทุก consensus gap** (วิเคราะห์ต่อยอดจากเสียงส่วนใหญ่) ก่อน lock → re-review iteration 2
 - **v0.2 แก้:** +glossary(§0) +measurable metrics(§2) +competitive/why-now(§3) +acceptance/phase/MoSCoW ต่อ FR(§5) +Plan entity +NFR targets(§6) +self-contained risks(§8) +GTM/value-capture(§10) +OD↔gate reconcile(§11) +shipped-contradiction(§12) +scope reconcile(§4) +model_floor def(FR-4.2) +path fix
 
+### Iteration 2 (2026-06-05) — BRD v0.2 → 2/3 PASS (contrarian FAIL 0.66 ↑)
+- **votes:** technical PASS .74 · strategic PASS .80 · contrarian **FAIL .66** · marketing=viable
+- **contrarian defects จริง (AI ยอมรับ — ไม่ override):** (1) scope/MoSCoW ขัด: multi-repo อยู่ In+Could+metric พร้อมกัน (2) placeholder "X" ยังอยู่ (3) OD-1 open แต่ FR-2.1 Must, dependency ไม่ visible (4) ขาด FR: Inbox lifecycle/audit (5) phase/gate ไม่นิยามใน-doc (6) T-058 ขัด FR-2.5
+- **contrarian meta-warning:** "อย่า override contrarian แล้วประกาศ fixed ซ้ำ" — รับฟัง → iterate แทนการ override
+- **marketing:** SHIP โชว์แค่ 2/4 differentiator → ต้อง honest scope + single lead message + monetization design-partner ก่อน Shell
+- **การตัดสิน (AI):** contrarian มี defect จริง (ไม่ใช่แค่ deferral) → **v0.3 แก้ทุก defect** (ตามที่สั่ง "เห็นด้วยทุกฝ่าย") ก่อน lock → re-review iteration 3
+- **v0.3 แก้:** scope multi-repo=post-SHIP เท่านั้น(§4) · เติม X→≤2/task + reword adversarial/parity metric(§2) · FR-2.1 pending OD-1 · FR-2.5 T-058 provisional · +FR-2.6 audit +FR-3.4 Inbox lifecycle · phase/gate definition table(§9) · "SHIP proves vs defers"(§9) · single lead message + OD-3 willingness-to-pay(§10)
+
 ---
 
-*BRD v0.2 — panel-1 consensus addressed. รอ re-review iteration 2 → ถ้าทุกฝ่าย agree → lock เป็น accepted*
+*BRD v0.3 — iter2 defects addressed. รอ re-review iteration 3 → ถ้าทุกฝ่าย agree (contrarian PASS) → lock เป็น accepted*
