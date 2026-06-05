@@ -1,11 +1,12 @@
 <!-- AI-CONTEXT
-total_tasks: 39
+total_tasks: 44
 in_progress: []
-blocked: [T-041,T-042,T-043,T-044,T-045,T-046,T-047,T-048,T-049,T-050]
+blocked: []
 done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022,T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031,T-032,T-033,T-034,T-035,T-040]
+todo: [T-041,T-042,T-043,T-044,T-045,T-046,T-047,T-048,T-049,T-050,T-051,T-052,T-053,T-054,T-055]
 last_updated: 2026-06-05
-priority_next: human approve ADR-006 → unblock P0-A (T-041..044)
-note: T-041..050 blocked on ADR-006 (Stage 2 direction) approval
+priority_next: P0-A housekeeping (T-041..044, safe) — ADR-006..009 Accepted, unblocked
+note: T-051..053 = carry-over กระทบ core ที่ ship แล้ว → รอ whole-project review round
 -->
 
 # Task Board — ai-project-template
@@ -14,9 +15,9 @@ note: T-041..050 blocked on ADR-006 (Stage 2 direction) approval
 
 *(ไม่มี)*
 
-## Blocked — รอ ADR-006 approve (Stage 2 direction)
+## Todo (unblocked — ADR-006..009 Accepted 2026-06-05)
 
-### P0-A — Housekeeping (safe, reversible — unblock ทันทีที่ ADR-006 approved)
+### P0-A — Housekeeping (safe, reversible — ทำได้เลย)
 
 | Task | Description | Source | Risk |
 |------|-------------|--------|------|
@@ -33,10 +34,25 @@ note: T-041..050 blocked on ADR-006 (Stage 2 direction) approval
 | T-046 | A2 task lifecycle + profile stage extension | D1 (ADR-009) | master-plan |
 | T-047 | A3 evidence model (machine-verifiable vs human-attested) | D2 (ADR-009) | master-plan |
 | T-048 | A4 profile/extension mechanism + compose | D3 (ADR-009) | master-plan |
-| T-049 | A5 retrofit schema กับ repo นี้ + เคสเกม → iterate | — | master-plan |
+| T-049 | A5 retrofit schema กับ repo นี้ + เคสเกม (+ domain ห่าง: research/industrial) → iterate | — | master-plan |
 | T-050 | A6 dual-authority contract spec | ADR-007 | master-plan |
 
-## Todo
+### Carry-over จาก ADR panel — ⚠️ กระทบ core ที่ ship แล้ว (รอ whole-project review round)
+
+| Task | Description | Source | หมายเหตุ |
+|------|-------------|--------|---------|
+| T-051 | re-publish Scenario A–N → new risk-Level mapping (core/11) | ADR-008 | redefine แกน uncertainty→risk |
+| T-052 | rewrite CLAUDE.md uniform challenge-necessity → risk-tiered + entry-point enforcement | ADR-008 | supersede commit 08ba8a7 |
+| T-053 | invert C-07 resolution (block wins for enforceable-state fields) core/03+core/15 | ADR-007 | แก้ contradiction กับ dual-authority |
+
+### Protocol institutionalization
+
+| Task | Description | Source |
+|------|-------------|--------|
+| T-054 | สร้าง `/caw-adr-review` slash command (wrap adr-review-panel workflow) | Scenario O |
+| T-055 | promote ADR-review-panel เข้า core template (core/11 + core/12) | Scenario O |
+
+## Todo (ภายหลัง)
 
 *(หลัง Stage A: P1 validator → P2 CLI → P3+ ตาม master-plan)*
 

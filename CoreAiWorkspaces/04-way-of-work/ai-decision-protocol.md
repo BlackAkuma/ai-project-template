@@ -275,3 +275,24 @@ Gap: 4 tasks ที่กำลังทำอยู่อาจต้องแ�
 | `[ENTITY:superseded:X→Y]` | entity X ถูกแทนด้วย Y |
 | `[ENTITY:proposed:X]` | entity X ยังรอ ADR |
 | `<NEEDS_CLARIFICATION: ...>` | placeholder แทนข้อมูลที่ยังไม่มี |
+
+---
+
+## 7. ADR Review Panel — Scenario O (ทุก ADR Proposed)
+
+ทุกครั้งที่มี ADR สถานะ Proposed → รัน **3-lens panel** ก่อนเสนอ human (ลดงาน human, แต่โปร่งใสเต็มที่)
+
+**กลไก:**
+1. spawn 3 reviewer อิสระ/ADR — lens: **technical** (sound/feasible?) · **strategic** (vision/market fit?) · **contrarian** (บังคับหาเหตุ reject + surface conflict, ห้ามตอบ "ไม่มี")
+2. แต่ละ reviewer โหวต PASS/FAIL + reasons + conflicts + alternatives
+3. **กติกา: 2/3 PASS = ผ่าน**
+
+**หน้าที่ AI หลัง panel (วิเคราะห์ก่อนส่ง):**
+- ถ้ามี dissent/FAIL → **วิเคราะห์ว่า contrarian ถูกหรือไม่** ก่อนเชื่อ; ถ้าถูก → หาเหตุผล + เสนอ revise แก้ต้นเหตุ
+- **เรื่องเล็ก ไม่ต้องรอ human:** แก้ revise ที่ชัดเจน/safe เองได้เลย แล้ว **log** (โต้เถียงแบบไหน/เลือกแบบไหน/AI ตัดสินแบบไหน) ใน "Panel Review Record" ท้าย ADR
+- **เรื่องใหญ่ (กระทบ core/template ที่ ship แล้ว, irreversible, ขัดของเดิม):** ห้ามแก้เงียบ → lock เป็น task รอ **whole-project review round**
+- เสมอ: report + ทักท้วง + เสนอทางเลือกให้ human
+
+**Reusable workflow:** `workflows/scripts/adr-review-panel-*.js` (รัน ADR ใหม่ได้ทันที) · จะทำเป็น `/caw-adr-review` (task T-054) + promote เข้า core template (task T-055)
+
+> precedent: ADR-006..009 (2026-06-05) — 006/007 = 3/3, 008/009 = 2/3 (contrarian FAIL มีมูล → revise ก่อน accept)

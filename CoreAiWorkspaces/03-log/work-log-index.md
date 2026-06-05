@@ -3,8 +3,8 @@ last_session: 2026-06-05
 tool: Claude Code
 completed: [T-040]
 checkpoint: none
-next_from_last: human approve ADR-006 (Stage 2 direction) → P0-A housekeeping + A1 schema
-notes: Odysseus analysis → Stage-2 vision "Governed Project Memory". 5 exploration docs + ADR-006..009 Proposed. Started dogfooding methodology (was bypassed since v1.5.0).
+next_from_last: P0-A housekeeping (T-041..044)
+notes: ADR-006..009 Accepted via 3-lens panel (2/3). 008/009 revised per contrarian FAIL. Scenario O (ADR review panel) codified. carry-over T-051/052/053 deferred to project review.
 released_since_log: v1.6.0–v1.10.0 (HARD RULE, escape valve, challenge-necessity, task close gate, behavioral tests)
 deep_context: exploration/master-plan.md
 -->
@@ -20,6 +20,27 @@ deep_context: exploration/master-plan.md
 | M3: Release Prep (ROADMAP, CHANGELOG, merge to master) | 🔄 todo | — |
 
 ## Recent Sessions
+
+### 2026-06-05 — [ADR Review Panel → Accept ADR-006..009 + codify Scenario O]
+
+**สิ่งที่ทำ:**
+- รัน **adr-review-panel** workflow: 3-lens reviewer (technical/strategic/contrarian) × 4 ADR = 12 agent, กติกา 2/3
+- ผล: 006/007 = 3/3 PASS · 008/009 = 2/3 PASS (contrarian FAIL มีมูลจริง)
+- ทางเลือก B: **revise 008/009 แก้ต้นเหตุก่อน accept** (contrarian ถูกทุกข้อ):
+  - 008: เพิ่ม Level 0 triage, redefine แกน uncertainty→risk ชัด, Engine-determined classification + conservative default, คง hard-stop conditions, ระบุ supersede กฎ uniform
+  - 009: เพิ่ม Task/Gate.risk_level, คง design_validate, fix source cite §5→§3, reconcile D2 กับ ADR-007
+  - 007: เพิ่ม C-07 invert mandate, narrow determinism, soften one-way-door
+- Accept ทั้ง 4 + Panel Review Record (log โหวต+dissent+การตัดสิน) ท้ายแต่ละ ADR
+- **codify Scenario O** (ADR Review Panel) เข้า ai-decision-protocol §7 — institutionalize loop
+- carry-over tasks ที่กระทบ core ที่ ship แล้ว → lock เป็น T-051/052/053 รอ project review (ไม่แก้เงียบ)
+
+**Decisions:** ADR-006..009 Accepted · Scenario O = standing protocol (every ADR → panel → 2/3 → log)
+**AI autonomy used:** revise เรื่องเล็ก/safe เอง + log; เรื่องใหญ่ (core ที่ ship) → task รอ review
+**ผล:** governance pattern จาก product vision = ใช้จริงด้วยมือแล้ว (dogfood ขั้นสุด)
+**Next:** P0-A housekeeping T-041..044
+**Branch:** explore/odysseus-analysis
+
+---
 
 ### 2026-06-05 — [Odysseus Analysis → Stage 2 Vision "Governed Project Memory"]
 

@@ -1,7 +1,7 @@
 # ADR-006: Stage 2 Product Direction — "Governed Project Memory"
 
 **Date:** 2026-06-05
-**Status:** Proposed
+**Status:** Accepted
 **Author:** AI session + User
 **Related Tasks:** T-040 (Odysseus analysis + Stage-2 exploration)
 **Source Reference:** `exploration/north-star-vision.md`, `exploration/what-it-should-be.md`, `exploration/master-plan.md`
@@ -43,3 +43,11 @@ Market validation: context engineering = mainstream (ACE paper); project memory 
 ## Review Trigger
 
 ทบทวนถ้า: คู่แข่ง (Cursor/Factory) ปิด gap four-way · ผู้ใช้ตัดสินหยุดที่ Engine-CLI (G1) · เจอว่า substrate รับ Stage 2 ไม่ไหวหลัง dogfood
+
+## Panel Review Record (2026-06-05)
+
+**โหวต: 3/3 PASS** (technical 0.72 · strategic 0.72 · contrarian 0.60)
+**Dissent ที่บันทึก:**
+- contrarian: live contradiction กับกฎ uniform ที่ ship แล้ว (08ba8a7) → **จัดการใน ADR-008 + task T-052**
+- contrarian: directional drift ไปฝั่ง Shell-product ทั้งที่ G5 (universal-vs-own) ยัง defer → **คงไว้ defer, ไม่ resolve ตอนนี้**
+**การตัดสิน (AI):** Accept — direction ผ่านสะอาด; soften wording "evidence-based" → "presence/structure-verifiable" (ใน ADR-007/009 แล้ว); market figures = directional/non-authoritative (รับทราบ)

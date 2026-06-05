@@ -1,7 +1,7 @@
 <!-- AI-CONTEXT
-phase: stage2-design (exploration → schema design)
-active_task: T-040 done (Odysseus analysis + Stage-2 exploration); next T-045 (A1 core schema)
-blocker: ADR-006 Proposed — await human approve before building Engine
+phase: stage2-design (ADRs accepted → P0-A housekeeping next)
+active_task: ADR-006..009 Accepted via panel; next P0-A (T-041..044, safe housekeeping)
+blocker: none (carry-over T-051..053 deferred to whole-project review)
 last_updated: 2026-06-05
 git_mode: branch-separated
 git_dev_branch: dev
@@ -12,8 +12,9 @@ read_more:
   vision: exploration/north-star-vision.md
   market+gap: exploration/what-it-should-be.md
   plan: exploration/master-plan.md
-  decisions: CoreAiWorkspaces/07-decisions/README.md (ADR-006..009 Proposed)
-next_action: human approve ADR-006 (Stage 2 direction) → เริ่ม P0-A housekeeping + A1 schema
+  decisions: CoreAiWorkspaces/07-decisions/README.md (ADR-006..009 Accepted)
+  adr_panel: CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md §7 (Scenario O)
+next_action: P0-A housekeeping T-041..044 (safe, ทำได้เลย)
 -->
 
 # Work Status — ai-project-template
@@ -39,11 +40,11 @@ next_action: human approve ADR-006 (Stage 2 direction) → เริ่ม P0-A 
 
 ## Next Actions
 
-1. ⏳ **human approve ADR-006** (Stage 2 direction) — gate ก่อนทุกอย่าง
-2. P0-A housekeeping (safe, reversible): T-041 core-count, T-042 missing compliance-codes, T-043 git_pipeline, T-044 C-15..19
-3. เคาะ G0 (canonical inversion → dual-authority ADR-007)
-4. A1 core schema (T-045) — ร่าง entities/fields/types เป็นเอกสารจริง
-5. A5 retrofit schema กับ repo นี้ + เคสเกม → validate ก่อน build
+1. ✅ ADR-006..009 Accepted (via 3-lens panel, 2/3 rule) — 008/009 revised แก้ contrarian FAIL ก่อน accept
+2. **P0-A housekeeping** (safe, reversible — ทำได้เลย): T-041 core-count, T-042 missing compliance-codes, T-043 git_pipeline, T-044 C-15..19
+3. A1 core schema (T-045) — ร่าง entities/fields/types เป็นเอกสารจริง
+4. A5 retrofit schema กับ repo นี้ + เคสเกม → validate ก่อน build
+5. ⚠️ carry-over (รอ project review): T-051 mapping, T-052 CLAUDE.md rewrite, T-053 C-07 invert
 
 ## Stage 2 Roadmap (สรุป)
 
