@@ -1,0 +1,99 @@
+"""engine check <gate> — evaluate a gate against real repo state (P2-1).
+
+Usage:
+  python engine/check.py <gate-id> [--task T-XXX] [--root .]
+
+Exit 0 = pass (or non-blocking fail); exit 1 = blocking fail (block/hard-stop).
+Verdict carries risk_level + effect (ADR-008 risk-tier).
+"""
+import argparse
+import os
+import subprocess
+import sys
+
+import yaml
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from resolvers import RESOLVERS  # noqa: E402
+
+try:
+    sys.stdout.reconfigure(encoding="utf-8")  # Thai output on Windows console (cp1252 fix)
+except Exception:
+    pass
+
+
+def gather_ctx(root):
+    def git(*a):
+        try:
+            return subprocess.run(
+                ["git", *a], cwd=root, capture_output=True, text=True
+            ).stdout
+        except Exception:
+            return ""
+    diff = git("diff", "--cached")
+    files = [f for f in git("diff", "--cached", "--name-only").splitlines() if f]
+    added = "\n".join(
+        ln[1:] for ln in diff.splitlines()
+        if ln.startswith("+") and not ln.startswith("+++")
+    )
+    return {"root": root, "staged_diff": diff, "staged_files": files, "staged_added": added}
+
+
+def resolve_args(d, ns):
+    out = {}
+    for k, v in d.items():
+        if isinstance(v, str) and v.startswith("$args."):
+            out[k] = getattr(ns, v.split(".", 1)[1], None)
+        else:
+            out[k] = v
+    return out
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("gate")
+    ap.add_argument("--task", dest="task_id")
+    ap.add_argument("--root", default=".")
+    ns = ap.parse_args()
+    root = os.path.abspath(ns.root)
+
+    gpath = os.path.join(root, "engine", "gates", ns.gate + ".yaml")
+    if not os.path.exists(gpath):
+        print(f"[ERR] gate not found: {gpath}")
+        sys.exit(2)
+    gate = yaml.safe_load(open(gpath, encoding="utf-8"))
+    ctx = gather_ctx(root)
+
+    fails = []
+    for req in gate.get("requires", []):
+        check = req["check"]
+        kw = {k: v for k, v in req.items() if k not in ("check", "class")}
+        kw = resolve_args(kw, ns)
+        fn = RESOLVERS.get(check)
+        if fn is None:
+            fails.append(f"{check}[no-resolver]")
+            continue
+        try:
+            if not fn(ctx, **kw):
+                fails.append(check)
+        except Exception as e:  # noqa: BLE001
+            fails.append(f"{check}[err:{e}]")
+
+    risk = gate.get("risk_level", 2)
+    effect = gate.get("on_fail", {}).get("effect", "block")
+    if fails:
+        msg = (gate.get("on_fail", {}).get("message", "")
+               .replace("{failed_checks}", ", ".join(fails))
+               .replace("{task_id}", str(ns.task_id)))
+        print(f"[FAIL] {gate['id']} (risk L{risk}, effect={effect})")
+        print(f"  missing: {', '.join(fails)}")
+        if msg:
+            print(f"  -> {msg}")
+        sys.exit(1 if effect in ("block", "hard-stop") else 0)
+
+    print(f"[PASS] {gate['id']} (risk L{risk})")
+    sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()

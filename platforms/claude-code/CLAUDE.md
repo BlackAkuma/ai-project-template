@@ -24,8 +24,8 @@ Protocol หลักอยู่ใน `AI.md` — ไฟล์นี้เพ�
    - ภาษาที่จะสื่อสารกัน
    - Promotion pipeline: `dev→main` / `dev→sit→uat→main` / อื่นๆ (ให้ระบุ)
 2. ตรวจว่ามี `~/ai-workspace/cross-project-memory.md` ไหม — ถ้ามีให้อ่านก่อน เพื่อดู pattern และ lesson จากโปรเจ็กต์เก่า
-3. อ่านไฟล์ใน `core/` ทั้งหมดตามลำดับ (00 → 18)
-4. ถ้าโปรเจ็กต์เป็น game หรือ web game → อ่าน `skills/game/` ต่อด้วย (00 → 06)
+3. อ่านไฟล์ใน `core/` ทั้งหมดตามลำดับ (00 → 22)
+4. ถ้าโปรเจ็กต์เป็น game หรือ web game → อ่าน `skills/game/` ต่อด้วย (00 → 12)
 5. สร้างโครงสร้าง `CoreAiWorkspaces/` ตาม core/01 template
 6. กรอกข้อมูลโปรเจ็กต์จาก context ที่มี — ใส่ placeholder ชัดเจนถ้าไม่พอ ห้ามเดา
    บันทึก `git_pipeline` ที่ได้จากข้อ 1 ใน work-status AI-CONTEXT block ด้วย
@@ -172,7 +172,7 @@ AI ใช้ 3-layer model — destination กำหนด format อัตโ�
 
 ## Skill Pack Detection
 
-ถ้าโปรเจ็กต์มี `CoreAiWorkspaces/08-design/` → โหลด game skill standards อัตโนมัติ (skills/game/ 00–11):
+ถ้าโปรเจ็กต์มี `CoreAiWorkspaces/08-design/` → โหลด game skill standards อัตโนมัติ (skills/game/ 00–12):
 - ทุก feature ใหม่ต้องมี FDD ก่อน implement
 - task lifecycle: todo → design_validate → in_progress → playtest → review → done
 - compliance rules G-01 ถึง G-10, A-01 ถึง A-07, N-01 ถึง N-04, U-01 ถึง U-03, L-01 ถึง L-02 บังคับใช้
@@ -203,6 +203,7 @@ AI ใช้ 3-layer model — destination กำหนด format อัตโ�
 /caw-compliance-check   รัน compliance scan ทันที
 /caw-fdd-create         สร้าง FDD template สำหรับ feature ใหม่
 /caw-adr-create         สร้าง ADR สำหรับ architectural decision
+/caw-adr-review         รัน 3-lens panel review บน ADR Proposed (2/3 + dissent log) — Scenario O
 /caw-session-end        sync work-status + log + task-board ครบในคำสั่งเดียว
 /caw-scope-check        ตรวจ scope ของ task ปัจจุบัน
 /caw-launch-check       รัน launch checklist ก่อน deploy

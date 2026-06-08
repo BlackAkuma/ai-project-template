@@ -26,14 +26,15 @@
 | `01-fdd-template.md` | Feature Design Document — ออกแบบ feature ก่อนโค้ด |
 | `02-game-coding-standards.md` | มาตรฐานโค้ดสำหรับ game โดยเฉพาะ |
 | `03-asset-protocol.md` | การจัดการ assets — naming, structure, validation |
-| `04-compliance-codes.md` | Compliance codes G-01–G-10, A-01–A-07, N-01–N-04 ฯลฯ |
-| `05-game-session-end-template.md` | Session end protocol สำหรับ game project |
+| `04-playtest-report-template.md` | Playtest report template |
+| `05-balance-check-template.md` | Balance check — ตรวจค่าใน config vs FDD range |
 | `06-narrative-standards-template.md` | มาตรฐานการเขียน narrative, dialogue, localization |
 | `07-gdd-template.md` | Game Design Document template |
 | `08-difficulty-curve-template.md` | Difficulty curve และ Sawtooth pattern template |
 | `09-art-bible-template.md` | Art bible — visual direction, color palette, style guide |
 | `10-ux-hud-template.md` | UX/HUD design spec template |
 | `11-level-design-template.md` | Level design document template |
+| `12-compliance-codes.md` | Compliance codes index G-01–G-10, A-01–A-07, N-01–N-04, U-01–U-03, L-01–L-02 |
 
 ---
 

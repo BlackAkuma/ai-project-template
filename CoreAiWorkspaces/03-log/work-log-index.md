@@ -1,11 +1,12 @@
 ﻿<!-- AI-CONTEXT
-last_session: 2026-05-08
+last_session: 2026-06-05
 tool: Claude Code
-completed: [T-034,T-035]
-checkpoint: none
-next_from_last: merge feat/savetoken → dev → master (await user approval for v1.5.0)
-notes: TACP implemented on feat/savetoken. 67/67 tests pass. v1.5.0 ready.
-deep_context: CoreAiWorkspaces/04-way-of-work/tacp.md
+completed: [T-040]
+checkpoint: post-G4 B-instruments done — hero-demo (demo.py) + OSS pkg + adversarial suite (test_adversarial.py: bypass blocked 100%, 9 attacks; FR-1 credibility artifact). 54 tests/7 suites, CI runs all. next: T-054 /caw-adr-review (institutionalize panel, additive) + carry-over T-051/052/053 = 🔴 needs USER (reverse shipped behavior). Shell gated on WTP. ADR-006..013 locked.
+next_from_last: T-049 full retrofit + T-056/057 (A1 findings); then P1 validator
+notes: ADR-006..009 Accepted (panel 2/3). Scenario O codified. P0-A done. A1 core schema drafted (exploration/a1-core-schema.md) — retrofit เจอ 2 gap จริง (spike source_ref, work-status field reconcile).
+released_since_log: v1.6.0–v1.10.0 (HARD RULE, escape valve, challenge-necessity, task close gate, behavioral tests)
+deep_context: exploration/master-plan.md
 -->
 
 # Work Log Index — ai-project-template
@@ -19,6 +20,117 @@ deep_context: CoreAiWorkspaces/04-way-of-work/tacp.md
 | M3: Release Prep (ROADMAP, CHANGELOG, merge to master) | 🔄 todo | — |
 
 ## Recent Sessions
+
+### 2026-06-07 — [Engine moat complete (P3-P6 data) + G3/G4 decided → autonomous-build terminus]
+
+**สิ่งที่ทำ:**
+- P3-1 tamper-evidence (hash chain) · P3-2 gated mutation + faked-done detection · P4-1/2 JSON-in-git canonical store + generated views (drift=0) · P6-1 Decision Inbox data layer — รวม **45 tests/6 suites** ผ่านหมด, CI รันครบ
+- G3 panel → **C-deferred** (ADR-012): JSON-in-git canonical, NFR-2 git-native FINAL
+- G4 panel → **B harvest-demand-first** (ADR-013): Shell gated บน ≥1 design-partner WTP; revenue hypothesis (OSS free + paid governance-of-record)
+- ทุก gate: panel 2/3 + dissent + marketing → user ตัดสิน → lock (G1✅ G3✅ G4✅)
+
+**ผล:** Engine (moat) สมบูรณ์+พิสูจน์แล้ว headless; thesis "context>model" = ระบบที่รัน+test ได้จริง · **autonomous build ถึง terminus** — next คือ GTM จริงของ user (harvest demand) ไม่ใช่ autonomous coding
+**Decisions:** ADR-012 (G3), ADR-013 (G4)
+**Next (USER):** publish hero-demo + category flag, outreach WTP, gate Shell บน signal (timebox 4-6wk)
+**Branch:** explore/odysseus-analysis
+
+---
+
+### 2026-06-06 — [MVW reached + G1 decided (C-conservative) + engine build P1-P2]
+
+**สิ่งที่ทำ:**
+- build engine/ ครบ MVW: P1 (5→6 gates as data, 8→9 resolvers, smoke tests, wired hook) + P2 (CLI, risk-tier, challenge-necessity validator, CI workflow) — รัน+verify จริงทุกขั้น
+- fixed 2 hook bugs ระหว่างทาง (BOM shebang, grep-c integer error)
+- **G1 decision panel** (3-lens vote + marketing): C2/B1 → C; user เลือก **C-conservative** → ADR-011
+- contrarian (B) dissent บันทึกครบ: solo focus risk → mitigation (timebox launch, P3 single-threaded, internal go/no-go)
+
+**Decisions:** G1=C-conservative (ADR-011) — soft-ship OSS + protect P3 + เลื่อน loud launch
+**ผล:** governance linter (MVW) ship-able + dogfooded; engine ชั้น 2 มีชีวิต
+**Next:** P3 interception (constitutive, moat — protected critical path) + soft-ship prep timeboxed
+**Branch:** explore/odysseus-analysis
+
+---
+
+### 2026-06-05 — [BRD v1.0 ACCEPTED via 3-iteration panel (+ marketing)]
+
+**สิ่งที่ทำ:**
+- ร่าง BRD (00-source) = source-of-truth requirements ของ "Governed Project Memory"
+- รัน brd-review-panel 3 รอบ (3 voting lens 2/3 + marketing advisory), log ทุกรอบ:
+  - iter1 v0.1 → 3/3 PASS (contra .60 borderline) → consensus gaps (acceptance criteria/metrics/Plan/GTM ฯลฯ)
+  - iter2 v0.2 → 2/3 PASS (contra FAIL .66, defect จริง: scope/MoSCoW, X placeholder, OD-1 dep) → แก้
+  - iter3 v0.3/v0.4 → 2/3 PASS (contra FAIL .63 บน named-deferrals) → **CONVERGED → LOCK**
+- เคารพ contrarian: iterate ไม่ override; lock เมื่อ contrarian self-acknowledged "named-deferral != incompleteness"
+- marketing ทุกรอบ = viable (thesis/trend แรง, ต้อง GTM/hero-demo/monetization)
+- lock BRD v1.0 = ADR-010 (โปร่งใส, reopenable); OD-1..4 ผูก gate รอ panel เมื่อถึง phase
+
+**Decisions:** BRD v1.0 Accepted (ADR-010) · all reviews logged ใน BRD §13 (อ่านย้อนได้)
+**ผล:** governing requirements doc พร้อม — ขับ build P1+ ได้
+**Next:** P1-3 wire engine→hook (build) + OD panels at gates
+**Branch:** explore/odysseus-analysis
+
+---
+
+### 2026-06-05 — [ADR Review Panel → Accept ADR-006..009 + codify Scenario O]
+
+**สิ่งที่ทำ:**
+- รัน **adr-review-panel** workflow: 3-lens reviewer (technical/strategic/contrarian) × 4 ADR = 12 agent, กติกา 2/3
+- ผล: 006/007 = 3/3 PASS · 008/009 = 2/3 PASS (contrarian FAIL มีมูลจริง)
+- ทางเลือก B: **revise 008/009 แก้ต้นเหตุก่อน accept** (contrarian ถูกทุกข้อ):
+  - 008: เพิ่ม Level 0 triage, redefine แกน uncertainty→risk ชัด, Engine-determined classification + conservative default, คง hard-stop conditions, ระบุ supersede กฎ uniform
+  - 009: เพิ่ม Task/Gate.risk_level, คง design_validate, fix source cite §5→§3, reconcile D2 กับ ADR-007
+  - 007: เพิ่ม C-07 invert mandate, narrow determinism, soften one-way-door
+- Accept ทั้ง 4 + Panel Review Record (log โหวต+dissent+การตัดสิน) ท้ายแต่ละ ADR
+- **codify Scenario O** (ADR Review Panel) เข้า ai-decision-protocol §7 — institutionalize loop
+- carry-over tasks ที่กระทบ core ที่ ship แล้ว → lock เป็น T-051/052/053 รอ project review (ไม่แก้เงียบ)
+
+**Decisions:** ADR-006..009 Accepted · Scenario O = standing protocol (every ADR → panel → 2/3 → log)
+**AI autonomy used:** revise เรื่องเล็ก/safe เอง + log; เรื่องใหญ่ (core ที่ ship) → task รอ review
+**ผล:** governance pattern จาก product vision = ใช้จริงด้วยมือแล้ว (dogfood ขั้นสุด)
+
+**P0-A housekeeping (ทำต่อในรอบเดียวกัน — delegated small tasks):**
+- T-041 ✅ core-count: root+platforms CLAUDE.md → core 00–22, skills 00–12
+- T-042 ✅ สร้าง `skills/game/12-compliance-codes.md` (consolidated G/A/N/U/L index); เจอ bonus gap: 00-overview table แถว 04/05 ผิด (อ้าง compliance-codes/game-session-end ที่ไม่มี) → sync ให้ตรงไฟล์จริง (playtest-report/balance-check). หมายเหตุ: เดิมตั้งชื่อ 04 ชนกับ playtest-report → rename เป็น 12
+- T-043 ✅ git_pipeline เข้า core/06 (field table + template block)
+- T-044 ✅ core/15 note C-15–C-19 reserved + flag run-audit collision (T-044b ตามมา)
+
+**T-045 ✅ A1 core schema (Stage A, paper-first):**
+- ร่าง CORE 11 entities (Project/Requirement/Task/Evidence/Decision/TeamMember/Gate/Repo/Entity/Event) + fields/types
+- lifecycle (D1), evidence model machine vs attested (D2), AI-CONTEXT schema เดียว (Critical gap #2), profile hook + game (D3, defer compose engine ตาม panel guidance)
+- schema_version 0.1, additive-only
+- **A5 lite retrofit กับ state จริง → เจอ 2 gap (paper-first ได้ผล):** #1 source_ref บังคับไม่ได้กับ spike/exploration (T-056) · #2 work-status field จริง ≠ core/06 template = Critical gap #2 ตัวจริง (T-057)
+- → `exploration/a1-core-schema.md`
+**Next:** T-049 full retrofit (domain ห่าง) + T-056/057 → P1 validator
+**Branch:** explore/odysseus-analysis
+
+**ตรวจสอบซ้ำ — independent verification pass (2026-06-05):**
+- spawn verification agent อิสระ audit ทั้งสาย (ADR + A1 schema + housekeeping + tracking)
+- เจอ + แก้ 5 defect: [HIGH] total_tasks 45→48 (math ผิด) · [MED] stale "00–11" ใน CLAUDE.md Skill Pack Detection ×2 (T-041 พลาด) · [LOW] Done table lag (เพิ่ม T-041..045) · [LOW] work-status body stale (ADR Proposed→Accepted) · [LOW] playtest state vs sub-gate (T-058)
+- confirmed correct: cross-ADR consistency, risk_level dependency, carry-over tasks, source cites, A1 soundness, Scenario O
+- T-056 resolved (spike source_ref), T-057 design done (unified work-status schema A1 §3, apply=P0-B)
+- → ตรวจสอบซ้ำได้ผล: paper + verify จับ error ก่อน propagate
+
+---
+
+### 2026-06-05 — [Odysseus Analysis → Stage 2 Vision "Governed Project Memory"]
+
+**สิ่งที่ทำ:**
+- วิเคราะห์ Odysseus (52k-star self-hosted AI workspace) เชิงลึก — feasibility, differentiation, tech stack
+- ตกผลึก vision 3-layer: Substrate (template/สมอง) → Engine (governance machine-enforced) → Shell (แอบ project-centric)
+- thesis: "AI capability = context engineering ไม่ใช่ตัว model" — Odysseus พิสูจน์ว่า body = commodity
+- gap audit ภายใน (อ่าน repo จริง): 3 รอยร้าวลึก — truth ใน prose, "done" เป็นคำพูด, ไม่มี concurrency; + housekeeping (core 00-22 vs docs, missing compliance-codes file, C-15..19)
+- market research: four-way intersection (project-centric + enforced-governance + multi-agent + multi-repo) ยังว่าง; threats = Cursor/Factory/Cognition/MS
+- 4 market corrections: governance risk-tiered (Gartner), multi-agent reframe (parallel เท่านั้น), อย่า out-index, compose underneath (LiteLLM/OPA), interoperate AGENTS.md
+- master plan: 11 phase, critical path ~14-15 สัปดาห์ถึง ship (P6), bottleneck = P3 interception, 6 decision gates, 5 stop points
+- schema architecture: CORE (process, invariant) + PROFILE (product, variant, compose ได้)
+- **dogfood methodology กลับมาใช้** — สร้าง ADR-006..009 (Proposed), update work-status/task-board/log
+
+**Artifacts:** `exploration/` 5 ไฟล์ (odysseus-analysis, north-star-vision, development-plan, what-it-should-be, master-plan) + ADR-006..009
+**Decisions (Proposed):** ADR-006 Stage-2 direction · ADR-007 dual-authority · ADR-008 risk-tiered governance · ADR-009 schema CORE+PROFILE
+**ผล:** vision + plan เป็น durable state แล้ว (ไม่ใช่แค่ในแชท)
+**Next:** ⏳ human approve ADR-006 → P0-A housekeeping (T-041..044) + A1 schema (T-045)
+**Branch:** explore/odysseus-analysis (pushed)
+
+---
 
 ### 2026-05-08 — [TACP v1.5.0 — Token-Aware Communication Protocol]
 

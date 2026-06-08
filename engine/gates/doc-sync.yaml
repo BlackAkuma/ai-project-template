@@ -1,0 +1,17 @@
+id: doc_sync
+version: 1
+description: code commit ต้อง sync docs (CoreAiWorkspaces) — body = source of truth
+trigger:
+  action: commit
+risk_level: 1                 # reversible → warn + log (ADR-008 Level 1)
+requires:
+  - check: git_staged_clean_of
+    class: machine
+    glob: "CoreAiWorkspaces/**"   # ถ้า code staged แต่ docs ค้าง dirty → fail
+    when_also_staged: "!(CoreAiWorkspaces/**)"
+on_fail:
+  effect: warn                # escape valve: SKIP_DOC_SYNC=1 → log ใน work-log (audit trail)
+  message: "code staged แต่ docs ยังไม่ sync — sync ก่อน หรือ SKIP_DOC_SYNC=1 (จะ log ใน work-log)"
+escape_valve:
+  env: SKIP_DOC_SYNC
+  log_to: CoreAiWorkspaces/03-log/work-log-index.md

@@ -1,0 +1,15 @@
+id: prototype_scan
+version: 1
+description: ไม่มี prototype code (// PROTOTYPE:) commit เข้า main/master (G-06)
+trigger:
+  action: commit
+  branch: [main, master]      # hook ใช้เงื่อนไข branch (engine = pattern check)
+risk_level: 3                 # prototype เข้า prod = hard-stop
+requires:
+  - check: placeholder_absent  # generic pattern-absent matcher on staged_added
+    class: machine
+    patterns:
+      - "// PROTOTYPE:"
+on_fail:
+  effect: hard-stop
+  message: "พบ prototype code (// PROTOTYPE:) ใน commit เข้า main/master (G-06)"

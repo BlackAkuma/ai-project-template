@@ -29,6 +29,7 @@ Block นี้อยู่ด้านบนสุดของไฟล์ เ�
 | `git_prod_branch` | production branch — ห้าม commit CoreAiWorkspaces/ ที่นี่ | `main` |
 | `git_dev_branch` | dev branch ที่ AI ทำงานและ CoreAiWorkspaces/ อาศัยอยู่ | `dev` |
 | `git_mode` | branch strategy ของโปรเจ็กต์นี้ | `branch-separated` หรือ `single-branch` |
+| `git_pipeline` | promotion pipeline (จาก bootstrap ข้อ 1) | `dev→main` หรือ `dev→sit→uat→main` |
 
 ---
 
@@ -53,6 +54,7 @@ updated: <CURRENT_DATE>
 git_prod_branch: <PROD_BRANCH>
 git_dev_branch: <DEV_BRANCH>
 git_mode: <branch-separated|single-branch>
+git_pipeline: <PROMOTION_PIPELINE>
 -->
 
 ---

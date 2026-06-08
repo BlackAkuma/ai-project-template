@@ -58,8 +58,8 @@ rm -rf CoreAiWorkspaces/ docs/ tests/ CHANGELOG.md ROADMAP.md
    - ภาษาที่จะสื่อสารกัน
    - Promotion pipeline: `dev→main` / `dev→sit→uat→main` / อื่นๆ (ให้ระบุ)
 2. ตรวจว่ามี `~/ai-workspace/cross-project-memory.md` ไหม — ถ้ามีให้อ่านก่อน
-3. อ่านไฟล์ใน `core/` ทั้งหมดตามลำดับ (00 → 21)
-4. ถ้าโปรเจ็กต์เป็น game หรือ web game → อ่าน `skills/game/` ต่อด้วย (00 → 11)
+3. อ่านไฟล์ใน `core/` ทั้งหมดตามลำดับ (00 → 22)
+4. ถ้าโปรเจ็กต์เป็น game หรือ web game → อ่าน `skills/game/` ต่อด้วย (00 → 12)
 5. สร้างโครงสร้าง `CoreAiWorkspaces/` ตาม core/01 template
 6. กรอกข้อมูลโปรเจ็กต์จาก context ที่มี — ใส่ placeholder ชัดเจนถ้าไม่พอ ห้ามเดา
    บันทึก `git_pipeline` ที่ได้จากข้อ 1 ใน work-status AI-CONTEXT block ด้วย
@@ -161,7 +161,7 @@ AI ใช้ 3-layer model — destination กำหนด format อัตโ�
 
 ## Skill Pack Detection
 
-ถ้าโปรเจ็กต์มี `CoreAiWorkspaces/08-design/` → โหลด game skill standards อัตโนมัติ (skills/game/ 00–11)
+ถ้าโปรเจ็กต์มี `CoreAiWorkspaces/08-design/` → โหลด game skill standards อัตโนมัติ (skills/game/ 00–12)
 
 ---
 
@@ -171,6 +171,7 @@ AI ใช้ 3-layer model — destination กำหนด format อัตโ�
 /caw-compliance-check   รัน compliance scan ทันที
 /caw-fdd-create         สร้าง FDD template สำหรับ feature ใหม่
 /caw-adr-create         สร้าง ADR สำหรับ architectural decision
+/caw-adr-review         รัน 3-lens panel review บน ADR Proposed (2/3 ผ่าน + dissent log) — Scenario O
 /caw-session-end        sync work-status + log + task-board ครบในคำสั่งเดียว
 /caw-scope-check        ตรวจ scope ของ task ปัจจุบัน
 /caw-launch-check       รัน launch checklist ก่อน deploy
