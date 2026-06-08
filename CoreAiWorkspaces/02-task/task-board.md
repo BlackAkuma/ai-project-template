@@ -5,7 +5,7 @@ blocked: []
 done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022,T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031,T-032,T-033,T-034,T-035,T-040,T-041,T-042,T-043,T-044,T-045,T-049,T-056,T-058]
 todo: [T-044b,T-046,T-047,T-048,T-050,T-051,T-052,T-053,T-054,T-055,T-057,P1-*,P2-*]
 last_updated: 2026-06-05
-priority_next: P6-1 Decision Inbox data layer (testable, killer differentiator) OR P5 Cockpit; T-057 live-cutover = gated migration (defer). P4-2 done (render WS+TB from canonical, 36 tests). G3=C-deferred
+priority_next: G4 panel (build Shell UI vs stop at Engine + revenue hypothesis) — Engine-side largely complete; OR P5 Cockpit. P6-1 done (Decision Inbox data layer, 45 tests/6 suites). G1/G3 locked
 backlog: exploration/flow-plan.md §3 (granular micro-tasks + flow-gate policy)
 note: P3-1 done (events.py hash-chain tamper-evidence, 3/3 tests; DEMO.md soft-ship). MVW done. G1=C-conservative (ADR-011)
 note: T-051..053 = carry-over กระทบ core ที่ ship แล้ว → รอ whole-project review round
