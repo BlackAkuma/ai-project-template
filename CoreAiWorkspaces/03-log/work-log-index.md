@@ -228,4 +228,4 @@ deep_context: exploration/master-plan.md
 **Decisions:**
 - เลือก MemPalace เป็น Phase 3 vector memory implementation (local-first, ไม่ต้อง cloud)
 - เปลี่ยนชื่อ doc/ → CoreAiWorkspaces/ เพื่อความชัดเจน (ไม่ชน docs/ folder)
-- แยก docs/ ไป gh-pages branch — user project ไม่ได้รับ web pages เมื่อ clone
+- แยก docs/ ไป gh-pages branch — user projec
