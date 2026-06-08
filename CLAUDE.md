@@ -171,6 +171,7 @@ AI ใช้ 3-layer model — destination กำหนด format อัตโ�
 /caw-compliance-check   รัน compliance scan ทันที
 /caw-fdd-create         สร้าง FDD template สำหรับ feature ใหม่
 /caw-adr-create         สร้าง ADR สำหรับ architectural decision
+/caw-adr-review         รัน 3-lens panel review บน ADR Proposed (2/3 ผ่าน + dissent log) — Scenario O
 /caw-session-end        sync work-status + log + task-board ครบในคำสั่งเดียว
 /caw-scope-check        ตรวจ scope ของ task ปัจจุบัน
 /caw-launch-check       รัน launch checklist ก่อน deploy
