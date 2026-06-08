@@ -79,7 +79,8 @@ Block นี้คือ snapshot ที่อัปเดตทุก session �
 - ห้ามเขียนทับ source docs revision เดิม
 - ถ้ามี scope ใหม่เกินต้นฉบับ ให้สร้าง extension doc หรือ source version ใหม่
 - ทุก session ต้องอัปเดต status และ log index
-- ⛔ **body ของไฟล์คือ source of truth** — อ่าน body ก่อน แก้ body ก่อน แล้ว sync AI-CONTEXT block ตาม ห้าม reverse
+- ⛔ **dual-authority** (ADR-007, T-053): **structured (AI-CONTEXT block) = source of truth ของ enforceable state** (status/evidence/ids/lifecycle) · **body/prose = source of truth ของ narrative** (เหตุผล/บริบท). field ที่ gate predicate อ้าง = ฝั่ง structured ชนะ; ที่เหลือ = prose generated view
+  - *(เดิม "body = source of truth ทุกอย่าง" = superseded — Engine parse enforceable state ไม่ได้ถ้า truth อยู่ใน prose)*
 
 ## Batch Checkpoint Rule
 
@@ -122,7 +123,7 @@ Block นี้คือ snapshot ที่อัปเดตทุก session �
 - [ ] task ที่ทำค้างอยู่ต้องมี `[IN_PROGRESS: checkpoint saved]` พร้อมสรุปสิ่งที่ทำไปแล้ว
 - [ ] ถ้า `git_mode: branch-separated` → `git push origin [git_dev_branch]` ป้องกัน data loss
 
-**กฎ sync:** AI-CONTEXT block และ body ต้องสะท้อนข้อมูลเดียวกันเสมอ ถ้า block กับ body ไม่ตรงกัน ให้เชื่อ body และอัปเดต block ทันที
+**กฎ sync (ADR-007 dual-authority):** block และ body ต้องสะท้อนข้อมูลเดียวกัน — ถ้าไม่ตรง: **enforceable-state field → เชื่อ block (structured)** แล้ว regenerate prose · **narrative → เชื่อ body**. *(เดิม "เชื่อ body เสมอ" = superseded สำหรับ enforceable state)*
 
 ## Branching Policy
 

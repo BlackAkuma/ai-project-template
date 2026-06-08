@@ -62,7 +62,7 @@ Protocol สำหรับตรวจสอบ code quality และ document
 |------|-----------|-------|
 | C-05 | Function/method ยาวเกิน | > 50 บรรทัด |
 | C-06 | Dependency ใหม่ ไม่มี ADR | import ที่ไม่เคยมีในโปรเจ็กต์ |
-| C-07 | AI-CONTEXT block ไม่ sync กับ body | ค่าใน block ≠ ค่าใน body |
+| C-07 | block ≠ body mismatch | **enforceable-state → block authoritative** (ADR-007 dual-authority); narrative → body; regenerate view on drift *(เดิม "เชื่อ body" superseded, T-053)* |
 | C-08 | TODO / FIXME ไม่มี task reference | comment ที่ไม่มี T-XXX กำกับ |
 
 ### ระดับ 3 — แจ้งเตือนอย่างเดียว

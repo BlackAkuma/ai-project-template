@@ -309,7 +309,11 @@ Gap: 4 tasks ที่กำลังทำอยู่อาจต้องแ�
 
 ---
 
-## 3. Escalation Levels
+## 3. Escalation Levels = Risk-Tier Binding (ADR-008, T-051)
+
+> **นี่คือ risk-tier ที่ gate ใช้บังคับ** (re-published เป็นแกน risk, ไม่ใช่แค่ uncertainty เดิม): action → Level → effect
+> **L0** triage (เสมอ) · **L1** auto-log+continue · **L2** Decision Inbox / block+flag · **L3** hard-stop
+> Engine กำหนด Level (ไม่ใช่ AI self-assess) · unknown → L2 conservative · dangerous (prod/data-loss/security/ขัด-requirement) force L3
 
 | Level | สถานการณ์ | การกระทำ | Scenarios |
 |-------|-----------|----------|-----------|

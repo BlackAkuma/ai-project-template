@@ -148,8 +148,11 @@ AI ใช้ 3-layer model — destination กำหนด format อัตโ�
 
 ## Key Rules
 
-- ⛔ **ก่อนแตะโค้ดทุกครั้ง — รัน Scenario M step 0 (challenge-necessity) ก่อนเสมอ**
-  "ทำต่อ" / "ได้เลย" / task ที่ดูชัดเจน **ไม่ยกเว้น** — ต้องตอบ (a)(b)(c) + 3-lens ก่อนทุกครั้ง
+- ⛔ **ก่อนแตะโค้ดทุกครั้ง — รัน Scenario M step 0 challenge-necessity แบบ risk-tiered** (ADR-008, T-052)
+  - **Level 0 (เสมอ):** triage เบาๆ — ประเมิน risk tier ของ action นี้ (reversible? prod? secret? ขัด requirement?)
+  - **Level 1 (low/reversible):** auto — ทำต่อ + log สั้น (ไม่ต้อง challenge เต็ม)
+  - **Level 2-3 (medium/irreversible/prod/security):** challenge เต็ม (a)(b)(c) + 3-lens ก่อน
+  - risk = ตัวกำหนด ไม่ใช่ "ทุก action เท่ากัน" (เดิม uniform — superseded; กัน approval-fatigue ตาม Gartner)
 - ห้าม implement โดยไม่รู้ source reference
 - **บอก plan ก่อนเขียน code เสมอ** — อธิบายว่าจะทำอะไร ทำไม แล้วรอยืนยันก่อน implement
 - ห้ามแก้ requirement โดยตรง — ต้อง version ใหม่หรือ extension doc
