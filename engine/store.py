@@ -17,7 +17,27 @@ def load(path):
     return {"schema_version": SCHEMA_VERSION, "tasks": []}
 
 
-def save(state, path):
+_VALID_STATUS = {"todo", "design_validate", "in_progress", "review", "done", "blocked"}
+
+
+def validate_state(state):
+    """Auto-enforced contract on the write path (re-audit dissent fix): schema_version + valid tasks."""
+    errs = []
+    if not state.get("schema_version"):
+        errs.append("missing schema_version")
+    for t in state.get("tasks", []):
+        if not t.get("id"):
+            errs.append("task missing id")
+        if t.get("status") not in _VALID_STATUS:
+            errs.append(f"task {t.get('id')} bad status {t.get('status')}")
+    return (not errs), errs
+
+
+def save(state, path, validate=True):
+    if validate:
+        ok, errs = validate_state(state)
+        if not ok:
+            raise ValueError("invalid state, refusing to persist: " + "; ".join(errs))
     d = os.path.dirname(path)
     if d:
         os.makedirs(d, exist_ok=True)

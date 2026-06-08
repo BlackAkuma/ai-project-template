@@ -1,7 +1,7 @@
 <!-- AI-CONTEXT
-phase: stage2 COMPLETE — arc merged to dev (Engine moat 54 tests + ADR-006..013 + BRD v1.0)
-active_task: none — autonomous build done + merged. next = USER real-world GTM (OD-3) + carry-over (deferred)
-blocker: Shell gated on ≥1 design-partner (ADR-013); carry-over T-051..053 deferred to project-review (user choice)
+phase: BRD BUILD COMPLETE — all FR-1..5 impl+tested (re-audit 3/3 complete); 15 suites/~146 tests + CI
+active_task: none — full build done (F1-F12, carry-over, gaps closed). honest deferrals documented
+blocker: none. deferrals (gated/honest): full-FS-interception (sandbox), semantic-retrieval, Shell-web-UI, T-057 live-cutover
 active_branch: dev
 last_updated: 2026-06-05
 git_mode: branch-separated
@@ -15,7 +15,7 @@ read_more:
   plan: exploration/master-plan.md
   decisions: CoreAiWorkspaces/07-decisions/README.md (ADR-006..009 Accepted)
   adr_panel: CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md §7 (Scenario O)
-next_action: USER — (1) GTM: publish hero-demo + outreach WTP, gate Shell on ≥1 design-partner (ADR-013); (2) project-review round for carry-over T-051/052/053; (3) merge dev→master เมื่อพร้อม release. engine/ soft-ship-ready
+next_action: USER — (1) merge dev→master release (เลือก LICENSE); (2) GTM: hero-demo + WTP outreach; (3) เมื่อพร้อม: full-FS-interception (sandbox), real semantic retrieval (Qdrant), Shell web UI, T-057 live-cutover. engine/ build complete + tested
 -->
 
 # Work Status — ai-project-template

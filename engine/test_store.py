@@ -63,6 +63,19 @@ check("missing schema_version+updated -> fail", ok_m is False and "schema_versio
 check("valid task-board block", validate_ai_context("schema_version: 0.1\ntotal_tasks: 5\ndone: [T-1]\n", "task-board")[0] is True)
 check("unknown kind -> fail", validate_ai_context("x: 1", "bogus")[0] is False)
 
+# write-path validation (re-audit dissent fix): save refuses invalid state
+from store import validate_state  # noqa: E402
+check("valid state passes validate_state", validate_state(state2)[0] is True)
+check("bad status fails validate_state", validate_state({"schema_version": "0.1", "tasks": [{"id": "T-9", "status": "wat"}]})[0] is False)
+import tempfile as _tf  # noqa: E402
+with _tf.TemporaryDirectory() as _d:
+    raised = False
+    try:
+        save({"schema_version": "0.1", "tasks": [{"id": "T-9", "status": "wat"}]}, os.path.join(_d, "s.json"))
+    except ValueError:
+        raised = True
+    check("save() refuses invalid state", raised is True)
+
 for n, ok in cases:
     print(f"  {'PASS' if ok else 'FAIL'}  {n}")
 failed = [n for n, ok in cases if not ok]
