@@ -17,8 +17,11 @@ jobs:
         with:
           python-version: "3.11"
       - run: pip install pyyaml
-      - name: Resolver smoke tests (P1-5)
-        run: python engine/test_resolvers.py
+      - name: Engine tests (resolvers, events, govern, store)
+        run: |
+          for t in resolvers events govern store; do
+            echo "::group::test_$t"; python engine/test_$t.py; echo "::endgroup::"
+          done
       - name: Governance gates (advisory on CI; blocking gates exit 1)
         run: |
           set +e
