@@ -5,7 +5,7 @@ blocked: []
 done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022,T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031,T-032,T-033,T-034,T-035,T-040,T-041,T-042,T-043,T-044,T-045,T-049,T-056,T-058]
 todo: [T-044b,T-046,T-047,T-048,T-050,T-051,T-052,T-053,T-054,T-055,T-057,P1-*,P2-*]
 last_updated: 2026-06-05
-priority_next: G3 store decision panel running → user decide → P4 build. P3 core done (P3-1/P3-2 data-level constitutive, 24 tests); P3-3 full-FS-interception deferred (needs agent-runtime sandbox, documented — detectable>impossible is pragmatic for git-based)
+priority_next: P4 build JSON-in-git canonical store + generated prose views (ADR-012). G3=C-deferred locked. P3 core done (24 tests); P3-3 full-FS-interception deferred. SQLite index deferred (build on real query pain)
 backlog: exploration/flow-plan.md §3 (granular micro-tasks + flow-gate policy)
 note: P3-1 done (events.py hash-chain tamper-evidence, 3/3 tests; DEMO.md soft-ship). MVW done. G1=C-conservative (ADR-011)
 note: T-051..053 = carry-over กระทบ core ที่ ship แล้ว → รอ whole-project review round

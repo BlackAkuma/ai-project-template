@@ -90,7 +90,7 @@ decisions_locked: [ADR-006, ADR-007, ADR-008, ADR-009]
 ### FR-2 Project Memory — phase P0-P4, **Must**
 | ID | requirement | accept | trace |
 |----|-------------|--------|-------|
-| FR-2.1 | canonical store; prose=generated view | **store-agnostic accept: drift=0 ไม่ว่า backend ใด** (testable ก่อน OD-1); store type (SQLite/JSON) = OD-1/G3 ไม่ block SHIP | ADR-007 |
+| FR-2.1 | **JSON-in-git canonical** store; prose=generated view | drift=0 (edit store→2 views ตรงกัน); store=JSON-in-git (ADR-012); SQLite index deferred | ADR-007, ADR-012 |
 | FR-2.2 | AI-CONTEXT schema เดียว typed | 3 state file validate ผ่าน schema | a1 §3 |
 | FR-2.3 | CORE 11 entities: Project/Requirement/**Plan**/Task/Evidence/Decision/TeamMember/Gate/Repo/Entity/Event | ครบ 11 (แก้ Plan ที่หาย) | ADR-009 |
 | FR-2.4 | evidence = machine-verifiable \| human-attested | 2 class ใน schema + Engine ตรวจต่างกัน | ADR-009 D2 |
@@ -124,7 +124,7 @@ decisions_locked: [ADR-006, ADR-007, ADR-008, ADR-009]
 | ID | NFR | target/standard |
 |----|-----|-----------------|
 | NFR-1 | Security | OWASP Agentic Top 10 + MS Agent Governance Toolkit; credentials=L3; no secret in log |
-| NFR-2 | Sovereignty | git-native, no proprietary cloud (⚠️ provisional pending OD-1/G3) |
+| NFR-2 | Sovereignty | git-native, no proprietary cloud — **FINAL** (ADR-012: JSON-in-git canonical) |
 | NFR-3 | Layer-1 compat | no-Engine session อ่าน markdown view ได้ (degrade graceful) |
 | NFR-4 | Concurrency | **single-writer via Engine**, append-only Event log + `prev_hash` chain, per-file lock จน P4 |
 | NFR-5 | Cost | per-task token budget cap, default **configurable (เริ่ม 50k/task)**, hard ceiling |
@@ -180,7 +180,7 @@ LiteLLM (routing) · OPA / MS Agent Governance Toolkit (policy) · Qdrant (vecto
 
 | OD | decision | gate | สถานะ |
 |----|----------|------|-------|
-| OD-1 | SQLite vs JSON-in-git canonical store | G3 | open (panel เมื่อ P4) |
+| OD-1 | SQLite vs JSON-in-git canonical store | G3 | ✅ **resolved → C-deferred** (ADR-012): JSON-in-git canonical + SQLite index deferred |
 | OD-2 | หยุดที่ Engine-CLI หรือไป P3 | G1 | ✅ **resolved → C-conservative** (ADR-011): soft-ship OSS + protect P3 |
 | OD-3 | build Shell หรือหยุด Engine (+ revenue hypothesis) | G4 | open |
 | OD-4 | universal vs optimize own-tool | G5 | deferred post-SHIP |
