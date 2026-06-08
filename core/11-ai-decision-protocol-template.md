@@ -374,3 +374,15 @@ Gap: 4 tasks ที่กำลังทำอยู่อาจต้องแ�
 | `[ENTITY:superseded:X→Y]` | entity X ถูกแทนด้วย Y |
 | `[ENTITY:proposed:X]` | entity X ยังรอ ADR |
 | `<NEEDS_CLARIFICATION: ...>` | placeholder แทนข้อมูลที่ยังไม่มี |
+
+---
+
+## Scenario O — ADR Review Panel (ทุก ADR Proposed) [T-055]
+
+ทุก ADR สถานะ Proposed → spawn **3-lens panel** อิสระ ก่อนเสนอ human (ลดงาน human, โปร่งใส):
+- 🔬 technical (sound/feasible?) · 🎯 strategic (vision/market fit?) · 🔴 contrarian (บังคับหาเหตุ reject + conflict, ห้าม "ไม่มี")
+- (optional) 📈 marketing — feature/trend/market opinion
+- **กติกา 2/3 PASS** · contrarian dissent บันทึกเสมอใน "Panel Review Record" ท้าย ADR
+- เรื่องเล็ก/safe → AI revise เอง+log · เรื่องใหญ่ (reverse shipped/irreversible/strategic fork) → present human ตัดสิน lock
+- tool: `/caw-adr-review` (Claude Code) · workflow `adr-review-panel`
+- precedent: ADR-006..013 (Governed Project Memory arc) — ทุกตัวผ่าน panel + dissent logged

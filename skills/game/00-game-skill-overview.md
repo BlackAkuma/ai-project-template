@@ -360,7 +360,7 @@ CoreAiWorkspaces/08-design/
 
 ### 3. Task lifecycle สำหรับ game feature
 ```
-todo → design_validate → in_progress → playtest → review → done
+todo → design_validate → in_progress → review → done
 ```
 เพิ่มขั้น `playtest` ระหว่าง implement และ review — ต้องทดสอบ feel จริงก่อน
 

@@ -174,17 +174,17 @@ assert_count "C-11: rules/ has 4 files" 4 "$RULES_COUNT"
 assert_file "C-12: rules/core-standards.md" "platforms/claude-code/rules/core-standards.md"
 assert_file "C-13: rules/design-docs.md" "platforms/claude-code/rules/design-docs.md"
 assert_file "C-14: rules/gameplay-code.md" "platforms/claude-code/rules/gameplay-code.md"
-assert_file "C-15: rules/test-standards.md" "platforms/claude-code/rules/test-standards.md"
+assert_file "AUD-15: rules/test-standards.md" "platforms/claude-code/rules/test-standards.md"
 
 # Skills (core 7)
 for skill in caw-compliance-check caw-fdd-create caw-adr-create caw-session-end caw-scope-check caw-launch-check caw-archive-logs; do
-  assert_file "C-16: skills/$skill.md" "platforms/claude-code/skills/$skill.md"
+  assert_file "AUD-16: skills/$skill.md" "platforms/claude-code/skills/$skill.md"
 done
 
 # Skills (game-only — documented as game-only in CLAUDE.md)
-assert_file "C-17: skills/balance-check.md (game-only)" "platforms/claude-code/skills/balance-check.md"
-assert_file "C-18: skills/playtest-report.md (game-only)" "platforms/claude-code/skills/playtest-report.md"
-assert_file "C-19: skills/game-review.md (game-only)" "platforms/claude-code/skills/game-review.md"
+assert_file "AUD-17: skills/balance-check.md (game-only)" "platforms/claude-code/skills/balance-check.md"
+assert_file "AUD-18: skills/playtest-report.md (game-only)" "platforms/claude-code/skills/playtest-report.md"
+assert_file "AUD-19: skills/game-review.md (game-only)" "platforms/claude-code/skills/game-review.md"
 
 # Game specialist agents
 AGENT_COUNT=$(ls platforms/claude-code/agents/*.md 2>/dev/null | wc -l | tr -d ' ')

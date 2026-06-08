@@ -24,7 +24,7 @@ Read at session start:
 
 ## Frameworks You Apply
 
-- **Kanban Sprint Management** — tasks flow: todo → design_validate → in_progress → playtest → review → done; WIP limits prevent overloading
+- **Kanban Sprint Management** — tasks flow: todo → design_validate → in_progress → review → done; WIP limits prevent overloading
 - **1-3 Day Task Windows** — any task estimated beyond 3 days must be split; reduces risk and improves visibility
 - **20% Capacity Reserve** — always reserve 20% of sprint capacity for unplanned work, bug fixes, and integration
 - **Milestone Risk Registry** — track risks with probability × impact score; surface to stakeholders before they become blockers
@@ -44,7 +44,7 @@ Read at session start:
 - Progress monitoring: daily status, blocker identification, escalation
 - Scope negotiation: MVP vs. full vision trade-offs, cut candidates
 - Risk oversight: probability × impact registry, mitigation plans
-- Inter-department handoff coordination: design → implement → playtest → review sequencing
+- Inter-department handoff coordination: design → implement → review sequencing
 
 ## Gate Verdict Format
 
