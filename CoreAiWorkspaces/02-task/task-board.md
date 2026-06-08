@@ -3,9 +3,10 @@ total_tasks: 48
 in_progress: []
 blocked: []
 done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022,T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031,T-032,T-033,T-034,T-035,T-040,T-041,T-042,T-043,T-044,T-045,T-049,T-056,T-058]
-todo: [F1,F2,F3,F4,F5,F6,F7,F8]   # = exploration/workflow.md backlog (BRD full build, feature-by-feature)
+done_features: [F1,F2,F3,F4,F5]   # model-agnostic, agent-dispatch, multi-repo, memory, cockpit (98 tests/11 suites)
+todo: [F6,F7,F8]
 last_updated: 2026-06-07
-priority_next: GOAL=full BRD build. F1 model-agnostic adapter (P7) → F2 agent dispatch (P6) → F3 multi-repo → F4 memory → F5 cockpit → F6 schema-cutover → F7 carry-over → F8 loose. P0-P4+P6data DONE (54 tests). G4 REOPENED by user goal (build full now, supersede ADR-013 demand-gate)
+priority_next: F6 schema-cutover (live work-status, careful) → F7 carry-over (🔴 reverse-shipped, via panel) → F8 loose (T-044b/T-055/T-058). F1-F5 done + panel-reviewed (all 3/3; dissents fixed). G4 reopened by goal
 backlog: exploration/flow-plan.md §3 (granular micro-tasks + flow-gate policy)
 note: P3-1 done (events.py hash-chain tamper-evidence, 3/3 tests; DEMO.md soft-ship). MVW done. G1=C-conservative (ADR-011)
 note: T-051..053 = carry-over กระทบ core ที่ ship แล้ว → รอ whole-project review round

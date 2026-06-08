@@ -31,18 +31,39 @@ ACTION_LANE = {
 }
 
 
+# Dangerous intents force Level 3 (FR-1.3 hard-stop: data-loss/security/prod) regardless of
+# caller-supplied risk_level — closes the F2-panel risk-axis mislabel seam.
+DANGEROUS = {"deploy_prod", "run_migration", "drop_table", "delete_data", "push_prod",
+             "rotate_keys", "prod_release", "force_push"}
+
+
 def lane_for(intent):
-    """Map an action to its REQUIRED lane (bound to the work, not the caller's claim)."""
+    """Map an action to its REQUIRED lane (bound to the work, not the caller's claim).
+    Fail-CLOSED: unknown intents default to code-author (high floor), not advisory."""
     if intent in ACTION_LANE:
         return ACTION_LANE[intent]
     low = intent.lower()
-    if "architect" in low or "adr" in low:
+    if "architect" in low or "adr" in low or "deploy" in low or "migrat" in low:
         return "architect"
-    if low.startswith(("read", "inspect", "list", "show")):
+    if low.startswith(("read", "inspect", "list", "show", "get")):
         return "read-only"
-    if low.startswith(("edit", "write", "commit", "code", "fix", "refactor")):
-        return "code-author"
-    return "advisory"  # conservative default
+    if low.startswith(("comment", "review", "suggest", "note")):
+        return "advisory"
+    return "code-author"  # fail-closed: unknown/mutating work needs a capable model
+
+
+def normalize_risk(risk_level, intent):
+    """Clamp risk to 0-3 (invalid -> 2 conservative, ADR-008); dangerous intents forced to 3 (FR-1.3)."""
+    try:
+        r = int(risk_level)
+        if r < 0 or r > 3:
+            r = 2
+    except (TypeError, ValueError):
+        r = 2
+    low = intent.lower()
+    if intent in DANGEROUS or any(k in low for k in ("prod", "migrat", "drop_", "delete_", "rotate_key")):
+        r = max(r, 3)
+    return r
 
 
 def governed_turn(task_id, intent, risk_level, model="stub-strong",
@@ -59,10 +80,12 @@ def governed_turn(task_id, intent, risk_level, model="stub-strong",
         append_event(model, "agent.refused", task_id, f"{reason} [lane={role} for intent={intent}]", ts=ts, root=root, log=log)
         return {"status": "refused", "reason": reason, "lane": role}
 
-    # 2) risk-tier (ADR-008): L0/L1 auto, L2-3 -> Decision Inbox (don't execute, await human)
-    if int(risk_level) >= 2:
-        item = create_item("agent_action", task_id, risk_level, intent, ts=ts, root=root, inbox=inbox, log=log)
-        return {"status": "inbox", "item": item["id"], "risk_level": int(risk_level)}
+    # 2) risk-tier (ADR-008): normalize risk (clamp + dangerous-intent force-L3, FR-1.3) — caller
+    #    can't downgrade risk to skip the gate. L0/L1 auto, L2-3 -> Decision Inbox (await human).
+    risk = normalize_risk(risk_level, intent)
+    if risk >= 2:
+        item = create_item("agent_action", task_id, risk, intent, ts=ts, root=root, inbox=inbox, log=log)
+        return {"status": "inbox", "item": item["id"], "risk_level": risk}
 
     # 3) L1 auto-execute — mark_done passes through the Task Close Gate (evidence required)
     if intent == "mark_done":

@@ -2,7 +2,7 @@
 last_session: 2026-06-05
 tool: Claude Code
 completed: [T-040]
-checkpoint: GOAL full-build in progress. F1 model-agnostic+role-floor DONE (llm.py, 9/9; panel 3/3 PASS, consensus dissent=role-binding bypass → FIXED in F2). F2 governed agent dispatch DONE (agent.py, 10/10; lane derived from action=seam closed). 73 tests/9 suites, CI updated. next: F2 panel + F3 multi-repo. workflow.md=loop.
+checkpoint: GOAL full-build. DONE: F1 model-agnostic+role-floor, F2 agent-dispatch, F3 multi-repo, F4 vector-memory, F5 cockpit-renderer. 98 tests/11 suites, CI all. Panels: F1 3/3 (role-binding dissent→fixed F2), F2 3/3 + F3 3/3 (F2 risk-axis/fail-closed dissent→FIXED in agent.py: dangerous-intent force-L3, normalize_risk, lane_for fail-closed code-author). next: F6 schema-cutover, F7 carry-over, F8 loose.
 next_from_last: T-049 full retrofit + T-056/057 (A1 findings); then P1 validator
 notes: ADR-006..009 Accepted (panel 2/3). Scenario O codified. P0-A done. A1 core schema drafted (exploration/a1-core-schema.md) — retrofit เจอ 2 gap จริง (spike source_ref, work-status field reconcile).
 released_since_log: v1.6.0–v1.10.0 (HARD RULE, escape valve, challenge-necessity, task close gate, behavioral tests)

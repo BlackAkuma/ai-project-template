@@ -53,6 +53,21 @@ with tempfile.TemporaryDirectory() as d:
     r5 = governed_turn("T-300", "mark_done", 1, model="claude-sonnet", root=d, ts=5, log=lg)
     check("mark_done no evidence -> blocked", r5["status"] == "blocked")
 
+    # F2-panel fix: dangerous intent labeled L1 -> FORCED to inbox (L3, FR-1.3 hard-stop)
+    r6 = governed_turn("T-400", "deploy_prod", 1, model="claude-sonnet", root=d, ts=6, log=lg, inbox="engine/inbox.jsonl")
+    check("dangerous intent (risk=1) -> forced inbox L3", r6["status"] == "inbox" and r6["risk_level"] == 3)
+
+    # F2-panel fix: invalid risk_level -> conservative (inbox, not silent auto-exec)
+    r7 = governed_turn("T-401", "edit_code", "bogus", model="claude-sonnet", root=d, ts=7, log=lg, inbox="engine/inbox.jsonl")
+    check("invalid risk -> conservative inbox", r7["status"] == "inbox")
+
+    # F2-panel fix: unknown mutating intent + weak model -> REFUSED (fail-closed default lane)
+    r8 = governed_turn("T-402", "frobnicate_thing", 1, model="local-3b", root=d, ts=8, log=lg)
+    check("unknown intent + weak model -> refused (fail-closed)", r8["status"] == "refused")
+
+# lane_for fail-closed default
+check("lane_for(unknown) = code-author (fail-closed)", lane_for("frobnicate_thing") == "code-author")
+
 for n, ok in cases:
     print(f"  {'PASS' if ok else 'FAIL'}  {n}")
 failed = [n for n, ok in cases if not ok]
