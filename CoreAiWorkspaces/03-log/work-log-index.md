@@ -2,7 +2,7 @@
 last_session: 2026-06-05
 tool: Claude Code
 completed: [T-040]
-checkpoint: post-G4 B-instruments done — hero-demo (demo.py) + OSS pkg + adversarial suite (test_adversarial.py: bypass blocked 100%, 9 attacks; FR-1 credibility artifact). 54 tests/7 suites, CI runs all. next: T-054 /caw-adr-review (institutionalize panel, additive) + carry-over T-051/052/053 = 🔴 needs USER (reverse shipped behavior). Shell gated on WTP. ADR-006..013 locked.
+checkpoint: GOAL set (2026-06-07) = build full BRD feature-by-feature + test + panel until done. G4 REOPENED by user (override ADR-013 demand-gate → build Shell/P5-P10 now). workflow.md = clear per-feature loop. backlog F1-F8. arc merged to dev. Engine core done (54 tests). next: F1 model-agnostic adapter (P7).
 next_from_last: T-049 full retrofit + T-056/057 (A1 findings); then P1 validator
 notes: ADR-006..009 Accepted (panel 2/3). Scenario O codified. P0-A done. A1 core schema drafted (exploration/a1-core-schema.md) — retrofit เจอ 2 gap จริง (spike source_ref, work-status field reconcile).
 released_since_log: v1.6.0–v1.10.0 (HARD RULE, escape valve, challenge-necessity, task close gate, behavioral tests)
