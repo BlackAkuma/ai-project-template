@@ -1,7 +1,14 @@
 # Engine — Hero Demo / Adversarial-Bypass Proof
 
-> Soft-ship asset (ADR-011 C-conservative) — the credibility proof competitors can't cheaply copy.
+> Soft-ship asset (ADR-011/ADR-013) — the credibility proof competitors can't cheaply copy.
 > Lead message: **"Governed Project Memory — enforcement เหนือ AGENTS.md + durable project Decision Inbox"**
+
+## ▶ Runnable (<10 min, reproducible, no live files touched)
+```bash
+python engine/demo.py     # end-to-end narrated: fake-done blocked → legit done+signed event
+                          # → adversarial fake DETECTED → risk-tiered Inbox + audit chain intact
+```
+= the demand-harvest instrument (ADR-013 B): publish with OSS soft-ship + show design partners.
 
 ## What this proves
 Governance ที่ **เครื่องบังคับเป็น state จริง** — ไม่ใช่ advisory ที่โมเดลจะข้ามก็ได้

@@ -2,7 +2,7 @@
 last_session: 2026-06-05
 tool: Claude Code
 completed: [T-040]
-checkpoint: AUTONOMOUS-BUILD TERMINUS. G4 decided=B harvest-demand-first (ADR-013): Engine moat complete (45 tests/6 suites), Shell gated on ≥1 design-partner WTP signal. next = USER real-world GTM (publish hero-demo + outreach). All headless-buildable work done. ADR-006..013 locked.
+checkpoint: post-G4 building B's instruments. engine/demo.py = runnable hero-demo (end-to-end, narrated, reproducible) — the demand-harvest asset ADR-013 B needs. Engine 45 tests + demo. next: OSS packaging + adversarial suite expansion. Shell still gated on WTP signal. ADR-006..013 locked.
 next_from_last: T-049 full retrofit + T-056/057 (A1 findings); then P1 validator
 notes: ADR-006..009 Accepted (panel 2/3). Scenario O codified. P0-A done. A1 core schema drafted (exploration/a1-core-schema.md) — retrofit เจอ 2 gap จริง (spike source_ref, work-status field reconcile).
 released_since_log: v1.6.0–v1.10.0 (HARD RULE, escape valve, challenge-necessity, task close gate, behavioral tests)
