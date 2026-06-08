@@ -86,3 +86,22 @@ def render_task_board_block(state):
 def verify_no_drift(state, rendered_block, renderer=render_ai_context):
     """drift=0 invariant: regenerate from canonical == the rendered view in the file."""
     return renderer(state) == rendered_block
+
+
+import re as _re  # noqa: E402
+
+# F12/FR-2.2: required AI-CONTEXT fields per state-file kind (typed schema, single source).
+AI_CONTEXT_REQUIRED = {
+    "work-status": ["schema_version", "phase", "updated"],
+    "task-board": ["schema_version", "total_tasks", "done"],
+    "work-log": ["schema_version", "last_session"],
+}
+
+
+def validate_ai_context(block_text, kind):
+    """Return (ok, missing). Checks the AI-CONTEXT block has required fields for its kind (FR-2.2)."""
+    req = AI_CONTEXT_REQUIRED.get(kind)
+    if req is None:
+        return False, [f"unknown file_kind '{kind}'"]
+    missing = [f for f in req if not _re.search(rf"^\s*{_re.escape(f)}\s*:", block_text, _re.M)]
+    return (not missing), missing

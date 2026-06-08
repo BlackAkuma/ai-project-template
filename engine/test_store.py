@@ -8,7 +8,7 @@ import tempfile
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from store import (  # noqa: E402
     load, save, render_ai_context, verify_no_drift,
-    render_work_status_block, render_task_board_block,
+    render_work_status_block, render_task_board_block, validate_ai_context,
 )
 
 cases = []
@@ -54,6 +54,14 @@ check("work-status: phase + git_pipeline rendered", "phase: stage2" in ws and "g
 check("task-board: total_tasks counted", "total_tasks: 3" in tb)
 check("task-board: done list", "done: [T-001]" in tb)
 check("both views from ONE canonical (no 2nd source)", verify_no_drift(state2, ws, render_work_status_block) and verify_no_drift(state2, tb, render_task_board_block))
+
+# F12/FR-2.2: AI-CONTEXT schema validation per file kind
+good_ws = "schema_version: 0.1\nphase: stage2\nupdated: 2026-06-08\n"
+check("valid work-status block validates", validate_ai_context(good_ws, "work-status")[0] is True)
+ok_m, missing = validate_ai_context("phase: x\n", "work-status")
+check("missing schema_version+updated -> fail", ok_m is False and "schema_version" in missing)
+check("valid task-board block", validate_ai_context("schema_version: 0.1\ntotal_tasks: 5\ndone: [T-1]\n", "task-board")[0] is True)
+check("unknown kind -> fail", validate_ai_context("x: 1", "bogus")[0] is False)
 
 for n, ok in cases:
     print(f"  {'PASS' if ok else 'FAIL'}  {n}")

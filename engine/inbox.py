@@ -65,3 +65,21 @@ def resolve_item(item_id, decision, by, ts=0, root=".", inbox=INBOX, log=LOG):
 
 def list_open(root=".", inbox=INBOX):
     return [i for i in _read(os.path.join(root, inbox)) if i["status"] == "open"]
+
+
+def escalate_overdue(now_ts, sla=86400, root=".", inbox=INBOX, log=LOG):
+    """F10/FR-3.4: flag open items older than SLA (default 1 day) as escalated; record to audit.
+    Returns the list of newly-escalated items. Prevents Level 2-3 items sitting forever (R7)."""
+    path = os.path.join(root, inbox)
+    items = _read(path)
+    escalated = []
+    for it in items:
+        if it["status"] == "open" and not it.get("escalated") and (now_ts - it.get("ts", 0)) > sla:
+            it["escalated"] = True
+            it["escalated_ts"] = now_ts
+            escalated.append(it)
+            append_event("engine", "inbox.escalate", it["id"], f"overdue >{sla}s", ts=now_ts, root=root, log=log)
+    if escalated:
+        _write(path, items)
+    return escalated
+

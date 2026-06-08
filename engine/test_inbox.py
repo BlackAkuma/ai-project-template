@@ -6,7 +6,7 @@ import sys
 import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from inbox import create_item, resolve_item, list_open  # noqa: E402
+from inbox import create_item, resolve_item, list_open, escalate_overdue  # noqa: E402
 from events import verify_chain  # noqa: E402
 
 cases = []
@@ -40,6 +40,13 @@ with tempfile.TemporaryDirectory() as d:
     # audit: every create+resolve chained in events, intact
     ok, _ = verify_chain(root=d, log=lg)
     check("audit chain intact (create+resolve logged)", ok is True)
+
+    # F10/FR-3.4: SLA escalation — DI-0002 created at ts=3; now far past SLA -> escalated
+    esc = escalate_overdue(now_ts=100000, sla=86400, root=d, inbox=ib, log=lg)
+    check("overdue open item escalated", any(i["id"] == "DI-0002" for i in esc))
+    # idempotent: not re-escalated
+    esc2 = escalate_overdue(now_ts=100001, sla=86400, root=d, inbox=ib, log=lg)
+    check("escalation idempotent", esc2 == [])
 
 for n, ok in cases:
     print(f"  {'PASS' if ok else 'FAIL'}  {n}")

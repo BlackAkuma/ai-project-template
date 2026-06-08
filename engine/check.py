@@ -58,10 +58,21 @@ def main():
     root = os.path.abspath(ns.root)
 
     gpath = os.path.join(root, "engine", "gates", ns.gate + ".yaml")
-    if not os.path.exists(gpath):
-        print(f"[ERR] gate not found: {gpath}")
+    gate = None
+    if os.path.exists(gpath):
+        gate = yaml.safe_load(open(gpath, encoding="utf-8"))
+    else:
+        # fallback: match by gate `id` (so BRD-traced ids like 'task_close_gate' work too)
+        gdir = os.path.join(root, "engine", "gates")
+        for fn in sorted(os.listdir(gdir)) if os.path.isdir(gdir) else []:
+            if fn.endswith(".yaml"):
+                g = yaml.safe_load(open(os.path.join(gdir, fn), encoding="utf-8"))
+                if g.get("id") == ns.gate:
+                    gate = g
+                    break
+    if gate is None:
+        print(f"[ERR] gate not found (by filename or id): {ns.gate}")
         sys.exit(2)
-    gate = yaml.safe_load(open(gpath, encoding="utf-8"))
     ctx = gather_ctx(root)
 
     fails = []
