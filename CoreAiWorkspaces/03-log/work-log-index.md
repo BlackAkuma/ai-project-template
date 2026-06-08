@@ -2,7 +2,7 @@
 last_session: 2026-06-05
 tool: Claude Code
 completed: [T-040]
-checkpoint: P4-1 done — engine/store.py JSON-in-git canonical + generated view, drift=0 invariant (7/7; 31 tests total across 4 suites; CI runs all). G3=C-deferred (ADR-012). next P4-2 render full work-status/task-board from store. G1=C-conservative (ADR-011)
+checkpoint: P4-2 done — store renders work-status + task-board blocks from ONE canonical (unified schema/T-057 + dual-authority, 12/12; 36 tests total). live-file cutover deferred (gated migration, not during active loop). G3=C-deferred (ADR-012). next P5 Cockpit OR P6-1 Decision Inbox data layer
 next_from_last: T-049 full retrofit + T-056/057 (A1 findings); then P1 validator
 notes: ADR-006..009 Accepted (panel 2/3). Scenario O codified. P0-A done. A1 core schema drafted (exploration/a1-core-schema.md) — retrofit เจอ 2 gap จริง (spike source_ref, work-status field reconcile).
 released_since_log: v1.6.0–v1.10.0 (HARD RULE, escape valve, challenge-necessity, task close gate, behavioral tests)

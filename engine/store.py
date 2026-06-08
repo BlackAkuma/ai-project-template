@@ -43,6 +43,46 @@ def render_ai_context(state):
     ])
 
 
-def verify_no_drift(state, rendered_block):
+def _by_status(state):
+    by = {}
+    for t in state.get("tasks", []):
+        by.setdefault(t.get("status", "todo"), []).append(t["id"])
+    return by
+
+
+def _lst(ids):
+    return "[" + ",".join(sorted(ids)) + "]"
+
+
+def render_work_status_block(state):
+    """P4-2/T-057: generate unified work-status AI-CONTEXT block from canonical JSON."""
+    p = state.get("project", {})
+    by = _by_status(state)
+    return "\n".join([
+        f"schema_version: {state.get('schema_version', SCHEMA_VERSION)}",
+        f"phase: {p.get('phase', '')}",
+        f"active_tasks: {_lst(by.get('in_progress', []))}",
+        f"blocker: {p.get('blocker', 'none')}",
+        f"next: {p.get('next', '')}",
+        f"active_branch: {p.get('active_branch', '')}",
+        f"git_pipeline: {p.get('git_pipeline', '')}",
+        f"updated: {p.get('updated', '')}",
+    ])
+
+
+def render_task_board_block(state):
+    """P4-2/T-057: generate unified task-board AI-CONTEXT block from canonical JSON."""
+    by = _by_status(state)
+    return "\n".join([
+        f"schema_version: {state.get('schema_version', SCHEMA_VERSION)}",
+        f"total_tasks: {len(state.get('tasks', []))}",
+        f"done: {_lst(by.get('done', []))}",
+        f"in_progress: {_lst(by.get('in_progress', []))}",
+        f"blocked: {_lst(by.get('blocked', []))}",
+        f"todo: {_lst(by.get('todo', []))}",
+    ])
+
+
+def verify_no_drift(state, rendered_block, renderer=render_ai_context):
     """drift=0 invariant: regenerate from canonical == the rendered view in the file."""
-    return render_ai_context(state) == rendered_block
+    return renderer(state) == rendered_block
