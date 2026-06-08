@@ -1,6 +1,6 @@
 ﻿<!-- AI-CONTEXT
-total_adrs: 12
-accepted: [ADR-001,ADR-002,ADR-003,ADR-004,ADR-005,ADR-006,ADR-007,ADR-008,ADR-009,ADR-010,ADR-011,ADR-012]
+total_adrs: 13
+accepted: [ADR-001,ADR-002,ADR-003,ADR-004,ADR-005,ADR-006,ADR-007,ADR-008,ADR-009,ADR-010,ADR-011,ADR-012,ADR-013]
 proposed: []
 last_updated: 2026-06-07
 note: ADR-006..009 Accepted 2026-06-05 via 3-lens panel (2/3 rule); 008+009 revised per contrarian FAIL before accept
@@ -43,6 +43,7 @@ ADR ที่ถูก accept แล้วถือเป็น source of truth 
 | ADR-010 | BRD v1.0 Accepted (Governed Project Memory) | Accepted | 2026-06-05 | — |
 | ADR-011 | G1 Decision — C-conservative (soft-ship + protect P3) | Accepted | 2026-06-06 | — |
 | ADR-012 | G3 Decision — JSON-in-git canonical + deferred index | Accepted | 2026-06-07 | finalizes ADR-007 store |
+| ADR-013 | G4 Decision — harvest demand first (gate Shell on WTP) | Accepted | 2026-06-07 | — |
 
 ## ✅ Stage 2 — Accepted 2026-06-05 (via 3-lens panel)
 

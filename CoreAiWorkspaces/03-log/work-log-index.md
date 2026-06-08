@@ -2,7 +2,7 @@
 last_session: 2026-06-05
 tool: Claude Code
 completed: [T-040]
-checkpoint: P6-1 done — engine/inbox.py Decision Inbox data layer (risk-tiered create L2/L3, resolve, audit-logged; 9/9; 45 tests/6 suites; CI updated). Differentiator built Engine-side. next: P5 Cockpit OR G4 (build Shell UI) panel. G3=C-deferred (ADR-012)
+checkpoint: AUTONOMOUS-BUILD TERMINUS. G4 decided=B harvest-demand-first (ADR-013): Engine moat complete (45 tests/6 suites), Shell gated on ≥1 design-partner WTP signal. next = USER real-world GTM (publish hero-demo + outreach). All headless-buildable work done. ADR-006..013 locked.
 next_from_last: T-049 full retrofit + T-056/057 (A1 findings); then P1 validator
 notes: ADR-006..009 Accepted (panel 2/3). Scenario O codified. P0-A done. A1 core schema drafted (exploration/a1-core-schema.md) — retrofit เจอ 2 gap จริง (spike source_ref, work-status field reconcile).
 released_since_log: v1.6.0–v1.10.0 (HARD RULE, escape valve, challenge-necessity, task close gate, behavioral tests)
@@ -20,6 +20,21 @@ deep_context: exploration/master-plan.md
 | M3: Release Prep (ROADMAP, CHANGELOG, merge to master) | 🔄 todo | — |
 
 ## Recent Sessions
+
+### 2026-06-07 — [Engine moat complete (P3-P6 data) + G3/G4 decided → autonomous-build terminus]
+
+**สิ่งที่ทำ:**
+- P3-1 tamper-evidence (hash chain) · P3-2 gated mutation + faked-done detection · P4-1/2 JSON-in-git canonical store + generated views (drift=0) · P6-1 Decision Inbox data layer — รวม **45 tests/6 suites** ผ่านหมด, CI รันครบ
+- G3 panel → **C-deferred** (ADR-012): JSON-in-git canonical, NFR-2 git-native FINAL
+- G4 panel → **B harvest-demand-first** (ADR-013): Shell gated บน ≥1 design-partner WTP; revenue hypothesis (OSS free + paid governance-of-record)
+- ทุก gate: panel 2/3 + dissent + marketing → user ตัดสิน → lock (G1✅ G3✅ G4✅)
+
+**ผล:** Engine (moat) สมบูรณ์+พิสูจน์แล้ว headless; thesis "context>model" = ระบบที่รัน+test ได้จริง · **autonomous build ถึง terminus** — next คือ GTM จริงของ user (harvest demand) ไม่ใช่ autonomous coding
+**Decisions:** ADR-012 (G3), ADR-013 (G4)
+**Next (USER):** publish hero-demo + category flag, outreach WTP, gate Shell บน signal (timebox 4-6wk)
+**Branch:** explore/odysseus-analysis
+
+---
 
 ### 2026-06-06 — [MVW reached + G1 decided (C-conservative) + engine build P1-P2]
 

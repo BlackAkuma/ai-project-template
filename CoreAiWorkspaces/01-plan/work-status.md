@@ -1,7 +1,7 @@
 <!-- AI-CONTEXT
-phase: stage2-design (Stage A — A1 schema drafted)
-active_task: T-045 A1 core schema done (+ retrofit found 2 gaps T-056/057); next T-049 full retrofit
-blocker: none (carry-over T-051..053 deferred to whole-project review)
+phase: stage2-BUILD — Engine moat complete (45 tests); autonomous-build terminus at G4=B
+active_task: none (build done headless). next = USER real-world GTM (harvest OD-3 willingness-to-pay per ADR-013)
+blocker: Shell build gated on ≥1 design-partner signal (ADR-013); carry-over T-051..053 → project review
 last_updated: 2026-06-05
 git_mode: branch-separated
 git_dev_branch: dev
@@ -14,7 +14,7 @@ read_more:
   plan: exploration/master-plan.md
   decisions: CoreAiWorkspaces/07-decisions/README.md (ADR-006..009 Accepted)
   adr_panel: CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md §7 (Scenario O)
-next_action: T-049 full retrofit (research/industrial domain) + T-056/057 (A1 findings); then P1 validator
+next_action: USER GTM — publish hero-demo + category flag, outreach 8-12 teams (WTP question), gate Shell on ≥1 design-partner (ADR-013, timebox 4-6wk). engine/ ready to soft-ship OSS
 -->
 
 # Work Status — ai-project-template

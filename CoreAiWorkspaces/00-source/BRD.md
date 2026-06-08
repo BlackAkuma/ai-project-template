@@ -182,7 +182,7 @@ LiteLLM (routing) · OPA / MS Agent Governance Toolkit (policy) · Qdrant (vecto
 |----|----------|------|-------|
 | OD-1 | SQLite vs JSON-in-git canonical store | G3 | ✅ **resolved → C-deferred** (ADR-012): JSON-in-git canonical + SQLite index deferred |
 | OD-2 | หยุดที่ Engine-CLI หรือไป P3 | G1 | ✅ **resolved → C-conservative** (ADR-011): soft-ship OSS + protect P3 |
-| OD-3 | build Shell หรือหยุด Engine (+ revenue hypothesis) | G4 | open |
+| OD-3 | build Shell หรือหยุด Engine (+ revenue hypothesis) | G4 | ✅ **resolved → B harvest-demand-first** (ADR-013): gate Shell บน ≥1 design-partner; revenue=OSS free + paid governance-of-record |
 | OD-4 | universal vs optimize own-tool | G5 | deferred post-SHIP |
 | (G0 canonical-inversion = decided via ADR-007 "high-cost-to-reverse"; G2 build-runtime = decided via P3 commitment) | | | noted |
 
