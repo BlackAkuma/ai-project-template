@@ -26,9 +26,16 @@ def _state(root):
     return st
 
 
+WEB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "web", "index.html")
+
+
 def handle(method, path, body=None, root="."):
-    """Pure router. Returns (status_code, dict). No socket — directly testable."""
+    """Pure router. Returns (status_code, dict|str). No socket — directly testable.
+    GET / serves the static web Cockpit (no Node build needed — runs in any browser)."""
     body = body or {}
+    if method == "GET" and path in ("/", "/index.html"):
+        html = open(WEB, encoding="utf-8").read() if os.path.exists(WEB) else "<h1>Cockpit UI missing</h1>"
+        return 200, {"_html": html}
     if method == "GET" and path == "/cockpit":
         return 200, {"cockpit": render_cockpit(_state(root), list_open(root=root, inbox=INBOX), [])}
     if method == "GET" and path == "/inbox":
@@ -61,9 +68,14 @@ def serve(port=8777, root="."):  # pragma: no cover (real server — needs a run
             except Exception:
                 body = {}
             st, res = handle(method, self.path, body, root=root)
-            payload = json.dumps(res, ensure_ascii=False).encode()
+            if isinstance(res, dict) and "_html" in res:
+                payload = res["_html"].encode("utf-8")
+                ctype = "text/html; charset=utf-8"
+            else:
+                payload = json.dumps(res, ensure_ascii=False).encode()
+                ctype = "application/json"
             self.send_response(st)
-            self.send_header("content-type", "application/json")
+            self.send_header("content-type", ctype)
             self.end_headers()
             self.wfile.write(payload)
 

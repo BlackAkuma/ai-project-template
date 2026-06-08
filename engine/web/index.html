@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Governed Project Memory — Cockpit</title>
+<style>
+  :root { --bg:#0f1115; --card:#1a1d24; --fg:#e6e8ec; --mut:#8b90a0; --acc:#5b9dff; --ok:#3ecf8e; --warn:#ffcc66; --bad:#ff6b6b; }
+  * { box-sizing:border-box; } body { margin:0; font:14px/1.5 system-ui,sans-serif; background:var(--bg); color:var(--fg); }
+  header { padding:16px 24px; border-bottom:1px solid #2a2e38; display:flex; align-items:center; gap:12px; }
+  header h1 { font-size:16px; margin:0; } .pill { font-size:12px; color:var(--mut); }
+  main { display:grid; grid-template-columns:1fr 1fr; gap:16px; padding:24px; max-width:1100px; margin:0 auto; }
+  .card { background:var(--card); border:1px solid #2a2e38; border-radius:10px; padding:16px; }
+  .card h2 { font-size:13px; text-transform:uppercase; letter-spacing:.5px; color:var(--mut); margin:0 0 12px; }
+  .stat { display:flex; gap:16px; flex-wrap:wrap; } .stat b { color:var(--acc); }
+  .inbox-item { border:1px solid #2a2e38; border-radius:8px; padding:10px; margin-bottom:8px; }
+  .lvl { font-weight:700; } .l2{color:var(--warn)} .l3{color:var(--bad)}
+  button { background:#262b35; color:var(--fg); border:1px solid #39414f; border-radius:6px; padding:5px 10px; cursor:pointer; }
+  button.ok { border-color:var(--ok); } button.bad { border-color:var(--bad); }
+  pre { background:#11141a; padding:10px; border-radius:8px; overflow:auto; color:var(--mut); white-space:pre-wrap; }
+  .muted { color:var(--mut); } .row { display:flex; gap:8px; align-items:center; margin-top:8px; }
+  input,select { background:#11141a; color:var(--fg); border:1px solid #39414f; border-radius:6px; padding:5px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🛡️ Governed Project Memory</h1>
+  <span class="pill">enforcement เหนือ AGENTS.md · risk-tiered · tamper-evident</span>
+  <span class="pill" id="audit"></span>
+</header>
+<main>
+  <section class="card">
+    <h2>Project</h2>
+    <div class="stat" id="proj">…</div>
+    <h2 style="margin-top:16px">Recent activity</h2>
+    <pre id="events">…</pre>
+  </section>
+  <section class="card">
+    <h2>Decision Inbox</h2>
+    <div id="inbox">…</div>
+    <h2 style="margin-top:16px">Run governed turn</h2>
+    <div class="row">
+      <input id="t-task" placeholder="task (T-XXX)" size="8"/>
+      <input id="t-intent" placeholder="intent" size="10"/>
+      <select id="t-model"><option>stub-strong</option><option>local-3b</option><option>claude-sonnet</option></select>
+      <button onclick="runTurn()">dispatch</button>
+    </div>
+    <pre id="turn-out" class="muted">—</pre>
+  </section>
+</main>
+<script>
+const api = (m,p,b) => fetch(p,{method:m,headers:{'content-type':'application/json'},body:b?JSON.stringify(b):undefined}).then(r=>r.json());
+async function refresh(){
+  const ck = await api('GET','/cockpit');
+  const txt = ck.cockpit||'';
+  document.getElementById('proj').innerHTML = txt.split('\n').filter(l=>l.includes('phase:')||l.includes('tasks:')||l.includes('blocker:')).map(l=>`<span>${l.replace(/</g,'&lt;')}</span>`).join(' ');
+  const au = await api('GET','/audit'); document.getElementById('audit').textContent = 'audit: '+(au.chain_ok?'✅ intact':'❌ tampered');
+  const ib = await api('GET','/inbox'); const box=document.getElementById('inbox');
+  box.innerHTML = ib.open.length? ib.open.map(i=>`<div class="inbox-item"><span class="lvl l${i.risk_level}">L${i.risk_level}</span> <b>${i.id}</b> ${i.gate} — ${(i.reason||'').replace(/</g,'&lt;')}<div class="row"><button class="ok" onclick="resolve('${i.id}','approved')">approve</button><button class="bad" onclick="resolve('${i.id}','rejected')">reject</button></div></div>`).join('') : '<span class="muted">(none — all clear)</span>';
+}
+async function resolve(id,d){ await api('POST','/inbox/resolve',{id,decision:d,by:'web-user'}); refresh(); }
+async function runTurn(){
+  const r = await api('POST','/turn',{task:t_task.value||'T-1',intent:t_intent.value||'mark_done',risk:1,model:t_model.value});
+  document.getElementById('turn-out').textContent = JSON.stringify(r,null,1); refresh();
+}
+refresh();
+</script>
+</body>
+</html>

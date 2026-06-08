@@ -43,6 +43,10 @@ with tempfile.TemporaryDirectory() as d:
     st, res = handle("GET", "/nope", root=d)
     check("unknown path -> 404", st == 404)
 
+    # Phase C: web Cockpit served at /
+    st, res = handle("GET", "/", root=d)
+    check("GET / serves web Cockpit HTML", st == 200 and "_html" in res and "Governed Project Memory" in res["_html"])
+
 # live socket smoke (start server in thread, real HTTP GET)
 import threading  # noqa: E402
 import urllib.request  # noqa: E402

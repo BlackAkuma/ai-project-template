@@ -6,12 +6,25 @@
 
 > สถานะ: Engine core complete — linter + constitutive enforcement + JSON-in-git canonical store + Decision Inbox data layer (45 tests/6 suites). Shell UI gated on demand (ADR-013). ดู `../exploration/master-plan.md`
 
-## Quickstart (OSS soft-ship)
+## ▶ Run the product (end-to-end, no Node/build needed)
 ```bash
 pip install -r engine/requirements.txt        # pyyaml
-python engine/demo.py                          # ▶ <10min hero demo (end-to-end)
-python engine/check.py task-close --task T-1   # governance gate vs real state
-for t in resolvers events govern store inbox; do python engine/test_$t.py; done   # 45 tests
+python engine/api.py                           # starts API + web Cockpit on http://127.0.0.1:8777
+# → open http://127.0.0.1:8777 in a browser: project + Decision Inbox (approve/reject) + run governed turn
+```
+Or as a CLI tool:
+```bash
+python engine/cli.py cockpit                   # render project state
+python engine/cli.py turn T-1 mark_done --model claude-sonnet   # governed agent turn
+python engine/cli.py gate task_close_gate --task T-1            # check a gate
+python engine/cli.py inbox                      # open Decision Inbox items
+python engine/cli.py audit                      # verify tamper-evident chain
+```
+
+## Quickstart (tests + demo)
+```bash
+python engine/demo.py                          # ▶ <10min hero demo (end-to-end narrated)
+for t in resolvers events govern store inbox adversarial llm agent repo memory cockpit migrate entities evidence check cli api; do python engine/test_$t.py; done   # 17 suites
 ```
 > ⚠️ **LICENSE ยังไม่มี** — ก่อน publish OSS ต้องเลือก license (MIT แนะนำสำหรับ OSS-core wedge, ADR-013) = การตัดสินของผู้ใช้
 
