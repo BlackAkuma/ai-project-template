@@ -1,7 +1,7 @@
 <!-- AI-CONTEXT
-phase: BRD BUILD COMPLETE — all FR-1..5 impl+tested (re-audit 3/3 complete); 15 suites/~146 tests + CI
-active_task: none — full build done (F1-F12, carry-over, gaps closed). honest deferrals documented
-blocker: none. deferrals (gated/honest): full-FS-interception (sandbox), semantic-retrieval, Shell-web-UI, T-057 live-cutover
+phase: Engine COMPLETE + RUNNABLE (Phase A: CLI + HTTP API) — 17 suites/~160 tests + CI
+active_task: Phase A (runnable headless) done. Phase B/C/D need real env (see product-completion-plan)
+blocker: B(LLM)=API key · C(Shell UI)=Node/browser · D(deploy+real-use)=hosting+users — env-gated, ผม build headless ต่อไม่ได้
 active_branch: dev
 last_updated: 2026-06-05
 git_mode: branch-separated
@@ -15,7 +15,7 @@ read_more:
   plan: exploration/master-plan.md
   decisions: CoreAiWorkspaces/07-decisions/README.md (ADR-006..009 Accepted)
   adr_panel: CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md §7 (Scenario O)
-next_action: USER — (1) merge dev→master release (เลือก LICENSE); (2) GTM: hero-demo + WTP outreach; (3) เมื่อพร้อม: full-FS-interception (sandbox), real semantic retrieval (Qdrant), Shell web UI, T-057 live-cutover. engine/ build complete + tested
+next_action: Phase B/C/D ต้อง env จาก USER — (B) ให้ API key → wire real LLM · (C) Node env → build/run Shell UI · (D) hosting + real users → deploy + validate vs Odysseus. ผม build A (CLI+API) headless เสร็จแล้ว. merge dev→master + LICENSE = USER
 -->
 
 # Work Status — ai-project-template
