@@ -5,6 +5,10 @@ Read-only: NEVER mutates state/engine (preserves the proven moat). This is the h
 renderer; the full interactive SvelteKit web Cockpit needs a frontend env (flagged, not built here).
 It is the demand-harvest 'visible surface' (ADR-013 C-fallback) over the same data contract.
 """
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 
 def _counts(state):
@@ -32,7 +36,7 @@ def render_cockpit(state, open_items=None, recent_events=None):
     L.append(f"DECISION INBOX ({len(open_items)} open) — needs human:")
     if open_items:
         for it in open_items:
-            L.append(f"  [{it['id']}] L{it.get('risk_level')} {it.get('gate')}: {it.get('reason', '')[:50]}")
+            L.append(f"  [{it.get('id', '?')}] L{it.get('risk_level')} {it.get('gate')}: {it.get('reason', '')[:50]}")
     else:
         L.append("  (none — all clear)")
     L.append("")
@@ -42,3 +46,22 @@ def render_cockpit(state, open_items=None, recent_events=None):
     if not recent_events:
         L.append("  (no events)")
     return "\n".join(L)
+
+
+def main(root="."):
+    """Real entrypoint (panel: 'zero callers' fix) — render live project from store+inbox.
+    Usage: python engine/cockpit.py"""
+    from inbox import list_open
+    from migrate_state import parse_board
+    board = os.path.join(root, "CoreAiWorkspaces/02-task/task-board.md")
+    state = parse_board(open(board, encoding="utf-8").read()) if os.path.exists(board) else {"tasks": []}
+    state.setdefault("project", {"phase": "stage2", "active_branch": "dev"})
+    print(render_cockpit(state, list_open(root=root), []))
+
+
+if __name__ == "__main__":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+    main(os.environ.get("ROOT", "."))

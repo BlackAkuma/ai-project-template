@@ -1,8 +1,12 @@
-"""F4/P10: vector memory interface + in-memory fallback (BRD FR-2 cross-session retrieval).
+"""F4/P10: retrieval interface + offline fallback (BRD FR-2 retrieval seam).
+
+⚠️ HONEST SCOPE (panel-driven): the offline fallback is **LEXICAL token-overlap (Jaccard),
+NOT semantic vector search**. Synonyms/paraphrases will NOT match. Real semantic retrieval
+(embeddings) = the Qdrant backend, which is a DEFERRED seam (get_store('qdrant') raises until wired).
+Do NOT market 'semantic memory' until the embedding backend lands.
 
 Wing/Room/Drawer scoping (core/19): Wing=project, Room=repo/area, Drawer=chunk.
-Real backend = Qdrant (lazy import); fallback = in-memory token-overlap similarity (offline,
-deterministic, testable). Retrieval is a VIEW (never authoritative — canonical truth = JSON-in-git).
+Retrieval is a VIEW (never authoritative — canonical truth = JSON-in-git, ADR-012).
 Budget controls (k, score floor) per core/20 to bound context cost (NFR-8).
 """
 import re
