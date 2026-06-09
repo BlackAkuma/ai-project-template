@@ -4,6 +4,9 @@ version: 2.0
 status: Draft (awaiting user accept)
 supersedes_context: BRD.md v1.0 (engine-scoped) — v2 reframes around usable-first (A) -> full app (B)
 direction_lock: usable-first via governance-layer (Path A) then grow to full app (Path B). user-decided 2026-06-09.
+ga_key: LOCAL (Ollama, free, no key) — user-decided 2026-06-09 (machine: 32GB RAM, GTX1070 8GB — viable)
+ga_host: Claude Code hooks first — user-decided 2026-06-09 (3-analyst consensus)
+m_a1_status: A1 local-LLM wiring DONE (llm.py ollama provider). next: install Ollama + pull model + verify real call, then A2 hooks
 phases: [A usable-layer, B full-app]
 -->
 
