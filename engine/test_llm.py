@@ -5,7 +5,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from llm import assign, complete  # noqa: E402
+from llm import assign, complete, ollama_status, PROVIDERS  # noqa: E402
 
 cases = []
 def check(name, cond): cases.append((name, bool(cond)))
@@ -27,6 +27,13 @@ check("swap model (gpt-4o) -> still works", r2["ok"] is True)
 # sub-floor model blocked at completion time
 r3 = complete([{"role": "user", "content": "x"}], model="local-3b", role="code-author", provider_name="stub")
 check("sub-floor completion -> blocked (lane_refused)", r3["ok"] is False and r3.get("lane_refused") is True)
+
+# A1: local Ollama provider wired (free, no key)
+check("ollama provider registered", "ollama" in PROVIDERS)
+check("local model tiered (qwen2.5-coder:7b)", assign("qwen2.5-coder:7b", "advisory")[0] is True)
+up, info = ollama_status()
+check("ollama_status returns gracefully (up or down)", isinstance(up, bool))
+print(f"  [info] Ollama server: {'UP — models: '+str(info) if up else 'not running yet (install + `ollama serve`)'}")
 
 for n, ok in cases:
     print(f"  {'PASS' if ok else 'FAIL'}  {n}")

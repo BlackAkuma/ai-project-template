@@ -10,6 +10,9 @@ MODEL_TIER = {
     "stub-weak": 0, "stub-strong": 3,
     "claude-sonnet": 3, "claude-haiku": 2, "gpt-4o": 3, "gpt-4o-mini": 2,
     "deepseek-v3": 3, "qwen2.5-7b": 1, "llama3-8b": 1, "local-3b": 0,
+    # local Ollama models (run on your machine, free, no key)
+    "qwen2.5-coder:7b": 2, "qwen2.5:7b": 2, "llama3.1:8b": 2,
+    "qwen2.5:3b": 1, "llama3.2:3b": 1, "phi3.5": 1,
 }
 # Min tier per lane (FR-4.2). code/architect work needs capable models; weak → advisory only.
 ROLE_FLOOR = {"read-only": 0, "advisory": 1, "code-author": 2, "architect": 3}
@@ -31,10 +34,33 @@ def _stub(messages, model, **_):
 
 
 @provider("litellm")
-def _litellm(messages, model, **_):  # real provider — lazy import, offline-safe
+def _litellm(messages, model, **_):  # cloud provider — lazy import, offline-safe
     import litellm  # noqa: F401  (only if installed/used)
     resp = litellm.completion(model=model, messages=messages)
     return resp["choices"][0]["message"]["content"]
+
+
+@provider("ollama")
+def _ollama(messages, model, **_):  # LOCAL provider — free, no key, stdlib only (no deps)
+    import json as _json
+    import urllib.request
+    body = _json.dumps({"model": model, "messages": messages, "stream": False}).encode()
+    req = urllib.request.Request("http://localhost:11434/api/chat", data=body,
+                                 headers={"content-type": "application/json"})
+    with urllib.request.urlopen(req, timeout=180) as r:
+        return _json.loads(r.read())["message"]["content"]
+
+
+def ollama_status():
+    """Return (up, info). Checks if the local Ollama server is running + which models are pulled."""
+    import json as _json
+    import urllib.request
+    try:
+        with urllib.request.urlopen("http://localhost:11434/api/tags", timeout=3) as r:
+            models = [m["name"] for m in _json.loads(r.read()).get("models", [])]
+        return True, models
+    except Exception as e:  # noqa: BLE001
+        return False, str(e)
 
 
 def assign(model, role):
