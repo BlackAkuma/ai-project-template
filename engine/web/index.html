@@ -5,65 +5,160 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Governed Project Memory — Cockpit</title>
 <style>
-  :root { --bg:#0f1115; --card:#1a1d24; --fg:#e6e8ec; --mut:#8b90a0; --acc:#5b9dff; --ok:#3ecf8e; --warn:#ffcc66; --bad:#ff6b6b; }
-  * { box-sizing:border-box; } body { margin:0; font:14px/1.5 system-ui,sans-serif; background:var(--bg); color:var(--fg); }
-  header { padding:16px 24px; border-bottom:1px solid #2a2e38; display:flex; align-items:center; gap:12px; }
-  header h1 { font-size:16px; margin:0; } .pill { font-size:12px; color:var(--mut); }
-  main { display:grid; grid-template-columns:1fr 1fr; gap:16px; padding:24px; max-width:1100px; margin:0 auto; }
-  .card { background:var(--card); border:1px solid #2a2e38; border-radius:10px; padding:16px; }
-  .card h2 { font-size:13px; text-transform:uppercase; letter-spacing:.5px; color:var(--mut); margin:0 0 12px; }
-  .stat { display:flex; gap:16px; flex-wrap:wrap; } .stat b { color:var(--acc); }
-  .inbox-item { border:1px solid #2a2e38; border-radius:8px; padding:10px; margin-bottom:8px; }
-  .lvl { font-weight:700; } .l2{color:var(--warn)} .l3{color:var(--bad)}
-  button { background:#262b35; color:var(--fg); border:1px solid #39414f; border-radius:6px; padding:5px 10px; cursor:pointer; }
-  button.ok { border-color:var(--ok); } button.bad { border-color:var(--bad); }
-  pre { background:#11141a; padding:10px; border-radius:8px; overflow:auto; color:var(--mut); white-space:pre-wrap; }
-  .muted { color:var(--mut); } .row { display:flex; gap:8px; align-items:center; margin-top:8px; }
-  input,select { background:#11141a; color:var(--fg); border:1px solid #39414f; border-radius:6px; padding:5px; }
+  :root{--bg:#0f1115;--card:#1a1d24;--fg:#e6e8ec;--mut:#8b90a0;--acc:#5b9dff;--ok:#3ecf8e;--warn:#ffcc66;--bad:#ff6b6b;--line:#2a2e38}
+  *{box-sizing:border-box} body{margin:0;font:14px/1.55 system-ui,sans-serif;background:var(--bg);color:var(--fg)}
+  header{padding:14px 24px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  header h1{font-size:16px;margin:0} .badge{font-size:12px;padding:3px 8px;border-radius:20px;border:1px solid var(--line)}
+  .badge.ok{color:var(--ok);border-color:var(--ok)} .badge.bad{color:var(--bad);border-color:var(--bad)}
+  .hero{padding:16px 24px;background:#13161d;border-bottom:1px solid var(--line)}
+  .hero p{margin:0;color:var(--fg);font-size:15px} .hero small{color:var(--mut)}
+  main{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;padding:20px 24px;max-width:1200px;margin:0 auto}
+  @media(max-width:880px){main{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:16px}
+  .card h2{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--mut);margin:0 0 12px}
+  .stat{display:flex;gap:18px;flex-wrap:wrap} .stat b{color:var(--acc)}
+  .demo-btns{display:flex;gap:8px;flex-wrap:wrap}
+  button{background:#262b35;color:var(--fg);border:1px solid #39414f;border-radius:7px;padding:7px 12px;cursor:pointer;font-size:13px}
+  button:hover{border-color:var(--acc)} button.ok{border-color:var(--ok)} button.bad{border-color:var(--bad)} button.primary{background:var(--acc);color:#0b0d12;border-color:var(--acc);font-weight:600}
+  .verdict{margin-top:10px;padding:10px 12px;border-radius:8px;border-left:3px solid var(--mut);background:#11141a;font-size:13px;display:none}
+  .verdict.show{display:block} .verdict.blocked{border-color:var(--bad)} .verdict.ok{border-color:var(--ok)} .verdict.held{border-color:var(--warn)}
+  .item{border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:10px}
+  .lvl{font-weight:700;font-size:12px;padding:2px 7px;border-radius:5px} .lvl.l2{color:#1a1500;background:var(--warn)} .lvl.l3{color:#2a0000;background:var(--bad)}
+  .item .who{color:var(--mut);font-size:12px;margin:6px 0} .item .why{font-size:12px;color:var(--fg);margin:6px 0}
+  .item .acts{display:flex;gap:8px;margin-top:8px;align-items:center} input,select{background:#11141a;color:var(--fg);border:1px solid #39414f;border-radius:6px;padding:6px}
+  .ev{font-family:ui-monospace,monospace;font-size:12px;padding:5px 0;border-bottom:1px solid var(--line);display:flex;gap:8px}
+  .ev .r-pass{color:var(--ok)} .ev .r-blocked,.ev .r-refused{color:var(--bad)} .ev .r-inbox{color:var(--warn)}
+  .mut{color:var(--mut)} label{font-size:12px;color:var(--mut)} .row{display:flex;gap:8px;align-items:end;flex-wrap:wrap;margin-top:8px}
+  .preview{font-size:12px;color:var(--mut);margin-top:8px;min-height:18px}
+  .field{display:flex;flex-direction:column;gap:3px}
 </style>
 </head>
 <body>
 <header>
   <h1>🛡️ Governed Project Memory</h1>
-  <span class="pill">enforcement เหนือ AGENTS.md · risk-tiered · tamper-evident</span>
-  <span class="pill" id="audit"></span>
+  <span class="badge" id="audit">audit: …</span>
+  <span class="mut" style="font-size:12px">demo project · no API key needed</span>
 </header>
+<div class="hero">
+  <p>AI agents <b>can't fake task completion or sneak risky actions past you.</b> The engine checks real state (git/files/tests) — not the agent's word — and holds anything risky for your approval.</p>
+  <small>Core loop: an agent acts → the gate auto-allows, <b>blocks</b>, or <b>holds it for you</b> → you decide → every outcome is signed into a tamper-evident audit chain.</small>
+</div>
 <main>
-  <section class="card">
-    <h2>Project</h2>
-    <div class="stat" id="proj">…</div>
-    <h2 style="margin-top:16px">Recent activity</h2>
-    <pre id="events">…</pre>
-  </section>
-  <section class="card">
-    <h2>Decision Inbox</h2>
-    <div id="inbox">…</div>
-    <h2 style="margin-top:16px">Run governed turn</h2>
-    <div class="row">
-      <input id="t-task" placeholder="task (T-XXX)" size="8"/>
-      <input id="t-intent" placeholder="intent" size="10"/>
-      <select id="t-model"><option>stub-strong</option><option>local-3b</option><option>claude-sonnet</option></select>
-      <button onclick="runTurn()">dispatch</button>
-    </div>
-    <pre id="turn-out" class="muted">—</pre>
-  </section>
+  <div>
+    <section class="card">
+      <h2>① Try it — watch an agent get caught (live)</h2>
+      <div class="demo-btns">
+        <button class="bad" onclick="demo('FAKE-1','mark_done','claude-sonnet',1)">Agent fakes "task done" (no evidence)</button>
+        <button class="bad" onclick="demo('WEAK-1','edit_code','local-3b',1)">Weak model writes code</button>
+        <button class="bad" onclick="demo('PROD-1','deploy_prod','claude-sonnet',1)">Agent deploys to production</button>
+      </div>
+      <div class="verdict" id="verdict"></div>
+    </section>
+
+    <section class="card">
+      <h2>② Decision Inbox — needs your call <span class="mut" id="ibcount"></span></h2>
+      <div id="inbox">…</div>
+    </section>
+
+    <section class="card">
+      <h2>③ Run a governed action</h2>
+      <div class="row">
+        <div class="field"><label>task</label><input id="t-task" value="T-500" size="7"/></div>
+        <div class="field"><label>action</label><select id="t-intent">
+          <option value="mark_done">Mark task complete</option>
+          <option value="edit_code">Edit code</option>
+          <option value="commit">Commit code</option>
+          <option value="deploy_prod">Deploy to production</option>
+          <option value="read_status">Read status</option>
+        </select></div>
+        <div class="field"><label>agent model</label><select id="t-model">
+          <option value="claude-sonnet">claude-sonnet (capable·t3)</option>
+          <option value="stub-strong">stub-strong (t3)</option>
+          <option value="local-3b">local-3b (weak·t0)</option>
+        </select></div>
+        <button class="primary" onclick="runTurn()">dispatch</button>
+      </div>
+      <div class="preview" id="preview"></div>
+      <div class="verdict" id="turnverdict"></div>
+    </section>
+  </div>
+
+  <div>
+    <section class="card">
+      <h2>Project</h2>
+      <div class="stat" id="proj">…</div>
+    </section>
+    <section class="card">
+      <h2>Audit chain — tamper-evident proof</h2>
+      <div id="events" class="mut">…</div>
+    </section>
+    <section class="card">
+      <h2>From demo → your project</h2>
+      <p class="mut" style="font-size:12px;margin:0">Point the engine at your repo and plug a model key for real use:<br/>
+      <code>ROOT=/path/to/repo python engine/api.py</code><br/>
+      The demo runs on stub models (offline). Real models via LiteLLM (your key) — same governance.</p>
+    </section>
+  </div>
 </main>
 <script>
-const api = (m,p,b) => fetch(p,{method:m,headers:{'content-type':'application/json'},body:b?JSON.stringify(b):undefined}).then(r=>r.json());
-async function refresh(){
-  const ck = await api('GET','/cockpit');
-  const txt = ck.cockpit||'';
-  document.getElementById('proj').innerHTML = txt.split('\n').filter(l=>l.includes('phase:')||l.includes('tasks:')||l.includes('blocker:')).map(l=>`<span>${l.replace(/</g,'&lt;')}</span>`).join(' ');
-  const au = await api('GET','/audit'); document.getElementById('audit').textContent = 'audit: '+(au.chain_ok?'✅ intact':'❌ tampered');
-  const ib = await api('GET','/inbox'); const box=document.getElementById('inbox');
-  box.innerHTML = ib.open.length? ib.open.map(i=>`<div class="inbox-item"><span class="lvl l${i.risk_level}">L${i.risk_level}</span> <b>${i.id}</b> ${i.gate} — ${(i.reason||'').replace(/</g,'&lt;')}<div class="row"><button class="ok" onclick="resolve('${i.id}','approved')">approve</button><button class="bad" onclick="resolve('${i.id}','rejected')">reject</button></div></div>`).join('') : '<span class="muted">(none — all clear)</span>';
+const api=(m,p,b)=>fetch(p,{method:m,headers:{'content-type':'application/json'},body:b?JSON.stringify(b):undefined}).then(r=>r.json());
+const INTENT={mark_done:'mark task complete',edit_code:'edit code',commit:'commit code',deploy_prod:'deploy to production',read_status:'read status'};
+const esc=s=>(s||'').replace(/</g,'&lt;');
+function statusLine(r){
+  if(r.status==='blocked') return {cls:'blocked',html:`🔴 <b>BLOCKED by the gate.</b> The engine checked real state and the claim failed — missing: <code>${esc((r.detail&&r.detail.missing||[]).join(', '))}</code>. The agent could NOT close this. Nothing got past.`};
+  if(r.status==='refused') return {cls:'blocked',html:`🔴 <b>REFUSED.</b> ${esc(r.reason)} — this model's tier is below the floor required for "${esc(INTENT[document.getElementById('t-intent')?.value]||'this action')}". Lane is bound to the action, so it can't be mislabeled.`};
+  if(r.status==='inbox') return {cls:'held',html:`🟡 <b>Held for your approval (Decision Inbox).</b> Risk level ${r.risk_level} — dangerous/irreversible actions can't auto-run, even if labeled low-risk. See the inbox →`};
+  if(r.status==='done') return {cls:'ok',html:`✅ <b>Allowed.</b> Evidence checked out — task closed and signed into the audit chain.`};
+  if(r.status==='executed') return {cls:'ok',html:`✅ <b>Executed</b> (low-risk, auto-allowed) and signed into the audit chain.`};
+  return {cls:'',html:esc(JSON.stringify(r))};
 }
-async function resolve(id,d){ await api('POST','/inbox/resolve',{id,decision:d,by:'web-user'}); refresh(); }
+async function demo(task,intent,model,risk){
+  const r=await api('POST','/turn',{task,intent,risk,model});
+  const v=statusLine(r),el=document.getElementById('verdict');
+  el.className='verdict show '+v.cls; el.innerHTML=`<b>${esc(INTENT[intent]||intent)}</b> by <code>${esc(model)}</code> → ${v.html}`;
+  refresh();
+}
 async function runTurn(){
-  const r = await api('POST','/turn',{task:t_task.value||'T-1',intent:t_intent.value||'mark_done',risk:1,model:t_model.value});
-  document.getElementById('turn-out').textContent = JSON.stringify(r,null,1); refresh();
+  const intent=t_intent.value,model=t_model.value;
+  const r=await api('POST','/turn',{task:t_task.value||'T-500',intent,risk:1,model});
+  const v=statusLine(r),el=document.getElementById('turnverdict');
+  el.className='verdict show '+v.cls; el.innerHTML=v.html; refresh();
 }
-refresh();
+async function preview(){
+  const r=await api('POST','/preview',{intent:t_intent.value,risk:1,model:t_model.value});
+  const map={'auto-allow':'✅ will auto-allow','decision-inbox':'🟡 will be held for your approval','refused':'🔴 will be refused (model below role floor)'};
+  document.getElementById('preview').innerHTML=`before you click → <b>${map[r.predicted]||r.predicted}</b> · lane: ${esc(r.lane)} · risk L${r.risk_level}`;
+}
+async function resolve(id,d){
+  let reason='';
+  if(d==='rejected'){ reason=prompt('Why reject? (recorded to the audit chain)')||''; }
+  await api('POST','/inbox/resolve',{id,decision:d,by:'web-user',reason}); refresh();
+}
+function riskLabel(l){return l>=3?['l3','L3 — Dangerous: production / irreversible']:l>=2?['l2','L2 — needs your sign-off']:['', 'L1'];}
+async function refresh(){
+  const ck=await api('GET','/cockpit'); const txt=ck.cockpit||'';
+  document.getElementById('proj').innerHTML=txt.split('\n').filter(l=>/phase:|tasks:|blocker:/.test(l)).map(l=>`<span>${esc(l)}</span>`).join(' ');
+  const au=await api('GET','/audit'); const ab=document.getElementById('audit');
+  ab.className='badge '+(au.chain_ok?'ok':'bad'); ab.textContent='audit: '+(au.chain_ok?'✓ tamper-evident chain intact':'✗ TAMPERED');
+  const ib=await api('GET','/inbox'); const box=document.getElementById('inbox');
+  document.getElementById('ibcount').textContent=`(${ib.open.length})`;
+  box.innerHTML=ib.open.length?ib.open.map(i=>{const[c,lbl]=riskLabel(i.risk_level);return `<div class="item">
+     <span class="lvl ${c}">${lbl}</span>
+     <div class="who">an AI agent attempted: <b>${esc(INTENT[i.reason]||i.reason)}</b> on <code>${esc(i.task||i.task_ref||'')}</code></div>
+     <div class="why">Why you're seeing this: the engine held it instead of letting the agent run it.</div>
+     <div class="acts">
+       <button class="ok" onclick="resolve('${i.id}','approved')">Approve — override &amp; sign</button>
+       <button class="bad" onclick="resolve('${i.id}','rejected')">Reject — keep blocked</button>
+     </div></div>`}).join(''):'<span class="mut">No pending decisions. Use ① above to make an agent try something risky.</span>';
+  const ev=await api('GET','/events'); const elist=ev.events.slice(-8).reverse();
+  document.getElementById('events').innerHTML=elist.length?elist.map(e=>{
+    const res=(e.result||'').toLowerCase(); const cls=res.includes('pass')||res.includes('done')?'r-pass':res.includes('inbox')?'r-inbox':'r-'+res;
+    return `<div class="ev"><span class="${cls}">${esc(e.action||'')}</span><span class="mut">${esc(e.target||'')}</span><span class="mut">${esc(e.result||'')}</span></div>`;
+  }).join(''):'<span class="mut">(no events yet — try ①)</span>';
+}
+document.getElementById('t-intent').addEventListener('change',preview);
+document.getElementById('t-model').addEventListener('change',preview);
+preview(); refresh();
 </script>
 </body>
 </html>

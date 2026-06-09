@@ -6,6 +6,12 @@
       "runtimeExecutable": "python",
       "runtimeArgs": ["-m", "http.server", "5555", "--directory", "docs"],
       "port": 5555
+    },
+    {
+      "name": "engine-demo",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["engine/serve_demo.py"],
+      "port": 8777
     }
   ]
 }

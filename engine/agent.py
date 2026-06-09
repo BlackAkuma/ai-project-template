@@ -66,6 +66,20 @@ def normalize_risk(risk_level, intent):
     return r
 
 
+def preview_turn(intent, risk_level, model="stub-strong"):
+    """Predict what governed_turn WOULD do — without executing (for UI live-preview)."""
+    lane = lane_for(intent)
+    ok, reason = assign(model, lane)
+    risk = normalize_risk(risk_level, intent)
+    if not ok:
+        predicted = "refused"
+    elif risk >= 2:
+        predicted = "decision-inbox"
+    else:
+        predicted = "auto-allow"
+    return {"lane": lane, "risk_level": risk, "role_ok": ok, "predicted": predicted, "reason": reason}
+
+
 def governed_turn(task_id, intent, risk_level, model="stub-strong",
                   root=".", ts=0, log=LOG, inbox=INBOX):
     """One governed agent action. intent: 'mark_done' | free-form. Returns {status, ...}.

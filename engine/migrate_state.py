@@ -23,7 +23,7 @@ def parse_board(text):
         if not m:
             continue
         for tid in [x.strip() for x in m.group(1).split(",") if x.strip()]:
-            if tid.startswith("T-") or tid.startswith("F"):  # task/feature ids only
+            if re.match(r"^[A-Z][A-Za-z]*-?\d", tid):  # id-like tokens (T-1, F1, DEMO-1)
                 state["tasks"].append({"id": tid, "status": status})
     return state
 

@@ -46,8 +46,9 @@ def create_item(gate, task, risk_level, reason, item_id=None, ts=0, root=".", in
     return item
 
 
-def resolve_item(item_id, decision, by, ts=0, root=".", inbox=INBOX, log=LOG):
-    """Human resolves an open item. decision = 'approved' | 'rejected'. Recorded to audit log."""
+def resolve_item(item_id, decision, by, ts=0, root=".", inbox=INBOX, log=LOG, reason=""):
+    """Human resolves an open item. decision = 'approved' | 'rejected'. Recorded to audit log.
+    reason: rationale (esp. for reject) — written to the item + audit chain (FR-3 accountability)."""
     assert decision in ("approved", "rejected")
     path = os.path.join(root, inbox)
     items = _read(path)
@@ -55,11 +56,13 @@ def resolve_item(item_id, decision, by, ts=0, root=".", inbox=INBOX, log=LOG):
     for it in items:
         if it["id"] == item_id and it["status"] == "open":
             it["status"], it["resolved_by"], it["resolved_ts"] = decision, by, ts
+            if reason:
+                it["resolution_reason"] = reason
             target = it
     if target is None:
         return None  # not found or already resolved
     _write(path, items)
-    append_event(by, "inbox.resolve", item_id, decision, ts=ts, root=root, log=log)
+    append_event(by, "inbox.resolve", item_id, f"{decision}: {reason}" if reason else decision, ts=ts, root=root, log=log)
     return target
 
 

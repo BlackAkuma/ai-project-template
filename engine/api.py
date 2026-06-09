@@ -12,8 +12,16 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from cockpit import render_cockpit  # noqa: E402
 from migrate_state import parse_board  # noqa: E402
 from inbox import list_open, resolve_item  # noqa: E402
-from agent import governed_turn  # noqa: E402
+from agent import governed_turn, preview_turn  # noqa: E402
 from events import verify_chain  # noqa: E402
+
+
+def _events(root):
+    import json as _j
+    p = os.path.join(root, LOG)
+    if not os.path.exists(p):
+        return []
+    return [_j.loads(x) for x in open(p, encoding="utf-8").read().splitlines() if x.strip()]
 
 LOG = "engine/events.log.jsonl"
 INBOX = "engine/inbox.jsonl"
@@ -43,6 +51,12 @@ def handle(method, path, body=None, root="."):
     if method == "GET" and path == "/audit":
         ok, reason = verify_chain(root=root, log=LOG)
         return 200, {"chain_ok": ok, "reason": reason}
+    if method == "GET" and path == "/events":
+        return 200, {"events": _events(root)}
+    if method == "POST" and path == "/preview":
+        if "intent" not in body:
+            return 400, {"error": "intent required"}
+        return 200, preview_turn(body["intent"], body.get("risk", 1), model=body.get("model", "stub-strong"))
     if method == "POST" and path == "/turn":
         if "task" not in body or "intent" not in body:
             return 400, {"error": "task and intent required"}
@@ -51,13 +65,13 @@ def handle(method, path, body=None, root="."):
         return 200, r
     if method == "POST" and path == "/inbox/resolve":
         r = resolve_item(body.get("id"), body.get("decision"), by=body.get("by", "user"),
-                         ts=body.get("ts", 0), root=root, inbox=INBOX, log=LOG)
+                         ts=body.get("ts", 0), root=root, inbox=INBOX, log=LOG, reason=body.get("reason", ""))
         return (200, r) if r else (404, {"error": "not found / already resolved"})
     return 404, {"error": "not found", "method": method, "path": path}
 
 
 def serve(port=8777, root="."):  # pragma: no cover (real server — needs a running process)
-    from http.server import BaseHTTPRequestHandler, HTTPServer
+    from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
     class H(BaseHTTPRequestHandler):
         def _go(self, method):
@@ -89,7 +103,7 @@ def serve(port=8777, root="."):  # pragma: no cover (real server — needs a run
             pass
 
     print(f"engine API on http://127.0.0.1:{port} (root={root})")
-    HTTPServer(("127.0.0.1", port), H).serve_forever()
+    ThreadingHTTPServer(("127.0.0.1", port), H).serve_forever()
 
 
 if __name__ == "__main__":  # pragma: no cover
