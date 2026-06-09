@@ -54,6 +54,13 @@ with tempfile.TemporaryDirectory() as d:
     code2, _ = run_hook(d, "ls -la")
     check("non-commit command -> allowed (exit 0)", code2 == 0)
 
+    # A4: dangerous git op -> HELD (exit 2) + creates a real Decision Inbox item
+    code3, err3 = run_hook(d, "git push --force origin main")
+    check("force-push -> HELD for approval (exit 2)", code3 == 2 and "HELD" in err3)
+    inbox_path = os.path.join(d, "engine", "inbox.jsonl")
+    has_item = os.path.exists(inbox_path) and "risky_git_op" in open(inbox_path, encoding="utf-8").read()
+    check("force-push created a Decision Inbox item", has_item)
+
 for n, ok in cases:
     print(f"  {'PASS' if ok else 'FAIL'}  {n}")
 failed = [n for n, ok in cases if not ok]

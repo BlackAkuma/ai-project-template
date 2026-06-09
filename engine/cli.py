@@ -59,6 +59,16 @@ def cmd_turn(a):
     return 0 if r["status"] in ("done", "executed", "inbox") else 1
 
 
+def cmd_hold(a):
+    from inbox import create_item
+    item = create_item(a.gate, a.task, a.risk, a.reason, root=a.root, inbox=INBOX, log=LOG)
+    if item:
+        print(f"held for approval: {item['id']} (L{a.risk}) {a.reason}")
+        return 0
+    print("not held (risk < 2 = auto-allowed)")
+    return 0
+
+
 def cmd_inbox(a):
     items = list_open(root=a.root, inbox=INBOX)
     print(f"{len(items)} open Decision Inbox item(s):")
@@ -91,13 +101,15 @@ def build_parser():
     t.add_argument("--ts", type=int, default=0); t.add_argument("--root", default=".")
     r = sub.add_parser("inbox-resolve"); r.add_argument("id"); r.add_argument("decision", choices=["approved", "rejected"])
     r.add_argument("--by", default="user"); r.add_argument("--ts", type=int, default=0); r.add_argument("--root", default=".")
+    h = sub.add_parser("hold"); h.add_argument("gate"); h.add_argument("task"); h.add_argument("reason")
+    h.add_argument("--risk", type=int, default=2); h.add_argument("--root", default=".")
     return ap
 
 
 def main(argv=None):
     a = build_parser().parse_args(argv)
     return {"cockpit": cmd_cockpit, "gate": cmd_gate, "turn": cmd_turn, "inbox": cmd_inbox,
-            "inbox-resolve": cmd_inbox_resolve, "audit": cmd_audit}[a.cmd](a)
+            "inbox-resolve": cmd_inbox_resolve, "audit": cmd_audit, "hold": cmd_hold}[a.cmd](a)
 
 
 if __name__ == "__main__":

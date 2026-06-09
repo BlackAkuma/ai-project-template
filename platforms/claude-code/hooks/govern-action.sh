@@ -27,10 +27,22 @@ run_gate() {
   fi
 }
 
+CLI="${ENGINE_DIR:-$SCRIPT_DIR/../../..}/engine/cli.py"
+
+hold_for_approval() {  # risky-but-not-forbidden (L2) -> Decision Inbox, agent waits for human
+  python "$CLI" hold "$1" "$2" "$3" --risk 2 --root "$(pwd)" >/dev/null 2>&1
+  echo "🟡 HELD FOR YOUR APPROVAL: \"$3\" — risk action queued to the Decision Inbox." >&2
+  echo "   Review + approve/reject in the Cockpit before this runs." >&2
+  exit 2
+}
+
 case "$cmd" in
   *"git commit"*)
-    run_gate secret-scan       # C-11: no secrets into git (engine resolver scans staged diff)
+    run_gate secret-scan       # C-11 (L3 hard-stop): no secrets into git
     run_gate placeholder-scan  # C-04: no unresolved placeholders
+    ;;
+  *"push --force"*|*"push -f"*|*"reset --hard"*|*"branch -D"*|*"clean -fd"*|*"push --force-with-lease"*)
+    hold_for_approval risky_git_op "$cmd" "dangerous git operation (rewrites/deletes history or work)"
     ;;
 esac
 
