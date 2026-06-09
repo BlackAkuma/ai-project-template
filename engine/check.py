@@ -55,15 +55,18 @@ def main():
     ap.add_argument("--task", dest="task_id")
     ap.add_argument("--root", default=".")
     ns = ap.parse_args()
-    root = os.path.abspath(ns.root)
+    root = os.path.abspath(ns.root)  # the PROJECT being checked (what resolvers scan)
+    # gates live with the ENGINE (this file's dir), NOT in the target project — these are separate
+    # locations: you can govern any repo without copying gates into it (A2 fix).
+    gates_root = os.path.dirname(os.path.abspath(__file__))
 
-    gpath = os.path.join(root, "engine", "gates", ns.gate + ".yaml")
+    gpath = os.path.join(gates_root, "gates", ns.gate + ".yaml")
     gate = None
     if os.path.exists(gpath):
         gate = yaml.safe_load(open(gpath, encoding="utf-8"))
     else:
         # fallback: match by gate `id` (so BRD-traced ids like 'task_close_gate' work too)
-        gdir = os.path.join(root, "engine", "gates")
+        gdir = os.path.join(gates_root, "gates")
         for fn in sorted(os.listdir(gdir)) if os.path.isdir(gdir) else []:
             if fn.endswith(".yaml"):
                 g = yaml.safe_load(open(os.path.join(gdir, fn), encoding="utf-8"))

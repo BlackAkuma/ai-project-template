@@ -6,7 +6,7 @@ supersedes_context: BRD.md v1.0 (engine-scoped) — v2 reframes around usable-fi
 direction_lock: usable-first via governance-layer (Path A) then grow to full app (Path B). user-decided 2026-06-09.
 ga_key: LOCAL (Ollama, free, no key) — user-decided 2026-06-09 (machine: 32GB RAM, GTX1070 8GB — viable)
 ga_host: Claude Code hooks first — user-decided 2026-06-09 (3-analyst consensus)
-m_a1_status: A1 local-LLM wiring DONE (llm.py ollama provider). next: install Ollama + pull model + verify real call, then A2 hooks
+m_a1_status: A1 DONE+VERIFIED (Ollama installed, qwen2.5-coder:7b pulled, engine calls real local AI). A2 DONE (govern-action.sh PreToolUse hook → engine gates → blocks real bad commits, 4/4 test, wired in .claude/settings.json). 18 suites. next: A3 real-state resolvers + A4 inbox-in-workflow + A5 memory auto-load
 phases: [A usable-layer, B full-app]
 -->
 
