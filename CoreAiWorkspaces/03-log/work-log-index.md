@@ -11,6 +11,13 @@ deep_context: exploration/master-plan.md
 
 # Work Log Index — ai-project-template
 
+## Recent: 2026-06-10 — P1 batch APPROVED 3/3 + consensus-dissent fixes
+
+- **panel P1 (BL-6,7,8,9,10,12): 3/3 PASS** (ทุก lens รัน 24 suites เองยืนยัน) + marketing=viable (hero story = live governed agent run)
+- consensus dissent → แก้ทันที (feature/BL-P1-fixes): (1) **stale-green cache loophole**: dirty tree → bypass cache เสมอ (test pinned) (2) agent_run บันทึก source=model|FALLBACK แยกได้จริง (3) broken settings.json → init ABORT ไม่ทับ (test pinned) (4) digest ตะโกน "test_gate: NOT CONFIGURED" (5) testcmd ขยาย 1→4 suites
+- dissent คงเหลือ (logged, ไม่ block): receipts.checked นับ bookkeeping events รวม (เลข inflate เล็กน้อย) · BL-12 เป็น spike งานเดียว — ห้าม cite ว่า loop ใช้ได้กับงาน arbitrary จนกว่า M-A3 รันงานจริง · deletable-testcmd ต้องการ "was-configured" state (FU-5, รอ M-A3)
+- สถานะ: backlog-v2 เหลือ BL-11 (รอ dogfood data) — **เข้าสู่ dogfood week (M-A3) เต็มตัว**
+
 ## Recent: 2026-06-10 — P0 panel review FAIL (1/3) → fixed → re-review
 
 - **panel P0 batch (BL-1..5): 1/3 PASS = FAIL ตามกติกา 2/3** (technical pass · strategic fail · contrarian fail) — ผล+เหตุผลเต็มใน task ws7too3li

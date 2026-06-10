@@ -18,6 +18,11 @@ git = shutil.which("git")
 
 
 def repo(d, testcmd=None):
+    if testcmd is not None:  # write BEFORE commit so the tree is clean (cache tests need that)
+        os.makedirs(os.path.join(d, "engine"), exist_ok=True)
+        open(os.path.join(d, "engine", "testcmd.txt"), "w").write(testcmd)
+        # same as engine-init writes for real repos: runtime files must not dirty the tree
+        open(os.path.join(d, ".gitignore"), "w").write("engine/.testrun_cache.json\nengine/*.jsonl\nengine/.writeback_state.json\n")
     if git:
         subprocess.run([git, "init", "-q"], cwd=d)
         subprocess.run([git, "config", "user.email", "t@t"], cwd=d)
@@ -25,9 +30,6 @@ def repo(d, testcmd=None):
         open(os.path.join(d, "x.txt"), "w").write("1")
         subprocess.run([git, "add", "."], cwd=d)
         subprocess.run([git, "commit", "-q", "-m", "c1"], cwd=d)
-    if testcmd is not None:
-        os.makedirs(os.path.join(d, "engine"), exist_ok=True)
-        open(os.path.join(d, "engine", "testcmd.txt"), "w").write(testcmd)
 
 
 # not configured -> not enforced (resolver passes, run_tests says so)
@@ -45,6 +47,10 @@ with tempfile.TemporaryDirectory() as d:
     check("resolver True on green", RESOLVERS["tests_green"]({"root": d}) is True)
     r2 = run_tests(d)
     check("second run cache-hit by HEAD", r2["cached"] is True and r2["green"] is True)
+    # P1-panel fix: DIRTY tree must NOT reuse cached green (stale-green loophole)
+    open(os.path.join(d, "x.txt"), "w").write("edited-after-green")
+    r3 = run_tests(d)
+    check("dirty tree -> cache bypassed (no stale green)", r3["cached"] is False)
 
 # configured + red command -> red, resolver blocks
 with tempfile.TemporaryDirectory() as d:

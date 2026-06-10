@@ -87,6 +87,13 @@ def render_digest(root="."):
         L.append(f"last_checkpoint: {wl['checkpoint'][:400]}")
     if ws.get("next_action"):
         L.append(f"next_action: {ws['next_action'][:300]}")
+    # P1-panel fix: unconfigured/deleted test gate must be LOUD, not silent
+    try:
+        from testrun import get_command
+        cmd = get_command(root)
+        L.append(f"test_gate: {'configured (' + cmd[:40] + ')' if cmd else '⚠️ NOT CONFIGURED — done-gate ไม่บังคับเทส (ตั้ง engine/testcmd.txt)'}")
+    except Exception:
+        pass
     L.append(f"decision_inbox_open: {len(held)}" + (
         " — " + "; ".join(f"[{i.get('id')}] L{i.get('risk_level')} {str(i.get('reason'))[:50]}" for i in held[:3]) if held else ""))
     if recent:
