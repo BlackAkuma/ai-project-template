@@ -54,6 +54,14 @@ with tempfile.TemporaryDirectory() as d:
     code2, _ = run_hook(d, "ls -la")
     check("non-commit command -> allowed (exit 0)", code2 == 0)
 
+    # TEMPLATE-ONLY MODE: no engine/ present -> hook passes silently (template standalone must work)
+    with tempfile.TemporaryDirectory() as empty_engine:
+        mock = '{"tool_name":"Bash","tool_input":{"command":"git commit -m x"}}'
+        env2 = dict(os.environ, ENGINE_DIR=empty_engine)
+        p2 = subprocess.run([bash, HOOK], input=mock, capture_output=True, text=True,
+                            encoding="utf-8", errors="replace", cwd=d, env=env2)
+        check("no engine/ -> template-only mode passes (exit 0)", p2.returncode == 0)
+
     # A4: dangerous git op -> HELD (exit 2) + creates a real Decision Inbox item
     code3, err3 = run_hook(d, "git push --force origin main")
     check("force-push -> HELD for approval (exit 2)", code3 == 2 and "HELD" in err3)

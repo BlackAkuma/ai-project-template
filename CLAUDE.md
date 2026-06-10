@@ -35,6 +35,11 @@ rm -rf CoreAiWorkspaces/ docs/ tests/ CHANGELOG.md ROADMAP.md
 # CoreAiWorkspaces/     — tracking ของ template project เอง (ไม่ใช่ของโปรเจ็กต์คุณ)
 # docs/   — web pages ของ template (อยู่บน gh-pages branch)
 # (core/, platforms/, skills/ ยังต้องเก็บไว้ — AI อ่านทุก session)
+
+# 3b. (ทางเลือก) ถ้าต้องการเฉพาะ TEMPLATE ไม่เอา governance engine:
+rm -rf engine/ exploration/ start-cockpit.cmd
+# ปลอดภัย 100% — hooks ตรวจเองว่าไม่มี engine/ แล้วทำงานแบบ template-only อัตโนมัติ
+# (ถ้าเก็บ engine/ ไว้ = ได้ governance ที่บังคับจริง + Cockpit dashboard เพิ่ม — ดู engine/README.md)
 ```
 
 → ทำตาม First Run Bootstrap ด้านล่าง

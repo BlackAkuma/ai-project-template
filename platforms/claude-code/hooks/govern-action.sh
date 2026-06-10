@@ -8,6 +8,13 @@
 
 input=$(cat)
 
+# TEMPLATE-ONLY MODE: ถ้าโปรเจ็กต์นี้ไม่มี engine/ (คนเอาเฉพาะ template ไปใช้) → ผ่านเงียบๆ
+# template ต้องใช้ standalone ได้เสมอ — engine เป็น optional layer (BRD-v2 N6)
+_SD="$(cd "$(dirname "$0")" && pwd)"
+if [ ! -f "${ENGINE_DIR:-$_SD/../../..}/engine/check.py" ]; then
+  exit 0
+fi
+
 # extract the bash command from the tool call (engine/python is required anyway)
 cmd=$(printf '%s' "$input" | python -c "import sys,json
 try:
