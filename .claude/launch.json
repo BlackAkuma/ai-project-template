@@ -8,6 +8,12 @@
       "port": 5555
     },
     {
+      "name": "cockpit-live",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["engine/api.py"],
+      "port": 8777
+    },
+    {
       "name": "engine-demo",
       "runtimeExecutable": "python",
       "runtimeArgs": ["engine/serve_demo.py"],

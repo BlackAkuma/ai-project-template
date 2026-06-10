@@ -37,7 +37,7 @@
 <header>
   <h1>🛡️ Governed Project Memory</h1>
   <span class="badge" id="audit">audit: …</span>
-  <span class="mut" style="font-size:12px">demo project · no API key needed</span>
+  <span class="badge" id="watch" style="font-size:11px">…</span>
 </header>
 <div class="hero">
   <p>AI agents <b>can't fake task completion or sneak risky actions past you.</b> The engine checks real state (git/files/tests) — not the agent's word — and holds anything risky for your approval.</p>
@@ -137,6 +137,9 @@ async function resolve(id,d){
 function riskLabel(l){return l>=3?['l3','L3 — Dangerous: production / irreversible']:l>=2?['l2','L2 — needs your sign-off']:['', 'L1'];}
 async function refresh(){
   const ck=await api('GET','/cockpit'); const txt=ck.cockpit||'';
+  const w=document.getElementById('watch');
+  if(ck.mode==='live'){ w.className='badge ok'; w.textContent='🟢 governance ON · watching: '+(ck.watching||'').split(/[\\/]/).pop(); }
+  else { w.className='badge'; w.textContent='demo project · no API key needed'; }
   document.getElementById('proj').innerHTML=txt.split('\n').filter(l=>/phase:|tasks:|blocker:/.test(l)).map(l=>`<span>${esc(l)}</span>`).join(' ');
   const au=await api('GET','/audit'); const ab=document.getElementById('audit');
   ab.className='badge '+(au.chain_ok?'ok':'bad'); ab.textContent='audit: '+(au.chain_ok?'✓ tamper-evident chain intact':'✗ TAMPERED');

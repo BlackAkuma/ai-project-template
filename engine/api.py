@@ -45,7 +45,9 @@ def handle(method, path, body=None, root="."):
         html = open(WEB, encoding="utf-8").read() if os.path.exists(WEB) else "<h1>Cockpit UI missing</h1>"
         return 200, {"_html": html}
     if method == "GET" and path == "/cockpit":
-        return 200, {"cockpit": render_cockpit(_state(root), list_open(root=root, inbox=INBOX), [])}
+        mode = "demo" if "demo_data" in os.path.abspath(root).replace("\\", "/") else "live"
+        return 200, {"cockpit": render_cockpit(_state(root), list_open(root=root, inbox=INBOX), []),
+                     "watching": os.path.abspath(root), "mode": mode}
     if method == "GET" and path == "/inbox":
         return 200, {"open": list_open(root=root, inbox=INBOX)}
     if method == "GET" and path == "/audit":

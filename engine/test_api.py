@@ -24,6 +24,7 @@ with tempfile.TemporaryDirectory() as d:
     fixture(d)
     st, res = handle("GET", "/cockpit", root=d)
     check("GET /cockpit -> 200 + cockpit", st == 200 and "COCKPIT" in res["cockpit"])
+    check("cockpit reports watching root + mode (BL-1)", res.get("watching") and res.get("mode") in ("live", "demo"))
 
     st, res = handle("GET", "/inbox", root=d)
     check("GET /inbox -> 200 + open list", st == 200 and "open" in res)
