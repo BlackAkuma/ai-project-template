@@ -11,6 +11,13 @@ deep_context: exploration/master-plan.md
 
 # Work Log Index — ai-project-template
 
+## Recent: 2026-06-10 — backlog-v2 (4-lens panel)
+
+- panel (product/tech/contrarian/marketing) อ่าน repo จริง → consensus: A1/A2/A4 ทำงานแต่ "มองไม่เห็นบนจอ" = ไม่นับว่าใช้ได้สำหรับ user ที่ไม่รันคำสั่ง
+- → `02-task/backlog-v2.md`: P0 ปิดลูป เห็น→ตัดสิน→จำ บน repo จริง (BL-1 cockpit-live, BL-2/3 memory auto-load+writeback, BL-4 one-click, BL-5 dogfood-start) · P1 = test-evidence, engine-init, notification, receipts, latency, fatigue-tuning, agent-run-spike
+- defer/kill consensus: B9 KILL, B3/B4/B5/B6/B7/B8 defer จนผ่าน M-A3 (BRD R3) · B2 ใช้ vanilla ต่อ
+- dissent logged ครบ 6 ข้อใน backlog-v2 (watchdog-passive, duplication, rubber-stamp, screen-candy, 7B-structured-output, vanity-metric)
+
 ## Milestone Summary
 
 | Milestone | Status | Completed |
