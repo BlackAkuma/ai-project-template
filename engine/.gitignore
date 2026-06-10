@@ -4,3 +4,4 @@ __pycache__/
 *.log.jsonl
 
 *.jsonl
+.writeback_state.json
