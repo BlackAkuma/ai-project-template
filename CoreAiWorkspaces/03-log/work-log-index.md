@@ -11,6 +11,12 @@ deep_context: exploration/master-plan.md
 
 # Work Log Index — ai-project-template
 
+## Recent: 2026-06-10 — compliance tightening (user-flagged)
+
+- **user ชี้ 3 เรื่อง:** (1) template ต้องเอาไปใช้เดี่ยวๆ ได้เสมอ (2) ทำงานเฉพาะเส้น dev (3) ไม่เห็นแยก feature branch ตาม core/21
+- ตรวจจริง: (1) พังจริง — settings.json hook เรียก engine โดยไม่เช็คว่ามี → แก้: template-only mode (ไม่มี engine/ → hook ผ่านเงียบ, 7/7 test) + CLAUDE.md path 3b ลบ engine ได้ (2) ตรงอยู่แล้ว (3) หลุดจริง — commit ตรง dev ตลอด → **เริ่มเคร่ง: ทุก feature → `feature/<id>-<name>` แยกจาก dev** เริ่มที่ feature/BL-2-memory-autoload
+- decision logged: งานเล็ก scoped (compliance fix นี้) = dev ตรงตามกฎข้อ 3 · งาน feature (BL-*) = แยก branch เสมอ
+
 ## Recent: 2026-06-10 — backlog-v2 (4-lens panel)
 
 - panel (product/tech/contrarian/marketing) อ่าน repo จริง → consensus: A1/A2/A4 ทำงานแต่ "มองไม่เห็นบนจอ" = ไม่นับว่าใช้ได้สำหรับ user ที่ไม่รันคำสั่ง
