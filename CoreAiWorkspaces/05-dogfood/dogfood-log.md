@@ -17,3 +17,4 @@ live_now: [secret-scan+placeholder block on commit, risky-git-op -> Decision Inb
 - friction: (ยังไม่มี — เริ่มนับ)
 
 <!-- เพิ่ม entry ใหม่ด้านล่าง: วันที่ · เกิดอะไร (block/hold/น่ารำคาญ/ช่วยได้จริง) · สั้นๆ -->
+- Day 1 latency baseline: worst 175ms (budget 1000ms) — PASS (BL-10)
