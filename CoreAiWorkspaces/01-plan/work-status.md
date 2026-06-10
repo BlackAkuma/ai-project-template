@@ -2,8 +2,8 @@
 phase: M-A2 (BRD-v2 Phase A) — closing see-decide-remember loop on LIVE repo per backlog-v2
 active_task: BL-2 memory auto-load (feature/BL-2-memory-autoload). done: A1 local-AI, A2 real-action hooks, A4 inbox-hold, BL-1 cockpit-live, BL-4 one-click
 blocker: none
-active_branch: feature/BL-2-memory-autoload (merge -> dev when verified)
-last_updated: 2026-06-10
+active_branch: feature/BL-P0-fixes
+last_updated: 2026-06-11
 git_mode: branch-separated
 git_dev_branch: dev
 git_prod_branch: master
@@ -15,6 +15,7 @@ read_more:
   decisions: CoreAiWorkspaces/07-decisions/README.md (ADR-006..009 Accepted)
   adr_panel: CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md §7 (Scenario O)
 next_action: BL-2 verify+merge -> BL-3 write-back -> BL-5 dogfood start -> panel review P0 batch -> P1 (BL-6..12). B* locked until M-A3 (R3)
+auto_session: 5 commit(s) @ 0041b1b | latest: 0041b1b merge BL-3 write-back + BL-5 dogfood start — verified 20/20 suites
 -->
 
 # Work Status — ai-project-template

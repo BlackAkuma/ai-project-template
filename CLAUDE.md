@@ -79,11 +79,13 @@ rm -rf engine/ exploration/ start-cockpit.cmd
 
 ทำตามลำดับนี้ทุก session:
 
-1. อ่าน AI-CONTEXT block ของ `CoreAiWorkspaces/01-plan/work-status.md`
+> **ถ้าโปรเจ็กต์มี `engine/` (governance engine):** SessionStart hook ฉีด `[PROJECT-MEMORY DIGEST]` ให้อัตโนมัติแล้ว — **digest แทนข้อ 1-3 ด้านล่าง ห้ามอ่านซ้ำ** (ข้อมูลเดียวกัน, render จาก store) · ยังต้องเช็ค prod-branch guard ในข้อ 1 เสมอ
+
+1. อ่าน AI-CONTEXT block ของ `CoreAiWorkspaces/01-plan/work-status.md` *(ข้ามถ้ามี digest)*
    - ถ้า `git_mode: branch-separated` → รัน `git branch --show-current` ทันที
    - ถ้า branch ปัจจุบัน == `git_prod_branch` → **หยุด** แจ้งผู้ใช้ก่อน
-2. อ่าน AI-CONTEXT block ของ `CoreAiWorkspaces/03-log/work-log-index.md`
-3. อ่าน AI-CONTEXT block ของ `CoreAiWorkspaces/02-task/task-board.md`
+2. อ่าน AI-CONTEXT block ของ `CoreAiWorkspaces/03-log/work-log-index.md` *(ข้ามถ้ามี digest)*
+3. อ่าน AI-CONTEXT block ของ `CoreAiWorkspaces/02-task/task-board.md` *(ข้ามถ้ามี digest)*
 4. ถ้า `CoreAiWorkspaces/03-log/agents/claude-code.md` มีอยู่ → อ่าน AI-CONTEXT block ด้วย
 5. ถ้า work-status มี `read_more` field → แสดงให้ผู้ใช้เห็น
 6. ตรวจ gap ระหว่าง task board และ source docs (Scenario H ใน `CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md`)

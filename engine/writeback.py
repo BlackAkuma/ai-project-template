@@ -66,7 +66,9 @@ def _update_block_key(text, key, value):
     body = m.group(2)
     line = f"{key}: {value}"
     if re.search(rf"^\s*{re.escape(key)}\s*:.*$", body, re.M):
-        body = re.sub(rf"^\s*{re.escape(key)}\s*:.*$", line, body, count=1, flags=re.M)
+        # lambda replacement: value is literal text, never re-escape-interpreted (panel bug-fix —
+        # a commit message containing backslashes must not crash the writeback)
+        body = re.sub(rf"^\s*{re.escape(key)}\s*:.*$", lambda _m: line, body, count=1, flags=re.M)
     else:
         body = body.rstrip("\n") + "\n" + line + "\n"
     return text[:m.start()] + m.group(1) + body + m.group(3) + text[m.end():]

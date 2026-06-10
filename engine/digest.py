@@ -41,6 +41,17 @@ def _ai_context(path):
     return out
 
 
+def _git_branch(root):
+    """Live branch from git directly (panel fix: never trust possibly-stale store for this)."""
+    import subprocess
+    try:
+        p = subprocess.run(["git", "branch", "--show-current"], cwd=root, capture_output=True,
+                           text=True, encoding="utf-8", errors="replace", timeout=10)
+        return p.stdout.strip() if p.returncode == 0 else ""
+    except Exception:
+        return ""
+
+
 def render_digest(root="."):
     ws = _ai_context(os.path.join(root, "CoreAiWorkspaces/01-plan/work-status.md"))
     tb = _ai_context(os.path.join(root, "CoreAiWorkspaces/02-task/task-board.md"))
@@ -61,7 +72,10 @@ def render_digest(root="."):
     L = ["[PROJECT-MEMORY DIGEST — rendered from store, not generated]"]
     if ws.get("phase"):
         L.append(f"phase: {ws['phase']}")
-    if ws.get("active_branch"):
+    live_branch = _git_branch(root)
+    if live_branch:
+        L.append(f"branch: {live_branch} (live from git)")
+    elif ws.get("active_branch"):
         L.append(f"branch: {ws['active_branch']}")
     if ws.get("blocker"):
         L.append(f"blocker: {ws['blocker']}")

@@ -36,10 +36,25 @@ run_gate() {
 
 CLI="${ENGINE_DIR:-$SCRIPT_DIR/../../..}/engine/cli.py"
 
-hold_for_approval() {  # risky-but-not-forbidden (L2) -> Decision Inbox, agent waits for human
-  python "$CLI" hold "$1" "$2" "$3" --risk 2 --root "$(pwd)" >/dev/null 2>&1
-  echo "🟡 HELD FOR YOUR APPROVAL: \"$3\" — risk action queued to the Decision Inbox." >&2
-  echo "   Review + approve/reject in the Cockpit before this runs." >&2
+hold_for_approval() {  # risky-but-not-forbidden (L2) -> Decision Inbox; human decision is CAUSAL:
+  # approved (unconsumed) -> allow ONCE · pending -> keep blocked, NO duplicate · rejected -> blocked
+  # approval is scoped to THIS exact command (reason includes the command string)
+  R="$3 :: $2"
+  state=$(python "$CLI" approval-state "$1" "$R" --root "$(pwd)" 2>/dev/null | tail -1)
+  case "$state" in
+    approved)
+      echo "✅ APPROVED in Decision Inbox — allowing this action once (approval consumed, audited)." >&2
+      exit 0 ;;
+    pending)
+      echo "🟡 STILL WAITING: \"$3\" is already in the Decision Inbox — approve/reject in the Cockpit first." >&2
+      exit 2 ;;
+    rejected)
+      echo "🔴 REJECTED earlier in the Decision Inbox — this action stays blocked." >&2
+      exit 2 ;;
+  esac
+  python "$CLI" hold "$1" "$2" "$R" --risk 2 --root "$(pwd)" >/dev/null 2>&1
+  echo "🟡 HELD FOR YOUR APPROVAL: \"$3\" — queued to the Decision Inbox." >&2
+  echo "   Review + approve/reject in the Cockpit (http://127.0.0.1:8777), then retry." >&2
   exit 2
 }
 
