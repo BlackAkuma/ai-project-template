@@ -70,6 +70,30 @@ def list_open(root=".", inbox=INBOX):
     return [i for i in _read(os.path.join(root, inbox)) if i["status"] == "open"]
 
 
+def approval_state(gate, reason, root=".", inbox=INBOX, log=LOG, ts=0):
+    """P0-fix (panel contrarian): make approval CAUSAL. Returns one of:
+    'approved'  — a matching approved+unconsumed item existed; it is now CONSUMED (one-shot allow)
+    'pending'   — a matching item is still open (do NOT create a duplicate)
+    'rejected'  — human said no earlier (stays blocked)
+    'none'      — no matching item (caller should hold/create one)
+    Matching key = (gate, reason). Single-use: each approval unblocks exactly one retry."""
+    path = os.path.join(root, inbox)
+    items = _read(path)
+    match = [i for i in items if i.get("gate") == gate and i.get("reason") == reason]
+    if any(i["status"] == "open" for i in match):
+        return "pending"
+    for it in match:
+        if it["status"] == "approved" and not it.get("consumed"):
+            it["consumed"] = True
+            _write(path, items)
+            append_event("engine", "inbox.consume", it["id"], "approval consumed (action allowed once)",
+                         ts=ts, root=root, log=log)
+            return "approved"
+    if match and match[-1]["status"] == "rejected":
+        return "rejected"
+    return "none"
+
+
 def escalate_overdue(now_ts, sla=86400, root=".", inbox=INBOX, log=LOG):
     """F10/FR-3.4: flag open items older than SLA (default 1 day) as escalated; record to audit.
     Returns the list of newly-escalated items. Prevents Level 2-3 items sitting forever (R7)."""

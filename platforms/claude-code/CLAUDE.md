@@ -40,7 +40,9 @@ Protocol หลักอยู่ใน `AI.md` — ไฟล์นี้เพ�
 
 ทำตามลำดับนี้ทุก session:
 
-1. อ่าน AI-CONTEXT block ของ `CoreAiWorkspaces/01-plan/work-status.md`
+> **ถ้าโปรเจ็กต์มี `engine/`:** SessionStart hook ฉีด `[PROJECT-MEMORY DIGEST]` อัตโนมัติ — **digest แทนข้อ 1-3 ห้ามอ่านซ้ำ** · prod-branch guard ในข้อ 1 ยังบังคับเสมอ
+
+1. อ่าน AI-CONTEXT block ของ `CoreAiWorkspaces/01-plan/work-status.md` *(ข้ามถ้ามี digest)*
    - ถ้า `git_mode: branch-separated` → รัน `git branch --show-current` ทันที
    - ถ้า branch ปัจจุบัน == `git_prod_branch` → **หยุด** แจ้งผู้ใช้ก่อนดำเนินการต่อ: "คุณอยู่บน production branch ([branch]) แนะนำให้ switch ไป [git_dev_branch] ก่อน"
 2. อ่าน AI-CONTEXT block ของ `CoreAiWorkspaces/03-log/work-log-index.md`

@@ -2,6 +2,7 @@
 Sets up a temp git repo, stages a secret, runs the hook with a mock 'git commit' tool-call → expect BLOCK.
 Run: python engine/test_hook_govern.py
 """
+import json
 import os
 import shutil
 import subprocess
@@ -68,6 +69,32 @@ with tempfile.TemporaryDirectory() as d:
     inbox_path = os.path.join(d, "engine", "inbox.jsonl")
     has_item = os.path.exists(inbox_path) and "risky_git_op" in open(inbox_path, encoding="utf-8").read()
     check("force-push created a Decision Inbox item", has_item)
+
+    # P0-fix: human decision is CAUSAL (panel contrarian seam)
+    # retry while pending -> blocked, NO duplicate item
+    code4, err4 = run_hook(d, "git push --force origin main")
+    items = [json.loads(x) for x in open(inbox_path, encoding="utf-8").read().splitlines() if x.strip()]
+    check("retry while pending -> blocked + NO duplicate", code4 == 2 and "WAITING" in err4
+          and len([i for i in items if i["status"] == "open"]) == 1)
+
+    # approve in inbox -> SAME command now allowed once
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from inbox import resolve_item
+    open_item = [i for i in items if i["status"] == "open"][0]
+    resolve_item(open_item["id"], "approved", by="tester", ts=99, root=d)
+    code5, err5 = run_hook(d, "git push --force origin main")
+    check("after APPROVE -> action allowed once (exit 0)", code5 == 0 and "APPROVED" in err5)
+
+    # approval consumed -> next retry is held again (new decision required)
+    code6, err6 = run_hook(d, "git push --force origin main")
+    check("approval consumed -> next retry held again", code6 == 2 and "HELD" in err6)
+
+    # reject -> stays blocked with rejected message
+    items2 = [json.loads(x) for x in open(inbox_path, encoding="utf-8").read().splitlines() if x.strip()]
+    open2 = [i for i in items2 if i["status"] == "open"][0]
+    resolve_item(open2["id"], "rejected", by="tester", ts=100, root=d)
+    code7, err7 = run_hook(d, "git push --force origin main")
+    check("after REJECT -> stays blocked (rejected msg)", code7 == 2 and "REJECTED" in err7)
 
 for n, ok in cases:
     print(f"  {'PASS' if ok else 'FAIL'}  {n}")

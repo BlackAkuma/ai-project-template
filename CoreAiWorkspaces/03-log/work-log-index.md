@@ -11,6 +11,17 @@ deep_context: exploration/master-plan.md
 
 # Work Log Index — ai-project-template
 
+## Recent: 2026-06-10 — P0 panel review FAIL (1/3) → fixed → re-review
+
+- **panel P0 batch (BL-1..5): 1/3 PASS = FAIL ตามกติกา 2/3** (technical pass · strategic fail · contrarian fail) — ผล+เหตุผลเต็มใน task ws7too3li
+- defects จริงที่ panel จับได้ → แก้ครบบน feature/BL-P0-fixes:
+  1. **approve ไม่ causal** (contrarian — สำคัญสุด): กดอนุมัติแล้ว retry โดนบล็อกซ้ำ+item ซ้ำ → เพิ่ม `inbox.approval_state` (approved→allow ONCE+consume · pending→no-dup · rejected→blocked) + hook consult ก่อน hold + scope approval ต่อคำสั่งเฉพาะ — test 11/11
+  2. **re.sub escape bug** ใน writeback (backslash ใน commit msg → crash เงียบ) → lambda replacement
+  3. **dissent #2 dodged**: CLAUDE.md ทั้ง 2 ไฟล์ยังสั่งอ่านมือ 3 ไฟล์ → digest แทนข้อ 1-3 อย่างเป็นทางการ (ห้ามอ่านซ้ำ)
+  4. **live stale**: writeback ไม่เคยยิงจริง + digest เชื่อ store → รัน writeback จริง (5 commits recorded) + digest อ่าน branch จาก git ตรง
+- dissent ใหม่ที่บันทึก: strategic เตือน "fail อาจเร็วไป 1 session เพราะ SessionEnd ยังไม่ทันยิง" · contrarian ยอมรับ digest/writeback ดีจริง — defect คือ seam ไม่ใช่ direction
+- re-review รันต่อ (กติกา: แก้แล้วต้องรีวิวใหม่จนผ่าน 2/3)
+
 ## Recent: 2026-06-10 — compliance tightening (user-flagged)
 
 - **user ชี้ 3 เรื่อง:** (1) template ต้องเอาไปใช้เดี่ยวๆ ได้เสมอ (2) ทำงานเฉพาะเส้น dev (3) ไม่เห็นแยก feature branch ตาม core/21

@@ -69,6 +69,13 @@ def cmd_hold(a):
     return 0
 
 
+def cmd_approval_state(a):
+    """Prints approved|pending|rejected|none — used by hooks to make human decisions CAUSAL."""
+    from inbox import approval_state
+    print(approval_state(a.gate, a.reason, root=a.root, inbox=INBOX, log=LOG))
+    return 0
+
+
 def cmd_inbox(a):
     items = list_open(root=a.root, inbox=INBOX)
     print(f"{len(items)} open Decision Inbox item(s):")
@@ -103,13 +110,15 @@ def build_parser():
     r.add_argument("--by", default="user"); r.add_argument("--ts", type=int, default=0); r.add_argument("--root", default=".")
     h = sub.add_parser("hold"); h.add_argument("gate"); h.add_argument("task"); h.add_argument("reason")
     h.add_argument("--risk", type=int, default=2); h.add_argument("--root", default=".")
+    s2 = sub.add_parser("approval-state"); s2.add_argument("gate"); s2.add_argument("reason"); s2.add_argument("--root", default=".")
     return ap
 
 
 def main(argv=None):
     a = build_parser().parse_args(argv)
     return {"cockpit": cmd_cockpit, "gate": cmd_gate, "turn": cmd_turn, "inbox": cmd_inbox,
-            "inbox-resolve": cmd_inbox_resolve, "audit": cmd_audit, "hold": cmd_hold}[a.cmd](a)
+            "inbox-resolve": cmd_inbox_resolve, "audit": cmd_audit, "hold": cmd_hold,
+            "approval-state": cmd_approval_state}[a.cmd](a)
 
 
 if __name__ == "__main__":
