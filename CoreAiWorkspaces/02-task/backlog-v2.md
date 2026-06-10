@@ -58,6 +58,13 @@ rule: B-anything stays locked until M-A3 dogfood passes (BRD R3)
 
 ## ลำดับการทำ (สัปดาห์นี้)
 ```
-BL-1 Cockpit Live → BL-4 one-click → BL-2 auto-load → BL-3 write-back → BL-5 dogfood start
-แล้ว P1 ตามผล dogfood
+✅ P0 ครบ + panel re-review 3/3 PASS (2026-06-10): BL-1 → BL-4 → BL-2 → BL-3 → BL-5
+   (รอบแรก FAIL 1/3 → แก้ causal-approval/re.sub/CLAUDE.md/live-writeback → ผ่าน)
+→ ตอนนี้: P1 เริ่ม BL-6 test-evidence
 ```
+
+## Follow-ups จาก P0 re-review dissent (logged 2026-06-10)
+- FU-1 reject re-open flow (in-band เปลี่ยนใจได้) — รอ M-A3
+- FU-2 inbox.jsonl file-lock/atomic — **บังคับก่อน Phase B multi-agent**
+- FU-3 approval scoping เปราะ (exact string) — รีวิวใน BL-11
+- FU-4 hold-list → parsing จริง (กัน refspec-force bypass) — รอ M-A3

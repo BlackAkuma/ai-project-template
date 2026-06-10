@@ -44,6 +44,9 @@ t2 = _update_block_key(WS, "active_branch", "new-branch")
 check("replaces existing key", "active_branch: new-branch" in t2 and "old-branch" not in t2)
 t3 = _update_block_key(WS, "auto_session", "X")
 check("inserts new key inside block", "auto_session: X" in t3 and t3.index("auto_session") < t3.index("-->"))
+# panel regression pin: backslash/regex-template chars in value must stay literal (re.sub lambda fix)
+t4 = _update_block_key(WS, "active_branch", r"fix\x \1 \g<1> path")
+check("backslash value stays literal (no re.error)", r"fix\x \1 \g<1> path" in t4)
 check("body + human narrative untouched", "must survive" in t2 and "narrative_note: HUMAN WROTE THIS" in t2)
 
 with tempfile.TemporaryDirectory() as d:
