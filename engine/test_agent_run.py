@@ -16,7 +16,9 @@ def check(name, cond): cases.append((name, bool(cond)))
 with tempfile.TemporaryDirectory() as d:
     r = run_task(d, task_id="SPIKE-1")
     check("run completes done=True", r["done"] is True)
-    check("4 steps recorded", len(r["steps"]) == 4)
+    check("5 steps recorded (incl propose-source)", len(r["steps"]) == 5)
+    check("propose source recorded (model vs fallback distinguishable)",
+          any(s["step"] == "propose" and "source=" in s["detail"] for s in r["steps"]))
     check("test evidence is real exit 0", r.get("test_exit") == 0)
     check("file actually written", os.path.exists(os.path.join(d, "calc.py")))
     check("transcript saved", os.path.exists(os.path.join(d, "agent-run-report.md")))

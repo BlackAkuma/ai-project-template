@@ -34,6 +34,18 @@ with tempfile.TemporaryDirectory() as d:
     check("settings merged: our 3 hooks added", all(k in flat for k in ("session-digest", "session-writeback", "govern-action")))
     check("settings merge preserves user's own hook", "user-own-hook" in flat)
 
+    # P1-panel fix: unparseable settings.json -> ABORT (never overwrite user's broken config)
+    with tempfile.TemporaryDirectory() as d2:
+        os.makedirs(os.path.join(d2, ".claude"))
+        open(os.path.join(d2, ".claude", "settings.json"), "w").write("{broken json!!")
+        raised = False
+        try:
+            init_repo(d2)
+        except ValueError:
+            raised = True
+        check("broken settings.json -> abort, not overwrite", raised
+              and open(os.path.join(d2, ".claude", "settings.json")).read() == "{broken json!!")
+
     # idempotent: run again -> no duplicate hook entries
     init_repo(d)
     cfg2 = json.load(open(os.path.join(d, ".claude", "settings.json"), encoding="utf-8"))

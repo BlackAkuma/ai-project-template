@@ -23,6 +23,17 @@ def _head(root):
         return ""
 
 
+def _tree_dirty(root):
+    """True if working tree has uncommitted changes — cache must NOT be reused then
+    (P1-panel consensus: stale-green loophole — edit after green run passed the gate)."""
+    try:
+        p = subprocess.run(["git", "status", "--porcelain"], cwd=root, capture_output=True,
+                           text=True, timeout=10)
+        return bool(p.stdout.strip()) if p.returncode == 0 else True  # unknown -> treat dirty
+    except Exception:
+        return True
+
+
 def get_command(root="."):
     p = os.path.join(root, CMD_FILE)
     if os.path.exists(p):
@@ -39,6 +50,8 @@ def run_tests(root=".", use_cache=True, timeout=600):
 
     head = _head(root)
     cp = os.path.join(root, CACHE)
+    if use_cache and _tree_dirty(root):
+        use_cache = False  # dirty tree -> always re-run (no stale green)
     if use_cache and head and os.path.exists(cp):
         try:
             c = json.load(open(cp, encoding="utf-8"))

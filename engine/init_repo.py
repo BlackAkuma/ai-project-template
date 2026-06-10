@@ -35,8 +35,9 @@ def _merge_settings(path):
     if os.path.exists(path):
         try:
             cfg = json.load(open(path, encoding="utf-8"))
-        except Exception:
-            cfg = {}
+        except Exception as e:
+            # P1-panel fix: NEVER overwrite a broken-but-recoverable user config — abort loudly
+            raise ValueError(f"existing {path} is not valid JSON — fix it first (refusing to overwrite): {e}")
     hooks = cfg.setdefault("hooks", {})
     added = []
     for event, cmd in HOOK_CMDS.items():

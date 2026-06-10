@@ -73,8 +73,11 @@ def run_task(workdir, task_id="SPIKE-1", model="stub-strong", provider="stub",
                        "Write ONLY python code for calc.py: function add(a, b) returning a+b, with a one-line docstring. No explanation."}],
                      model=model, role="advisory", provider_name=provider)
         code = _extract_code(r.get("text", "")) if r["ok"] else ""
+        source = "model"
         if "def add" not in code:  # stub/weak fallback keeps loop mechanics testable
             code = 'def add(a, b):\n    """Return a + b."""\n    return a + b\n'
+            source = "FALLBACK-template (model output unusable)"  # panel: must be distinguishable
+        rec("propose", "ok", f"source={source}")
     if SECRET_PAT.search(code) or PLACEHOLDER_PAT.search(code):
         rec("write", "BLOCKED", "deterministic gate: proposed content contains secret/placeholder")
         _save(workdir, task_id, steps, done=False)
