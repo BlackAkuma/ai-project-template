@@ -69,6 +69,19 @@ def cmd_hold(a):
     return 0
 
 
+def cmd_init(a):
+    """BL-7: install governance into any repo (one command, Thai summary)."""
+    from init_repo import init_repo
+    r = init_repo(a.target)
+    print(f"✅ ติดตั้ง governance ลง {r['target']}")
+    print(f"   copied {r['copied']} files · hooks added: {', '.join(r['hooks_added']) or '(มีครบแล้ว)'}")
+    if r["scaffolded"]:
+        print(f"   สร้าง state files: {len(r['scaffolded'])} (CoreAiWorkspaces)")
+    print("   ถัดไป: (1) ตั้งคำสั่งเทสจริงใน engine/testcmd.txt (ดู .example)")
+    print("          (2) เปิด Cockpit: python engine/api.py → http://127.0.0.1:8777")
+    return 0
+
+
 def cmd_approval_state(a):
     """Prints approved|pending|rejected|none — used by hooks to make human decisions CAUSAL."""
     from inbox import approval_state
@@ -111,6 +124,7 @@ def build_parser():
     h = sub.add_parser("hold"); h.add_argument("gate"); h.add_argument("task"); h.add_argument("reason")
     h.add_argument("--risk", type=int, default=2); h.add_argument("--root", default=".")
     s2 = sub.add_parser("approval-state"); s2.add_argument("gate"); s2.add_argument("reason"); s2.add_argument("--root", default=".")
+    i = sub.add_parser("init"); i.add_argument("--target", required=True)
     return ap
 
 
@@ -118,7 +132,7 @@ def main(argv=None):
     a = build_parser().parse_args(argv)
     return {"cockpit": cmd_cockpit, "gate": cmd_gate, "turn": cmd_turn, "inbox": cmd_inbox,
             "inbox-resolve": cmd_inbox_resolve, "audit": cmd_audit, "hold": cmd_hold,
-            "approval-state": cmd_approval_state}[a.cmd](a)
+            "approval-state": cmd_approval_state, "init": cmd_init}[a.cmd](a)
 
 
 if __name__ == "__main__":
