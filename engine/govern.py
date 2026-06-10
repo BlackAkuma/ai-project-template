@@ -40,6 +40,8 @@ def mark_done(task_id, root=".", ts=0, actor="ai", board=BOARD, worklog=WORKLOG,
         missing.append("worklog_entry")
     if not RESOLVERS["evidence_count_gte"](ctx, task=task_id, n=1):
         missing.append("evidence")
+    if not RESOLVERS["tests_green"](ctx):
+        missing.append("tests_red")  # BL-6: configured test command actually ran and FAILED
     if missing:
         ev = append_event(actor, "task.done", task_id, "blocked:" + ",".join(missing), ts=ts, root=root, log=log)
         return {"ok": False, "missing": missing, "event": ev, "effect": "decision-inbox"}
