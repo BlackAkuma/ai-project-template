@@ -13,6 +13,7 @@ MODEL_TIER = {
     # local Ollama models (run on your machine, free, no key)
     "qwen2.5-coder:7b": 2, "qwen2.5:7b": 2, "llama3.1:8b": 2,
     "qwen2.5:3b": 1, "llama3.2:3b": 1, "phi3.5": 1,
+    "qwen3.6:latest": 3, "qwen3.6": 3,  # user-pulled large local model (23GB)
 }
 # Min tier per lane (FR-4.2). code/architect work needs capable models; weak → advisory only.
 ROLE_FLOOR = {"read-only": 0, "advisory": 1, "code-author": 2, "architect": 3}

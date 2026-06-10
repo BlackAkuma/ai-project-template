@@ -19,7 +19,7 @@ jobs:
       - run: pip install pyyaml
       - name: Engine tests (resolvers, events, govern, store)
         run: |
-          for t in resolvers events govern store inbox adversarial llm agent repo memory cockpit migrate entities evidence check cli api hook_govern digest writeback testrun init latency; do
+          for t in resolvers events govern store inbox adversarial llm agent repo memory cockpit migrate entities evidence check cli api hook_govern digest writeback testrun init latency agent_run; do
             echo "::group::test_$t"; python engine/test_$t.py; echo "::endgroup::"
           done
       - name: Governance gates (advisory on CI; blocking gates exit 1)

@@ -1,0 +1,3 @@
+- SPIKE-1 done: calc.add implemented, test exit=0 evidence ✓
+- SPIKE-1 done: calc.add implemented, test exit=0 evidence ✓
+- SPIKE-1 done: calc.add implemented, test exit=0 evidence ✓
