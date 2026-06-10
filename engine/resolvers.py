@@ -123,3 +123,15 @@ def challenge_record_valid(ctx, record=None, min_len=10, **_):
     if not all(ok(lenses.get(k)) for k in ("expert", "technical", "contrarian")):
         return False
     return True
+
+
+@resolver("tests_green")
+def tests_green(ctx, **_):
+    """BL-6: REAL test evidence — runs the project's configured test command (engine/testcmd.txt),
+    consumes the actual exit code (cached by git HEAD). Policy: configured -> enforced;
+    not configured -> pass-with-note (BL-7 init writes a default; digest surfaces the gap)."""
+    from testrun import run_tests
+    r = run_tests(ctx.get("root", "."))
+    if not r["configured"]:
+        return True  # not enforced until configured (logged decision, see BL-6)
+    return bool(r["green"])

@@ -19,6 +19,8 @@ requires:
     class: machine
     task: "$args.task_id"
     n: 1
+  - check: tests_green        # BL-6: REAL test run green (enforced เมื่อมี engine/testcmd.txt)
+    class: machine
 on_fail:
   effect: decision-inbox
   message: "ปิด {task_id} ไม่ได้ — ขาด: {failed_checks}. ดู Task Close Gate (core/15)"
