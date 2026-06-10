@@ -93,6 +93,10 @@
       <div id="events" class="mut">…</div>
     </section>
     <section class="card">
+      <h2>Receipts — governance ทำอะไรให้บ้าง</h2>
+      <div class="stat" id="receipts">…</div>
+    </section>
+    <section class="card">
       <h2>From demo → your project</h2>
       <p class="mut" style="font-size:12px;margin:0">Point the engine at your repo and plug a model key for real use:<br/>
       <code>ROOT=/path/to/repo python engine/api.py</code><br/>
@@ -153,6 +157,18 @@ async function refresh(){
        <button class="ok" onclick="resolve('${i.id}','approved')">Approve — override &amp; sign</button>
        <button class="bad" onclick="resolve('${i.id}','rejected')">Reject — keep blocked</button>
      </div></div>`}).join(''):'<span class="mut">No pending decisions. Use ① above to make an agent try something risky.</span>';
+  // BL-9 receipts (counted from real audit chain)
+  const rc=await api('GET','/receipts');
+  document.getElementById('receipts').innerHTML =
+    `<span>ตรวจ <b>${rc.checked}</b></span><span>บล็อก <b>${rc.blocked}</b></span><span>hold <b>${rc.held}</b></span>`+
+    `<span>คุณตัดสิน <b>${rc.decided}</b></span><span>จำ <b>${rc.sessions_remembered}</b> sessions</span>`+
+    `<span>${rc.chain_ok?'⛓️ chain ✓':'⛓️ TAMPERED'}</span>`;
+  // BL-8 notification: open-hold count went UP -> flash title + pulse badge
+  if(typeof window._prevOpen==='number' && ib.open.length>window._prevOpen){
+    document.title=`🔔 (${ib.open.length}) ต้องตัดสินใจ — Cockpit`;
+    const wb=document.getElementById('watch'); if(wb){wb.style.outline='2px solid var(--warn)';setTimeout(()=>wb.style.outline='',4000);}
+  } else if(ib.open.length===0){ document.title='Governed Project Memory — Cockpit'; }
+  window._prevOpen=ib.open.length;
   const ev=await api('GET','/events'); const elist=ev.events.slice(-8).reverse();
   document.getElementById('events').innerHTML=elist.length?elist.map(e=>{
     const res=(e.result||'').toLowerCase(); const cls=res.includes('pass')||res.includes('done')?'r-pass':res.includes('inbox')?'r-inbox':'r-'+res;
@@ -162,6 +178,7 @@ async function refresh(){
 document.getElementById('t-intent').addEventListener('change',preview);
 document.getElementById('t-model').addEventListener('change',preview);
 preview(); refresh();
+setInterval(refresh, 5000);  // BL-8: live poll — holds appear without manual reload
 </script>
 </body>
 </html>

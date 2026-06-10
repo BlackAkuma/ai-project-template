@@ -44,6 +44,10 @@ with tempfile.TemporaryDirectory() as d:
     st, res = handle("GET", "/nope", root=d)
     check("unknown path -> 404", st == 404)
 
+    # BL-9: receipts counted from real audit chain
+    st, res = handle("GET", "/receipts", root=d)
+    check("GET /receipts -> counts + chain_ok", st == 200 and "blocked" in res and "chain_ok" in res)
+
     # Phase C: web Cockpit served at /
     st, res = handle("GET", "/", root=d)
     check("GET / serves web Cockpit HTML", st == 200 and "_html" in res and "Governed Project Memory" in res["_html"])

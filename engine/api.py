@@ -55,6 +55,25 @@ def handle(method, path, body=None, root="."):
         return 200, {"chain_ok": ok, "reason": reason}
     if method == "GET" and path == "/events":
         return 200, {"events": _events(root)}
+    if method == "GET" and path == "/receipts":
+        # BL-9: "what governance did for you" — counted from the REAL audit chain (no vanity math)
+        evs = _events(root)
+        res = [str(e.get("result", "")) for e in evs]
+        act = [str(e.get("action", "")) for e in evs]
+        ok, _r = verify_chain(root=root, log=LOG)
+        sess = 0
+        sp = os.path.join(root, "engine/sessions.log.jsonl")
+        if os.path.exists(sp):
+            sess = len([x for x in open(sp, encoding="utf-8", errors="replace").read().splitlines() if x.strip()])
+        return 200, {
+            "checked": len(evs),
+            "blocked": len([r for r in res if r.startswith("blocked")]) + len([a for a in act if a == "agent.refused"]),
+            "held": len([a for a in act if a == "inbox.create"]),
+            "decided": len([a for a in act if a == "inbox.resolve"]),
+            "approvals_used": len([a for a in act if a == "inbox.consume"]),
+            "sessions_remembered": sess,
+            "chain_ok": ok,
+        }
     if method == "POST" and path == "/preview":
         if "intent" not in body:
             return 400, {"error": "intent required"}
