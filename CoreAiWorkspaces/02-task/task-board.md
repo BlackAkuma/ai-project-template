@@ -4,7 +4,7 @@ in_progress: []
 blocked: []
 done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T-020,T-021,T-022,T-023,T-024,T-025,T-026,T-027,T-028,T-029,T-030,T-031,T-032,T-033,T-034,T-035,T-040,T-041,T-042,T-043,T-044,T-045,T-049,T-056,T-058]
 done_features: [F1,F2,F3,F4,F5,F6,F7,F8]   # ALL features built (105 tests/12 suites + carry-over + loose ends)
-todo: [BL-1,BL-2,BL-3,BL-4,BL-5,BL-6,BL-7,BL-8,BL-9,BL-10,BL-11,BL-12]   # see 02-task/backlog-v2.md
+todo: [BL-11]   # awaits dogfood-week data · BL-1..10,12 done+panel-approved
 last_updated: 2026-06-10
 priority_next: backlog-v2 (4-lens panel): P0 = close see-decide-remember loop on LIVE repo (BL-1 cockpit-live, BL-2 memory-autoload, BL-3 writeback, BL-4 one-click, BL-5 dogfood-start). A1/A2/A4 done+verified. B* locked until M-A3 (R3)
 status: M-A1 done (A1 local AI + A2 real-action hooks). M-A2 in progress via backlog-v2 P0
