@@ -23,3 +23,4 @@ live_now: [secret-scan+placeholder block on commit, risky-git-op -> Decision Inb
 
 <!-- เพิ่ม entry ใหม่ด้านล่าง: วันที่ · เกิดอะไร (block/hold/น่ารำคาญ/ช่วยได้จริง) · สั้นๆ -->
 - Day 1 latency baseline: worst 175ms (budget 1000ms) — PASS (BL-10)
+- Day 2 dogfood: 🛡️ FIRST REAL HOLD — hook จับ branch-cleanup (dangerous op) → DI-0001 → user approved in chat → recorded+consumed → ผ่าน. ลูป decide ทำงานจริงกับงานจริง
