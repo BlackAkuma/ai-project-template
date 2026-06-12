@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 # Hook: validate-commit
 # รันอัตโนมัติก่อน git commit
 # Event: PreToolUse (Bash tool ที่มี "git commit")

@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 # Hook: detect-gaps
 # ตรวจ gap ระหว่าง task board กับ source docs
 # รันอัตโนมัติตอน session start หรือเรียกด้วย /scope-check

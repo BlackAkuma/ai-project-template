@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 # Hook: session-start
 # รันอัตโนมัติเมื่อเริ่ม Claude Code session
 # Event: PreToolUse (ก่อน tool แรกของ session)

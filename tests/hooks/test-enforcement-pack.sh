@@ -62,6 +62,18 @@ OUT=$(bash "$SD")
 echo "$OUT" | grep -q "GOVERNANCE-DEBT" && ok "debt header present" || no "debt header missing"
 echo "$OUT" | grep -q "branch:" && ok "branch line present" || no "branch line missing"
 
+echo "=== hook hygiene (BOM regression guard) ==="
+BOMS=0
+for H in "$ROOT"/platforms/claude-code/hooks/*.sh; do
+  head -c3 "$H" | grep -q $'\xef\xbb\xbf' && { no "BOM in $(basename "$H")"; BOMS=1; }
+done
+[ "$BOMS" = "0" ] && ok "no BOM in any hook (shebang ใช้ได้จริง)"
+
+echo "=== session-start.sh on bootstrapped repo ==="
+SS_OUT=$(cd "$D" && bash "$ROOT/platforms/claude-code/hooks/session-start.sh" 2>&1)
+echo "$SS_OUT" | grep -q "not found" && no "session-start: ไม่เจอ CoreAiWorkspaces ทั้งที่มี" || ok "session-start เจอ CoreAiWorkspaces (path fix ใช้ได้)"
+echo "$SS_OUT" | grep -q "No such file or directory" && no "session-start: shebang/BOM error" || ok "session-start รันสะอาด ไม่มี line-1 error"
+
 cd "$ROOT"; rm -rf "$D"
 echo ""
 echo "ผล: $PASS PASS / $FAIL FAIL"
