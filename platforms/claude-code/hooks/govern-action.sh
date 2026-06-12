@@ -58,6 +58,14 @@ hold_for_approval() {  # risky-but-not-forbidden (L2) -> Decision Inbox; human d
   exit 2
 }
 
+# MASTER FREEZE (user rule 2026-06-11): ห้ามอัปเดต master ทุกกรณีจนกว่า user สั่งอย่างเป็นทางการ
+# hard block — ไม่มีทาง approve ผ่าน Inbox (ปลดได้ทางเดียว: user สั่ง + แก้กฎนี้อย่างเป็นทางการ)
+case "$cmd" in
+  *"push"*master*|*"push origin master"*|*"checkout master"*|*"switch master"*|*"merge"*" master"*)
+    echo "⛔ MASTER FREEZE: user ห้ามอัปเดต/แตะ master ทุกกรณีจนกว่าจะสั่งอย่างเป็นทางการ (rule 2026-06-11)" >&2
+    exit 2 ;;
+esac
+
 case "$cmd" in
   *"git commit"*)
     run_gate secret-scan       # C-11 (L3 hard-stop): no secrets into git

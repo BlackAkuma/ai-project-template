@@ -1,7 +1,7 @@
 <!-- AI-CONTEXT
 phase: M-A3 dogfood week (day 2/7, started 2026-06-10) — BRD-v2 Phase A items A1-A6 ALL DONE
 active_task: dogfood-watch. P0+P1 approved by panels (BL-1..10,12 merged). BL-11 + M-A3 verdict await week data
-blocker: none
+blocker: none · MASTER FREEZE active (user rule 2026-06-11: no master updates until official order — enforced in govern hook)
 active_branch: dev
 last_updated: 2026-06-11
 git_mode: branch-separated

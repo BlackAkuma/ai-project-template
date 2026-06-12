@@ -63,6 +63,11 @@ with tempfile.TemporaryDirectory() as d:
                             encoding="utf-8", errors="replace", cwd=d, env=env2)
         check("no engine/ -> template-only mode passes (exit 0)", p2.returncode == 0)
 
+    # MASTER FREEZE (user rule 2026-06-11): any master-touching command -> hard block, no approval path
+    for mc in ("git push origin master", "git checkout master", "git merge feature/x master"):
+        c0, e0 = run_hook(d, mc)
+        check(f"master freeze blocks: {mc}", c0 == 2 and "MASTER FREEZE" in e0)
+
     # A4: dangerous git op -> HELD (exit 2) + creates a real Decision Inbox item
     code3, err3 = run_hook(d, "git push --force origin main")
     check("force-push -> HELD for approval (exit 2)", code3 == 2 and "HELD" in err3)
