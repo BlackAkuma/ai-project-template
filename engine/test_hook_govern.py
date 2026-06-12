@@ -63,6 +63,22 @@ with tempfile.TemporaryDirectory() as d:
                             encoding="utf-8", errors="replace", cwd=d, env=env2)
         check("no engine/ -> template-only mode passes (exit 0)", p2.returncode == 0)
 
+    # DEV DIRECT FREEZE (user rule): marker on + branch=dev -> git commit blocked; feature branch ok
+    os.makedirs(os.path.join(d, "engine"), exist_ok=True)
+    open(os.path.join(d, "engine", ".dev-direct-freeze"), "w").write("on\n")
+    subprocess.run([git, "branch", "-M", "dev"], cwd=d)
+    cdf, edf = run_hook(d, "git commit -m direct-on-dev")
+    check("dev-direct-freeze: commit on dev blocked", cdf == 2 and "DEV DIRECT FREEZE" in edf)
+    subprocess.run([git, "checkout", "-q", "-b", "feature/x"], cwd=d)
+    cdf2, _ = run_hook(d, "git commit -m on-feature")
+    check("dev-direct-freeze: commit on feature branch allowed", cdf2 == 0)
+    subprocess.run([git, "checkout", "-q", "dev"], cwd=d)
+    env_o = dict(os.environ, ENGINE_DIR=REPO, GOVERN_USER_ORDER="1")
+    p_o = subprocess.run([bash, HOOK], input='{"tool_name":"Bash","tool_input":{"command":"git commit -m user-ordered"}}',
+                         capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=d, env=env_o)
+    check("dev-direct-freeze: user-order bypass works", p_o.returncode == 0)
+    os.remove(os.path.join(d, "engine", ".dev-direct-freeze"))
+
     # MASTER FREEZE (user rule 2026-06-11): any master-touching command -> hard block, no approval path
     for mc in ("git push origin master", "git checkout master", "git merge feature/x master"):
         c0, e0 = run_hook(d, mc)

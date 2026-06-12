@@ -58,6 +58,21 @@ hold_for_approval() {  # risky-but-not-forbidden (L2) -> Decision Inbox; human d
   exit 2
 }
 
+# DEV DIRECT FREEZE (user rule 2026-06-11): งานฟีเจอร์ทุกชนิดต้องอยู่บน branch แยก —
+# ห้าม commit ตรงบน dev (merge จาก feature branch ทำได้). เปิดใช้เมื่อมี marker engine/.dev-direct-freeze
+# bypass เฉพาะมีคำสั่ง user ชัดเจน: GOVERN_USER_ORDER=1
+if [ -f "$(pwd)/engine/.dev-direct-freeze" ] && [ "${GOVERN_USER_ORDER:-0}" != "1" ]; then
+  case "$cmd" in
+    *"git commit"*)
+      CURB=$(git -C "$(pwd)" branch --show-current 2>/dev/null)
+      if [ "$CURB" = "dev" ]; then
+        echo "⛔ DEV DIRECT FREEZE: ห้าม commit ตรงบน dev — แตก feature/<id> ก่อนเสมอ (user rule 2026-06-11)" >&2
+        echo "   (merge จาก feature branch = ทำได้ปกติ · มีคำสั่ง user: ใส่ GOVERN_USER_ORDER=1)" >&2
+        exit 2
+      fi ;;
+  esac
+fi
+
 # MASTER FREEZE (user rule 2026-06-11): ห้ามอัปเดต master ทุกกรณีจนกว่า user สั่งอย่างเป็นทางการ
 # hard block — ไม่มีทาง approve ผ่าน Inbox (ปลดได้ทางเดียว: user สั่ง + แก้กฎนี้อย่างเป็นทางการ)
 case "$cmd" in
