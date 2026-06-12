@@ -1,0 +1,3 @@
+{"ts": 0, "actor": "engine", "action": "inbox.create", "target": "DI-0001", "result": "gate=risky_git_op;L2", "prev": "", "hash": "d6aa647e0e5e774823361ca6281399524e92cc664bf77c120a981177928a9dc3"}
+{"ts": 0, "actor": "user-chat-approval(เคลียร์ branch)", "action": "inbox.resolve", "target": "DI-0001", "result": "approved", "prev": "d6aa647e0e5e774823361ca6281399524e92cc664bf77c120a981177928a9dc3", "hash": "f2a74dff78ca228b8c6647bfef3c03318127e5676d85cb25bc2c3e34fa3ab15b"}
+{"ts": 0, "actor": "engine", "action": "inbox.consume", "target": "DI-0001", "result": "approval consumed (action allowed once)", "prev": "f2a74dff78ca228b8c6647bfef3c03318127e5676d85cb25bc2c3e34fa3ab15b", "hash": "555a3ba432dd0262289469e07d6f1650aaf19e47b0ce6e88877ca5e12aa2ea64"}

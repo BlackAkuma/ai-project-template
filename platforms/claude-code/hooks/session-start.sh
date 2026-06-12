@@ -4,7 +4,7 @@
 # Event: PreToolUse (ก่อน tool แรกของ session)
 
 PROJECT_ROOT="${CLAUDE_PROJECT_ROOT:-.}"
-DOC_DIR="$PROJECT_ROOT/ai"
+DOC_DIR="$PROJECT_ROOT/CoreAiWorkspaces"
 
 echo "=== Session Start Check ==="
 

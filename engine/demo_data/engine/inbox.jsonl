@@ -1,0 +1,1 @@
+{"id": "DI-0001", "ts": 2003, "gate": "agent_action", "task": "DEMO-4", "risk_level": 3, "reason": "deploy_prod", "status": "open", "resolved_by": null, "resolved_ts": null}

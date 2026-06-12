@@ -1,0 +1,1 @@
+{"head": "0644af3e51b01d585823dfe124d16c9d1f0fcf54", "exit": 0, "command": "python engine/test_resolvers.py && python engine/test_govern.py && python engine/test_entities.py && python engine/test_inbox.py"}
