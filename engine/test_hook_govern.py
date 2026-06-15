@@ -150,6 +150,18 @@ with tempfile.TemporaryDirectory() as d:
     code7, err7 = run_hook(d, "git push --force origin main")
     check("after REJECT -> stays blocked (rejected msg)", code7 == 2 and "REJECTED" in err7)
 
+    # FU-4: evasions the OLD substring glob missed are now HELD end-to-end (hook -> gitguard)
+    e1, _ = run_hook(d, "git push origin develop --force")      # flag at end (non-adjacent)
+    check("FU-4 hook: flag-at-end force push -> HELD", e1 == 2)
+    e2, _ = run_hook(d, "git push origin +develop")             # refspec '+' force (no --force flag)
+    check("FU-4 hook: refspec '+' force push -> HELD", e2 == 2)
+    e3, _ = run_hook(d, "git push  origin   develop   --force") # double/triple spacing
+    check("FU-4 hook: whitespace-padded force push -> HELD", e3 == 2)
+    e4, _ = run_hook(d, "git reset develop --hard")             # reset --hard flag-last
+    check("FU-4 hook: reset --hard (flag-last) -> HELD", e4 == 2)
+    e5, _ = run_hook(d, "git push origin develop")              # genuinely safe push stays allowed
+    check("FU-4 hook: plain push -> allowed (no false-positive)", e5 == 0)
+
 for n, ok in cases:
     print(f"  {'PASS' if ok else 'FAIL'}  {n}")
 failed = [n for n, ok in cases if not ok]

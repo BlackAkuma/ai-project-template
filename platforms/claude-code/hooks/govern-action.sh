@@ -109,10 +109,15 @@ case "$CMD_NOQ" in
       fi
     fi
     ;;
-  *"push --force"*|*"push -f"*|*"reset --hard"*|*"branch -D"*|*"clean -fd"*|*"push --force-with-lease"*)
-    [ "$BYPASS" = "1" ] && exit 0
-    hold_for_approval risky_git_op "$cmd" "dangerous git operation (rewrites/deletes history or work)"
-    ;;
 esac
+
+# RISKY GIT (FU-4): real tokenizer (engine/gitguard) instead of fragile substring globs — catches
+# flag-order ('push origin main --force'), refspec-force ('push origin +master'), and ws evasion.
+# Detect on CMD_NOQ (quotes stripped -> no commit-message false-positive); scope/hold on raw $cmd.
+GITRISK=$(python "$CLI" git-risk "$CMD_NOQ" 2>/dev/null | tail -1)
+if [ -n "$GITRISK" ]; then
+  [ "$BYPASS" = "1" ] && exit 0
+  hold_for_approval risky_git_op "$cmd" "$GITRISK"
+fi
 
 exit 0
