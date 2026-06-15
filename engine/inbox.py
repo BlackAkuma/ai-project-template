@@ -24,26 +24,48 @@ LOCK_TIMEOUT = 10.0  # seconds before a stale lock is broken
 _PROC_LOCK = threading.RLock()  # serialize threads IN-process (O_EXCL only covers cross-process)
 
 
-def _holder_alive(lockfile):
-    """Is the pid recorded in the lockfile still running? (don't steal a live holder's lock —
-    only break truly stale locks from crashed holders). Unknown/unreadable -> treat as DEAD."""
+def _pid_alive(pid):
+    """Cross-platform pid liveness. POSIX: os.kill(pid,0). Windows: os.kill(pid,0) does NOT
+    raise for a dead pid (re-review blocker) -> use ctypes OpenProcess + GetExitCodeProcess."""
+    if sys.platform == "win32":
+        try:
+            import ctypes
+            PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+            STILL_ACTIVE = 259
+            k = ctypes.windll.kernel32
+            h = k.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, int(pid))
+            if not h:
+                return False  # cannot open -> not running (dead pid)
+            try:
+                code = ctypes.c_ulong()
+                if k.GetExitCodeProcess(h, ctypes.byref(code)):
+                    return code.value == STILL_ACTIVE
+                return False
+            finally:
+                k.CloseHandle(h)
+        except Exception:  # noqa: BLE001
+            return False  # probe failed -> treat dead (so stale-break can proceed, no deadlock)
     try:
-        pid = int(open(lockfile, encoding="utf-8").read().strip() or "0")
-    except (OSError, ValueError):
-        return False
-    if pid <= 0:
-        return False
-    if pid == os.getpid():
-        return True
-    try:
-        os.kill(pid, 0)  # signal 0 = liveness probe (POSIX); Windows: raises if absent
+        os.kill(int(pid), 0)
         return True
     except ProcessLookupError:
         return False
     except PermissionError:
-        return True  # exists but not ours — alive
+        return True  # exists, owned by another user
     except OSError:
         return False
+
+
+def _holder_alive(lockfile):
+    """Is the lockfile's recorded holder still running? Only break locks of DEAD holders.
+    Unreadable/own-pid -> breakable (we're the one waiting, so our own pid on it = stale crash)."""
+    try:
+        pid = int(open(lockfile, encoding="utf-8").read().strip() or "0")
+    except (OSError, ValueError):
+        return False
+    if pid <= 0 or pid == os.getpid():
+        return False  # own-pid on a lock we're waiting for = stale (re-review edge) -> breakable
+    return _pid_alive(pid)
 
 
 class _FileLock:

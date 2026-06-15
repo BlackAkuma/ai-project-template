@@ -83,6 +83,31 @@ with tempfile.TemporaryDirectory() as d:
     check(f"cross-process: all {N} items survive (O_EXCL lock works)", len(items) == N)
     check("cross-process: unique ids (no lost write)", len({i["id"] for i in items}) == N)
 
+# CRASHED-HOLDER RECOVERY (re-review blocker: os.kill liveness wrong on Windows -> deadlock).
+# Simulate a holder that crashed leaving a stale lockfile with a DEAD pid -> must break + recover, not hang.
+inbox.LOCK_TIMEOUT = 0.5  # speed up stale-break for the test
+with tempfile.TemporaryDirectory() as d:
+    os.makedirs(os.path.join(d, "engine"), exist_ok=True)
+    lockpath = os.path.join(d, IB + ".lock")
+    open(lockpath, "w").write("999999")  # dead pid (no such process)
+    done = []
+    def attempt():
+        create_item("g", "T-1", 2, "after-crash", root=d, inbox=IB, log=LOG)
+        done.append(True)
+    th = threading.Thread(target=attempt); th.start(); th.join(timeout=8)
+    check("crashed-holder stale lock (dead pid) -> recovers, no deadlock", done == [True] and not th.is_alive())
+
+with tempfile.TemporaryDirectory() as d:
+    os.makedirs(os.path.join(d, "engine"), exist_ok=True)
+    open(os.path.join(d, IB + ".lock"), "w").write(str(os.getpid()))  # own-pid stale (crash+reuse)
+    done2 = []
+    def attempt2():
+        create_item("g", "T-2", 2, "own-pid-stale", root=d, inbox=IB, log=LOG); done2.append(True)
+    th2 = threading.Thread(target=attempt2); th2.start(); th2.join(timeout=8)
+    check("own-pid stale lock -> breakable, no deadlock", done2 == [True])
+    check("_pid_alive(dead 999999) -> False", inbox._pid_alive(999999) is False)
+    check("_pid_alive(self) -> True", inbox._pid_alive(os.getpid()) is True)
+
 for n, ok in cases:
     print(f"  {'PASS' if ok else 'FAIL'}  {n}")
 failed = [n for n, ok in cases if not ok]
