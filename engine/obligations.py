@@ -45,7 +45,16 @@ def _prod_branch(root):
 
 
 def render(root="."):
-    """Return the obligations reminder string (empty if nothing to surface / no engine)."""
+    """Return the obligations reminder string (empty if nothing to surface / no engine).
+    Defense-in-depth fail-safe (panel dissent): any internal error -> '' so the reminder can
+    silently vanish for a turn but NEVER raises into the hook (the prompt is never disrupted)."""
+    try:
+        return _render(root)
+    except Exception:
+        return ""
+
+
+def _render(root="."):
     if not os.path.exists(os.path.join(root, "engine")):
         return ""
     lines = []
@@ -80,8 +89,6 @@ def render(root="."):
     except Exception:
         pass
 
-    if len(lines) == 1 and not items:  # only the freeze line — still worth the one-line reminder
-        pass
     return "[ACTIVE OBLIGATIONS — re-injected each turn]\n" + "\n".join(lines)
 
 

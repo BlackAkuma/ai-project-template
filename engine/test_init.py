@@ -33,6 +33,14 @@ with tempfile.TemporaryDirectory() as d:
     flat = json.dumps(cfg)
     check("settings merged: our 3 hooks added", all(k in flat for k in ("session-digest", "session-writeback", "govern-action")))
     check("settings merge preserves user's own hook", "user-own-hook" in flat)
+    # OBS-1/FU-4 regression guard: the load-bearing engine deps MUST ship + the new hook MUST wire
+    check("ships gitguard.py (FU-4: absent -> git-risk crash -> fail-closed ALL git in target)",
+          os.path.exists(os.path.join(d, "engine", "gitguard.py")))
+    check("ships obligations.py (OBS-1 renderer)", os.path.exists(os.path.join(d, "engine", "obligations.py")))
+    check("settings merged: UserPromptSubmit re-inject hook wired", "reinject-obligations" in flat
+          and "UserPromptSubmit" in flat)
+    check("reinject hook script copied to target", os.path.exists(
+          os.path.join(d, "platforms/claude-code/hooks/reinject-obligations.sh")))
 
     # P1-panel fix: unparseable settings.json -> ABORT (never overwrite user's broken config)
     with tempfile.TemporaryDirectory() as d2:
