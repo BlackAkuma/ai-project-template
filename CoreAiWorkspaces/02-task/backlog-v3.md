@@ -5,8 +5,8 @@ rule: นี่คือที่เดียวที่ track ทุกอย�
 status_legend: ✅done · 🔄now · 🟢next · ⏸️deferred(มี gate) · ❌killed
 now: [A7-dogfood, BL-11]
 done_recent: [DEV-FP]
-done_recent: [DEV-FP, FU-2(3-round), FU-1(3/3), FU-3(3/3), FU-4(2-round: tokenizer+quote-aware+fail-closed)]
-next: [FU-5, FU-6-auditlog-concurrency, OBS-1, RD-1..4(user)]
+done_recent: [DEV-FP, FU-2, FU-1, FU-3, FU-4(2-round), FU-5(sticky+commit-guard, 3/3)]
+next: [FU-6-auditlog-concurrency, OBS-1, RD-1..4(user)]
 deferred_until_M-A3: [B1,B2,B3,B4,B5,B6,B7,B8]
 killed: [B9-team]
 freeze: MASTER (no master update until user order) · DEV-DIRECT (feature work -> branch)
@@ -48,7 +48,7 @@ freeze: MASTER (no master update until user order) · DEV-DIRECT (feature work -
 | ~~FU-3~~ ✅ | approval scoping canonical key (ws+quote, case-safe) — panel 3/3, false-merge fixed | P0 re-review | done |
 | **FU-6** | audit-log concurrency: append_event hash-chain fork ใต้ concurrent writes — **บังคับก่อน Phase B** | FU-2 panel | engine |
 | ~~FU-4~~ ✅ | dangerous-git classifier (engine/gitguard): tokenized+quote-aware(shlex)+segmented+subcommand-parsed, fail-CLOSED hook. ปิด flag-order/refspec-force/ws/=value/branch-combo/quote-wrap/cross-cmd. panel round1 FAIL→fix→round2 3/3 | P0 re-review + FU-3 panel | done |
-| **FU-5** | "was-configured" state กัน deletable testcmd | P1 re-review | engine |
+| ~~FU-5~~ ✅ | was-configured sticky marker + commit-deletion guard (ลบ testcmd หลังตั้ง=fail-closed regression; commit ลบ=blocked; de-config ต้อง bypass=auditable) — panel 3/3 | P1 re-review | done |
 | **RD-1** | **rule diet**: CLAUDE.md เหลือ ~12 กฎ HARD + รวม 2 CLAUDE.md ที่ซ้ำ 80% | compliance-decay (4-lens) | ⚠️ shipped template — ต้อง panel+user |
 | **RD-2** | ยุบ Scenario A-O (15→4-5 ตัวจริง) | compliance-decay | ⚠️ shipped |
 | **RD-3** | ย้าย TACP/vector-memory ออกจาก bootstrap read path | compliance-decay | ⚠️ shipped |

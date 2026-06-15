@@ -11,6 +11,15 @@ deep_context: exploration/master-plan.md
 
 # Work Log Index — ai-project-template
 
+## 2026-06-15 — loop: FU-5 DONE (sticky test gate + commit-guard, panel 3/3)
+
+- **FU-5 merged dev** (no-ff): hole — test-evidence policy "configured→enforce, not configured→pass". ลบ engine/testcmd.txt = test gate หายเงียบ (AI/dev dodge "tests must be green"). fix 2 ชั้น:
+  1. **sticky marker** engine/.testcmd_configured: run_tests เขียน marker เมื่อมี cmd; ถ้า cmd หายแต่ marker อยู่ → regressed=True, green=False → tests_green resolver return False (BLOCK). marker gitignored (ไม่ dirty tree/cache, ไม่ leak). digest โชว์ 🛑 REGRESSED. de-config = ลบทั้ง testcmd.txt + marker (explicit).
+  2. **commit-deletion guard** (panel dissent): marker local-only → commit ลบ testcmd.txt = propagate disable ไป clone อื่น. hook block staged deletion ของ engine/testcmd.txt → ต้อง consume-once bypass = deliberate + auditable.
+- **panel 3/3 PASS** + marketing strong. dissents แก้: propagate (commit-guard), audit (bypass-required). residual ที่ยอมรับ: read-only-fs first-write fail (narrow, no worse than pre-FU-5).
+- evidence: 16 testrun + 34 hook e2e (incl deletion-block + bypass) + 30 suites.
+- next: FU-6 (audit-log/append_event concurrency hash-chain fork — บังคับก่อน Phase B)
+
 ## 2026-06-15 — loop: FU-4 DONE (dangerous-git classifier, 2 panel rounds)
 
 - **FU-4 merged dev** (no-ff): hook เดิมจับ dangerous git ด้วย adjacent-substring case-glob (`*"push --force"*`) → หนีง่ายมาก. แทนด้วย **engine/gitguard.classify()** — tokenize + quote-aware (shlex) + segment on ;/&&/||/| + parse git subcommand จริง (ข้าม -c/-C globals). CLI `git-risk`. hook fail-CLOSED.
