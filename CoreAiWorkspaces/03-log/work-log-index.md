@@ -11,6 +11,17 @@ deep_context: exploration/master-plan.md
 
 # Work Log Index — ai-project-template
 
+## 2026-06-15 — loop: FU-2 DONE (3 panel rounds) + DEV-FP done
+
+- **FU-2 inbox file-lock merged dev** (5753857): atomic write (tmp+fsync+os.replace) + 2-layer lock (threading.RLock + O_EXCL) + pid-liveness stale-break. prereq Phase B multi-agent.
+- **panel เข้มจริง — 3 รอบ** (loop จับของจริงที่ unit test มองไม่เห็น):
+  1. panel 2/3: contrarian จับ Windows PermissionError lost-write (multiprocessing 1/8) -> catch PermissionError
+  2. re-review1 1/2 FAIL: technical จับ deadlock — os.kill(pid,0) ไม่ work บน Windows (dead pid = alive) -> ctypes OpenProcess + crashed-holder recovery test
+  3. re-review2 2/3 PASS: contrarian จับ access-denied false-dead (protected pid 4=System) -> WinDLL use_last_error แยก ERROR 5(alive) vs 87(dead)
+- เพิ่ม test ที่ panel ขอทุกครั้ง: cross-process (subprocess.Popen), crashed-holder recovery, protected-pid. 16/16 inbox_lock, 27 suites stable.
+- **FU-6 ใหม่** (panel-found): append_event hash-chain fork ใต้ concurrent writes -> backlog, บังคับก่อน Phase B
+- next: FU-1 (reject re-open flow)
+
 ## 2026-06-15 — loop: DEV-FP DONE (panel 3/3) + iter 2 starting
 
 - **DEV-FP merged dev** (ad5a8a9): forward-port enforcement master->dev (Edit/Write gate, Stop gate, T-ref). panel 3/3 PASS.
