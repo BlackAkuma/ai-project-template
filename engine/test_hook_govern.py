@@ -184,6 +184,23 @@ with tempfile.TemporaryDirectory() as fe, tempfile.TemporaryDirectory() as wd:
     check("FU-4 fail-closed: classifier crash -> safe push HELD (not fail-open)",
           fc == 2 and "fail-closed" in ferr.lower())
 
+# FU-5: committing a DELETION of engine/testcmd.txt is blocked (anti silent-disable propagate);
+# explicit consume-once bypass makes intentional de-config auditable. Isolated repo.
+with tempfile.TemporaryDirectory() as d:
+    git_init(d)
+    os.makedirs(os.path.join(d, "engine"), exist_ok=True)
+    open(os.path.join(d, "engine", "testcmd.txt"), "w").write("pytest -q\n")
+    open(os.path.join(d, "keep.txt"), "w").write("x\n")  # keeps engine/ non-empty isn't needed; keep repo non-empty
+    subprocess.run([git, "add", "."], cwd=d)
+    subprocess.run([git, "commit", "-q", "-m", "T-1: add testcmd"], cwd=d)
+    subprocess.run([git, "rm", "-q", "engine/testcmd.txt"], cwd=d)  # stage the deletion (removes empty dir too)
+    cd1, ed1 = run_hook(d, 'git commit -m "T-1: drop tests"')
+    check("FU-5: commit deleting testcmd.txt -> BLOCK", cd1 == 2 and "test gate" in ed1)
+    os.makedirs(os.path.join(d, "engine"), exist_ok=True)  # git rm removed empty dir; recreate for marker
+    open(os.path.join(d, "engine", ".govern-allow-once"), "w").write("")  # explicit auditable bypass
+    cd2, _ = run_hook(d, 'git commit -m "T-1: drop tests (intentional)"')
+    check("FU-5: with consume-once bypass -> deletion allowed (auditable)", cd2 == 0)
+
 for n, ok in cases:
     print(f"  {'PASS' if ok else 'FAIL'}  {n}")
 failed = [n for n, ok in cases if not ok]
