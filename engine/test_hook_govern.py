@@ -29,7 +29,7 @@ def run_hook(repo_dir, command):
 
 
 def git_init(d):
-    subprocess.run([git, "init", "-q"], cwd=d)
+    subprocess.run([git, "init", "-q", "-b", "work"], cwd=d)  # neutral branch (not master/dev) for gate tests
     subprocess.run([git, "config", "user.email", "t@t"], cwd=d)
     subprocess.run([git, "config", "user.name", "t"], cwd=d)
 
@@ -63,26 +63,45 @@ with tempfile.TemporaryDirectory() as d:
                             encoding="utf-8", errors="replace", cwd=d, env=env2)
         check("no engine/ -> template-only mode passes (exit 0)", p2.returncode == 0)
 
-    # DEV DIRECT FREEZE (user rule): marker on + branch=dev -> git commit blocked; feature branch ok
+    # DEV DIRECT FREEZE (user rule): marker on + branch=dev + CODE staged -> blocked; doc-only -> allowed
     os.makedirs(os.path.join(d, "engine"), exist_ok=True)
     open(os.path.join(d, "engine", ".dev-direct-freeze"), "w").write("on\n")
     subprocess.run([git, "branch", "-M", "dev"], cwd=d)
+    open(os.path.join(d, "app.py"), "w").write("x=1\n"); subprocess.run([git, "add", "app.py"], cwd=d)
     cdf, edf = run_hook(d, "git commit -m direct-on-dev")
-    check("dev-direct-freeze: commit on dev blocked", cdf == 2 and "DEV DIRECT FREEZE" in edf)
+    check("dev-freeze: CODE commit on dev blocked", cdf == 2 and "DEV DIRECT FREEZE" in edf)
+    # doc-only commit on dev -> allowed (fix: was over-broad). full reset first (clear stray staged code)
+    subprocess.run([git, "reset", "-q"], cwd=d)
+    os.remove(os.path.join(d, "app.py"))
+    os.makedirs(os.path.join(d, "CoreAiWorkspaces"), exist_ok=True)
+    open(os.path.join(d, "CoreAiWorkspaces", "note.md"), "w").write("log\n"); subprocess.run([git, "add", "CoreAiWorkspaces/note.md"], cwd=d)
+    cdoc, edoc = run_hook(d, "git commit -m doc-sync")
+    check("dev-freeze: doc-only commit on dev ALLOWED", cdoc == 0)
+    # feature branch: code commit allowed
+    open(os.path.join(d, "app.py"), "w").write("x=1\n"); subprocess.run([git, "add", "app.py"], cwd=d)
     subprocess.run([git, "checkout", "-q", "-b", "feature/x"], cwd=d)
     cdf2, _ = run_hook(d, "git commit -m on-feature")
-    check("dev-direct-freeze: commit on feature branch allowed", cdf2 == 0)
+    check("dev-freeze: code commit on feature branch allowed", cdf2 == 0)
+    # consume-once bypass marker (replaces broken env var)
     subprocess.run([git, "checkout", "-q", "dev"], cwd=d)
-    env_o = dict(os.environ, ENGINE_DIR=REPO, GOVERN_USER_ORDER="1")
-    p_o = subprocess.run([bash, HOOK], input='{"tool_name":"Bash","tool_input":{"command":"git commit -m user-ordered"}}',
-                         capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=d, env=env_o)
-    check("dev-direct-freeze: user-order bypass works", p_o.returncode == 0)
+    open(os.path.join(d, "engine", ".govern-allow-once"), "w").write("1\n")
+    cby, _ = run_hook(d, "git commit -m user-ordered")
+    check("dev-freeze: consume-once bypass works", cby == 0)
+    check("bypass marker consumed (one-shot)", not os.path.exists(os.path.join(d, "engine", ".govern-allow-once")))
     os.remove(os.path.join(d, "engine", ".dev-direct-freeze"))
+    subprocess.run([git, "reset", "-q"], cwd=d); os.remove(os.path.join(d, "app.py"))
 
     # MASTER FREEZE (user rule 2026-06-11): any master-touching command -> hard block, no approval path
     for mc in ("git push origin master", "git checkout master", "git merge feature/x master"):
         c0, e0 = run_hook(d, mc)
         check(f"master freeze blocks: {mc}", c0 == 2 and "MASTER FREEZE" in e0)
+
+    # BL-13 regression: trigger words INSIDE a quoted commit message must NOT false-trigger freezes
+    subprocess.run([git, "checkout", "-q", "-b", "feature/safe"], cwd=d)
+    open(os.path.join(d, "z.py"), "w").write("z=1\n"); subprocess.run([git, "add", "z.py"], cwd=d)
+    cq, eq = run_hook(d, 'git commit -m "T-1: fix git push origin master and reset --hard docs"')
+    check("quoted msg with master/reset words -> NOT blocked (CMD_NOQ)", cq == 0)
+    subprocess.run([git, "reset", "-q"], cwd=d); os.remove(os.path.join(d, "z.py"))
 
     # A4: dangerous git op -> HELD (exit 2) + creates a real Decision Inbox item
     code3, err3 = run_hook(d, "git push --force origin main")
