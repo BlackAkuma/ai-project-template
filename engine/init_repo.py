@@ -16,12 +16,15 @@ CORE_FILES = [
     "llm.py", "agent.py", "repo.py", "memory.py", "migrate_state.py", "entities.py",
     "evidence.py", "cockpit.py", "digest.py", "writeback.py", "testrun.py", "cli.py",
     "api.py", "init_repo.py", "requirements.txt",
+    "gitguard.py",      # FU-4: hook 'git-risk' imports this; missing -> classifier crash -> fail-closed
+    "obligations.py",   # OBS-1: UserPromptSubmit re-injector
 ]
-HOOKS = ["govern-action.sh", "session-digest.sh", "session-writeback.sh"]
+HOOKS = ["govern-action.sh", "session-digest.sh", "session-writeback.sh", "reinject-obligations.sh"]
 HOOK_CMDS = {
     "SessionStart": "bash platforms/claude-code/hooks/session-digest.sh",
     "SessionEnd": "bash platforms/claude-code/hooks/session-writeback.sh",
     "PreToolUse": "bash platforms/claude-code/hooks/govern-action.sh",
+    "UserPromptSubmit": "bash platforms/claude-code/hooks/reinject-obligations.sh",  # OBS-1
 }
 
 BOARD_MIN = "<!-- AI-CONTEXT\nschema_version: 0.1\ntotal_tasks: 0\ndone: []\nin_progress: []\nblocked: []\ntodo: []\n-->\n# Task Board\n"
