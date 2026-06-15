@@ -21,6 +21,13 @@
         ]
       }
     ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          { "type": "command", "command": "bash platforms/claude-code/hooks/reinject-obligations.sh" }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "Bash",
