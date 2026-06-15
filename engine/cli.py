@@ -83,6 +83,16 @@ def cmd_init(a):
     return 0
 
 
+def cmd_git_risk(a):
+    """FU-4: classify a git command as dangerous (real tokenizer, not substring glob).
+    Prints the reason (empty line = safe) and ALWAYS exits 0 on a successful run, so the hook can
+    tell "ran, safe" (exit 0 + empty) from "classifier crashed" (non-zero exit) and fail CLOSED on
+    the latter. Do NOT overload the exit code with the risky/safe verdict — stdout carries that."""
+    from gitguard import classify
+    print(classify(a.command))
+    return 0
+
+
 def cmd_inbox_reopen(a):
     from inbox import reopen_item
     r = reopen_item(a.id, by=a.by, ts=a.ts, root=a.root, inbox=INBOX, log=LOG, reason=a.reason)
@@ -136,6 +146,7 @@ def build_parser():
     i = sub.add_parser("init"); i.add_argument("--target", required=True)
     ro = sub.add_parser("inbox-reopen"); ro.add_argument("id"); ro.add_argument("--by", default="user")
     ro.add_argument("--reason", default=""); ro.add_argument("--ts", type=int, default=0); ro.add_argument("--root", default=".")
+    gr = sub.add_parser("git-risk"); gr.add_argument("command")
     return ap
 
 
@@ -144,7 +155,7 @@ def main(argv=None):
     return {"cockpit": cmd_cockpit, "gate": cmd_gate, "turn": cmd_turn, "inbox": cmd_inbox,
             "inbox-resolve": cmd_inbox_resolve, "audit": cmd_audit, "hold": cmd_hold,
             "approval-state": cmd_approval_state, "init": cmd_init,
-            "inbox-reopen": cmd_inbox_reopen}[a.cmd](a)
+            "inbox-reopen": cmd_inbox_reopen, "git-risk": cmd_git_risk}[a.cmd](a)
 
 
 if __name__ == "__main__":
