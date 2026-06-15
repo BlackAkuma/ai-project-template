@@ -65,6 +65,24 @@ with tempfile.TemporaryDirectory() as d:
     held.__exit__()
     check("lockfile removed on release", not os.path.exists(p + ".lock"))
 
+# CROSS-PROCESS (real, not threads) — exercises the O_EXCL path that thread-only tests masked.
+# panel found PermissionError lost-write here on Windows; this pins it.
+import subprocess  # noqa: E402
+ENGINE = os.path.dirname(os.path.abspath(__file__))
+with tempfile.TemporaryDirectory() as d:
+    os.makedirs(os.path.join(d, "engine"), exist_ok=True)
+    N = 14
+    code = ("import sys; sys.path.insert(0, r'%s'); from inbox import create_item; "
+            "import sys as s; n=s.argv[1]; "
+            "create_item('gp', 'P-'+n, 2, 'xproc-'+n, root=r'%s', inbox='engine/inbox.jsonl', log='engine/events.log.jsonl')"
+            % (ENGINE, d))
+    procs = [subprocess.Popen([sys.executable, "-c", code, str(i)]) for i in range(N)]
+    rcs = [p.wait() for p in procs]
+    items = _read(os.path.join(d, IB))
+    check("cross-process: no worker crashed (exit 0)", all(rc == 0 for rc in rcs))
+    check(f"cross-process: all {N} items survive (O_EXCL lock works)", len(items) == N)
+    check("cross-process: unique ids (no lost write)", len({i["id"] for i in items}) == N)
+
 for n, ok in cases:
     print(f"  {'PASS' if ok else 'FAIL'}  {n}")
 failed = [n for n, ok in cases if not ok]

@@ -24,6 +24,28 @@ LOCK_TIMEOUT = 10.0  # seconds before a stale lock is broken
 _PROC_LOCK = threading.RLock()  # serialize threads IN-process (O_EXCL only covers cross-process)
 
 
+def _holder_alive(lockfile):
+    """Is the pid recorded in the lockfile still running? (don't steal a live holder's lock —
+    only break truly stale locks from crashed holders). Unknown/unreadable -> treat as DEAD."""
+    try:
+        pid = int(open(lockfile, encoding="utf-8").read().strip() or "0")
+    except (OSError, ValueError):
+        return False
+    if pid <= 0:
+        return False
+    if pid == os.getpid():
+        return True
+    try:
+        os.kill(pid, 0)  # signal 0 = liveness probe (POSIX); Windows: raises if absent
+        return True
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True  # exists but not ours — alive
+    except OSError:
+        return False
+
+
 class _FileLock:
     """FU-2: atomic inbox RMW (prereq for Phase B multi-agent). Two layers:
     (1) in-process threading.RLock — serializes threads of THIS process (O_EXCL doesn't);
@@ -43,14 +65,20 @@ class _FileLock:
             while True:
                 try:
                     self.fd = os.open(self.lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+                    try:
+                        os.write(self.fd, str(os.getpid()).encode())  # holder pid for stale liveness
+                    except OSError:
+                        pass
                     return self
-                except FileExistsError:
-                    if time.time() > deadline:
+                except (FileExistsError, PermissionError):
+                    # PermissionError = Windows delete-pending/sharing-violation race on the lockfile
+                    # (panel cross-process bug: was uncaught -> lost write). Must retry, not crash.
+                    if time.time() > deadline and not _holder_alive(self.lock):
                         try:
-                            os.remove(self.lock)  # stale lock (crashed holder) — break it
+                            os.remove(self.lock)  # stale lock, holder confirmed dead — break it
                         except OSError:
                             pass
-                        continue
+                        deadline = time.time() + LOCK_TIMEOUT  # re-arm; avoid tight-spin
                     time.sleep(0.03)
         except BaseException:
             _PROC_LOCK.release()
