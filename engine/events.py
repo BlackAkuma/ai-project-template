@@ -22,17 +22,29 @@ def _payload(rec):
 
 
 def append_event(actor, action, target, result, ts=0, root=".", log=LOG):
-    """Append a hash-chained event. ts passed in (deterministic for tests / caller stamps real time)."""
+    """Append a hash-chained event. ts passed in (deterministic for tests / caller stamps real time).
+
+    FU-6 (prereq Phase B): the read-prev -> hash -> append sequence MUST be serialized. Without a
+    lock, two concurrent writers read the same prev_hash and both append against it -> a CHAIN FORK
+    (two records share one prev) that verify_chain reports as tampered. We reuse FU-2's _FileLock
+    (atomic, pid-liveness stale-break) via a lazy import — events is imported BY inbox, so importing
+    it at module top would be circular; importing inside the call is safe (inbox is loaded by then).
+    inbox's own mutators call append_event AFTER releasing their lock, so there is no nested-lock
+    deadlock, and the log's lock file (events.log.jsonl.lock) is independent of inbox.jsonl.lock."""
+    from inbox import _FileLock  # lazy: break the events<->inbox import cycle
     path = os.path.join(root, log)
-    prev = ""
-    if os.path.exists(path):
-        lines = [ln for ln in open(path, encoding="utf-8").read().splitlines() if ln.strip()]
-        if lines:
-            prev = json.loads(lines[-1])["hash"]
-    payload = {"ts": ts, "actor": actor, "action": action, "target": target, "result": result, "prev": prev}
-    rec = dict(payload, hash=_hash(prev, payload))
-    with open(path, "a", encoding="utf-8") as f:
-        f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    with _FileLock(path):  # serialize read-prev + append so the chain never forks under concurrency
+        prev = ""
+        if os.path.exists(path):
+            lines = [ln for ln in open(path, encoding="utf-8").read().splitlines() if ln.strip()]
+            if lines:
+                prev = json.loads(lines[-1])["hash"]
+        payload = {"ts": ts, "actor": actor, "action": action, "target": target, "result": result, "prev": prev}
+        rec = dict(payload, hash=_hash(prev, payload))
+        with open(path, "a", encoding="utf-8") as f:
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+            f.flush()
+            os.fsync(f.fileno())  # durability: the audit record is on disk before the lock releases
     return rec
 
 
