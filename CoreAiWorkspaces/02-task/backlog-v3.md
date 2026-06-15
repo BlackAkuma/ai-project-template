@@ -5,7 +5,8 @@ rule: นี่คือที่เดียวที่ track ทุกอย�
 status_legend: ✅done · 🔄now · 🟢next · ⏸️deferred(มี gate) · ❌killed
 now: [A7-dogfood, BL-11]
 done_recent: [DEV-FP]
-next: [FU-2-inbox-lock, FU-1, FU-3, FU-4, FU-5, OBS-1, RD-1..4(user)]
+done_recent: [DEV-FP, FU-2]
+next: [FU-1, FU-3, FU-4, FU-5, FU-6-auditlog-concurrency, OBS-1, RD-1..4(user)]
 deferred_until_M-A3: [B1,B2,B3,B4,B5,B6,B7,B8]
 killed: [B9-team]
 freeze: MASTER (no master update until user order) · DEV-DIRECT (feature work -> branch)
@@ -41,9 +42,10 @@ freeze: MASTER (no master update until user order) · DEV-DIRECT (feature work -
 
 | id | งาน | source (วิจัย) | กระทบ shipped? |
 |----|-----|---------------|----------------|
-| **DEV-FP** | forward-port T-060 enforcement → dev (reconcile กับ govern-action engine hook กัน hook ซ้อน) | dogfood divergence | dev เท่านั้น |
+| ~~DEV-FP~~ ✅ | forward-port enforcement → dev (merged ad5a8a9, panel 3/3) | dogfood divergence | done |
+| ~~FU-2~~ ✅ | inbox file-lock/atomic (merged, panel 2/3, cross-process fix) | P0 re-review | done |
 | **FU-1** | reject re-open flow (เปลี่ยนใจ in-band ได้) | P0 re-review | engine |
-| **FU-2** | inbox.jsonl file-lock/atomic — **บังคับก่อน Phase B multi-agent** | P0 re-review | engine |
+| **FU-6** | audit-log concurrency: append_event hash-chain fork ใต้ concurrent writes — **บังคับก่อน Phase B** | FU-2 panel | engine |
 | **FU-3** | approval scoping เปราะ (reword คำสั่ง = item ใหม่) | P0 re-review | engine |
 | **FU-4** | hold-list → parsing จริง (กัน refspec-force bypass) | P0 re-review | hook |
 | **FU-5** | "was-configured" state กัน deletable testcmd | P1 re-review | engine |
