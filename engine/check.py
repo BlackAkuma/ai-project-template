@@ -26,15 +26,26 @@ def gather_ctx(root):
     def git(*a):
         try:
             return subprocess.run(
-                ["git", *a], cwd=root, capture_output=True, text=True
+                ["git", *a], cwd=root, capture_output=True, text=True,
+                encoding="utf-8", errors="replace"  # git diff อาจมีภาษาไทย — กัน cp1252 crash
             ).stdout
         except Exception:
             return ""
-    diff = git("diff", "--cached")
     files = [f for f in git("diff", "--cached", "--name-only").splitlines() if f]
+    # Exclude ONLY files that DEFINE scanner patterns (scanner flagging itself) — NOT whole
+    # test/hook dirs (panel dissent: real secret in tests/ or a non-scanner hook must still be caught).
+    SCANNER_DEFS = ("engine/gates/", "hooks/govern-docs.sh", "hooks/govern-template.sh", "hooks/govern-action.sh")
+    def _is_scanner_def(f):
+        fn = f.replace("\\", "/")
+        return any(x in fn for x in SCANNER_DEFS)
+    diff = git("diff", "--cached")
+    scan_files = [f for f in files if not _is_scanner_def(f)]
+    scan_diff = git("diff", "--cached", "--", *scan_files) if scan_files else ""
+    # per-line opt-out for intentional fixtures: a line tagged 'allowlist-secret' is skipped
+    # (pragma pattern — a real secret WITHOUT the tag is still caught, even inside a test file)
     added = "\n".join(
-        ln[1:] for ln in diff.splitlines()
-        if ln.startswith("+") and not ln.startswith("+++")
+        ln[1:] for ln in scan_diff.splitlines()
+        if ln.startswith("+") and not ln.startswith("+++") and "allowlist-secret" not in ln
     )
     return {"root": root, "staged_diff": diff, "staged_files": files, "staged_added": added}
 

@@ -11,6 +11,15 @@ deep_context: exploration/master-plan.md
 
 # Work Log Index — ai-project-template
 
+## 2026-06-15 — backlog-v3 roadmap + loop iteration 1 (DEV-FP)
+
+- **backlog-v3** = single roadmap (รวมผลวิจัยทุก panel เป็น tracked items: RD-1..4, OBS-1, DEV-FP, FU-1..5 + sync T-060/BL-13). backlog-v2 superseded.
+- เริ่ม **loop พัฒนา backlog-v3** (gate: branch-per-feature, panel 2/3+dissent+marketing, RD->user, B*->M-A3, master freeze)
+- **iteration 1 DEV-FP** (feature/DEV-FP-enforce-reconcile): forward-port enforcement master->dev — govern-docs.sh (Edit/Write: 00-source immutable + Task Close Gate), session-end-gate.sh (Stop log-sync), T-ref on code commits. evidence: 24/24 engine suites + 22/22 hook tests. panel review running (w2jl92a62).
+- **dogfood findings (เจอ+แก้):** secret-scan self-match (exclude scanner/test files), git Thai-diff crash (utf-8), test harness quote-escape (json.dumps). 
+- **dogfood proof:** Stop-gate (DEV-FP) บล็อกการจบ session ของ AI เอง เพราะ commit code แต่ยังไม่ลง log -> ทำ log นี้ = ระบบบังคับ Session End Protocol สำเร็จ
+
+
 ## 2026-06-12 — T-060 Enforcement Pack -> MASTER + BL-13 hook reconcile
 
 - **T-060 released to master** (user official order): merge feature/main-enforcement-pack (bc4e06c->befab38). master ได้ template-only enforcement: branch-per-feature, secret/placeholder block, T-ref required, Task Close Gate (Edit/Write), Stop-gate log sync, debt line, BOM fix. 19/19 tests on master. freeze re-engaged.
