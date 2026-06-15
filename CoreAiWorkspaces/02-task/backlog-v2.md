@@ -1,4 +1,5 @@
 <!-- AI-CONTEXT
+> ⚠️ SUPERSEDED by backlog-v3.md (2026-06-12) — เก็บไว้อ้างอิงประวัติเท่านั้น
 doc: backlog-v2
 source: BRD-v2 + 4-lens panel 2026-06-10 (product/tech/contrarian/marketing — full results in work-log)
 status: active

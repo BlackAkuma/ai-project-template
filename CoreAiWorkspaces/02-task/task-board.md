@@ -6,7 +6,7 @@ done: [T-001,T-002,T-003,T-004,T-005,T-006,T-007,T-010,T-011,T-012,T-013,T-014,T
 done_features: [F1,F2,F3,F4,F5,F6,F7,F8]   # ALL features built (105 tests/12 suites + carry-over + loose ends)
 todo: [BL-11]   # awaits dogfood-week data · BL-1..10,12 done+panel-approved
 last_updated: 2026-06-10
-priority_next: backlog-v2 (4-lens panel): P0 = close see-decide-remember loop on LIVE repo (BL-1 cockpit-live, BL-2 memory-autoload, BL-3 writeback, BL-4 one-click, BL-5 dogfood-start). A1/A2/A4 done+verified. B* locked until M-A3 (R3)
+priority_next: ดู 02-task/backlog-v3.md (roadmap เดียว). NOW: A7 dogfood (day2/7) + BL-11. NEXT: DEV-FP, FU-1..5, RD-1..4, OBS-1. B* deferred until M-A3
 status: M-A1 done (A1 local AI + A2 real-action hooks). M-A2 in progress via backlog-v2 P0
 backlog: exploration/flow-plan.md §3 (granular micro-tasks + flow-gate policy)
 note: P3-1 done (events.py hash-chain tamper-evidence, 3/3 tests; DEMO.md soft-ship). MVW done. G1=C-conservative (ADR-011)
