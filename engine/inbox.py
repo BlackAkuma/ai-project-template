@@ -10,6 +10,7 @@ inbox.jsonl = current state (derived, rewritable view). events.log = audit truth
 import json
 import os
 import sys
+import threading
 import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -20,39 +21,51 @@ LOG = "engine/events.log.jsonl"
 LOCK_TIMEOUT = 10.0  # seconds before a stale lock is broken
 
 
+_PROC_LOCK = threading.RLock()  # serialize threads IN-process (O_EXCL only covers cross-process)
+
+
 class _FileLock:
-    """FU-2: cross-platform inter-process lock for the inbox (read-modify-write must be atomic
-    before Phase B multi-agent). O_CREAT|O_EXCL lockfile + bounded wait + stale-break. Works on
-    Windows + POSIX. Pair with _write's atomic os.replace so a crash never leaves a torn file."""
+    """FU-2: atomic inbox RMW (prereq for Phase B multi-agent). Two layers:
+    (1) in-process threading.RLock — serializes threads of THIS process (O_EXCL doesn't);
+    (2) O_CREAT|O_EXCL lockfile + bounded wait + stale-break — serializes other PROCESSES.
+    Paired with _write's tmp+os.replace (per-thread tmp) so a crash never leaves a torn file."""
     def __init__(self, path):
         self.lock = path + ".lock"
         self.fd = None
 
     def __enter__(self):
-        d = os.path.dirname(self.lock)
-        if d:
-            os.makedirs(d, exist_ok=True)
-        deadline = time.time() + LOCK_TIMEOUT
-        while True:
-            try:
-                self.fd = os.open(self.lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
-                return self
-            except FileExistsError:
-                if time.time() > deadline:
-                    try:
-                        os.remove(self.lock)  # stale lock (crashed holder) — break it
-                    except OSError:
-                        pass
-                    continue
-                time.sleep(0.03)
+        _PROC_LOCK.acquire()
+        try:
+            d = os.path.dirname(self.lock)
+            if d:
+                os.makedirs(d, exist_ok=True)
+            deadline = time.time() + LOCK_TIMEOUT
+            while True:
+                try:
+                    self.fd = os.open(self.lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+                    return self
+                except FileExistsError:
+                    if time.time() > deadline:
+                        try:
+                            os.remove(self.lock)  # stale lock (crashed holder) — break it
+                        except OSError:
+                            pass
+                        continue
+                    time.sleep(0.03)
+        except BaseException:
+            _PROC_LOCK.release()
+            raise
 
     def __exit__(self, *a):
-        if self.fd is not None:
-            os.close(self.fd)
         try:
-            os.remove(self.lock)
-        except OSError:
-            pass
+            if self.fd is not None:
+                os.close(self.fd)
+            try:
+                os.remove(self.lock)
+            except OSError:
+                pass
+        finally:
+            _PROC_LOCK.release()
         return False
 
 
@@ -68,7 +81,7 @@ def _write(path, items):
     if d:
         os.makedirs(d, exist_ok=True)
     body = "\n".join(json.dumps(i, ensure_ascii=False) for i in items) + ("\n" if items else "")
-    tmp = path + f".tmp.{os.getpid()}"
+    tmp = path + f".tmp.{os.getpid()}.{threading.get_ident()}"
     with open(tmp, "w", encoding="utf-8") as f:
         f.write(body)
         f.flush()
