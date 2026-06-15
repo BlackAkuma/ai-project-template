@@ -75,6 +75,23 @@ with tempfile.TemporaryDirectory() as d:
     ok, _ = verify_chain(root=d, log=LOG)
     check("tamper still detected (integrity intact)", ok is False)
 
+# FU-6 panel dissent: torn-tail recovery — a crash mid-append leaves a corrupt LAST line; the next
+# append must self-heal (drop it + chain from the last valid record), not crash on json.loads.
+with tempfile.TemporaryDirectory() as d:
+    os.makedirs(os.path.join(d, "engine"), exist_ok=True)
+    append_event("a", "act", "T-1", "ok", ts=1, root=d, log=LOG)
+    append_event("a", "act", "T-2", "ok", ts=2, root=d, log=LOG)
+    path = os.path.join(d, LOG)
+    good_head = _read_recs(path)[-1]["hash"]
+    with open(path, "a", encoding="utf-8") as f:
+        f.write('{"ts": 3, "actor": "a", "act')  # simulate torn write (crash mid-append, no newline)
+    r = append_event("a", "act", "T-4", "ok", ts=4, root=d, log=LOG)  # must NOT raise
+    check("torn-tail: next append recovers (no crash)", r is not None)
+    check("torn-tail: new record chains from last VALID hash (torn line dropped)", r["prev"] == good_head)
+    ok, reason = verify_chain(root=d, log=LOG)
+    check(f"torn-tail: chain valid after recovery ({reason})", ok is True)
+    check("torn-tail: log has exactly 3 valid records (T-1,T-2,T-4)", len(_read_recs(path)) == 3)
+
 for n, ok in cases:
     print(f"  {'PASS' if ok else 'FAIL'}  {n}")
 failed = [n for n, ok in cases if not ok]
