@@ -61,7 +61,8 @@ def cmd_turn(a):
 
 def cmd_hold(a):
     from inbox import create_item
-    item = create_item(a.gate, a.task, a.risk, a.reason, root=a.root, inbox=INBOX, log=LOG)
+    item = create_item(a.gate, a.task, a.risk, a.reason, root=a.root, inbox=INBOX, log=LOG,
+                       scope=getattr(a, "scope", None))
     if item:
         print(f"held for approval: {item['id']} (L{a.risk}) {a.reason}")
         return 0
@@ -92,7 +93,7 @@ def cmd_inbox_reopen(a):
 def cmd_approval_state(a):
     """Prints approved|pending|rejected|none — used by hooks to make human decisions CAUSAL."""
     from inbox import approval_state
-    print(approval_state(a.gate, a.reason, root=a.root, inbox=INBOX, log=LOG))
+    print(approval_state(a.gate, a.reason, root=a.root, inbox=INBOX, log=LOG, scope=getattr(a, "scope", None)))
     return 0
 
 
@@ -129,8 +130,9 @@ def build_parser():
     r = sub.add_parser("inbox-resolve"); r.add_argument("id"); r.add_argument("decision", choices=["approved", "rejected"])
     r.add_argument("--by", default="user"); r.add_argument("--ts", type=int, default=0); r.add_argument("--root", default=".")
     h = sub.add_parser("hold"); h.add_argument("gate"); h.add_argument("task"); h.add_argument("reason")
-    h.add_argument("--risk", type=int, default=2); h.add_argument("--root", default=".")
-    s2 = sub.add_parser("approval-state"); s2.add_argument("gate"); s2.add_argument("reason"); s2.add_argument("--root", default=".")
+    h.add_argument("--risk", type=int, default=2); h.add_argument("--root", default="."); h.add_argument("--scope", default=None)
+    s2 = sub.add_parser("approval-state"); s2.add_argument("gate"); s2.add_argument("reason")
+    s2.add_argument("--root", default="."); s2.add_argument("--scope", default=None)
     i = sub.add_parser("init"); i.add_argument("--target", required=True)
     ro = sub.add_parser("inbox-reopen"); ro.add_argument("id"); ro.add_argument("--by", default="user")
     ro.add_argument("--reason", default=""); ro.add_argument("--ts", type=int, default=0); ro.add_argument("--root", default=".")
