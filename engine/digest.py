@@ -89,9 +89,14 @@ def render_digest(root="."):
         L.append(f"next_action: {ws['next_action'][:300]}")
     # P1-panel fix: unconfigured/deleted test gate must be LOUD, not silent
     try:
-        from testrun import get_command
+        from testrun import get_command, _was_configured
         cmd = get_command(root)
-        L.append(f"test_gate: {'configured (' + cmd[:40] + ')' if cmd else '⚠️ NOT CONFIGURED — done-gate ไม่บังคับเทส (ตั้ง engine/testcmd.txt)'}")
+        if cmd:
+            L.append(f"test_gate: configured ({cmd[:40]})")
+        elif _was_configured(root):  # FU-5: deleted after being enforced = regression, fail-closed
+            L.append("test_gate: 🛑 REGRESSED — testcmd.txt ถูกลบหลังเคยตั้งไว้; done-gate ถูก BLOCK (fail-closed). กู้ engine/testcmd.txt หรือลบ engine/.testcmd_configured เพื่อยกเลิกอย่างตั้งใจ")
+        else:
+            L.append("test_gate: ⚠️ NOT CONFIGURED — done-gate ไม่บังคับเทส (ตั้ง engine/testcmd.txt)")
     except Exception:
         pass
     L.append(f"decision_inbox_open: {len(held)}" + (

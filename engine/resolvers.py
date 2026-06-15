@@ -129,9 +129,13 @@ def challenge_record_valid(ctx, record=None, min_len=10, **_):
 def tests_green(ctx, **_):
     """BL-6: REAL test evidence — runs the project's configured test command (engine/testcmd.txt),
     consumes the actual exit code (cached by git HEAD). Policy: configured -> enforced;
-    not configured -> pass-with-note (BL-7 init writes a default; digest surfaces the gap)."""
+    not configured -> pass-with-note (BL-7 init writes a default; digest surfaces the gap).
+    FU-5: once tests were EVER configured, deleting testcmd.txt is a REGRESSION -> fail-closed
+    (block), not a silent un-enforce. Legitimate de-config must also remove the sticky marker."""
     from testrun import run_tests
     r = run_tests(ctx.get("root", "."))
+    if r.get("regressed"):
+        return False  # config deleted after being enforced -> block (anti silent-disable)
     if not r["configured"]:
         return True  # not enforced until configured (logged decision, see BL-6)
     return bool(r["green"])

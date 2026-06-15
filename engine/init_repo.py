@@ -83,7 +83,7 @@ def init_repo(target, src_engine=None):
 
     # .gitignore engine runtime
     gi = os.path.join(t_engine, ".gitignore")
-    open(gi, "w", encoding="utf-8").write("__pycache__/\n*.pyc\n*.jsonl\n.writeback_state.json\n.testrun_cache.json\n")
+    open(gi, "w", encoding="utf-8").write("__pycache__/\n*.pyc\n*.jsonl\n.writeback_state.json\n.testrun_cache.json\n.testcmd_configured\n")
 
     added = _merge_settings(os.path.join(target, ".claude", "settings.json"))
 
