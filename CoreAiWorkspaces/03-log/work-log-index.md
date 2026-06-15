@@ -11,6 +11,16 @@ deep_context: exploration/master-plan.md
 
 # Work Log Index — ai-project-template
 
+## 2026-06-15 — loop: OBS-1 DONE (re-inject obligations, panel 3/3)
+
+- **OBS-1 merged dev** (no-ff): SessionStart ฉีด digest ครั้งเดียว → conversation ยาว standing constraints (freezes/pending decisions/regression) decay ออกจาก attention → AI ละเมิด (= ปัญหาหลักทั้งหมดที่แก้). fix: **UserPromptSubmit hook** (reinject-obligations.sh → engine/obligations.py render()) ฉีด reminder สั้น token-aware ทุก user turn. deterministic จาก real state (markers/inbox/branch/testrun), no LLM. surfaces: freezes (MASTER always + DEV-DIRECT marker), branch+prod-guard, open inbox ids (ห้าม self-decide), FU-5 regression. empty เมื่อไม่มี engine.
+- **dogfood proof:** hook ฉีดเข้า session ของ AI เองแล้ว (เห็น [ACTIVE OBLIGATIONS] ใน context จริง).
+- **+ แก้ init_repo bug จริง** (เจอตอนทำ): CORE_FILES ขาด **gitguard.py** → target repo `git-risk` import crash → fail-closed → **HOLD ทุก git op**. เพิ่ม gitguard.py + obligations.py + UserPromptSubmit ใน HOOK_CMDS (propagate ผ่าน `engine init`).
+- **panel 3/3 PASS** + marketing strong. dissents แก้: render() top-level try/except (fail-safe defense-in-depth), ลบ dead code, **test_init regression guards** (assert target ships gitguard/obligations + UserPromptSubmit wired — เดิมแค่ copied≥20 จับ revert ไม่ได้).
+- residual (tracked/accepted): MASTER FREEZE line hardcoded ไม่ data-driven (ถ้า user ปลด freeze ต้องแก้ทั้ง hook+display; ตอนนี้ accurate), effectiveness ยังไม่มี behavioral eval.
+- evidence: 10 obligations + 14 init + 32 suites. +CI obligations.
+- next: **RD-1..4 (rule diet) = reverse shipped behavior → panel แล้วเสนอ USER ตัดสิน (ห้าม auto-implement)**
+
 ## 2026-06-15 — loop: FU-6 DONE (audit-log concurrency, panel 3/3) — Phase B prereq เคลียร์
 
 - **FU-6 merged dev** (no-ff): append_event เดิมอ่าน prev_hash จากบรรทัดสุดท้าย → hash → append **ไม่มี lock**. concurrent writers (Phase B) อ่าน prev เดียวกัน → **hash-chain FORK** (2 records prev เดียว) → verify_chain ฟ้อง tampered. audit log (รากฐาน tamper-evidence) เองไม่ concurrency-safe.

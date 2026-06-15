@@ -5,8 +5,8 @@ rule: นี่คือที่เดียวที่ track ทุกอย�
 status_legend: ✅done · 🔄now · 🟢next · ⏸️deferred(มี gate) · ❌killed
 now: [A7-dogfood, BL-11]
 done_recent: [DEV-FP]
-done_recent: [DEV-FP, FU-2, FU-1, FU-3, FU-4, FU-5, FU-6(auditlog-lock 3/3, LAST Phase-B prereq)]
-next: [OBS-1, FU-7(lasthash-cache+log-rotation), FU-8(writeback/store concurrency), RD-1..4(user)]
+done_recent: [DEV-FP, FU-1..6, OBS-1(re-inject obligations 3/3 + init gitguard-ship fix)]
+next: [RD-1..4(USER decision — panel แล้วเสนอ), FU-7(lasthash-cache+rotation), FU-8(writeback/store concurrency)]
 deferred_until_M-A3: [B1,B2,B3,B4,B5,B6,B7,B8]
 killed: [B9-team]
 freeze: MASTER (no master update until user order) · DEV-DIRECT (feature work -> branch)
@@ -55,7 +55,7 @@ freeze: MASTER (no master update until user order) · DEV-DIRECT (feature work -
 | **RD-2** | ยุบ Scenario A-O (15→4-5 ตัวจริง) | compliance-decay | ⚠️ shipped |
 | **RD-3** | ย้าย TACP/vector-memory ออกจาก bootstrap read path | compliance-decay | ⚠️ shipped |
 | **RD-4** | แยก C-codes: machine-checked (เป็น hook) vs advisory (เป็น reference) | compliance-decay | ⚠️ shipped |
-| **OBS-1** | UserPromptSubmit re-inject obligations (สู้ recency decay) | compliance-decay (behavior lens) | hook |
+| ~~OBS-1~~ ✅ | UserPromptSubmit re-inject obligations (freezes/inbox/regression/branch ทุก turn) + แก้ init_repo ไม่ ship gitguard.py/obligations.py — panel 3/3 | compliance-decay (behavior lens) | done |
 
 > RD-1..4 = "reverse shipped behavior" (เหมือน carry-over เดิม) → ต้องผ่าน panel + คุณ approve ก่อนแตะ · DEV-FP/FU/OBS = engine/hook ทำบน feature branch ได้เลย
 
