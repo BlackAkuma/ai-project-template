@@ -141,8 +141,27 @@ def _write(path, items):
     os.replace(tmp, path)  # atomic on Windows + POSIX
 
 
-def create_item(gate, task, risk_level, reason, item_id=None, ts=0, root=".", inbox=INBOX, log=LOG):
-    """Create an Inbox item from a gate verdict. ONLY Level 2-3 create items (L0/L1 auto-pass)."""
+def canon_scope(s):
+    """FU-3: canonical approval scope key — so a human's reject/approve sticks to a command even
+    when reworded by whitespace or surrounding quotes (the genuinely-equivalent cheap evasions).
+
+    Deliberately does NOT lowercase (panel dissent FU-3): shell args are case-SENSITIVE on
+    Linux/macOS (paths, git ref/branch names), so lowercasing would FALSE-MERGE two distinct
+    commands — an approval of 'rm -rf build/' could be consumed by 'rm -rf Build/'. Whitespace and
+    paired-quote wrapping are equivalent on every OS; case is not. A case-reworded retry that
+    escapes a REJECT is fail-safe (re-opens a fresh item the human sees again); a case false-merge
+    on APPROVE is fail-dangerous. So we normalize only the safe axes.
+    Semantic rewording (git push -f vs --force) is also NOT caught — needs an alias/LLM layer (FU)."""
+    s = (s or "").strip()
+    while len(s) >= 2 and s[0] == s[-1] and s[0] in ("'", '"'):  # unwrap paired wrapping quotes only
+        s = s[1:-1].strip()
+    return " ".join(s.split())
+
+
+def create_item(gate, task, risk_level, reason, item_id=None, ts=0, root=".", inbox=INBOX, log=LOG, scope=None):
+    """Create an Inbox item from a gate verdict. ONLY Level 2-3 create items (L0/L1 auto-pass).
+    scope (FU-3): stable canonical key the approval is bound to (defaults to reason) — a reworded
+    retry that canonicalizes to the same scope reuses the prior decision instead of escaping it."""
     if int(risk_level) < 2:
         return None  # risk-tiered: low-risk never reaches the human (ADR-008, anti approval-fatigue)
     path = os.path.join(root, inbox)
@@ -150,7 +169,8 @@ def create_item(gate, task, risk_level, reason, item_id=None, ts=0, root=".", in
         items = _read(path)
         item_id = item_id or f"DI-{len(items) + 1:04d}"
         item = {"id": item_id, "ts": ts, "gate": gate, "task": task, "risk_level": int(risk_level),
-                "reason": reason, "status": "open", "resolved_by": None, "resolved_ts": None}
+                "reason": reason, "scope": canon_scope(scope if scope is not None else reason),
+                "status": "open", "resolved_by": None, "resolved_ts": None}
         items.append(item)
         _write(path, items)
     append_event("engine", "inbox.create", item_id, f"gate={gate};L{risk_level}", ts=ts, root=root, log=log)
@@ -208,17 +228,21 @@ def reopen_item(item_id, by, ts=0, root=".", inbox=INBOX, log=LOG, reason=""):
     return target
 
 
-def approval_state(gate, reason, root=".", inbox=INBOX, log=LOG, ts=0):
+def approval_state(gate, reason, root=".", inbox=INBOX, log=LOG, ts=0, scope=None):
     """P0-fix (panel contrarian): make approval CAUSAL. Returns one of:
     'approved'  — a matching approved+unconsumed item existed; it is now CONSUMED (one-shot allow)
     'pending'   — a matching item is still open (do NOT create a duplicate)
     'rejected'  — human said no earlier (stays blocked)
     'none'      — no matching item (caller should hold/create one)
-    Matching key = (gate, reason). Single-use: each approval unblocks exactly one retry."""
+    Matching key (FU-3) = (gate, canon_scope) — canonical so a reworded retry can't escape a prior
+    reject. scope defaults to reason; legacy items without a 'scope' field fall back to canon(reason).
+    Single-use: each approval unblocks exactly one retry."""
+    want = canon_scope(scope if scope is not None else reason)
     path = os.path.join(root, inbox)
     with _FileLock(path):  # FU-2: atomic consume — no double-consume of one approval (TOCTOU)
         items = _read(path)
-        match = [i for i in items if i.get("gate") == gate and i.get("reason") == reason]
+        match = [i for i in items if i.get("gate") == gate
+                 and i.get("scope", canon_scope(i.get("reason", ""))) == want]
         if any(i["status"] == "open" for i in match):
             return "pending"
         for it in match:

@@ -40,7 +40,9 @@ hold_for_approval() {  # risky-but-not-forbidden (L2) -> Decision Inbox; human d
   # approved (unconsumed) -> allow ONCE · pending -> keep blocked, NO duplicate · rejected -> blocked
   # approval is scoped to THIS exact command (reason includes the command string)
   R="$3 :: $2"
-  state=$(python "$CLI" approval-state "$1" "$R" --root "$(pwd)" 2>/dev/null | tail -1)
+  # FU-3: bind approval to a canonical SCOPE (the command itself) so a reworded retry can't escape a
+  # prior reject. The engine canonicalizes (whitespace/case/quoting); we pass the raw command as scope.
+  state=$(python "$CLI" approval-state "$1" "$R" --scope "$2" --root "$(pwd)" 2>/dev/null | tail -1)
   case "$state" in
     approved)
       echo "✅ APPROVED in Decision Inbox — allowing this action once (approval consumed, audited)." >&2
@@ -52,7 +54,7 @@ hold_for_approval() {  # risky-but-not-forbidden (L2) -> Decision Inbox; human d
       echo "🔴 REJECTED earlier in the Decision Inbox — this action stays blocked." >&2
       exit 2 ;;
   esac
-  python "$CLI" hold "$1" "$2" "$R" --risk 2 --root "$(pwd)" >/dev/null 2>&1
+  python "$CLI" hold "$1" "$2" "$R" --scope "$2" --risk 2 --root "$(pwd)" >/dev/null 2>&1
   echo "🟡 HELD FOR YOUR APPROVAL: \"$3\" — queued to the Decision Inbox." >&2
   echo "   Review + approve/reject in the Cockpit (http://127.0.0.1:8777), then retry." >&2
   exit 2
