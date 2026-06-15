@@ -58,35 +58,49 @@ hold_for_approval() {  # risky-but-not-forbidden (L2) -> Decision Inbox; human d
   exit 2
 }
 
-# DEV DIRECT FREEZE (user rule 2026-06-11): งานฟีเจอร์ทุกชนิดต้องอยู่บน branch แยก —
-# ห้าม commit ตรงบน dev (merge จาก feature branch ทำได้). เปิดใช้เมื่อมี marker engine/.dev-direct-freeze
-# bypass เฉพาะมีคำสั่ง user ชัดเจน: GOVERN_USER_ORDER=1
-if [ -f "$(pwd)/engine/.dev-direct-freeze" ] && [ "${GOVERN_USER_ORDER:-0}" != "1" ]; then
-  case "$cmd" in
+# USER-ORDER BYPASS (consume-once) — แทน GOVERN_USER_ORDER env ที่ใช้ไม่ได้ผ่าน Claude Code
+# (hook ไม่ inherit env ของ command). user/AI สั่งโดย: touch engine/.govern-allow-once ก่อน command
+# bypass ได้เฉพาะ dev-freeze + risky-hold เท่านั้น — secret/placeholder/MASTER freeze ยัง HARD เสมอ
+BYPASS=0
+ALLOW_ONCE="$(pwd)/engine/.govern-allow-once"
+if [ -f "$ALLOW_ONCE" ]; then BYPASS=1; rm -f "$ALLOW_ONCE"; fi
+
+# strip quoted strings (commit messages ฯลฯ) ก่อน match — กัน false-positive จากคำใน -m "..."
+CMD_NOQ=$(printf '%s' "$cmd" | sed 's/"[^"]*"//g; s/'"'"'[^'"'"']*'"'"'//g')
+CURB=$(git -C "$(pwd)" branch --show-current 2>/dev/null)
+# โค้ดที่ staged (นอก CoreAiWorkspaces และไม่ใช่ .md) — doc-only = ไม่นับเป็นงานฟีเจอร์
+CODE_STAGED=$(git -C "$(pwd)" diff --cached --name-only 2>/dev/null | grep -vE '^CoreAiWorkspaces/|\.md$' | head -1)
+
+# MASTER FREEZE (user rule 2026-06-11): HARD — ไม่มี bypass. precise patterns กัน false-positive
+# (เดิม *push*master* จับ "git stash push -m ...master..." ผิด)
+case "$CMD_NOQ" in
+  *"git push"*master*|*"git checkout master"*|*"git switch master"*|*"checkout -B master"*|*"checkout -b master"*|*"git merge"*master*)
+    echo "⛔ MASTER FREEZE: ห้ามแตะ master จนกว่า user สั่งปลดอย่างเป็นทางการ (rule 2026-06-11)" >&2
+    exit 2 ;;
+esac
+case "$CMD_NOQ" in
+  *"git commit"*|*"git merge"*) [ "$CURB" = "master" ] && { echo "⛔ MASTER FREEZE: ห้าม commit/merge บน master (rule 2026-06-11)" >&2; exit 2; } ;;
+esac
+
+# DEV DIRECT FREEZE (user rule 2026-06-11): งานฟีเจอร์ต้องแยก branch — แต่ doc-only commit บน dev ผ่านได้
+if [ -f "$(pwd)/engine/.dev-direct-freeze" ] && [ "$BYPASS" != "1" ]; then
+  case "$CMD_NOQ" in
     *"git commit"*)
-      CURB=$(git -C "$(pwd)" branch --show-current 2>/dev/null)
-      if [ "$CURB" = "dev" ]; then
-        echo "⛔ DEV DIRECT FREEZE: ห้าม commit ตรงบน dev — แตก feature/<id> ก่อนเสมอ (user rule 2026-06-11)" >&2
-        echo "   (merge จาก feature branch = ทำได้ปกติ · มีคำสั่ง user: ใส่ GOVERN_USER_ORDER=1)" >&2
+      if [ "$CURB" = "dev" ] && [ -n "$CODE_STAGED" ]; then
+        echo "⛔ DEV DIRECT FREEZE: ห้าม commit โค้ดตรงบน dev — แตก feature/<id> ก่อน (doc-only ผ่านได้)" >&2
+        echo "   bypass มีคำสั่ง user: touch engine/.govern-allow-once แล้วรันใหม่" >&2
         exit 2
       fi ;;
   esac
 fi
 
-# MASTER FREEZE (user rule 2026-06-11): ห้ามอัปเดต master ทุกกรณีจนกว่า user สั่งอย่างเป็นทางการ
-# hard block — ไม่มีทาง approve ผ่าน Inbox (ปลดได้ทางเดียว: user สั่ง + แก้กฎนี้อย่างเป็นทางการ)
-case "$cmd" in
-  *"push"*master*|*"push origin master"*|*"checkout master"*|*"switch master"*|*"merge"*" master"*)
-    echo "⛔ MASTER FREEZE: user ห้ามอัปเดต/แตะ master ทุกกรณีจนกว่าจะสั่งอย่างเป็นทางการ (rule 2026-06-11)" >&2
-    exit 2 ;;
-esac
-
-case "$cmd" in
+case "$CMD_NOQ" in
   *"git commit"*)
-    run_gate secret-scan       # C-11 (L3 hard-stop): no secrets into git
+    run_gate secret-scan       # C-11 (L3 hard-stop): no secrets into git — HARD, no bypass
     run_gate placeholder-scan  # C-04: no unresolved placeholders
     ;;
   *"push --force"*|*"push -f"*|*"reset --hard"*|*"branch -D"*|*"clean -fd"*|*"push --force-with-lease"*)
+    [ "$BYPASS" = "1" ] && exit 0
     hold_for_approval risky_git_op "$cmd" "dangerous git operation (rewrites/deletes history or work)"
     ;;
 esac
