@@ -107,6 +107,10 @@ with tempfile.TemporaryDirectory() as d:
     check("own-pid stale lock -> breakable, no deadlock", done2 == [True])
     check("_pid_alive(dead 999999) -> False", inbox._pid_alive(999999) is False)
     check("_pid_alive(self) -> True", inbox._pid_alive(os.getpid()) is True)
+    # re-review2 contrarian: live-but-protected pid (Windows SYSTEM pid 4 = ACCESS_DENIED) must be ALIVE,
+    # not falsely dead (else its lock could be stolen on pid-reuse)
+    if sys.platform == "win32":
+        check("_pid_alive(protected live pid 4=System) -> True (not false-dead)", inbox._pid_alive(4) is True)
 
 for n, ok in cases:
     print(f"  {'PASS' if ok else 'FAIL'}  {n}")

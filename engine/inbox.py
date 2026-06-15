@@ -32,10 +32,12 @@ def _pid_alive(pid):
             import ctypes
             PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
             STILL_ACTIVE = 259
-            k = ctypes.windll.kernel32
+            k = ctypes.WinDLL("kernel32", use_last_error=True)
             h = k.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, int(pid))
             if not h:
-                return False  # cannot open -> not running (dead pid)
+                # distinguish dead vs protected-but-alive (mirror POSIX PermissionError->alive):
+                #   ERROR_INVALID_PARAMETER(87) = no such pid -> DEAD · ERROR_ACCESS_DENIED(5) = exists -> ALIVE
+                return ctypes.get_last_error() == 5
             try:
                 code = ctypes.c_ulong()
                 if k.GetExitCodeProcess(h, ctypes.byref(code)):
