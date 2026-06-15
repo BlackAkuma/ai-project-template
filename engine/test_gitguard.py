@@ -52,6 +52,26 @@ check("global opt 'git -c k=v push --force' parsed (sub=push)",
       classify("git -c user.name=x push --force origin main") != "")
 check("global opt 'git -C path push +main' parsed", classify("git -C /repo push origin +main") != "")
 
+# --- FU-4 re-review2 (panel dissent): branch force-delete via -d + --force combos ---
+check("branch -d --force (force-deletes unmerged) — r2 false-neg", classify("git branch -d --force x") != "")
+check("branch -f -d (separate shorts)", classify("git branch -f -d x") != "")
+check("branch --delete --force", classify("git branch --delete --force x") != "")
+check("branch -d alone (plain delete) -> safe", classify("git branch -d merged") == "")
+check("branch -f alone (no delete) -> safe", classify("git branch -f x") == "")
+
+# --- FU-4 re-review2 (panel dissent): QUOTE-AWARE — quotes are shell syntax, not evasion ---
+check("quoted '+master' refspec force IS caught (quote-aware)",
+      classify('git push origin "+master"') != "")
+check("quoted '--force' flag IS caught", classify('git push origin master "--force"') != "")
+check("commit message containing 'push +master' stays SAFE (sub=commit, message one token)",
+      classify('git commit -m "fix; git push origin +master"') == "")
+check("commit message with '--force' text stays SAFE",
+      classify('git commit -m "do not use --force here"') == "")
+check("stash with message containing && git push +x stays SAFE (quoted)",
+      classify('git stash push -m "later: git push origin +x"') == "")
+check("unbalanced quote -> naive fallback still catches real force",
+      classify('git push origin main --force "oops') != "")
+
 # --- FU-4 re-review: segmentation — no cross-command MISATTRIBUTION (false-positive) ---
 check("'echo +foo && git push origin main' -> safe (+ is not push's)",
       classify("echo +foo && git push origin main") == "")

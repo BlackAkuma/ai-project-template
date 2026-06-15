@@ -167,6 +167,11 @@ with tempfile.TemporaryDirectory() as d:
     check("FU-4 re-review hook: --force-with-lease=VALUE -> HELD", e6 == 2)
     e7, _ = run_hook(d, "echo +foo && git push origin develop")
     check("FU-4 re-review hook: chained '+foo' misattribution -> allowed", e7 == 0)
+    # re-review2: quote-aware end-to-end (hook now passes raw $cmd, not CMD_NOQ)
+    e8, _ = run_hook(d, 'git push origin "+master"')
+    check("FU-4 re-review2 hook: quoted '+master' refspec force -> HELD", e8 == 2)
+    e9, _ = run_hook(d, 'git branch -d --force somebranch')
+    check("FU-4 re-review2 hook: branch -d --force -> HELD", e9 == 2)
 
 # FU-4 re-review BLOCKER: hook must FAIL-CLOSED if the classifier itself can't run.
 # Fake engine whose cli.py always crashes (exit 3); a normally-SAFE 'git push' must still be HELD.

@@ -113,14 +113,15 @@ esac
 
 # RISKY GIT (FU-4): real tokenizer (engine/gitguard) instead of fragile substring globs — catches
 # flag-order ('push origin main --force'), refspec-force ('push origin +master'), ws evasion, and
-# chained-command misattribution (segmented). Detect on CMD_NOQ (quotes stripped -> no commit-msg
-# false-positive); scope/hold on raw $cmd. Only invoked for git commands (bounds cost + fail-closed
-# blast radius). FAIL-CLOSED: if the classifier itself can't run (python missing/crash -> non-zero
-# exit), HOLD rather than silently allow — the gate must not fail open (panel FU-4 blocker).
+# chained-command misattribution (segmented). gitguard is QUOTE-AWARE (shlex), so we pass the RAW
+# $cmd (NOT CMD_NOQ): 'git push origin "+master"' is correctly caught while a commit -m "...push
+# +master..." message stays one token under sub=commit and is safe (re-review: quote-strip bypass).
+# Only invoked for git commands (bounds cost + fail-closed blast radius). FAIL-CLOSED: if the
+# classifier can't run (python missing/crash -> non-zero exit), HOLD rather than silently allow.
 case "$CMD_NOQ" in
   *git*)
     if [ "$BYPASS" = "1" ]; then exit 0; fi
-    GITRISK=$(python "$CLI" git-risk "$CMD_NOQ" 2>/dev/null); RC=$?
+    GITRISK=$(python "$CLI" git-risk "$cmd" 2>/dev/null); RC=$?
     if [ "$RC" -ne 0 ]; then
       hold_for_approval risky_git_op "$cmd" "git-risk classifier unavailable — fail-closed hold"
     elif [ -n "$GITRISK" ]; then

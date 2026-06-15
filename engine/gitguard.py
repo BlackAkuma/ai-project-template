@@ -15,20 +15,47 @@ Conservative by design (fail-toward-hold): a segment with a dangerous verb+flag 
 
 classify(cmd) -> reason string (held for approval) or "" (allowed).
 
+Quote-aware (FU-4 re-review): tokenizes with shlex so quoting is respected — 'git push origin
+"+master"' is a real refspec-force (quotes are shell syntax, git sees '+master'), while a commit
+message 'git commit -m "fix; git push +master"' stays a SINGLE token under subcommand 'commit' and
+is correctly safe (the ';' and '+master' inside the quoted message do not split or classify). This
+lets the hook pass the RAW command (no quote-stripping) without commit-message false-positives.
+
 Out of scope (documented; need shell evaluation the hook can't do): git aliased to another name
 ('g push --force'), command substitution ('$(echo git) push --force'). The HOOK pairs this with a
 fail-CLOSED wiring (classifier error -> hold) so these don't silently fail open.
 """
-import re
+import shlex
 import sys
 
 _FORCE_PUSH_FLAGS = {"--force", "-f", "--force-with-lease", "--force-if-includes", "--mirror"}
 _ARG_TAKING_GLOBAL = {"-c", "-C", "--git-dir", "--work-tree", "--namespace", "--exec-path"}
-_SEG_SPLIT = re.compile(r"\|\||&&|[;|&\n]")
+_SEPARATORS = {";", "&", "&&", "|", "||", "\n"}
 
 
 def _segments(cmd):
-    return [s for s in _SEG_SPLIT.split(cmd or "") if s.strip()]
+    """Split into per-command token-lists, quote-aware. Separators ( ; & && | || newline ) outside
+    quotes delimit segments; quoted spans stay intact (so message text can't inject a fake segment).
+    Newlines are hard boundaries (shell terminates a command at a newline), so we split on them first
+    — shlex would otherwise treat a newline as ordinary whitespace and merge two commands."""
+    segs = []
+    for line in (cmd or "").split("\n"):
+        try:
+            lex = shlex.shlex(line, posix=True, punctuation_chars=True)
+            lex.whitespace_split = True
+            toks = list(lex)
+        except ValueError:
+            toks = line.split()  # unbalanced quotes etc -> naive split (fail-toward-detection)
+        cur = []
+        for t in toks:
+            if t in _SEPARATORS or (t and set(t) <= {";", "&", "|"}):  # punctuation_chars groups &&,||
+                if cur:
+                    segs.append(cur); cur = []
+            else:
+                cur.append(t)
+        if cur:
+            segs.append(cur)
+    return segs
 
 
 def _subcommand(rest):
@@ -55,8 +82,7 @@ def _has_short_bundle(args, letter):
     return False
 
 
-def _classify_seg(seg):
-    toks = seg.split()
+def _classify_seg(toks):
     if "git" not in toks:
         return ""
     rest = toks[toks.index("git") + 1:]
@@ -78,8 +104,14 @@ def _classify_seg(seg):
         return "reset --hard (discards uncommitted work)" if "--hard" in flagbase else ""
 
     if sub == "branch":
-        if "-D" in flagbase or ("--delete" in flagbase and "--force" in flagbase) or _has_short_bundle(args, "D"):
+        # force-delete = -D (or bundle with D), OR any delete form co-occurring with any force form.
+        # git force-deletes an unmerged branch for ALL of: -D · -d --force · -f -d · --delete --force
+        if "-D" in flagbase or _has_short_bundle(args, "D"):
             return "force-delete local branch (-D)"
+        delete = "--delete" in flagbase or "-d" in flagbase or _has_short_bundle(args, "d")
+        force = "--force" in flagbase or "-f" in flagbase or _has_short_bundle(args, "f")
+        if delete and force:
+            return "force-delete local branch (-d + --force)"
         return ""
 
     if sub == "clean":
@@ -100,6 +132,10 @@ def classify(cmd):
         if r:
             return r
     return ""
+
+
+# NOTE: 'branch -d --force' fix above also keeps 'branch -d merged' (plain delete) safe — force
+# must co-occur. _has_short_bundle is case-sensitive: lowercase 'd' = delete, uppercase 'D' = force.
 
 
 if __name__ == "__main__":  # CLI shim for the hook: prints reason (empty = not risky); exit 0 = ran OK
