@@ -197,6 +197,8 @@ def reopen_item(item_id, by, ts=0, root=".", inbox=INBOX, log=LOG, reason=""):
                 it["resolved_ts"] = None
                 it.pop("consumed", None)
                 it.pop("resolution_reason", None)
+                it.pop("escalated", None)  # panel dissent (FU-1): else reopened+overdue never re-escalates (R7)
+                it.pop("escalated_ts", None)
                 it["reopened_count"] = it.get("reopened_count", 0) + 1
                 target = it
         if target is None:

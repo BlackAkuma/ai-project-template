@@ -6,7 +6,7 @@ import sys
 import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from inbox import create_item, resolve_item, reopen_item, approval_state, list_open  # noqa: E402
+from inbox import create_item, resolve_item, reopen_item, approval_state, list_open, escalate_overdue  # noqa: E402
 from events import verify_chain  # noqa: E402
 
 cases = []
@@ -40,6 +40,18 @@ with tempfile.TemporaryDirectory() as d:
     # audit chain intact through reject->reopen->approve->consume
     ok, _ = verify_chain(root=d, log=LOG)
     check("audit chain intact (reject/reopen/approve all logged)", ok is True)
+
+# panel dissent (FU-1): reopened item that goes overdue AGAIN must re-escalate (SLA not lost)
+with tempfile.TemporaryDirectory() as d:
+    os.makedirs(os.path.join(d, "engine"), exist_ok=True)
+    it2 = create_item("gy", "T-2", 3, "release", ts=0, root=d, inbox=IB, log=LOG)
+    esc1 = escalate_overdue(now_ts=200000, root=d, inbox=IB, log=LOG)  # overdue once
+    check("escalated first time", any(i["id"] == it2["id"] for i in esc1))
+    resolve_item(it2["id"], "rejected", by="u", ts=200001, root=d, inbox=IB, log=LOG)
+    r2 = reopen_item(it2["id"], by="user", ts=200002, root=d, inbox=IB, log=LOG, reason="reconsider")
+    check("reopen clears escalated flag", "escalated" not in r2 and "escalated_ts" not in r2)
+    esc2 = escalate_overdue(now_ts=400000, root=d, inbox=IB, log=LOG)  # overdue AGAIN after reopen
+    check("reopened+overdue re-escalates (SLA protection survives)", any(i["id"] == it2["id"] for i in esc2))
 
 for n, ok in cases:
     print(f"  {'PASS' if ok else 'FAIL'}  {n}")
