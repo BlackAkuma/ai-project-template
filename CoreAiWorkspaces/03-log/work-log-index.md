@@ -11,6 +11,20 @@ deep_context: exploration/master-plan.md
 
 # Work Log Index — ai-project-template
 
+## 2026-06-15 — loop: FU-4 DONE (dangerous-git classifier, 2 panel rounds)
+
+- **FU-4 merged dev** (no-ff): hook เดิมจับ dangerous git ด้วย adjacent-substring case-glob (`*"push --force"*`) → หนีง่ายมาก. แทนด้วย **engine/gitguard.classify()** — tokenize + quote-aware (shlex) + segment on ;/&&/||/| + parse git subcommand จริง (ข้าม -c/-C globals). CLI `git-risk`. hook fail-CLOSED.
+- **panel round 1 FAIL 1/3** (technical+contrarian fail) — เจอ blocker จริง:
+  1. **FAIL-OPEN** (contrarian): hook เช็คแค่ stdout ไม่อ่าน exit code → python crash = force-push ผ่านเงียบ. fix: git-risk exit 0 เสมอเมื่อรันสำเร็จ (verdict บน stdout), hook capture RC, RC≠0 → HOLD. e2e: fake engine cli.py exit 3 → safe push ถูก HELD.
+  2. **=value false-neg** (technical): `--force-with-lease=main` หลุด. fix: flagbase split('=').
+  3. **branch -fD/-Df bundle** false-neg. fix: _has_short_bundle.
+  4. **cross-command misattribution** (medium FP): global token set → `echo +foo && git push` โดน flag ผิด. fix: segment + subcommand parse.
+- **re-review round 2 PASS 3/3** + marketing strong. 2 dissent แก้ก่อน merge:
+  - branch force-delete combos `-d --force`/`-f -d`/`--delete --force` (force-delete unmerged branch, เดิม false-neg) — caught; `branch -d merged` ยัง safe.
+  - **quote-strip bypass** (inherited CMD_NOQ): `git push origin "+master"` reduce เป็น safe. fix: **quote-aware shlex tokenizer** → quoted refspec/flag caught, แต่ commit `-m "...; git push +master"` ยัง safe (message=1 token, sub=commit); hook ส่ง RAW $cmd แทน CMD_NOQ. newline=hard separator.
+- evidence: 52 gitguard unit + 32 hook e2e (incl fail-closed via fake crashing engine, quoted-refspec, =value) + 30 engine suites. +CI inbox_scope+gitguard.
+- next: FU-5 (was-configured testcmd)
+
 ## 2026-06-15 — loop: FU-3 DONE (approval scoping, panel 3/3)
 
 - **FU-3 merged dev** (no-ff): governance hole — เดิม approval match ด้วย exact (gate, reason) string; hook's reason = "<desc> :: <command>" → reword command (เว้นวรรค/quote/ลำดับ) = reason ใหม่ = approval_state 'none' = item ใหม่ = หนี reject ได้. fix: item มี canonical `scope` key; `canon_scope` normalize ws + paired-quotes; create_item(scope=)/approval_state(scope=) match ด้วย (gate, canon_scope); hook ส่ง raw command ($2) เป็น --scope ทั้ง hold + approval-state. legacy item ไม่มี scope → fall back canon(reason).
