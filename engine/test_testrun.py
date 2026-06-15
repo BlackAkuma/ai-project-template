@@ -22,7 +22,7 @@ def repo(d, testcmd=None):
         os.makedirs(os.path.join(d, "engine"), exist_ok=True)
         open(os.path.join(d, "engine", "testcmd.txt"), "w").write(testcmd)
         # same as engine-init writes for real repos: runtime files must not dirty the tree
-        open(os.path.join(d, ".gitignore"), "w").write("engine/.testrun_cache.json\nengine/*.jsonl\nengine/.writeback_state.json\n")
+        open(os.path.join(d, ".gitignore"), "w").write("engine/.testrun_cache.json\nengine/*.jsonl\nengine/.writeback_state.json\nengine/.testcmd_configured\n")
     if git:
         subprocess.run([git, "init", "-q"], cwd=d)
         subprocess.run([git, "config", "user.email", "t@t"], cwd=d)
@@ -69,6 +69,33 @@ with tempfile.TemporaryDirectory() as d:
     open(os.path.join(d, "CoreAiWorkspaces/03-log/work-log-index.md"), "w", encoding="utf-8").write("# WL\n- T-1 done commit a1b2c3d evidence ✓\n")
     r = mark_done("T-1", root=d, ts=1)
     check("mark_done with RED tests -> blocked (tests_red)", r["ok"] is False and "tests_red" in r["missing"])
+
+# FU-5: deleting testcmd.txt AFTER tests were configured = REGRESSION -> fail-closed (not silent disable)
+import testrun  # noqa: E402
+with tempfile.TemporaryDirectory() as d:
+    repo(d, testcmd=f'"{sys.executable}" -c "print(1)"')
+    r0 = run_tests(d)  # configures + writes sticky marker
+    check("FU-5: first run sets was_configured", r0.get("was_configured") is True and r0.get("regressed") is False)
+    check("FU-5: sticky marker file written", os.path.exists(os.path.join(d, testrun.MARKER)))
+    # now DELETE the test config (the silent-disable attack)
+    os.remove(os.path.join(d, "engine", "testcmd.txt"))
+    r1 = run_tests(d)
+    check("FU-5: deleted testcmd after configured -> regressed=True", r1.get("regressed") is True)
+    check("FU-5: regressed -> green=False (fail-closed signal)", r1.get("green") is False)
+    check("FU-5: resolver BLOCKS on regression (no silent un-enforce)",
+          RESOLVERS["tests_green"]({"root": d}) is False)
+    # legitimate de-config: remove BOTH testcmd.txt AND the sticky marker -> back to not-enforced
+    os.remove(os.path.join(d, testrun.MARKER))
+    r2 = run_tests(d)
+    check("FU-5: removing marker too -> clean not-configured (resolver passes)",
+          r2.get("regressed") is False and RESOLVERS["tests_green"]({"root": d}) is True)
+
+# FU-5: a repo that NEVER configured tests must stay not-enforced (no false regression)
+with tempfile.TemporaryDirectory() as d:
+    repo(d)
+    rn = run_tests(d)
+    check("FU-5: never-configured -> regressed=False, resolver passes",
+          rn.get("regressed") is False and RESOLVERS["tests_green"]({"root": d}) is True)
 
 for n, ok in cases:
     print(f"  {'PASS' if ok else 'FAIL'}  {n}")

@@ -12,6 +12,7 @@ import subprocess
 
 CMD_FILE = "engine/testcmd.txt"
 CACHE = "engine/.testrun_cache.json"
+MARKER = "engine/.testcmd_configured"  # FU-5: sticky proof tests were EVER configured (anti-silent-disable)
 
 
 def _head(root):
@@ -42,11 +43,31 @@ def get_command(root="."):
     return None
 
 
+def _mark_configured(root, cmd):
+    """FU-5: record (stickily) that tests were configured, so deleting testcmd.txt later is a
+    detectable REGRESSION, not a silent un-enforce. Stores the last known command for the message."""
+    try:
+        with open(os.path.join(root, MARKER), "w", encoding="utf-8") as f:
+            f.write(cmd)
+    except Exception:
+        pass
+
+
+def _was_configured(root):
+    return os.path.exists(os.path.join(root, MARKER))
+
+
 def run_tests(root=".", use_cache=True, timeout=600):
-    """Returns {configured, green, exit, head, cached, command}. Real exit code only."""
+    """Returns {configured, green, exit, head, cached, command, was_configured, regressed}.
+    Real exit code only. FU-5: if tests were EVER configured (sticky marker) but testcmd.txt is now
+    gone, that's a fail-closed REGRESSION (regressed=True) — the gate must block, not silently pass."""
     cmd = get_command(root)
     if not cmd:
-        return {"configured": False, "green": None, "exit": None, "head": "", "cached": False, "command": None}
+        regressed = _was_configured(root)
+        return {"configured": False, "green": False if regressed else None,
+                "exit": None, "head": "", "cached": False, "command": None,
+                "was_configured": regressed, "regressed": regressed}
+    _mark_configured(root, cmd)
 
     head = _head(root)
     cp = os.path.join(root, CACHE)
@@ -57,7 +78,8 @@ def run_tests(root=".", use_cache=True, timeout=600):
             c = json.load(open(cp, encoding="utf-8"))
             if c.get("head") == head and c.get("command") == cmd:
                 return {"configured": True, "green": c["exit"] == 0, "exit": c["exit"],
-                        "head": head, "cached": True, "command": cmd}
+                        "head": head, "cached": True, "command": cmd,
+                        "was_configured": True, "regressed": False}
         except Exception:
             pass
 
@@ -75,4 +97,5 @@ def run_tests(root=".", use_cache=True, timeout=600):
             json.dump({"head": head, "exit": code, "command": cmd}, open(cp, "w", encoding="utf-8"))
         except Exception:
             pass
-    return {"configured": True, "green": code == 0, "exit": code, "head": head, "cached": False, "command": cmd}
+    return {"configured": True, "green": code == 0, "exit": code, "head": head, "cached": False,
+            "command": cmd, "was_configured": True, "regressed": False}

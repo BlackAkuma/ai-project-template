@@ -108,6 +108,17 @@ case "$CMD_NOQ" in
         exit 2
       fi
     fi
+    # FU-5 (panel dissent): block COMMITTING a deletion of engine/testcmd.txt — the local sticky
+    # marker only catches same-session delete; a committed deletion would silently disable the test
+    # gate downstream (fresh clone has neither file nor marker). Disabling tests must be deliberate +
+    # auditable: require the consume-once user-order bypass, which leaves the intent on the record.
+    if [ "$BYPASS" != "1" ]; then
+      if git -C "$(pwd)" diff --cached --name-status 2>/dev/null | grep -qE '^D[[:space:]]+engine/testcmd\.txt$'; then
+        echo "⛔ BLOCK: ห้าม commit การลบ engine/testcmd.txt — จะปิด test gate แบบเงียบ (propagate ไป clone อื่น)" >&2
+        echo "   ถ้าตั้งใจปลด test gate: touch engine/.govern-allow-once แล้ว commit ใหม่ (auditable bypass)" >&2
+        exit 2
+      fi
+    fi
     ;;
 esac
 
