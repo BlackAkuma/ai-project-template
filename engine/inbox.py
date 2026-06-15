@@ -143,11 +143,19 @@ def _write(path, items):
 
 def canon_scope(s):
     """FU-3: canonical approval scope key — so a human's reject/approve sticks to a command even
-    when reworded by whitespace/case/quoting/flag-spacing (the cheap evasions). Semantic rewording
-    (different words, same intent) is NOT caught here — that needs an LLM match (out of scope; noted).
-    Normalize: strip surrounding quotes, lowercase, collapse all whitespace runs to single space."""
-    s = (s or "").strip().strip("'\"")
-    return " ".join(s.lower().split())
+    when reworded by whitespace or surrounding quotes (the genuinely-equivalent cheap evasions).
+
+    Deliberately does NOT lowercase (panel dissent FU-3): shell args are case-SENSITIVE on
+    Linux/macOS (paths, git ref/branch names), so lowercasing would FALSE-MERGE two distinct
+    commands — an approval of 'rm -rf build/' could be consumed by 'rm -rf Build/'. Whitespace and
+    paired-quote wrapping are equivalent on every OS; case is not. A case-reworded retry that
+    escapes a REJECT is fail-safe (re-opens a fresh item the human sees again); a case false-merge
+    on APPROVE is fail-dangerous. So we normalize only the safe axes.
+    Semantic rewording (git push -f vs --force) is also NOT caught — needs an alias/LLM layer (FU)."""
+    s = (s or "").strip()
+    while len(s) >= 2 and s[0] == s[-1] and s[0] in ("'", '"'):  # unwrap paired wrapping quotes only
+        s = s[1:-1].strip()
+    return " ".join(s.split())
 
 
 def create_item(gate, task, risk_level, reason, item_id=None, ts=0, root=".", inbox=INBOX, log=LOG, scope=None):
