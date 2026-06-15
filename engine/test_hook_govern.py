@@ -9,6 +9,11 @@ import subprocess
 import sys
 import tempfile
 
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 HOOK = os.path.join(REPO, "platforms", "claude-code", "hooks", "govern-action.sh")
 cases = []
@@ -21,7 +26,7 @@ if not bash or not git:
 
 
 def run_hook(repo_dir, command):
-    mock = '{"tool_name":"Bash","tool_input":{"command":"%s"}}' % command
+    mock = json.dumps({"tool_name": "Bash", "tool_input": {"command": command}})  # proper escaping
     env = dict(os.environ, ENGINE_DIR=REPO)
     p = subprocess.run([bash, HOOK], input=mock, capture_output=True, text=True,
                        encoding="utf-8", errors="replace", cwd=repo_dir, env=env)
@@ -95,6 +100,15 @@ with tempfile.TemporaryDirectory() as d:
     for mc in ("git push origin master", "git checkout master", "git merge feature/x master"):
         c0, e0 = run_hook(d, mc)
         check(f"master freeze blocks: {mc}", c0 == 2 and "MASTER FREEZE" in e0)
+
+    # DEV-FP: code commit must carry a task ref (T-/BL-/FU-/SPIKE)
+    subprocess.run([git, "checkout", "-q", "-b", "feature/tref"], cwd=d)
+    open(os.path.join(d, "q.py"), "w").write("q=1\n"); subprocess.run([git, "add", "q.py"], cwd=d)
+    ct1, et1 = run_hook(d, 'git commit -m "no task ref here"')
+    check("DEV-FP: code commit without task ref -> BLOCK", ct1 == 2 and "traceability" in et1)
+    ct2, _ = run_hook(d, 'git commit -m "FU-2: add lock"')
+    check("DEV-FP: code commit with task ref -> ALLOW", ct2 == 0)
+    subprocess.run([git, "reset", "-q"], cwd=d); os.remove(os.path.join(d, "q.py"))
 
     # BL-13 regression: trigger words INSIDE a quoted commit message must NOT false-trigger freezes
     subprocess.run([git, "checkout", "-q", "-b", "feature/safe"], cwd=d)

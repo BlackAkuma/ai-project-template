@@ -98,6 +98,14 @@ case "$CMD_NOQ" in
   *"git commit"*)
     run_gate secret-scan       # C-11 (L3 hard-stop): no secrets into git — HARD, no bypass
     run_gate placeholder-scan  # C-04: no unresolved placeholders
+    # DEV-FP: traceability — code commit ต้องผูก task (T-xxx/BL-xx/SPIKE) — forward-port จาก master pack
+    if [ -n "$CODE_STAGED" ] && [ "$BYPASS" != "1" ]; then
+      MSG=$(printf '%s' "$cmd" | grep -oE "\-m[[:space:]]+\"[^\"]*\"|\-m[[:space:]]+'[^']*'" | head -1)
+      if [ -n "$MSG" ] && ! printf '%s' "$MSG" | grep -qE 'T-[0-9]+|BL-[0-9]+|SPIKE|hotfix|FU-[0-9]+|DEV-FP|RD-[0-9]+|OBS-[0-9]+'; then
+        echo "⛔ BLOCK: commit โค้ดต้องผูก task — ใส่ T-xxx/BL-xx/FU-x/SPIKE ใน message (traceability)" >&2
+        exit 2
+      fi
+    fi
     ;;
   *"push --force"*|*"push -f"*|*"reset --hard"*|*"branch -D"*|*"clean -fd"*|*"push --force-with-lease"*)
     [ "$BYPASS" = "1" ] && exit 0

@@ -26,14 +26,23 @@ def gather_ctx(root):
     def git(*a):
         try:
             return subprocess.run(
-                ["git", *a], cwd=root, capture_output=True, text=True
+                ["git", *a], cwd=root, capture_output=True, text=True,
+                encoding="utf-8", errors="replace"  # git diff อาจมีภาษาไทย — กัน cp1252 crash
             ).stdout
         except Exception:
             return ""
-    diff = git("diff", "--cached")
     files = [f for f in git("diff", "--cached", "--name-only").splitlines() if f]
+    # FU: secret/placeholder scan must exclude files that DEFINE patterns (the scanner itself) +
+    # test fixtures with intentional fake secrets — else the scanner flags its own definitions.
+    EXCLUDE = ("platforms/claude-code/hooks/", "/test_", "test_", "tests/", "engine/gates/")
+    def _excluded(f):
+        return any(x in f for x in EXCLUDE)
+    # full diff for context; scanned 'added' excludes scanner/test files (pathspec-scoped)
+    diff = git("diff", "--cached")
+    scan_files = [f for f in files if not _excluded(f)]
+    scan_diff = git("diff", "--cached", "--", *scan_files) if scan_files else ""
     added = "\n".join(
-        ln[1:] for ln in diff.splitlines()
+        ln[1:] for ln in scan_diff.splitlines()
         if ln.startswith("+") and not ln.startswith("+++")
     )
     return {"root": root, "staged_diff": diff, "staged_files": files, "staged_added": added}
