@@ -18,8 +18,10 @@ check("push -f", classify("git push -f origin main") != "")
 check("push --force-with-lease", classify("git push --force-with-lease") != "")
 check("push double-space before flag — old glob MISSED this",
       classify("git push  --force") != "")
-check("tabs/newlines between tokens still caught",
-      classify("git\tpush\n  --force") != "")
+check("tabs between tokens still caught (intra-segment whitespace)",
+      classify("git\tpush\t\t--force") != "")
+check("newline IS a command separator (shell semantics), not intra-token",
+      classify("git push\n--force origin main") == "")  # two commands; '--force' alone is not git
 
 # --- refspec force '+': forces WITHOUT a --force flag (the named FU-4 bypass) ---
 check("refspec force '+branch'", classify("git push origin +main") != "")
@@ -39,6 +41,30 @@ check("clean -df (reordered bundle)", classify("git clean -df") != "")
 check("clean -fdx", classify("git clean -fdx") != "")
 check("clean --force", classify("git clean --force") != "")
 check("filter-branch", classify("git filter-branch --tree-filter x HEAD") != "")
+
+# --- FU-4 re-review (panel blockers): =value forms, short-flag bundles, global-opt skip ---
+check("--force-with-lease=VALUE (attached) — re-review false-neg",
+      classify("git push --force-with-lease=main:abc origin main") != "")
+check("--force-if-includes=VALUE", classify("git push --force-if-includes=x origin main") != "")
+check("branch -fD bundle (force delete) — re-review false-neg", classify("git branch -fD feature/x") != "")
+check("branch -Df bundle (reordered)", classify("git branch -Df feature/x") != "")
+check("global opt 'git -c k=v push --force' parsed (sub=push)",
+      classify("git -c user.name=x push --force origin main") != "")
+check("global opt 'git -C path push +main' parsed", classify("git -C /repo push origin +main") != "")
+
+# --- FU-4 re-review: segmentation — no cross-command MISATTRIBUTION (false-positive) ---
+check("'echo +foo && git push origin main' -> safe (+ is not push's)",
+      classify("echo +foo && git push origin main") == "")
+check("'git config -f x && git push origin main' -> safe (-f is config's)",
+      classify("git config -f x && git push origin main") == "")
+check("'git push origin main && git log +HEAD' -> safe (+ is log's)",
+      classify("git push origin main && git log +HEAD") == "")
+check("'git stash push origin +foo' -> safe (sub=stash not push)",
+      classify("git stash push origin +foo") == "")
+# --- but a dangerous op in ANY segment is still caught ---
+check("dangerous in segment 2 still caught", classify("git status && git push origin +master") != "")
+check("dangerous in segment 1 still caught", classify("git reset --hard && echo done") != "")
+check("pipe separator segmented", classify("echo x | git push origin +master") != "")
 
 # --- NEGATIVES: must NOT block ordinary safe commands ---
 check("plain push -> safe", classify("git push origin main") == "")

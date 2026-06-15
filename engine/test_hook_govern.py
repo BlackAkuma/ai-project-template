@@ -25,9 +25,9 @@ if not bash or not git:
     print("[SKIP] bash/git not available — hook test needs git-bash"); sys.exit(0)
 
 
-def run_hook(repo_dir, command):
+def run_hook(repo_dir, command, engine_dir=REPO):
     mock = json.dumps({"tool_name": "Bash", "tool_input": {"command": command}})  # proper escaping
-    env = dict(os.environ, ENGINE_DIR=REPO)
+    env = dict(os.environ, ENGINE_DIR=engine_dir)
     p = subprocess.run([bash, HOOK], input=mock, capture_output=True, text=True,
                        encoding="utf-8", errors="replace", cwd=repo_dir, env=env)
     return p.returncode, (p.stderr or "")
@@ -161,6 +161,23 @@ with tempfile.TemporaryDirectory() as d:
     check("FU-4 hook: reset --hard (flag-last) -> HELD", e4 == 2)
     e5, _ = run_hook(d, "git push origin develop")              # genuinely safe push stays allowed
     check("FU-4 hook: plain push -> allowed (no false-positive)", e5 == 0)
+
+    # FU-4 re-review (panel blockers): =value force form + no cross-command misattribution, e2e
+    e6, _ = run_hook(d, "git push --force-with-lease=develop origin develop")
+    check("FU-4 re-review hook: --force-with-lease=VALUE -> HELD", e6 == 2)
+    e7, _ = run_hook(d, "echo +foo && git push origin develop")
+    check("FU-4 re-review hook: chained '+foo' misattribution -> allowed", e7 == 0)
+
+# FU-4 re-review BLOCKER: hook must FAIL-CLOSED if the classifier itself can't run.
+# Fake engine whose cli.py always crashes (exit 3); a normally-SAFE 'git push' must still be HELD.
+with tempfile.TemporaryDirectory() as fe, tempfile.TemporaryDirectory() as wd:
+    git_init(wd)
+    os.makedirs(os.path.join(fe, "engine"), exist_ok=True)
+    open(os.path.join(fe, "engine", "check.py"), "w").write("import sys; sys.exit(0)\n")  # exists -> not template-only
+    open(os.path.join(fe, "engine", "cli.py"), "w").write("import sys; sys.exit(3)\n")    # always crashes
+    fc, ferr = run_hook(wd, "git push origin develop", engine_dir=fe)
+    check("FU-4 fail-closed: classifier crash -> safe push HELD (not fail-open)",
+          fc == 2 and "fail-closed" in ferr.lower())
 
 for n, ok in cases:
     print(f"  {'PASS' if ok else 'FAIL'}  {n}")

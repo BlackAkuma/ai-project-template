@@ -85,13 +85,12 @@ def cmd_init(a):
 
 def cmd_git_risk(a):
     """FU-4: classify a git command as dangerous (real tokenizer, not substring glob).
-    Prints a reason (empty = safe). exit 0 = risky (hold), 1 = safe — so the hook can branch."""
+    Prints the reason (empty line = safe) and ALWAYS exits 0 on a successful run, so the hook can
+    tell "ran, safe" (exit 0 + empty) from "classifier crashed" (non-zero exit) and fail CLOSED on
+    the latter. Do NOT overload the exit code with the risky/safe verdict — stdout carries that."""
     from gitguard import classify
-    reason = classify(a.command)
-    if reason:
-        print(reason)
-        return 0
-    return 1
+    print(classify(a.command))
+    return 0
 
 
 def cmd_inbox_reopen(a):
