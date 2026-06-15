@@ -11,6 +11,14 @@ deep_context: exploration/master-plan.md
 
 # Work Log Index — ai-project-template
 
+## 2026-06-15 — loop: FU-1 DONE (reject re-open, panel 3/3)
+
+- **FU-1 merged dev** (no-ff, was 79dd531): `reopen_item` — resolved item (rejected OR approved-consumed) -> status open, clears resolved_by/ts + consumed + resolution_reason, audited `inbox.reopen`, reopened_count. + cli `inbox-reopen <id>`. closes P0 "rejected stuck forever in-band" (human เปลี่ยนใจได้โดยไม่ต้องแก้ inbox.jsonl มือ). approval_state post-reopen = 'pending' (fresh decision, blocks abuse: reopen approved-consumed ไม่ re-allow action โดยไม่ approve ใหม่).
+- **panel 3/3 PASS** (technical/strategic/contrarian) + marketing **strong** (reject→reconsider→approve fully-logged = 2026 human-in-the-loop accountability theme).
+- **consensus dissent (แก้ก่อน merge):** reopen ไม่ล้าง escalated/escalated_ts -> reopened+overdue ไม่ re-escalate (เสีย R7 SLA). fix: pop escalated+escalated_ts + 3 tests (escalate→reject→reopen→re-escalate). 12/12 reopen, 28 suites.
+- contrarian residual (non-block, -> note): ไม่มี cap reopen ping-pong (visible via reopened_count) · ไม่มี role check (consistent กับ engine, ADR note ก่อน Phase B multi-actor).
+- next: FU-3 (approval scoping — reword คำสั่ง = item ใหม่ ข้าม rejection)
+
 ## 2026-06-15 — loop: FU-2 DONE (3 panel rounds) + DEV-FP done
 
 - **FU-2 inbox file-lock merged dev** (5753857): atomic write (tmp+fsync+os.replace) + 2-layer lock (threading.RLock + O_EXCL) + pid-liveness stale-break. prereq Phase B multi-agent.
