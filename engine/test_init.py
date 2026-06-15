@@ -56,7 +56,7 @@ with tempfile.TemporaryDirectory() as d:
         subprocess.run([git, "init", "-q"], cwd=d)
         subprocess.run([git, "config", "user.email", "t@t"], cwd=d)
         subprocess.run([git, "config", "user.name", "t"], cwd=d)
-        open(os.path.join(d, "leak.py"), "w").write('api_key = "sk-abcd1234efgh5678"\n')
+        open(os.path.join(d, "leak.py"), "w").write('api_key = "sk-abcd1234efgh5678"\n')  # allowlist-secret (fake fixture)
         subprocess.run([git, "add", "."], cwd=d)
         p = subprocess.run([sys.executable, os.path.join(d, "engine", "check.py"), "secret-scan", "--root", d],
                            capture_output=True, text=True, encoding="utf-8", errors="replace")

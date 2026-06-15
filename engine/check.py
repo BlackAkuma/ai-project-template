@@ -32,18 +32,20 @@ def gather_ctx(root):
         except Exception:
             return ""
     files = [f for f in git("diff", "--cached", "--name-only").splitlines() if f]
-    # FU: secret/placeholder scan must exclude files that DEFINE patterns (the scanner itself) +
-    # test fixtures with intentional fake secrets — else the scanner flags its own definitions.
-    EXCLUDE = ("platforms/claude-code/hooks/", "/test_", "test_", "tests/", "engine/gates/")
-    def _excluded(f):
-        return any(x in f for x in EXCLUDE)
-    # full diff for context; scanned 'added' excludes scanner/test files (pathspec-scoped)
+    # Exclude ONLY files that DEFINE scanner patterns (scanner flagging itself) — NOT whole
+    # test/hook dirs (panel dissent: real secret in tests/ or a non-scanner hook must still be caught).
+    SCANNER_DEFS = ("engine/gates/", "hooks/govern-docs.sh", "hooks/govern-template.sh", "hooks/govern-action.sh")
+    def _is_scanner_def(f):
+        fn = f.replace("\\", "/")
+        return any(x in fn for x in SCANNER_DEFS)
     diff = git("diff", "--cached")
-    scan_files = [f for f in files if not _excluded(f)]
+    scan_files = [f for f in files if not _is_scanner_def(f)]
     scan_diff = git("diff", "--cached", "--", *scan_files) if scan_files else ""
+    # per-line opt-out for intentional fixtures: a line tagged 'allowlist-secret' is skipped
+    # (pragma pattern — a real secret WITHOUT the tag is still caught, even inside a test file)
     added = "\n".join(
         ln[1:] for ln in scan_diff.splitlines()
-        if ln.startswith("+") and not ln.startswith("+++")
+        if ln.startswith("+") and not ln.startswith("+++") and "allowlist-secret" not in ln
     )
     return {"root": root, "staged_diff": diff, "staged_files": files, "staged_added": added}
 

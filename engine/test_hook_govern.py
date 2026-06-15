@@ -42,7 +42,7 @@ def git_init(d):
 with tempfile.TemporaryDirectory() as d:
     git_init(d)
     # stage a real secret -> hook must BLOCK (exit 2)
-    open(os.path.join(d, "config.py"), "w").write('api_key = "sk-abcd1234efgh5678"\n')
+    open(os.path.join(d, "config.py"), "w").write('api_key = "sk-abcd1234efgh5678"\n')  # allowlist-secret (fake fixture)
     subprocess.run([git, "add", "."], cwd=d)
     code, err = run_hook(d, "git commit -m wip")
     check("commit with secret -> BLOCKED (exit 2)", code == 2)

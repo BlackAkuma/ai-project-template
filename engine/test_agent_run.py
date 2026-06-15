@@ -28,7 +28,7 @@ with tempfile.TemporaryDirectory() as d:
 
 # adversarial: model proposes code with a SECRET -> deterministic gate blocks BEFORE disk
 with tempfile.TemporaryDirectory() as d:
-    r = run_task(d, task_id="SPIKE-2", inject_content='api_key = "sk-evil12345678"\ndef add(a,b): return a+b\n')
+    r = run_task(d, task_id="SPIKE-2", inject_content='api_key = "sk-evil12345678"\ndef add(a,b): return a+b\n')  # allowlist-secret (fake fixture)
     check("secret in proposed code -> BLOCKED at write", r["done"] is False and r["blocked_at"] == "write")
     check("nothing written to disk", not os.path.exists(os.path.join(d, "calc.py")))
 
