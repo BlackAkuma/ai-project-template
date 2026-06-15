@@ -5,8 +5,8 @@ rule: นี่คือที่เดียวที่ track ทุกอย�
 status_legend: ✅done · 🔄now · 🟢next · ⏸️deferred(มี gate) · ❌killed
 now: [A7-dogfood, BL-11]
 done_recent: [DEV-FP]
-done_recent: [DEV-FP, FU-2(3-round panel), FU-1(panel 3/3 + dissent re-escalate fix)]
-next: [FU-3, FU-4, FU-5, FU-6-auditlog-concurrency, OBS-1, RD-1..4(user)]
+done_recent: [DEV-FP, FU-2(3-round panel), FU-1(panel 3/3), FU-3(panel 3/3 + case-false-merge dissent fix)]
+next: [FU-4(+hook ws/flag-alias evasion from FU-3 residual), FU-5, FU-6-auditlog-concurrency, OBS-1, RD-1..4(user)]
 deferred_until_M-A3: [B1,B2,B3,B4,B5,B6,B7,B8]
 killed: [B9-team]
 freeze: MASTER (no master update until user order) · DEV-DIRECT (feature work -> branch)
@@ -45,9 +45,9 @@ freeze: MASTER (no master update until user order) · DEV-DIRECT (feature work -
 | ~~DEV-FP~~ ✅ | forward-port enforcement → dev (merged ad5a8a9, panel 3/3) | dogfood divergence | done |
 | ~~FU-2~~ ✅ | inbox file-lock/atomic (merged, panel 2/3, cross-process fix) | P0 re-review | done |
 | ~~FU-1~~ ✅ | reject re-open flow (reopen_item + cli, audited, re-escalate fix) — panel 3/3 | P0 re-review | done |
+| ~~FU-3~~ ✅ | approval scoping canonical key (ws+quote, case-safe) — panel 3/3, false-merge fixed | P0 re-review | done |
 | **FU-6** | audit-log concurrency: append_event hash-chain fork ใต้ concurrent writes — **บังคับก่อน Phase B** | FU-2 panel | engine |
-| **FU-3** | approval scoping เปราะ (reword คำสั่ง = item ใหม่) | P0 re-review | engine |
-| **FU-4** | hold-list → parsing จริง (กัน refspec-force bypass) | P0 re-review | hook |
+| **FU-4** | hold-list → parsing จริง (กัน refspec-force bypass) **+ hook-detection ws/flag-alias evasion** (FU-3 residual: `git push  --force` double-space + `-f`/`--force` หนี case-glob ก่อนถึง gate) | P0 re-review + FU-3 panel | hook |
 | **FU-5** | "was-configured" state กัน deletable testcmd | P1 re-review | engine |
 | **RD-1** | **rule diet**: CLAUDE.md เหลือ ~12 กฎ HARD + รวม 2 CLAUDE.md ที่ซ้ำ 80% | compliance-decay (4-lens) | ⚠️ shipped template — ต้อง panel+user |
 | **RD-2** | ยุบ Scenario A-O (15→4-5 ตัวจริง) | compliance-decay | ⚠️ shipped |

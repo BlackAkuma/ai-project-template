@@ -11,6 +11,14 @@ deep_context: exploration/master-plan.md
 
 # Work Log Index — ai-project-template
 
+## 2026-06-15 — loop: FU-3 DONE (approval scoping, panel 3/3)
+
+- **FU-3 merged dev** (no-ff): governance hole — เดิม approval match ด้วย exact (gate, reason) string; hook's reason = "<desc> :: <command>" → reword command (เว้นวรรค/quote/ลำดับ) = reason ใหม่ = approval_state 'none' = item ใหม่ = หนี reject ได้. fix: item มี canonical `scope` key; `canon_scope` normalize ws + paired-quotes; create_item(scope=)/approval_state(scope=) match ด้วย (gate, canon_scope); hook ส่ง raw command ($2) เป็น --scope ทั้ง hold + approval-state. legacy item ไม่มี scope → fall back canon(reason).
+- **panel 3/3 PASS** + marketing strong.
+- **blocking dissent (contrarian+strategic, แก้ก่อน merge):** canon เดิม lowercase ทั้ง command → POSIX path/ref case-sensitive → `rm -rf build/` vs `RM -RF Build/` = scope เดียว → approve ของ build/ ถูก consume โดย Build/ = **อนุมัติคนละ command เงียบๆ (widening)**. หลักการ: reject หนีด้วย case = fail-safe (re-ask), approve false-merge = fail-dangerous → **ตัด lowercase** เหลือ ws+paired-quote (equivalent ทุก OS). +paired-quote unwrap (เดิม char-class strip asymmetric) +true raw-jsonl legacy test. 13/13, 29 suites.
+- **residual → FU-4** (out of FU-3 scope): (1) hook detection glob `*"push --force"*` โดน double-space evasion ก่อนถึง approval_state เลย; (2) flag-alias `-f`/`--force`/`--force-with-lease` = scope คนละตัว (semantic, ต้อง alias map). ทั้งคู่ = hook-parsing → รวมเข้า FU-4.
+- next: FU-4 (hold-list parsing + hook-detection evasion)
+
 ## 2026-06-15 — loop: FU-1 DONE (reject re-open, panel 3/3)
 
 - **FU-1 merged dev** (no-ff, was 79dd531): `reopen_item` — resolved item (rejected OR approved-consumed) -> status open, clears resolved_by/ts + consumed + resolution_reason, audited `inbox.reopen`, reopened_count. + cli `inbox-reopen <id>`. closes P0 "rejected stuck forever in-band" (human เปลี่ยนใจได้โดยไม่ต้องแก้ inbox.jsonl มือ). approval_state post-reopen = 'pending' (fresh decision, blocks abuse: reopen approved-consumed ไม่ re-allow action โดยไม่ approve ใหม่).
