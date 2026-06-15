@@ -5,8 +5,8 @@ rule: นี่คือที่เดียวที่ track ทุกอย�
 status_legend: ✅done · 🔄now · 🟢next · ⏸️deferred(มี gate) · ❌killed
 now: [A7-dogfood, BL-11]
 done_recent: [DEV-FP]
-done_recent: [DEV-FP, FU-2, FU-1, FU-3, FU-4(2-round), FU-5(sticky+commit-guard, 3/3)]
-next: [FU-6-auditlog-concurrency, OBS-1, RD-1..4(user)]
+done_recent: [DEV-FP, FU-2, FU-1, FU-3, FU-4, FU-5, FU-6(auditlog-lock 3/3, LAST Phase-B prereq)]
+next: [OBS-1, FU-7(lasthash-cache+log-rotation), FU-8(writeback/store concurrency), RD-1..4(user)]
 deferred_until_M-A3: [B1,B2,B3,B4,B5,B6,B7,B8]
 killed: [B9-team]
 freeze: MASTER (no master update until user order) · DEV-DIRECT (feature work -> branch)
@@ -46,7 +46,9 @@ freeze: MASTER (no master update until user order) · DEV-DIRECT (feature work -
 | ~~FU-2~~ ✅ | inbox file-lock/atomic (merged, panel 2/3, cross-process fix) | P0 re-review | done |
 | ~~FU-1~~ ✅ | reject re-open flow (reopen_item + cli, audited, re-escalate fix) — panel 3/3 | P0 re-review | done |
 | ~~FU-3~~ ✅ | approval scoping canonical key (ws+quote, case-safe) — panel 3/3, false-merge fixed | P0 re-review | done |
-| **FU-6** | audit-log concurrency: append_event hash-chain fork ใต้ concurrent writes — **บังคับก่อน Phase B** | FU-2 panel | engine |
+| ~~FU-6~~ ✅ | audit-log concurrency: append_event ครอบ _FileLock + fsync + torn-tail self-heal — ปิด hash-chain fork. panel 3/3. **Phase B audit prereq เคลียร์** | FU-2 panel | done |
+| **FU-7** | append_event O(n²) read-all-lines + ไม่มี log rotation → last-hash cache (in-mem/tail) + rotate ก่อน Phase B volume | FU-6 panel | engine |
+| **FU-8** | writeback.py + store.py เขียน state แบบไม่มี lock/atomic → torn/last-writer-wins ใต้ concurrency | FU-6 panel | engine |
 | ~~FU-4~~ ✅ | dangerous-git classifier (engine/gitguard): tokenized+quote-aware(shlex)+segmented+subcommand-parsed, fail-CLOSED hook. ปิด flag-order/refspec-force/ws/=value/branch-combo/quote-wrap/cross-cmd. panel round1 FAIL→fix→round2 3/3 | P0 re-review + FU-3 panel | done |
 | ~~FU-5~~ ✅ | was-configured sticky marker + commit-deletion guard (ลบ testcmd หลังตั้ง=fail-closed regression; commit ลบ=blocked; de-config ต้อง bypass=auditable) — panel 3/3 | P1 re-review | done |
 | **RD-1** | **rule diet**: CLAUDE.md เหลือ ~12 กฎ HARD + รวม 2 CLAUDE.md ที่ซ้ำ 80% | compliance-decay (4-lens) | ⚠️ shipped template — ต้อง panel+user |
@@ -66,7 +68,7 @@ freeze: MASTER (no master update until user order) · DEV-DIRECT (feature work -
 | B3 | model-picker UI | M-A3 |
 | B4 | semantic memory (Qdrant) | dogfood พิสูจน์ lexical ไม่พอ |
 | B5 | multi-repo live | ใช้จริง 2+ repos |
-| B6 | specialists/multi-agent | B1 + FU-2 (inbox lock) |
+| B6 | specialists/multi-agent | B1 + FU-2 + FU-6 (audit-lock) ✓ prereqs เคลียร์ |
 | B7 | deploy/Docker | มีผู้ใช้คนที่ 2 |
 | B8 | game profile pack | M-A3 |
 

@@ -11,6 +11,18 @@ deep_context: exploration/master-plan.md
 
 # Work Log Index — ai-project-template
 
+## 2026-06-15 — loop: FU-6 DONE (audit-log concurrency, panel 3/3) — Phase B prereq เคลียร์
+
+- **FU-6 merged dev** (no-ff): append_event เดิมอ่าน prev_hash จากบรรทัดสุดท้าย → hash → append **ไม่มี lock**. concurrent writers (Phase B) อ่าน prev เดียวกัน → **hash-chain FORK** (2 records prev เดียว) → verify_chain ฟ้อง tampered. audit log (รากฐาน tamper-evidence) เองไม่ concurrency-safe.
+- fix: ครอบ read-prev→hash→append ด้วย FU-2 `_FileLock` (lazy `from inbox import` เลี่ยง circular; events เป็น lock-LEAF บน events.log.jsonl.lock คนละไฟล์ inbox.jsonl.lock) + fsync.
+- **panel 3/3 PASS** + marketing strong. dissents แก้ก่อน merge:
+  1. **torn-tail recovery**: append เป็น plain open('a') ไม่ใช่ tmp+replace → crash กลาง write = บรรทัดสุดท้ายพัง → append ถัดไป json.loads crash. fix `_last_hash` self-heal (drop torn line + atomic-rewrite + chain จาก valid record สุดท้าย). +4 tests.
+  2. **deadlock doc แก้**: เดิมเขียนผิดว่า inbox mutator เรียก append_event หลังปลด lock; จริง approval_state/escalate_overdue เรียก**ขณะถือ** inbox lock — safe เพราะ events lock เป็น leaf คนละไฟล์. document invariant "never acquire inbox lock here".
+- evidence: 13 concurrency tests (25-thread + 16 cross-process: chain valid, prev unique=no fork; + torn-tail) + 31 suites. +CI events_lock.
+- **follow-ups (panel-found, tracked):** FU-7 (append_event O(n²) read-all + ไม่มี log rotation → last-hash cache + rotate), FU-8 (writeback.py/store.py เขียน state ไม่มี lock/atomic). ทั้งคู่ "ก่อน Phase B heavy write" — B* deferred until M-A3 อยู่แล้ว.
+- **Phase B audit prereq เคลียร์** (FU-2 inbox-lock + FU-6 audit-lock ครบ)
+- next: OBS-1 (UserPromptSubmit re-inject obligations)
+
 ## 2026-06-15 — loop: FU-5 DONE (sticky test gate + commit-guard, panel 3/3)
 
 - **FU-5 merged dev** (no-ff): hole — test-evidence policy "configured→enforce, not configured→pass". ลบ engine/testcmd.txt = test gate หายเงียบ (AI/dev dodge "tests must be green"). fix 2 ชั้น:
