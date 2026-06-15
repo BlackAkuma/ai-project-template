@@ -11,6 +11,17 @@ deep_context: exploration/master-plan.md
 
 # Work Log Index — ai-project-template
 
+## 2026-06-12 — T-060 Enforcement Pack -> MASTER + BL-13 hook reconcile
+
+- **T-060 released to master** (user official order): merge feature/main-enforcement-pack (bc4e06c->befab38). master ได้ template-only enforcement: branch-per-feature, secret/placeholder block, T-ref required, Task Close Gate (Edit/Write), Stop-gate log sync, debt line, BOM fix. 19/19 tests on master. freeze re-engaged.
+- **BL-13 dev hook reconcile** (3 dogfood bugs, R1 = governance น่ารำคาญจนต้องเลี่ยง):
+  1. dev-direct-freeze บล็อก doc-only -> ยกเว้น doc/CoreAiWorkspaces commits
+  2. GOVERN_USER_ORDER env bypass ใช้ไม่ได้ผ่าน Claude Code (hook ไม่ inherit command env) -> consume-once marker engine/.govern-allow-once
+  3. master/dev freeze pattern จับคำใน commit message (false-positive) -> strip quoted strings (CMD_NOQ) ก่อน match
+  merged dev, 20/20 hook tests. branches เหลือ dev+master.
+- dogfood Day proof: hook ดักตัว AI เอง 4+ ครั้งจริงระหว่างทำงานนี้ (master-freeze ×2, dev-freeze ×1, false-positive ×2) = ระบบทำงาน + เจอจุดอ่อนของตัวเอง
+
+
 ## Recent: 2026-06-10 — P1 batch APPROVED 3/3 + consensus-dissent fixes
 
 - **panel P1 (BL-6,7,8,9,10,12): 3/3 PASS** (ทุก lens รัน 24 suites เองยืนยัน) + marketing=viable (hero story = live governed agent run)

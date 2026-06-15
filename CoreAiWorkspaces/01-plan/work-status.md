@@ -3,7 +3,7 @@ phase: M-A3 dogfood week (day 2/7, started 2026-06-10) — BRD-v2 Phase A items 
 active_task: dogfood-watch. P0+P1 approved by panels (BL-1..10,12 merged). BL-11 + M-A3 verdict await week data
 blocker: none · MASTER FREEZE active (user rule 2026-06-11: no master updates until official order — enforced in govern hook)
 active_branch: dev
-last_updated: 2026-06-11
+last_updated: 2026-06-12
 git_mode: branch-separated
 git_dev_branch: dev
 git_prod_branch: master
@@ -15,7 +15,7 @@ read_more:
   decisions: CoreAiWorkspaces/07-decisions/README.md (ADR-006..009 Accepted)
   adr_panel: CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md §7 (Scenario O)
 next_action: dogfood until 2026-06-17 -> BL-11 fatigue-tuning + panel M-A3 verdict (=G1). USER inputs welcome: 2nd repo path for engine init. B* locked until M-A3 (R3)
-auto_session: 0 commit(s) @ e834873 | latest: (no new commits)
+auto_session: 0 commit(s) @ 0d1caa2 | latest: (no new commits)
 -->
 
 # Work Status — ai-project-template
