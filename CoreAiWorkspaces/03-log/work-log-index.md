@@ -11,6 +11,13 @@ deep_context: exploration/master-plan.md
 
 # Work Log Index — ai-project-template
 
+## 2026-06-15 — loop: DEV-FP DONE (panel 3/3) + iter 2 starting
+
+- **DEV-FP merged dev** (ad5a8a9): forward-port enforcement master->dev (Edit/Write gate, Stop gate, T-ref). panel 3/3 PASS.
+- panel consensus dissent (security): secret-scan exclude กว้างไป -> แคบเหลือเฉพาะ scanner-def files + allowlist-secret pragma รายบรรทัด (secret จริงใน tests/ ยังโดนจับ, พิสูจน์ test 5/5) + เพิ่ม coverage govern-docs+session-end-gate (8/8). 26 suites.
+- dogfood proof: Stop-gate บล็อก session ของ AI เอง (ต้องเขียน log ก่อนจบ) = ระบบบังคับ Session End สำเร็จ
+- next loop: FU-2 (inbox file-lock, บังคับก่อน Phase B)
+
 ## 2026-06-15 — backlog-v3 roadmap + loop iteration 1 (DEV-FP)
 
 - **backlog-v3** = single roadmap (รวมผลวิจัยทุก panel เป็น tracked items: RD-1..4, OBS-1, DEV-FP, FU-1..5 + sync T-060/BL-13). backlog-v2 superseded.

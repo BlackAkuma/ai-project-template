@@ -4,7 +4,8 @@ updated: 2026-06-12
 rule: นี่คือที่เดียวที่ track ทุกอย่าง — ผลวิจัย/panel ทุกรอบถูกแปลงเป็น item ที่มี id+status+source แล้ว
 status_legend: ✅done · 🔄now · 🟢next · ⏸️deferred(มี gate) · ❌killed
 now: [A7-dogfood, BL-11]
-next: [DEV-FP, FU-1..5, RD-1..4, OBS-1]
+done_recent: [DEV-FP]
+next: [FU-2-inbox-lock, FU-1, FU-3, FU-4, FU-5, OBS-1, RD-1..4(user)]
 deferred_until_M-A3: [B1,B2,B3,B4,B5,B6,B7,B8]
 killed: [B9-team]
 freeze: MASTER (no master update until user order) · DEV-DIRECT (feature work -> branch)
