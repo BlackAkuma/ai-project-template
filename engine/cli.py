@@ -82,6 +82,13 @@ def cmd_init(a):
     return 0
 
 
+def cmd_inbox_reopen(a):
+    from inbox import reopen_item
+    r = reopen_item(a.id, by=a.by, ts=a.ts, root=a.root, inbox=INBOX, log=LOG, reason=a.reason)
+    print(f"reopened: {a.id}" if r else f"not found / already open: {a.id}")
+    return 0 if r else 1
+
+
 def cmd_approval_state(a):
     """Prints approved|pending|rejected|none — used by hooks to make human decisions CAUSAL."""
     from inbox import approval_state
@@ -125,6 +132,8 @@ def build_parser():
     h.add_argument("--risk", type=int, default=2); h.add_argument("--root", default=".")
     s2 = sub.add_parser("approval-state"); s2.add_argument("gate"); s2.add_argument("reason"); s2.add_argument("--root", default=".")
     i = sub.add_parser("init"); i.add_argument("--target", required=True)
+    ro = sub.add_parser("inbox-reopen"); ro.add_argument("id"); ro.add_argument("--by", default="user")
+    ro.add_argument("--reason", default=""); ro.add_argument("--ts", type=int, default=0); ro.add_argument("--root", default=".")
     return ap
 
 
@@ -132,7 +141,8 @@ def main(argv=None):
     a = build_parser().parse_args(argv)
     return {"cockpit": cmd_cockpit, "gate": cmd_gate, "turn": cmd_turn, "inbox": cmd_inbox,
             "inbox-resolve": cmd_inbox_resolve, "audit": cmd_audit, "hold": cmd_hold,
-            "approval-state": cmd_approval_state, "init": cmd_init}[a.cmd](a)
+            "approval-state": cmd_approval_state, "init": cmd_init,
+            "inbox-reopen": cmd_inbox_reopen}[a.cmd](a)
 
 
 if __name__ == "__main__":

@@ -182,6 +182,32 @@ def list_open(root=".", inbox=INBOX):
     return [i for i in _read(os.path.join(root, inbox)) if i["status"] == "open"]
 
 
+def reopen_item(item_id, by, ts=0, root=".", inbox=INBOX, log=LOG, reason=""):
+    """FU-1: reconsider a resolved item IN-BAND (rejected/approved-consumed -> open) without
+    hand-editing inbox.jsonl. Audited (inbox.reopen). Clears resolution + consumed so the
+    decision is genuinely fresh. Returns the item, or None if not found / already open."""
+    path = os.path.join(root, inbox)
+    with _FileLock(path):  # FU-2: atomic RMW
+        items = _read(path)
+        target = None
+        for it in items:
+            if it["id"] == item_id and it["status"] != "open":
+                it["status"] = "open"
+                it["resolved_by"] = None
+                it["resolved_ts"] = None
+                it.pop("consumed", None)
+                it.pop("resolution_reason", None)
+                it.pop("escalated", None)  # panel dissent (FU-1): else reopened+overdue never re-escalates (R7)
+                it.pop("escalated_ts", None)
+                it["reopened_count"] = it.get("reopened_count", 0) + 1
+                target = it
+        if target is None:
+            return None
+        _write(path, items)
+    append_event(by, "inbox.reopen", item_id, reason or "reconsider", ts=ts, root=root, log=log)
+    return target
+
+
 def approval_state(gate, reason, root=".", inbox=INBOX, log=LOG, ts=0):
     """P0-fix (panel contrarian): make approval CAUSAL. Returns one of:
     'approved'  — a matching approved+unconsumed item existed; it is now CONSUMED (one-shot allow)
