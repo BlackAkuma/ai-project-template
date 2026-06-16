@@ -5,8 +5,9 @@ rule: นี่คือที่เดียวที่ track ทุกอย�
 status_legend: ✅done · 🔄now · 🟢next · ⏸️deferred(มี gate) · ❌killed
 now: [A7-dogfood, BL-11]
 done_recent: [DEV-FP]
-done_recent: [DEV-FP, FU-1..6, OBS-1(re-inject obligations 3/3 + init gitguard-ship fix)]
-next: [RD-1..4(USER decision — panel แล้วเสนอ), FU-7(lasthash-cache+rotation), FU-8(writeback/store concurrency)]
+done_recent: [DEV-FP, FU-1..6, OBS-1, RD-4(compliance split 3/3)]
+next: [RD-3(TACP/vector out of bootstrap), RD-1(merge CLAUDE.md), RD-2(scenarios->7), FU-7, FU-8]
+rd_status: USER-approved "dedup ทั้ง 4, defer new gates" (2026-06-16) · sequence RD-4→RD-3→RD-1→RD-2 · หลังครบ หยุดวัดผลก่อนทำ gate
 deferred_until_M-A3: [B1,B2,B3,B4,B5,B6,B7,B8]
 killed: [B9-team]
 freeze: MASTER (no master update until user order) · DEV-DIRECT (feature work -> branch)
@@ -51,10 +52,10 @@ freeze: MASTER (no master update until user order) · DEV-DIRECT (feature work -
 | **FU-8** | writeback.py + store.py เขียน state แบบไม่มี lock/atomic → torn/last-writer-wins ใต้ concurrency | FU-6 panel | engine |
 | ~~FU-4~~ ✅ | dangerous-git classifier (engine/gitguard): tokenized+quote-aware(shlex)+segmented+subcommand-parsed, fail-CLOSED hook. ปิด flag-order/refspec-force/ws/=value/branch-combo/quote-wrap/cross-cmd. panel round1 FAIL→fix→round2 3/3 | P0 re-review + FU-3 panel | done |
 | ~~FU-5~~ ✅ | was-configured sticky marker + commit-deletion guard (ลบ testcmd หลังตั้ง=fail-closed regression; commit ลบ=blocked; de-config ต้อง bypass=auditable) — panel 3/3 | P1 re-review | done |
-| **RD-1** | **rule diet**: CLAUDE.md เหลือ ~12 กฎ HARD + รวม 2 CLAUDE.md ที่ซ้ำ 80% | compliance-decay (4-lens) | ⚠️ shipped template — ต้อง panel+user |
-| **RD-2** | ยุบ Scenario A-O (15→4-5 ตัวจริง) | compliance-decay | ⚠️ shipped |
-| **RD-3** | ย้าย TACP/vector-memory ออกจาก bootstrap read path | compliance-decay | ⚠️ shipped |
-| **RD-4** | แยก C-codes: machine-checked (เป็น hook) vs advisory (เป็น reference) | compliance-decay | ⚠️ shipped |
+| **RD-1** | **rule diet**: merge 2 CLAUDE.md (ซ้ำ 80%) เป็นไฟล์เดียว conditional, เก็บครบ 14 กฎ (Option B) | compliance-decay (4-lens) | USER-approved (dedup, no new gate) |
+| **RD-2** | ยุบ Scenario A-O (15→~7: เก็บ H/J/L/M/N/O, ยุบ A-G/I/K) | compliance-decay | USER-approved |
+| **RD-3** | ย้าย TACP/vector-memory ออกจาก bootstrap read path | compliance-decay | USER-approved |
+| ~~RD-4~~ ✅ | C-codes machine-vs-advisory split (Enforce column, verified vs yaml) — panel round1 FAIL→round2 3/3 | compliance-decay | done |
 | ~~OBS-1~~ ✅ | UserPromptSubmit re-inject obligations (freezes/inbox/regression/branch ทุก turn) + แก้ init_repo ไม่ ship gitguard.py/obligations.py — panel 3/3 | compliance-decay (behavior lens) | done |
 
 > RD-1..4 = "reverse shipped behavior" (เหมือน carry-over เดิม) → ต้องผ่าน panel + คุณ approve ก่อนแตะ · DEV-FP/FU/OBS = engine/hook ทำบน feature branch ได้เลย

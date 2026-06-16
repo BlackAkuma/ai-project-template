@@ -11,6 +11,13 @@ deep_context: exploration/master-plan.md
 
 # Work Log Index — ai-project-template
 
+## 2026-06-16 — loop: RD rule-diet START (USER-approved) + RD-4 DONE
+
+- **USER ตัดสิน RD-1..4** (AskUserQuestion): "ทำตาม panel — dedup ทั้ง 4, เลื่อน gate ใหม่ทุกตัว". จาก RD analysis panel (5 agents อ่านไฟล์จริง): CLAUDE.md 2 ไฟล์ซ้ำ ~80%, 15 scenarios แต่อ้างจริง 6, 14 C-codes มี gate จริง 4. cross-cutting risk = template-only user (prose=guardrail เดียว) → กฎ: dedup ได้ ลบ prose ได้เฉพาะที่ไม่พึ่ง gate. ลำดับ RD-4→RD-3→RD-1→RD-2 แล้วหยุดวัดผลก่อนทำ gate ใหม่.
+- **RD-4 merged dev** (no-ff): compliance.md เพิ่ม Enforce column (🔒 gate/📋 prose) — C-03→task-close, C-04 partial→placeholder-scan (ไม่จับชื่อ ai-project-template), C-07→prose (no gate; doc-sync คนละเรื่อง), C-11 partial→secret-scan (เฉพาะ hardcoded). 10 advisory. zero prose deleted + template-only-scan-all caveat.
+- **panel round1 FAIL 1/3** → จับ mislabel จริง: C-07 false gate, C-04 over-claim, hot-path summary ขัด template-only note. แก้ครบตรวจกับ yaml → **round2 PASS 3/3**.
+- next: RD-3 (ย้าย TACP/vector ออก bootstrap read path)
+
 ## 2026-06-15 — loop: OBS-1 DONE (re-inject obligations, panel 3/3)
 
 - **OBS-1 merged dev** (no-ff): SessionStart ฉีด digest ครั้งเดียว → conversation ยาว standing constraints (freezes/pending decisions/regression) decay ออกจาก attention → AI ละเมิด (= ปัญหาหลักทั้งหมดที่แก้). fix: **UserPromptSubmit hook** (reinject-obligations.sh → engine/obligations.py render()) ฉีด reminder สั้น token-aware ทุก user turn. deterministic จาก real state (markers/inbox/branch/testrun), no LLM. surfaces: freezes (MASTER always + DEV-DIRECT marker), branch+prod-guard, open inbox ids (ห้าม self-decide), FU-5 regression. empty เมื่อไม่มี engine.

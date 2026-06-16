@@ -15,7 +15,7 @@ read_more:
   decisions: CoreAiWorkspaces/07-decisions/README.md (ADR-006..009 Accepted)
   adr_panel: CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md §7 (Scenario O)
 next_action: dogfood until 2026-06-17 -> BL-11 fatigue-tuning + panel M-A3 verdict (=G1). USER inputs welcome: 2nd repo path for engine init. B* locked until M-A3 (R3)
-auto_session: 0 commit(s) @ 45e0049 | latest: (no new commits)
+auto_session: 38 commit(s) @ 03d4080 | latest: 03d4080 log: OBS-1 re-inject obligations DONE (panel 3/3 + init gitguard-ship fix) — backl
 -->
 
 # Work Status — ai-project-template
