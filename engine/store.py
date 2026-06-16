@@ -7,8 +7,24 @@ SQLite index = deferred (ADR-012) — build only on real query pressure; never a
 """
 import json
 import os
+import threading
 
 SCHEMA_VERSION = "0.1"
+
+
+def _atomic_write(path, text):
+    """FU-8: crash-/concurrency-safe write — tmp (per pid+thread) + fsync + os.replace, so a reader
+    never sees a half-written file and a crash never leaves a torn one. os.replace is atomic on
+    POSIX + Windows. Shared shape with inbox._write / events._rewrite."""
+    d = os.path.dirname(path)
+    if d:
+        os.makedirs(d, exist_ok=True)
+    tmp = path + f".tmp.{os.getpid()}.{threading.get_ident()}"
+    with open(tmp, "w", encoding="utf-8") as f:
+        f.write(text)
+        f.flush()
+        os.fsync(f.fileno())
+    os.replace(tmp, path)
 
 
 def load(path):
@@ -38,11 +54,12 @@ def save(state, path, validate=True):
         ok, errs = validate_state(state)
         if not ok:
             raise ValueError("invalid state, refusing to persist: " + "; ".join(errs))
-    d = os.path.dirname(path)
-    if d:
-        os.makedirs(d, exist_ok=True)
-    # sorted keys + indent => stable, git-diffable
-    json.dump(state, open(path, "w", encoding="utf-8"), ensure_ascii=False, indent=2, sort_keys=True)
+    # sorted keys + indent => stable, git-diffable. FU-8: serialize the write (canonical store must
+    # not lose an update or tear under concurrent saves) via FU-2 _FileLock + atomic replace.
+    text = json.dumps(state, ensure_ascii=False, indent=2, sort_keys=True)
+    from inbox import _FileLock  # lazy: avoid import cycle; reuse the battle-tested lock
+    with _FileLock(path):
+        _atomic_write(path, text)
 
 
 def render_ai_context(state):
