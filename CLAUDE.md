@@ -46,137 +46,17 @@ rm -rf engine/ exploration/ start-cockpit.cmd
 
 ---
 
-## เริ่มต้น Session
+## Protocol เต็ม → `platforms/claude-code/CLAUDE.md`
 
-**ก่อนทำอะไร** ตรวจว่า `CoreAiWorkspaces/` มีอยู่ไหม:
+> **RD-1 (dedup):** เดิมไฟล์นี้ duplicate protocol ~80% กับ `platforms/claude-code/CLAUDE.md`
+> ทำให้ AI อ่านซ้ำทุก session (compliance-decay). ตอนนี้ **canonical อยู่ที่
+> `platforms/claude-code/CLAUDE.md`** (Claude Code auto-load ทั้งสองไฟล์ + เป็น deploy source ของ
+> `scripts/new-project.sh`) — ไฟล์นี้เก็บเฉพาะ Case 1/2 ที่ unique แล้วชี้ไปที่นั่น.
 
-- **ยังไม่มี** → ทำ **First Run Bootstrap** (ด้านล่าง)
-- **มีแล้ว** → ทำ **Session Start Protocol** (ด้านล่าง)
+อ่าน **`platforms/claude-code/CLAUDE.md`** สำหรับ:
+- First Run Bootstrap · Session Start / End Protocol · Batch Checkpoint · Context Window Management
+- Project Context · TACP · Language Policy · Branching & Backup
+- **Key Rules ครบทุกข้อ** (challenge-necessity risk-tiered, plan-before-code, "ทำต่อ"=task เดียว, scope-change, ADR-Proposed STOP, Memory Scope, entity-register ฯลฯ)
+- Skill Pack Detection · Game Specialist Agents · Available Slash Commands (`/caw-*`)
 
----
-
-## First Run Bootstrap
-
-ทำครั้งเดียวตอนสร้างโปรเจ็กต์ใหม่:
-
-1. ถามผู้ใช้ 2 เรื่องพร้อมกัน รอคำตอบก่อน:
-   - ภาษาที่จะสื่อสารกัน
-   - Promotion pipeline: `dev→main` / `dev→sit→uat→main` / อื่นๆ (ให้ระบุ)
-2. ตรวจว่ามี `~/ai-workspace/cross-project-memory.md` ไหม — ถ้ามีให้อ่านก่อน
-3. อ่านไฟล์ใน `core/` ตามลำดับ (00 → 22) — **ข้ามแค่ `core/20-vector-memory-optional.md`** (optional Phase 3, อ่านเฉพาะตอนจะเปิด `vector_memory: enabled`; default = ไม่มี field = disabled = ข้าม). core/19 อ่านครบ (ชั้น 4 Vector เป็น reference เฉยๆ) (RD-3: ออกจาก bootstrap read path)
-4. ถ้าโปรเจ็กต์เป็น game หรือ web game → อ่าน `skills/game/` ต่อด้วย (00 → 12)
-5. สร้างโครงสร้าง `CoreAiWorkspaces/` ตาม core/01 template
-6. กรอกข้อมูลโปรเจ็กต์จาก context ที่มี — ใส่ placeholder ชัดเจนถ้าไม่พอ ห้ามเดา
-   บันทึก `git_pipeline` ที่ได้จากข้อ 1 ใน work-status AI-CONTEXT block ด้วย
-7. เพิ่มโปรเจ็กต์นี้ลงใน `~/ai-workspace/cross-project-memory.md` (ถ้ามีไฟล์นั้นอยู่)
-8. ตรวจสอบกับ `core/10-bootstrap-checklist-template.md` ก่อนประกาศว่าเสร็จ
-
-จากนั้น → ทำ Session Start Protocol ต่อ
-
----
-
-## Session Start Protocol
-
-ทำตามลำดับนี้ทุก session:
-
-> **ถ้าโปรเจ็กต์มี `engine/` (governance engine):** SessionStart hook ฉีด `[PROJECT-MEMORY DIGEST]` ให้อัตโนมัติแล้ว — **digest แทนข้อ 1-3 ด้านล่าง ห้ามอ่านซ้ำ** (ข้อมูลเดียวกัน, render จาก store) · ยังต้องเช็ค prod-branch guard ในข้อ 1 เสมอ
-
-1. อ่าน AI-CONTEXT block ของ `CoreAiWorkspaces/01-plan/work-status.md` *(ข้ามถ้ามี digest)*
-   - ถ้า `git_mode: branch-separated` → รัน `git branch --show-current` ทันที
-   - ถ้า branch ปัจจุบัน == `git_prod_branch` → **หยุด** แจ้งผู้ใช้ก่อน
-2. อ่าน AI-CONTEXT block ของ `CoreAiWorkspaces/03-log/work-log-index.md` *(ข้ามถ้ามี digest)*
-3. อ่าน AI-CONTEXT block ของ `CoreAiWorkspaces/02-task/task-board.md` *(ข้ามถ้ามี digest)*
-4. ถ้า `CoreAiWorkspaces/03-log/agents/claude-code.md` มีอยู่ → อ่าน AI-CONTEXT block ด้วย
-5. ถ้า work-status มี `read_more` field → แสดงให้ผู้ใช้เห็น
-6. ตรวจ gap ระหว่าง task board และ source docs (Scenario H ใน `CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md`)
-7. รัน compliance scan อัตโนมัติ (ดู `CoreAiWorkspaces/04-way-of-work/compliance.md`)
-8. รายงานสถานะ: phase ปัจจุบัน, task ที่ active, สิ่งที่ต้องทำก่อน
-
----
-
-## Session End Protocol
-
-ก่อนจบ session ทุกครั้ง — รัน `/caw-session-end` หรือทำตามลำดับ:
-
-1. อัปเดต `work-status` — body **และ** AI-CONTEXT block
-2. เพิ่ม entry ใน `work-log-index` — body **และ** AI-CONTEXT block
-3. อัปเดต `task-board` — status **และ** AI-CONTEXT block (ถ้ามี task เปลี่ยน)
-4. task ที่ยัง in_progress → mark เป็น `[IN_PROGRESS: checkpoint saved — <สิ่งที่ทำไปแล้ว>]`
-5. ถ้า `git_mode: branch-separated` → รัน `git push origin [git_dev_branch]`
-
----
-
-## Project Context
-
-- Source docs: `CoreAiWorkspaces/00-source/`
-- Work status: `CoreAiWorkspaces/01-plan/work-status.md`
-- Task board: `CoreAiWorkspaces/02-task/task-board.md`
-- Way of work: `CoreAiWorkspaces/04-way-of-work/way-of-work.md`
-- Decision protocol: `CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md`
-- Compliance rules: `CoreAiWorkspaces/04-way-of-work/compliance.md`
-- ADR index: `CoreAiWorkspaces/07-decisions/README.md`
-
----
-
-## Token-Aware Communication Protocol (TACP)
-
-หลักพอใช้ทุก session (รายละเอียดเต็ม = lazy, อ่านเมื่อต้องใช้):
-- **L1** (AI-CONTEXT/internal) = English, dense · **L2** (chat) = `L2_LANG` default `th`, compressed · **L3** (shared files) = dual-block (L1 + HUMAN-CONTEXT)
-
-→ verbosity scale V1–V5, Thai-compression rules, layer detail เต็ม: **`CoreAiWorkspaces/04-way-of-work/tacp.md`** (RD-3: ย้ายออกจาก bootstrap read path — อ่านตอนจะใช้จริง ไม่ใช่ทุก session)
-
----
-
-## Language Policy
-
-- AI-internal reasoning: English
-- Output to user: ตาม `tacp.L2_LANG` ใน `CoreAiWorkspaces/04-way-of-work/way-of-work.md` (default: `th`)
-- AI-CONTEXT blocks: English เสมอ (L1)
-- Code / identifiers: English เสมอ
-
----
-
-## Branching & Backup Policy
-
-กฎ branching อยู่ใน `CoreAiWorkspaces/04-way-of-work/` (bootstrapped จาก `core/21-git-workflow-template.md`) — ใช้กับทุก AI tool เหมือนกัน
-
-**ก่อนแตะโค้ดทุกครั้ง → รัน Scenario M** ใน `CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md`
-
----
-
-## Key Rules
-
-- ⛔ **ก่อนแตะโค้ดทุกครั้ง — รัน Scenario M step 0 challenge-necessity แบบ risk-tiered** (ADR-008, T-052)
-  - **Level 0 (เสมอ):** triage เบาๆ — ประเมิน risk tier ของ action นี้ (reversible? prod? secret? ขัด requirement?)
-  - **Level 1 (low/reversible):** auto — ทำต่อ + log สั้น (ไม่ต้อง challenge เต็ม)
-  - **Level 2-3 (medium/irreversible/prod/security):** challenge เต็ม (a)(b)(c) + 3-lens ก่อน
-  - risk = ตัวกำหนด ไม่ใช่ "ทุก action เท่ากัน" (เดิม uniform — superseded; กัน approval-fatigue ตาม Gartner)
-- ห้าม implement โดยไม่รู้ source reference
-- **บอก plan ก่อนเขียน code เสมอ** — อธิบายว่าจะทำอะไร ทำไม แล้วรอยืนยันก่อน implement
-- ห้ามแก้ requirement โดยตรง — ต้อง version ใหม่หรือ extension doc
-- ห้ามตัดสินใจเรื่อง architecture โดยไม่สร้าง ADR draft
-- ทุก session ต้องทำ Session End Protocol ก่อนจบ
-- ถ้าไม่แน่ใจ: Do less, document more
-
----
-
-## Skill Pack Detection
-
-ถ้าโปรเจ็กต์มี `CoreAiWorkspaces/08-design/` → โหลด game skill standards อัตโนมัติ (skills/game/ 00–12)
-
----
-
-## Available Slash Commands
-
-```
-/caw-compliance-check   รัน compliance scan ทันที
-/caw-fdd-create         สร้าง FDD template สำหรับ feature ใหม่
-/caw-adr-create         สร้าง ADR สำหรับ architectural decision
-/caw-adr-review         รัน 3-lens panel review บน ADR Proposed (2/3 ผ่าน + dissent log) — Scenario O
-/caw-session-end        sync work-status + log + task-board ครบในคำสั่งเดียว
-/caw-scope-check        ตรวจ scope ของ task ปัจจุบัน
-/caw-launch-check       รัน launch checklist ก่อน deploy
-/caw-archive-logs       compress session เก่าเป็น monthly archive
-/caw-update             อัปเดต caw-* commands และ CLAUDE.md เป็น version ใหม่
-/caw-debug              รัน 4-step debug-mantra checklist อัตโนมัติ
-```
+AI tool อื่น (Cursor/Windsurf/claude.ai) → `platforms/universal/AI.md` · มีอะไรขัดกัน → เชื่อ `platforms/claude-code/CLAUDE.md`

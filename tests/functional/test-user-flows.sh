@@ -294,11 +294,13 @@ cd "$TEMPLATE_ROOT"
 # Check: core/22-tacp-template.md exists
 [ -f "core/22-tacp-template.md" ] && pass "T1: core/22-tacp-template.md exists" || fail "T1: core/22-tacp-template.md missing"
 
-# Check: CLAUDE.md has TACP section
-if grep -q "Token-Aware Communication Protocol" "CLAUDE.md" 2>/dev/null; then
-  pass "T2: root CLAUDE.md has TACP section"
+# Check: root CLAUDE.md surfaces TACP — full section OR (RD-1 dedup) a pointer to the canonical
+# platforms/claude-code/CLAUDE.md which holds the full protocol (verified by T3). Root is a stub.
+if grep -q "Token-Aware Communication Protocol" "CLAUDE.md" 2>/dev/null || \
+   { grep -q "TACP" "CLAUDE.md" 2>/dev/null && grep -q "platforms/claude-code/CLAUDE.md" "CLAUDE.md" 2>/dev/null; }; then
+  pass "T2: root CLAUDE.md surfaces TACP (section or RD-1 pointer to canonical)"
 else
-  fail "T2: root CLAUDE.md missing TACP section"
+  fail "T2: root CLAUDE.md neither has TACP nor points to canonical"
 fi
 
 # Check: platforms/claude-code/CLAUDE.md has TACP section
@@ -536,13 +538,14 @@ else
   fail "P12: Scenario M missing challenge-necessity or 3-lens structure"
 fi
 
-# P14: root CLAUDE.md Key Rules explicitly blocks "ทำต่อ" from bypassing challenge-necessity
+# P14: root CLAUDE.md surfaces the challenge-necessity + "ทำต่อ" guard and (RD-1 dedup) routes to the
+# canonical platforms/claude-code/CLAUDE.md which carries the full guard (verified by P15). Root=stub.
 if grep -q "challenge-necessity" "CLAUDE.md" 2>/dev/null && \
    grep -q "ทำต่อ" "CLAUDE.md" 2>/dev/null && \
-   grep -q "ไม่ยกเว้น" "CLAUDE.md" 2>/dev/null; then
-  pass "P14: root CLAUDE.md Key Rules: ทำต่อ cannot bypass challenge-necessity (entry-point enforcement)"
+   grep -q "platforms/claude-code/CLAUDE.md" "CLAUDE.md" 2>/dev/null; then
+  pass "P14: root CLAUDE.md surfaces ทำต่อ + challenge-necessity (RD-1 pointer to canonical guard)"
 else
-  fail "P14: root CLAUDE.md missing challenge-necessity guard — momentum can still bypass it"
+  fail "P14: root CLAUDE.md missing challenge-necessity guard / canonical pointer"
 fi
 
 # P15: platforms CLAUDE.md also has challenge-necessity guard (Claude Code specific)
