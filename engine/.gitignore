@@ -7,3 +7,5 @@ __pycache__/
 .writeback_state.json
 .testrun_cache.json
 .testcmd_configured
+*.lock
+*.tmp.*
