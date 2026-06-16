@@ -24,7 +24,7 @@ Protocol หลักอยู่ใน `AI.md` — ไฟล์นี้เพ�
    - ภาษาที่จะสื่อสารกัน
    - Promotion pipeline: `dev→main` / `dev→sit→uat→main` / อื่นๆ (ให้ระบุ)
 2. ตรวจว่ามี `~/ai-workspace/cross-project-memory.md` ไหม — ถ้ามีให้อ่านก่อน เพื่อดู pattern และ lesson จากโปรเจ็กต์เก่า
-3. อ่านไฟล์ใน `core/` ตามลำดับ (00 → 22) — **ยกเว้น vector-memory (core/19 ส่วน Vector + core/20) = optional Phase 3, อ่านเฉพาะตอนจะเปิด `vector_memory: enabled`** (RD-3: ออกจาก bootstrap read path)
+3. อ่านไฟล์ใน `core/` ตามลำดับ (00 → 22) — **ข้ามแค่ `core/20-vector-memory-optional.md`** (optional Phase 3, อ่านเฉพาะตอนจะเปิด `vector_memory: enabled`; default = ไม่มี field = disabled = ข้าม). core/19 อ่านครบ (ชั้น 4 Vector เป็น reference เฉยๆ) (RD-3: ออกจาก bootstrap read path)
 4. ถ้าโปรเจ็กต์เป็น game หรือ web game → อ่าน `skills/game/` ต่อด้วย (00 → 12)
 5. สร้างโครงสร้าง `CoreAiWorkspaces/` ตาม core/01 template
 6. กรอกข้อมูลโปรเจ็กต์จาก context ที่มี — ใส่ placeholder ชัดเจนถ้าไม่พอ ห้ามเดา
