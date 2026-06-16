@@ -26,6 +26,8 @@
 > RD-2: scenario สั้น (procedure ง่าย) ยุบเป็นตารางเดียว — anchor "Scenario X" คงไว้ (cross-ref ใช้ได้)
 > · pattern ร่วม = **อย่าทำเงียบ → log → ถ้าตัน escalate human**. scenario ที่มี procedure ลึก
 > (H/J/K/L) ยังเป็น section เต็มด้านล่าง.
+> ⚠️ **DO-NOT-FOLD: H/J/K/L** — consumers เดิน decision-tree เต็ม (detect-gaps hook อ่าน H; reader tests
+> walk K/J/L step-by-step). ห้ามยุบเป็น legend แม้ ref เยอะ — จะ break การ walk tree.
 
 | Scenario | สถานการณ์ | action สั้น |
 |----------|-----------|------------|
