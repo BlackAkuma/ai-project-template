@@ -1,9 +1,10 @@
 <!-- AI-CONTEXT
 phase: M-A3 dogfood week (day 2/7, started 2026-06-10) — BRD-v2 Phase A items A1-A6 ALL DONE
-active_task: dogfood-watch. P0+P1 approved by panels (BL-1..10,12 merged). BL-11 + M-A3 verdict await week data
+active_task: dogfood-watch. backlog-v3 tracked items ว่างหมด — FU-1..8 + OBS-1 + RD-1..4 merged dev (panel-approved). BL-11 + M-A3 verdict await week data
 blocker: none · MASTER FREEZE active (user rule 2026-06-11: no master updates until official order — enforced in govern hook)
 active_branch: dev
-last_updated: 2026-06-15
+last_updated: 2026-06-16
+backlog_v3: FU-1..8 done (concurrency/governance hardening, Phase-B prereqs CLEARED) · RD-1..4 done (rule-diet dedup, no new gates) · OBS-1 done (re-inject obligations). deferred: FU-7b log-rotation, Option-D gates (user decision), B* (M-A3)
 git_mode: branch-separated
 git_dev_branch: dev
 git_prod_branch: master
@@ -14,7 +15,7 @@ read_more:
   plan: exploration/master-plan.md
   decisions: CoreAiWorkspaces/07-decisions/README.md (ADR-006..009 Accepted)
   adr_panel: CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md §7 (Scenario O)
-next_action: dogfood until 2026-06-17 -> BL-11 fatigue-tuning + panel M-A3 verdict (=G1). USER inputs welcome: 2nd repo path for engine init. B* locked until M-A3 (R3)
+next_action: dogfood until 2026-06-17 -> BL-11 fatigue-tuning + panel M-A3 verdict (=G1). USER decisions pending: (1) Option-D gates? วัดผล token/compliance ของ rule-diet ก่อน (2) 2nd repo path for engine init. B* locked until M-A3 (R3). FU-7b (log rotation) = engine, ทำได้เมื่อต้องการ
 auto_session: 38 commit(s) @ 03d4080 | latest: 03d4080 log: OBS-1 re-inject obligations DONE (panel 3/3 + init gitguard-ship fix) — backl
 -->
 

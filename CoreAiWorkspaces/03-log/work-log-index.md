@@ -11,6 +11,14 @@ deep_context: exploration/master-plan.md
 
 # Work Log Index — ai-project-template
 
+## 2026-06-16 — loop: FU-7 + FU-8 DONE — tracked backlog ว่างหมด
+
+- **FU-7 merged dev** (panel 3/3): append_event O(n²) — เดิมอ่านทั้ง log ทุก append เพื่อหา prev_hash (lock-hold โตตาม log size, กระทบ Phase-B volume). fix: in-process last-hash cache keyed (abspath→size,mtime_ns,hash); trust เฉพาะตอน on-disk (size,mtime) ตรงกับที่เขียนล่าสุด → external write (append size↑ หรือ in-place rewrite mtime↑) = miss → authoritative _last_hash (FU-6 read+heal). dissent: same-size collision → แก้ด้วย mtime_ns ใน key (+verify_chain ยัง independent). 9 cache tests (out-of-band invalidation, cold-cache, 50-append). log-rotation = FU-7b (deferred, แยกเพราะเปลี่ยน verify_chain semantics).
+- **FU-8 merged dev** (panel 3/3): store.py/writeback.py เขียน state แบบ plain open('w')/append = torn-read + last-writer-wins. fix: shared `_atomic_write` (tmp per pid+thread + fsync + os.replace). store.save = +_FileLock (canonical: ไม่เสีย update/ไม่ tear); work-status/STATE = atomic-only (derived, lost-update self-heal, torn-read safe); sessions JSONL append = +_FileLock+fsync. 9 concurrency tests (16-thread + 12-process saves ยัง valid). dissents: gitignore *.lock/*.tmp.* + work-status machine-fact-only invariant comment.
+- **Phase B prereqs CLEARED:** FU-2 (inbox-lock) + FU-6 (audit-lock) + FU-7 (lasthash-cache) + FU-8 (state-atomic). เหลือ FU-7b (log rotation, bound worst-case) ก่อน sustained Phase-B write.
+- **tracked backlog ว่างหมด** — เหลือแต่ที่รอเวลา/รอ user: A7 dogfood (ถึง 2026-06-17 → M-A3 verdict=G1), deferred Option-D gates (user วัดผล token/compliance ก่อน), FU-7b, B* (รอ M-A3).
+- **session summary:** loop นี้ปิด FU-1..8 + OBS-1 + RD-1..4 ครบ (panel-approved ทุกตัว). panel จับ bug จริงที่ test มองไม่เห็นหลายตัว: FU-2 Windows-pid-liveness/PermissionError, FU-3 case-false-merge, FU-4 fail-open+evasions, FU-5 commit-propagate, FU-6 chain-fork+torn-tail, RD-1 deploy-regression+red-test, RD-2 cross-ref-break(grep กันไว้), FU-7 same-size-collision. → ยืนยันค่า panel+verify-before-act.
+
 ## 2026-06-16 — loop: RD rule-diet COMPLETE (RD-1..4 all merged, USER-approved)
 
 - **RD-1 merged dev** (2 panel rounds): merge 2 CLAUDE.md (ซ้ำ ~80%). round1 strategic จับ **deploy regression** (new-project.sh copy platforms/claude-code/CLAUDE.md เป็น deployed CLAUDE.md → stub จะ break clone) → กลับทิศ: platforms=full canonical (untouched, deploy/docs/tests ปลอดภัย), root=dedup stub (Case-1/2 + pointer). round2 contrarian จับ red tests (T2/P14 grep root หา TACP/challenge-necessity ที่ stub ลบ) → retarget เป็น dedup invariant. functional 97/0. root -131 บรรทัด.
