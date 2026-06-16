@@ -33,34 +33,44 @@ Protocol สำหรับตรวจสอบ code quality และ document
 
 ## สิ่งที่ตรวจ
 
+> **Enforce column (RD-4):** `🔒 gate` = engine บังคับจริง (machine-checked, tamper-evident) — ดูชื่อ gate
+> ใน `engine/gates/` (gate จับเฉพาะที่ระบุ; ส่วนที่ไม่ครอบ = prose). `📋 prose` = advisory เท่านั้น (AI/human scan).
+> **template-only user (ไม่มี `engine/`):** gate ไม่รัน → **ทุก C-code = prose** สำหรับคุณ; prose
+> ด้านล่างคือ guardrail เดียว ห้ามลบทิ้งเพราะคิดว่า "มี gate แล้ว"
+
 ### ระดับ 1 — Fix Now หรือ Defer (ต้องตัดสินใจ)
 
-| Code | สิ่งที่ตรวจ | เกณฑ์ |
-|------|-----------|-------|
-| C-01 | File size | > 500 บรรทัด |
-| C-02 | Task ไม่มี source reference | ทุก task ที่ไม่มี `CoreAiWorkspaces/00-source/...` |
-| C-03 | Task `done` ไม่มี validation evidence | ไม่มีบันทึกว่าตรวจสอบอย่างไร |
-| C-04 | Placeholder ยังค้างในไฟล์ | `ai-project-template`, `<NEEDS_CLARIFICATION>` ฯลฯ |
+| Code | สิ่งที่ตรวจ | เกณฑ์ | Enforce |
+|------|-----------|-------|---------|
+| C-01 | File size | > 500 บรรทัด | 📋 prose |
+| C-02 | Task ไม่มี source reference | ทุก task ที่ไม่มี `CoreAiWorkspaces/00-source/...` | 📋 prose |
+| C-03 | Task `done` ไม่มี validation evidence | ไม่มีบันทึกว่าตรวจสอบอย่างไร | 🔒 gate `task-close` (evidence_count_gte) |
+| C-04 | Placeholder ยังค้างในไฟล์ | `ai-project-template`, `<NEEDS_CLARIFICATION>` ฯลฯ | 🔒 gate `placeholder-scan` (เฉพาะ `<NEEDS_CLARIFICATION`/`<PROJECT_NAME>`/`<CURRENT_DATE>`; **ไม่จับ** ชื่อ `ai-project-template` → ส่วนนั้น 📋 prose) |
 
 ### ระดับ 2 — Defer เสมอ พร้อม tag ในโค้ด
 
-| Code | สิ่งที่ตรวจ | เกณฑ์ |
-|------|-----------|-------|
-| C-05 | Function/method ยาวเกิน | > 50 บรรทัด |
-| C-06 | Dependency ใหม่ ไม่มี ADR | import ที่ไม่เคยมีในโปรเจ็กต์ |
-| C-07 | AI-CONTEXT block ไม่ sync กับ body | ค่าใน block ≠ ค่าใน body |
-| C-08 | TODO / FIXME ไม่มี task reference | comment ที่ไม่มี T-XXX กำกับ |
+| Code | สิ่งที่ตรวจ | เกณฑ์ | Enforce |
+|------|-----------|-------|---------|
+| C-05 | Function/method ยาวเกิน | > 50 บรรทัด | 📋 prose |
+| C-06 | Dependency ใหม่ ไม่มี ADR | import ที่ไม่เคยมีในโปรเจ็กต์ | 📋 prose |
+| C-07 | AI-CONTEXT block ไม่ sync กับ body | ค่าใน block ≠ ค่าใน body | 📋 prose (block↔body value equality — **ไม่มี gate จับ**) · gate `doc-sync` จับคนละเรื่อง: code staged แต่ docs ค้าง dirty (co-staging) ไม่ใช่ block↔body |
+| C-08 | TODO / FIXME ไม่มี task reference | comment ที่ไม่มี T-XXX กำกับ | 📋 prose |
 
 ### ระดับ 3 — แจ้งเตือนอย่างเดียว
 
-| Code | สิ่งที่ตรวจ | เกณฑ์ |
-|------|-----------|-------|
-| C-09 | work-status ไม่ได้อัปเดตนานเกิน | มี task `in_progress` แต่ไม่อัปเดต > 3 วัน |
-| C-10 | Session ก่อนไม่มี log entry | work-log-index ไม่มีบันทึก session ล่าสุด |
-| C-11 | Security baseline ไม่ผ่าน | ดูรายการตรวจด้านล่าง |
-| C-12 | work-log-index ใหญ่เกิน | > 300 บรรทัด — แนะนำ archive |
-| C-13 | task-board done section ใหญ่เกิน | > 15 รายการ — แนะนำ archive |
-| C-14 | entity-register ไม่ได้อัปเดตเมื่อ tech เปลี่ยน | task ที่ deprecated/เพิ่ม tech ใหม่ แต่ entity-register ไม่เปลี่ยน |
+| Code | สิ่งที่ตรวจ | เกณฑ์ | Enforce |
+|------|-----------|-------|---------|
+| C-09 | work-status ไม่ได้อัปเดตนานเกิน | มี task `in_progress` แต่ไม่อัปเดต > 3 วัน | 📋 prose |
+| C-10 | Session ก่อนไม่มี log entry | work-log-index ไม่มีบันทึก session ล่าสุด | 📋 prose (Stop-gate hook เตือนตอนจบ session) |
+| C-11 | Security baseline ไม่ผ่าน | ดูรายการตรวจด้านล่าง | 🔒 gate `secret-scan` (เฉพาะ hardcoded secrets) + 📋 prose (SQL/XSS/IDOR/PII ดูด้านล่าง) |
+| C-12 | work-log-index ใหญ่เกิน | > 300 บรรทัด — แนะนำ archive | 📋 prose |
+| C-13 | task-board done section ใหญ่เกิน | > 15 รายการ — แนะนำ archive | 📋 prose |
+| C-14 | entity-register ไม่ได้อัปเดตเมื่อ tech เปลี่ยน | task ที่ deprecated/เพิ่ม tech ใหม่ แต่ entity-register ไม่เปลี่ยน | 📋 prose |
+
+> **Hot path สรุป (engine user เท่านั้น):** engine บังคับเต็มแค่ C-03 + C-11(hardcoded secret) และ
+> บางส่วน C-04. **C-07 ไม่มี gate จับ block↔body — ยังต้อง scan เอง.** สำหรับ engine user: อย่าเสียเวลา
+> พิสูจน์ซ้ำเฉพาะ C-03 + C-11-secret ที่ gate จับ fail-closed อยู่แล้ว.
+> ⚠️ **template-only user (ไม่มี engine/): ข้ามไม่ได้สักตัว — ไม่มี gate เลย ต้อง scan ครบ 14 codes.**
 
 ---
 
