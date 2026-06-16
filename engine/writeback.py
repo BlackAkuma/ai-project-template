@@ -82,6 +82,10 @@ def writeback(root="."):
     date = (facts["ts"] or "")[:10]
 
     # 1) update work-status AI-CONTEXT (machine facts only — never narrative)
+    # FU-8 invariant: this write touches ONLY machine-fact keys (active_branch/last_updated/
+    # auto_session). It is atomic (torn-read safe) but intentionally NOT locked — work-status is a
+    # DERIVED view (re-derived from git+events next run), so a concurrent lost update self-heals.
+    # If a non-re-derivable (human-authored) key is ever written here, add a _FileLock.
     ws = os.path.join(root, "CoreAiWorkspaces/01-plan/work-status.md")
     if os.path.exists(ws):
         text = open(ws, encoding="utf-8", errors="replace").read()
