@@ -153,16 +153,35 @@ rm -rf engine/ exploration/ start-cockpit.cmd
   - risk = ตัวกำหนด ไม่ใช่ "ทุก action เท่ากัน" (เดิม uniform — superseded; กัน approval-fatigue ตาม Gartner)
 - ห้าม implement โดยไม่รู้ source reference
 - **บอก plan ก่อนเขียน code เสมอ** — อธิบายว่าจะทำอะไร ทำไม แล้วรอยืนยันก่อน implement
+- **"ทำต่อ" = approve task ปัจจุบันเท่านั้น** — ไม่ใช่ arc ทั้งหมด ทุก milestone ต้องได้ explicit approval แยก (Scenario N)
+- **task ที่เพิ่ม entity/mechanic ใหม่ = scope change** — หยุดก่อนทุกครั้ง ไม่ใช่ implementation ปกติ
+- ADR Proposed → **STOP รอ human Approve** ก่อน implement เสมอ — ห้ามรวบ draft+approve+implement ในขั้นตอนเดียว
 - ห้ามแก้ requirement โดยตรง — ต้อง version ใหม่หรือ extension doc
 - ห้ามตัดสินใจเรื่อง architecture โดยไม่สร้าง ADR draft
 - ทุก session ต้องทำ Session End Protocol ก่อนจบ
 - ถ้าไม่แน่ใจ: Do less, document more
+- เมื่อพบข้อมูลใหม่ที่ต้องเก็บ → ใช้ Memory Scope decision tree (Scenario K) ตัดสินว่าเก็บที่ไหน
+- ห้ามเขียนลง `~/ai-workspace/cross-project-memory.md` โดยไม่ถามผู้ใช้ก่อน
+- เมื่อพบ `[ENTITY:deprecated]` หรือ `[ENTITY:superseded]` ในโค้ด task หรือ ADR → ตรวจ entity-register ก่อน (Scenario J)
+
+---
+
+## Claude Code-specific (RD-1: รวมจาก platforms/claude-code/CLAUDE.md — ทูลอื่นข้ามได้)
+
+**Batch Checkpoint** — ทุกครั้งที่ commit feature สำคัญ หยุด sync 3 ไฟล์ก่อนทำต่อ: work-status (body+block), task-board (ย้าย done/register ใหม่), work-log-index (มี entry). body = source of truth (แก้ body ก่อน sync block; ห้าม reverse). user บอก "ทำต่อ" แต่ docs ค้าง → sync ก่อน.
+
+**Context Window Management** — Pre-compact: checkpoint ใน work-log + อัปเดต work-status + mark task `[IN_PROGRESS: checkpoint saved — …]` + next action. Post-compact: อ่าน AI-CONTEXT 3 ไฟล์หลัก + 07-decisions/README + ยืนยัน task ตรง checkpoint (ไม่ตรง → Scenario B). งานละเอียดอ่อน (architecture/security/req conflict) อ่าน **body ต้นฉบับเสมอ** อย่าตัดสินจาก block อย่างเดียว.
+
+**Game Specialist Agents** (game project) — invoke ผ่าน `/caw-game-review`: `game-designer` (mechanic/FDD-vs-GDD/degenerate), `game-art-director` (asset/palette), `game-narrative-director` (dialogue/voice/ludonarrative), `game-ux-designer` (screen flow/HUD/input), `game-performance-analyst` (bottleneck/frame budget). ไฟล์ agent: `platforms/claude-code/agents/`.
 
 ---
 
 ## Skill Pack Detection
 
-ถ้าโปรเจ็กต์มี `CoreAiWorkspaces/08-design/` → โหลด game skill standards อัตโนมัติ (skills/game/ 00–12)
+ถ้าโปรเจ็กต์มี `CoreAiWorkspaces/08-design/` → โหลด game skill standards อัตโนมัติ (skills/game/ 00–12):
+- ทุก feature ใหม่ต้องมี FDD ก่อน implement
+- task lifecycle: todo → design_validate → in_progress → review → done
+- compliance G-01..G-10, A-01..A-07, N-01..N-04, U-01..U-03, L-01..L-02 บังคับใช้
 
 ---
 
@@ -179,4 +198,8 @@ rm -rf engine/ exploration/ start-cockpit.cmd
 /caw-archive-logs       compress session เก่าเป็น monthly archive
 /caw-update             อัปเดต caw-* commands และ CLAUDE.md เป็น version ใหม่
 /caw-debug              รัน 4-step debug-mantra checklist อัตโนมัติ
+/caw-tool-clean         ลบ config ของ AI tool ที่ไม่ใช้แล้ว เหลือเฉพาะ tool ที่ต้องการ
+/caw-balance-check      รัน balance check สำหรับ game config (game projects)
+/caw-playtest-report    สร้าง playtest report template (game projects)
+/caw-game-review        รัน milestone gate review โดย specialist agents (game projects)
 ```
