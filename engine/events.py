@@ -11,6 +11,14 @@ import os
 
 LOG = "engine/events.log.jsonl"
 
+# FU-7: in-process last-hash cache — kills the O(n^2) full-file read on every append (lock-hold time
+# grew with log size, degrading exactly at Phase-B multi-agent volume). Keyed by abspath -> (size,
+# hash). Valid because appends are lock-serialized AND we only trust the cache when the on-disk size
+# still matches what we last wrote: any OTHER writer (another process) changes the size -> cache miss
+# -> fall back to the authoritative full read+heal (_last_hash). So the cache can never serve a stale
+# head across a concurrent external append. Bounded to one entry per distinct log path.
+_LAST_HASH = {}
+
 
 def _hash(prev, payload):
     blob = prev + json.dumps(payload, sort_keys=True, ensure_ascii=False)
@@ -37,15 +45,40 @@ def append_event(actor, action, target, result, ts=0, root=".", log=LOG):
     or an ABBA deadlock appears. Keep this function a lock-leaf."""
     from inbox import _FileLock  # lazy: break the events<->inbox import cycle (and stay a lock-leaf)
     path = os.path.join(root, log)
+    key = os.path.abspath(path)
     with _FileLock(path):  # serialize read-prev + append so the chain never forks under concurrency
-        prev = _last_hash(path)
+        prev = _cached_or_read_last_hash(path, key)  # FU-7: O(1) cache hit in steady state
         payload = {"ts": ts, "actor": actor, "action": action, "target": target, "result": result, "prev": prev}
         rec = dict(payload, hash=_hash(prev, payload))
+        line = json.dumps(rec, ensure_ascii=False) + "\n"
         with open(path, "a", encoding="utf-8") as f:
-            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+            f.write(line)
             f.flush()
             os.fsync(f.fileno())  # durability: the audit record is on disk before the lock releases
+        try:  # refresh cache to the post-write state so the NEXT append is a pure cache hit (no read)
+            _LAST_HASH[key] = (os.path.getsize(path), rec["hash"])
+        except OSError:
+            _LAST_HASH.pop(key, None)
     return rec
+
+
+def _cached_or_read_last_hash(path, key):
+    """FU-7: return the chain head from the in-process cache if the on-disk size still matches what we
+    last wrote (no concurrent external append); otherwise fall back to the authoritative full read +
+    torn-tail heal (_last_hash) and refresh the cache. Caller MUST hold the lock."""
+    try:
+        size = os.path.getsize(path) if os.path.exists(path) else 0
+    except OSError:
+        size = -1
+    cached = _LAST_HASH.get(key)
+    if cached is not None and cached[0] == size and size >= 0:
+        return cached[1]  # cache hit — no file read
+    head = _last_hash(path)  # cache miss (first append / external write / crash) -> authoritative path
+    try:
+        _LAST_HASH[key] = (os.path.getsize(path) if os.path.exists(path) else 0, head)
+    except OSError:
+        _LAST_HASH.pop(key, None)
+    return head
 
 
 def _last_hash(path):
