@@ -33,7 +33,7 @@ with tempfile.TemporaryDirectory() as d:
     # cache is populated for this path
     check("cache populated after appends", os.path.abspath(path) in _LAST_HASH)
     # cache head == on-disk last hash
-    check("cached head == on-disk last hash", _LAST_HASH[os.path.abspath(path)][1] == recs[-1]["hash"])
+    check("cached head == on-disk last hash", _LAST_HASH[os.path.abspath(path)][2] == recs[-1]["hash"])
 
 # OUT-OF-BAND external append (simulating another process) -> size changes -> cache MUST miss and
 # chain from the real last record, not the stale cached head (else FORK).

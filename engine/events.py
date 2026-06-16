@@ -12,12 +12,23 @@ import os
 LOG = "engine/events.log.jsonl"
 
 # FU-7: in-process last-hash cache — kills the O(n^2) full-file read on every append (lock-hold time
-# grew with log size, degrading exactly at Phase-B multi-agent volume). Keyed by abspath -> (size,
-# hash). Valid because appends are lock-serialized AND we only trust the cache when the on-disk size
-# still matches what we last wrote: any OTHER writer (another process) changes the size -> cache miss
-# -> fall back to the authoritative full read+heal (_last_hash). So the cache can never serve a stale
-# head across a concurrent external append. Bounded to one entry per distinct log path.
+# grew with log size, degrading exactly at Phase-B multi-agent volume). Keyed by abspath ->
+# (size, mtime_ns, hash). Valid because appends are lock-serialized AND we only trust the cache when
+# BOTH the on-disk size and mtime still match what we last wrote: a concurrent external append grows
+# the size; an in-place same-size rewrite (the only same-size edge, panel FU-7) changes mtime. Either
+# -> cache miss -> authoritative full read+heal (_last_hash). So the cache cannot serve a stale head
+# across any external write, append or in-place. (verify_chain never consults the cache, so tamper-
+# evidence is independent regardless.) Bounded to one entry per distinct log path.
 _LAST_HASH = {}
+
+
+def _stat_key(path):
+    """(size, mtime_ns) of the file, or None if it can't be stat'd (forces a cache miss)."""
+    try:
+        st = os.stat(path)
+        return (st.st_size, st.st_mtime_ns)
+    except OSError:
+        return None
 
 
 def _hash(prev, payload):
@@ -55,28 +66,28 @@ def append_event(actor, action, target, result, ts=0, root=".", log=LOG):
             f.write(line)
             f.flush()
             os.fsync(f.fileno())  # durability: the audit record is on disk before the lock releases
-        try:  # refresh cache to the post-write state so the NEXT append is a pure cache hit (no read)
-            _LAST_HASH[key] = (os.path.getsize(path), rec["hash"])
-        except OSError:
+        sk = _stat_key(path)  # refresh cache to post-write state so the NEXT append is a pure hit
+        if sk is not None:
+            _LAST_HASH[key] = (sk[0], sk[1], rec["hash"])
+        else:
             _LAST_HASH.pop(key, None)
     return rec
 
 
 def _cached_or_read_last_hash(path, key):
-    """FU-7: return the chain head from the in-process cache if the on-disk size still matches what we
-    last wrote (no concurrent external append); otherwise fall back to the authoritative full read +
-    torn-tail heal (_last_hash) and refresh the cache. Caller MUST hold the lock."""
-    try:
-        size = os.path.getsize(path) if os.path.exists(path) else 0
-    except OSError:
-        size = -1
+    """FU-7: return the chain head from the in-process cache if the on-disk (size, mtime) still match
+    what we last wrote (no external append OR in-place rewrite); otherwise fall back to the
+    authoritative full read + torn-tail heal (_last_hash) and refresh the cache. Caller MUST hold the
+    lock."""
+    sk = _stat_key(path)
     cached = _LAST_HASH.get(key)
-    if cached is not None and cached[0] == size and size >= 0:
-        return cached[1]  # cache hit — no file read
+    if cached is not None and sk is not None and cached[0] == sk[0] and cached[1] == sk[1]:
+        return cached[2]  # cache hit — no file read
     head = _last_hash(path)  # cache miss (first append / external write / crash) -> authoritative path
-    try:
-        _LAST_HASH[key] = (os.path.getsize(path) if os.path.exists(path) else 0, head)
-    except OSError:
+    sk2 = _stat_key(path)    # re-stat: _last_hash may have rewritten (torn-tail heal) -> new mtime
+    if sk2 is not None:
+        _LAST_HASH[key] = (sk2[0], sk2[1], head)
+    else:
         _LAST_HASH.pop(key, None)
     return head
 
