@@ -11,6 +11,16 @@ deep_context: exploration/master-plan.md
 
 # Work Log Index — ai-project-template
 
+## 2026-06-16 — loop: RD rule-diet COMPLETE (RD-1..4 all merged, USER-approved)
+
+- **RD-1 merged dev** (2 panel rounds): merge 2 CLAUDE.md (ซ้ำ ~80%). round1 strategic จับ **deploy regression** (new-project.sh copy platforms/claude-code/CLAUDE.md เป็น deployed CLAUDE.md → stub จะ break clone) → กลับทิศ: platforms=full canonical (untouched, deploy/docs/tests ปลอดภัย), root=dedup stub (Case-1/2 + pointer). round2 contrarian จับ red tests (T2/P14 grep root หา TACP/challenge-necessity ที่ stub ลบ) → retarget เป็น dedup invariant. functional 97/0. root -131 บรรทัด.
+- **RD-2 merged dev** (panel 3/3): ai-decision-protocol.md 298→238. **grep พิสูจน์ 12/15 scenarios ถูก ref ภายนอก** (K=17,G=17,...) → "ลบเหลือ 7" ตาม panel เดิม**ทำไม่ได้**. ปรับเป็น: ยุบ 8 procedural สั้น (A-G,I) เป็น legend table ที่เก็บ anchor "Scenario X" ครบ (cross-ref resolve) + เก็บ H/J/K/L เต็ม + DO-NOT-FOLD marker. M/N อยู่ core/11 (untouched).
+- **RD-3 merged dev** (panel 3/3): TACP detail + vector ออก bootstrap read path (lazy ใน tacp.md/core20).
+- **RD-4 merged dev** (panel round2 3/3): compliance C-code machine-vs-advisory split.
+- **RD rule-diet ครบ** — dedup ล้วน, ไม่สร้าง gate ใหม่ (ตาม USER). **deferred (รอ user):** RD-1 Option-D gates (adr-proposed, scope-change, risk-tier-dispatch) — panel: หยุดวัดผล token/compliance ก่อนตัดสิน.
+- **บทเรียน:** panel จับ 2 bug จริงใน RD (deploy regression, red tests) + verify-before-collapse (grep) กัน RD-2 พังทั้ง repo — ยืนยันค่าของ panel+grep ก่อนแตะ shipped behavior.
+- next: FU-7 (append_event lasthash-cache + log rotation) / FU-8 (writeback/store concurrency) — engine, pre-Phase-B, ไม่ต้องรอ user
+
 ## 2026-06-16 — loop: RD rule-diet START (USER-approved) + RD-4 DONE
 
 - **USER ตัดสิน RD-1..4** (AskUserQuestion): "ทำตาม panel — dedup ทั้ง 4, เลื่อน gate ใหม่ทุกตัว". จาก RD analysis panel (5 agents อ่านไฟล์จริง): CLAUDE.md 2 ไฟล์ซ้ำ ~80%, 15 scenarios แต่อ้างจริง 6, 14 C-codes มี gate จริง 4. cross-cutting risk = template-only user (prose=guardrail เดียว) → กฎ: dedup ได้ ลบ prose ได้เฉพาะที่ไม่พึ่ง gate. ลำดับ RD-4→RD-3→RD-1→RD-2 แล้วหยุดวัดผลก่อนทำ gate ใหม่.
