@@ -21,73 +21,24 @@
 
 ## 2. Decision Tree ตามสถานการณ์
 
-### Scenario A — Task คลุมเครือ ไม่รู้จะทำอะไร
+### Scenarios A–G, I — Quick reference (compact)
 
-```
-มี task คล้ายกันที่เสร็จแล้วใน task-board ไหม?
-  → ใช่: ทำตามรูปแบบนั้น และบันทึกว่าอ้างอิงจาก T-XXX
-  → ไม่: มี section ที่เกี่ยวข้องใน source docs ไหม?
-           → ใช่: ตีความจาก source docs และระบุว่าอิง section ใด
-           → ไม่: STOP → เปลี่ยนสถานะ task เป็น [BLOCKED]
-                         → ระบุชัดเจนว่าต้องการข้อมูลอะไร
-                         → อัปเดต work-status
-```
+> RD-2: scenario สั้น (procedure ง่าย) ยุบเป็นตารางเดียว — anchor "Scenario X" คงไว้ (cross-ref ใช้ได้)
+> · pattern ร่วม = **อย่าทำเงียบ → log → ถ้าตัน escalate human**. scenario ที่มี procedure ลึก
+> (H/J/K/L) ยังเป็น section เต็มด้านล่าง.
+> ⚠️ **DO-NOT-FOLD: H/J/K/L** — consumers เดิน decision-tree เต็ม (detect-gaps hook อ่าน H; reader tests
+> walk K/J/L step-by-step). ห้ามยุบเป็น legend แม้ ref เยอะ — จะ break การ walk tree.
 
-### Scenario B — Source docs ขัดแย้งกับ code ที่มีอยู่
-
-```
-ตรวจสอบว่าอันไหนใหม่กว่า (doc version vs git log)
-→ ห้ามแก้ปัญหาเงียบ ๆ โดยไม่แจ้ง
-→ สร้าง extension doc บันทึกความขัดแย้ง
-→ อัปเดต work-status เป็น [NEEDS HUMAN DECISION: อธิบายความขัดแย้ง]
-→ รอการตัดสินใจจากมนุษย์
-```
-
-### Scenario C — พบว่างานที่ทำอยู่ขยายเกิน scope เดิม
-
-```
-→ ทำเฉพาะส่วนที่ scope เดิมกำหนดไว้
-→ สร้าง task ใหม่ T-XXX ใน task-board สำหรับส่วนที่เกิน
-→ ถ้ามี source reference: ใส่ไว้
-→ ถ้าไม่มี: แท็ก [NEEDS SOURCE VALIDATION]
-→ บันทึกใน work-log ว่าพบ scope เพิ่มเติม
-```
-
-### Scenario D — พบ bug ที่ไม่เกี่ยวกับ task ปัจจุบัน
-
-```
-→ ห้ามแก้ bug นั้นเงียบ ๆ โดยไม่แจ้ง
-→ สร้าง task T-XXX ใน task-board แท็ก [FOUND-IN-PASSING]
-→ บันทึกไว้ใน work-log
-→ กลับมาทำ task เดิมต่อ
-```
-
-### Scenario E — Requirement สองข้อขัดแย้งกัน
-
-```
-→ ห้ามเลือกข้างใดข้างหนึ่งเงียบ ๆ
-→ สร้าง extension doc อธิบายความขัดแย้งและอ้างอิงทั้งสอง requirement
-→ เปลี่ยนสถานะ task เป็น [BLOCKED: CONFLICT] พร้อมอ้างอิงทั้งสองจุด
-→ อัปเดต work-status รอการตัดสินใจ
-```
-
-### Scenario F — ไม่มีข้อมูลในเอกสารใดเลย
-
-```
-→ ห้ามเดาหรือแต่งข้อมูลเอง
-→ ใช้ placeholder: <NEEDS_CLARIFICATION: [ระบุว่าต้องการข้อมูลอะไร]>
-→ บันทึก gap นี้ใน work-status
-→ ดำเนินการต่อในส่วนอื่นที่มีข้อมูลพอ
-```
-
-### Scenario G — Context window ใกล้เต็มกลางคัน
-
-```
-→ หยุดและบันทึก progress ปัจจุบันใน work-log ก่อนที่ context จะหาย
-→ อัปเดต work-status ให้สะท้อน checkpoint ปัจจุบัน
-→ เปลี่ยนสถานะ task เป็น [IN_PROGRESS: checkpoint saved — <สรุปสิ่งที่ทำไปแล้ว>]
-→ Session ถัดไปอ่าน work-status เพื่อ resume
-```
+| Scenario | สถานการณ์ | action สั้น |
+|----------|-----------|------------|
+| **Scenario A** | Task คลุมเครือ | task คล้ายใน board → ทำตาม+อ้าง T-XXX · มี source → ตีความ+อ้าง section · ไม่มีเลย → `[BLOCKED]`+ระบุข้อมูลที่ขาด+อัปเดต work-status |
+| **Scenario B** | Source docs ขัด code | เทียบใหม่กว่า (doc version vs git log) · ห้ามแก้เงียบ · extension doc บันทึกขัดแย้ง · work-status `[NEEDS HUMAN DECISION]` รอ human |
+| **Scenario C** | งานขยายเกิน scope | ทำเฉพาะ scope เดิม · สร้าง T-XXX ส่วนเกิน (มี ref ใส่ / ไม่มี → `[NEEDS SOURCE VALIDATION]`) · log |
+| **Scenario D** | พบ bug นอก task | ห้ามแก้เงียบ · สร้าง T-XXX `[FOUND-IN-PASSING]` · log · กลับมาทำ task เดิม |
+| **Scenario E** | Requirement 2 ข้อขัด | ห้ามเลือกข้างเงียบ · extension doc อ้างทั้งสอง · task `[BLOCKED: CONFLICT]` · work-status รอ decision |
+| **Scenario F** | ไม่มีข้อมูลในเอกสารเลย | ห้ามเดา · placeholder `<NEEDS_CLARIFICATION: …>` · log gap ใน work-status · ทำส่วนอื่นที่ข้อมูลพอ |
+| **Scenario G** | Context ใกล้เต็ม | หยุด+บันทึก progress ใน work-log · work-status checkpoint · task `[IN_PROGRESS: checkpoint saved — …]` · session ถัดไป resume |
+| **Scenario I** | code ไม่มี doc รองรับ | ห้ามแก้ทันที · reverse-document ตาม `extension-doc-template.md` · task `[REVERSE-DOC]` · รอ human review |
 
 ### Scenario H — พบ gap ระหว่าง task board กับ source docs
 
@@ -134,15 +85,6 @@ Gap: 4 tasks ที่กำลังทำอยู่อาจต้องแ�
    [NEEDS HUMAN DECISION: source v1.3 เปลี่ยน auth model — T-020, T-021, T-022, T-023
     อาจกระทบ scope ทั้งหมด รอยืนยันก่อนดำเนิน]
 → รอ human ยืนยันก่อน
-```
-
-### Scenario I — พบ code ที่ไม่มี documentation รองรับ
-
-```
-→ ห้ามแก้ไข code นั้นทันที
-→ ทำ reverse-document ตาม protocol ใน extension-doc-template.md
-→ สร้าง task [REVERSE-DOC] ใน task-board
-→ รอ human review ก่อนแก้ไข
 ```
 
 ### Scenario J — พบ `[ENTITY:deprecated]` หรือ `[ENTITY:superseded]` tag
