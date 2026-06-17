@@ -1,9 +1,9 @@
 <!-- AI-CONTEXT
-phase: M-A3 dogfood week (day 2/7, started 2026-06-10) — BRD-v2 Phase A items A1-A6 ALL DONE
-active_task: dogfood-watch. backlog-v3 tracked items ว่างหมด — FU-1..8 + OBS-1 + RD-1..4 merged dev (panel-approved). BL-11 + M-A3 verdict await week data
+phase: G1-SELF LOCKED 2026-06-17 (M-A3 panel 3/3 PASS_CONDITIONAL, user Option A) — Phase A "usable" proven on THIS repo (self-dogfood). A7-literal 2nd-project + cloud-path = B-entry condition (NOT G1 blocker, NOT done)
+active_task: BL-11 bypass-counter instrumentation (user-approved, feature branch) — observability not new gate. backlog-v3 tracked items ว่างหมด — FU-1..8 + OBS-1 + RD-1..4 merged dev
 blocker: none · MASTER FREEZE active (user rule 2026-06-11: no master updates until official order — enforced in govern hook)
 active_branch: dev
-last_updated: 2026-06-16
+last_updated: 2026-06-17
 backlog_v3: FU-1..8 done (concurrency/governance hardening, Phase-B prereqs CLEARED) · RD-1..4 done (rule-diet dedup, no new gates) · OBS-1 done (re-inject obligations). deferred: FU-7b log-rotation, Option-D gates (user decision), B* (M-A3)
 git_mode: branch-separated
 git_dev_branch: dev
@@ -15,8 +15,8 @@ read_more:
   plan: exploration/master-plan.md
   decisions: CoreAiWorkspaces/07-decisions/README.md (ADR-006..009 Accepted)
   adr_panel: CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md §7 (Scenario O)
-next_action: dogfood until 2026-06-17 -> BL-11 fatigue-tuning + panel M-A3 verdict (=G1). USER decisions pending: (1) Option-D gates? วัดผล token/compliance ของ rule-diet ก่อน (2) 2nd repo path for engine init. B* locked until M-A3 (R3). FU-7b (log rotation) = engine, ทำได้เมื่อต้องการ
-auto_session: 38 commit(s) @ 03d4080 | latest: 03d4080 log: OBS-1 re-inject obligations DONE (panel 3/3 + init gitguard-ship fix) — backl
+next_action: G1-SELF locked (Option A). NOW: BL-11 bypass-counter instrumentation (feature branch, panel-reviewed). THEN B-entry conditions ก่อนปลด Phase-B: 2nd-repo week (init_repo บนโปรเจ็กต์จริงของ user ≥1สัปดาห์) + cloud-path exercise + ≥1 organic hold + 1 end-to-end inbox approve. USER decisions pending: (1) Option-D gates? วัดผล token/compliance ก่อน (2) เลือก repo จริงสำหรับ 2nd-repo week. B* ยังไม่ปลด (R3 — G1 authorize เฉพาะ item ที่ prereq เคลียร์เอง). FU-7b (log rotation) = engine, ทำได้เมื่อต้องการ
+auto_session: 22 commit(s) @ 63f0e53 | latest: 63f0e53 log: FU-7 + FU-8 DONE (panel 3/3 each) — tracked backlog-v3 empty; Phase-B prereqs
 -->
 
 # Work Status — ai-project-template
@@ -25,10 +25,11 @@ auto_session: 38 commit(s) @ 03d4080 | latest: 03d4080 log: OBS-1 re-inject obli
 
 ## สถานะปัจจุบัน
 
-**Phase:** Stage-2 design — ADR-006..009 Accepted, P0-A done, A1 schema drafted
-**Active branch:** `explore/odysseus-analysis`
+**🔒 G1-SELF LOCKED (2026-06-17)** — M-A3 panel 3/3 PASS_CONDITIONAL, user เลือก Option A. Phase A "ใช้ได้จริง" พิสูจน์แล้วบน **repo นี้** (self-dogfood: 90 commits / 7 วัน, ไม่ป้อนมือ, governance บล็อก/hold จริง, จำข้าม session ได้). **ขอบเขต lock = BRD-v2 §2 เท่านั้น** — A7-literal "+1 โปรเจ็กต์จริงของคุณ" + cloud-path + 1 organic hold = **B-entry condition (ยังไม่ done, ไม่ปลด Phase-B)**.
+**Phase:** Phase A complete (G1-SELF) → next BL-11 counters แล้วเตรียม 2nd-repo week
+**Active branch:** `dev`
 **Released:** v1.10.0 (challenge-necessity + task close gate + behavioral tests) — merged master
-**Blocker:** none (carry-over T-051/052/053 = core ที่ ship แล้ว → รอ whole-project review)
+**Blocker:** none · MASTER FREEZE + DEV-DIRECT FREEZE active
 
 ## สิ่งที่เสร็จ session นี้ (2026-06-05 — Odysseus → Stage 2)
 

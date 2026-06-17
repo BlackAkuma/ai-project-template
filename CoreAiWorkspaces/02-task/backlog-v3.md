@@ -3,7 +3,7 @@ doc: backlog-v3 (SINGLE ACTIVE ROADMAP — supersedes backlog-v2)
 updated: 2026-06-12
 rule: นี่คือที่เดียวที่ track ทุกอย่าง — ผลวิจัย/panel ทุกรอบถูกแปลงเป็น item ที่มี id+status+source แล้ว
 status_legend: ✅done · 🔄now · 🟢next · ⏸️deferred(มี gate) · ❌killed
-now: [A7-dogfood, BL-11]
+now: [BL-11-counters]  # G1-SELF LOCKED 2026-06-17 (M-A3 3/3 PASS_CONDITIONAL, user Option A). A7 self-dogfood DONE; A7-literal 2nd-project = B-entry cond
 done_recent: [DEV-FP]
 done_recent: [DEV-FP, FU-1..8, OBS-1, RD-1..4] — tracked backlog ว่างหมด
 next: [] — เหลือแต่ที่รอเวลา/รอ user: A7 dogfood(ถึง 2026-06-17), M-A3 verdict, deferred Option-D gates(user), FU-7b log-rotation, B*(M-A3)
@@ -36,9 +36,11 @@ freeze: MASTER (no master update until user order) · DEV-DIRECT (feature work -
 
 | id | งาน | สถานะ | รออะไร |
 |----|-----|-------|--------|
-| **A7** | dogfood week บน repo จริง | day 2/7 | เวลา + usage (จบ 2026-06-17) |
-| **BL-11** | fatigue-tuning (ลด rule noisy หลังเก็บ data) | รอ | A7 ครบสัปดาห์ |
-| **M-A3** | panel verdict = ประกาศ G1 "ใช้ได้จริง" | รอ | A7 + BL-11 |
+| ~~A7~~ ✅(self) | dogfood week บน **repo นี้** ครบ 7/7 (2026-06-10..17): 90 commits, 34/34 suites, 6 sessions auto-logged, 3 risky-git holds, hooks end-to-end | self-dogfood DONE | A7-literal "+1 โปรเจ็กต์จริง" → ⏸️ B-entry cond |
+| ~~M-A3~~ ✅ | panel verdict **3/3 PASS_CONDITIONAL** → **G1-SELF LOCKED 2026-06-17** (user Option A). ขอบเขต = BRD-v2 §2 (repo นี้, ไม่ป้อนมือ). ห้าม inflate เป็น A7-DONE/public claim | LOCKED | — |
+| **BL-11** | ✅verdict=CONFIRM CALIBRATED (no threshold change). action = **bypass-path counters (observability)** | 🔄 building (feature branch, user-approved) | panel review |
+
+> **G1-SELF lock note:** panel จับ caveat ตรง — DI-0001..3 = synthetic gitguard self-test probes (ไม่ใช่ organic risky op) + ยัง OPEN → approve→execute loop ยังไม่ปิด. ⇒ A7-literal 2nd-project + cloud-path + ≥1 organic hold + 1 end-to-end inbox-approve = **B-entry conditions** (encoded ใน B5/B7), **ไม่ใช่ G1 blocker**. Phase-B ยังไม่ปลดทั้งก้อน — G1 authorize เฉพาะ item ที่ prereq เคลียร์เอง (FU-2/6/7/8 done).
 
 ## 🟢 ทำต่อ (NEXT — actionable, ผลวิจัยที่ยังไม่ทำ)
 
