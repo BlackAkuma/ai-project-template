@@ -19,6 +19,17 @@ HOOK = os.path.join(REPO, "platforms", "claude-code", "hooks", "govern-action.sh
 cases = []
 def check(name, cond): cases.append((name, bool(cond)))
 
+def cval(repo_dir, name):
+    """BL-11 e2e: read a bypass counter straight from disk — proves the .sh actually wired the
+    bump call, not just that the module increments in isolation (panel/contrarian condition #3)."""
+    p = os.path.join(repo_dir, "engine", ".bypass-counters.json")
+    if not os.path.exists(p):
+        return 0
+    try:
+        return int(json.load(open(p, encoding="utf-8")).get("counts", {}).get(name, 0))
+    except Exception:
+        return 0
+
 bash = shutil.which("bash") or shutil.which("bash.exe")
 git = shutil.which("git")
 if not bash or not git:
@@ -80,8 +91,10 @@ with tempfile.TemporaryDirectory() as d:
     os.remove(os.path.join(d, "app.py"))
     os.makedirs(os.path.join(d, "CoreAiWorkspaces"), exist_ok=True)
     open(os.path.join(d, "CoreAiWorkspaces", "note.md"), "w").write("log\n"); subprocess.run([git, "add", "CoreAiWorkspaces/note.md"], cwd=d)
+    de_before = cval(d, "doc_exempt")
     cdoc, edoc = run_hook(d, "git commit -m doc-sync")
     check("dev-freeze: doc-only commit on dev ALLOWED", cdoc == 0)
+    check("BL-11 e2e: doc-only commit bumped doc_exempt (.sh wired)", cval(d, "doc_exempt") == de_before + 1)
     # feature branch: code commit allowed
     open(os.path.join(d, "app.py"), "w").write("x=1\n"); subprocess.run([git, "add", "app.py"], cwd=d)
     subprocess.run([git, "checkout", "-q", "-b", "feature/x"], cwd=d)
@@ -90,9 +103,11 @@ with tempfile.TemporaryDirectory() as d:
     # consume-once bypass marker (replaces broken env var)
     subprocess.run([git, "checkout", "-q", "dev"], cwd=d)
     open(os.path.join(d, "engine", ".govern-allow-once"), "w").write("1\n")
+    co_before = cval(d, "consume_once")
     cby, _ = run_hook(d, "git commit -m user-ordered")
     check("dev-freeze: consume-once bypass works", cby == 0)
     check("bypass marker consumed (one-shot)", not os.path.exists(os.path.join(d, "engine", ".govern-allow-once")))
+    check("BL-11 e2e: consume-once bumped consume_once (.sh wired)", cval(d, "consume_once") == co_before + 1)
     os.remove(os.path.join(d, "engine", ".dev-direct-freeze"))
     subprocess.run([git, "reset", "-q"], cwd=d); os.remove(os.path.join(d, "app.py"))
 
@@ -136,8 +151,10 @@ with tempfile.TemporaryDirectory() as d:
     from inbox import resolve_item
     open_item = [i for i in items if i["status"] == "open"][0]
     resolve_item(open_item["id"], "approved", by="tester", ts=99, root=d)
+    ia_before = cval(d, "inbox_approved")
     code5, err5 = run_hook(d, "git push --force origin main")
     check("after APPROVE -> action allowed once (exit 0)", code5 == 0 and "APPROVED" in err5)
+    check("BL-11 e2e: inbox-approved bypass bumped inbox_approved (.sh wired)", cval(d, "inbox_approved") == ia_before + 1)
 
     # approval consumed -> next retry is held again (new decision required)
     code6, err6 = run_hook(d, "git push --force origin main")
