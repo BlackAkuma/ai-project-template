@@ -18,6 +18,7 @@ CORE_FILES = [
     "api.py", "init_repo.py", "requirements.txt",
     "gitguard.py",      # FU-4: hook 'git-risk' imports this; missing -> classifier crash -> fail-closed
     "obligations.py",   # OBS-1: UserPromptSubmit re-injector
+    "counters.py",      # BL-11: bypass-path counters; hook bumps + digest reads it (fail-safe if absent)
 ]
 HOOKS = ["govern-action.sh", "session-digest.sh", "session-writeback.sh", "reinject-obligations.sh"]
 HOOK_CMDS = {

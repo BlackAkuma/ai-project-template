@@ -101,6 +101,20 @@ def render_digest(root="."):
         pass
     L.append(f"decision_inbox_open: {len(held)}" + (
         " — " + "; ".join(f"[{i.get('id')}] L{i.get('risk_level')} {str(i.get('reason'))[:50]}" for i in held[:3]) if held else ""))
+    # BL-11: surface bypass-path usage so a low hold-count can be read as calibration, not silent friction.
+    # Liveness (panel: all 3 lenses): a broken/dead counter must NOT read as "0 = calibrated" — if the
+    # instrument can't be imported or its file is corrupt, say so LOUDLY here (read-side; hook stays fail-safe).
+    try:
+        from counters import digest_line, health
+        ok, note = health(root)
+        if not ok:
+            L.append(f"bypass_paths (BL-11): ⚠️ INSTRUMENT BROKEN — {note}; do NOT read a low hold-count as calibrated")
+        else:
+            bl = digest_line(root)
+            if bl:
+                L.append(bl)
+    except Exception as e:  # noqa: BLE001 — import/render failure is itself a liveness signal, not silent
+        L.append(f"bypass_paths (BL-11): ⚠️ counters unavailable ({str(e)[:60]}) — low hold-count is UNVERIFIED")
     if recent:
         L.append("recent_audit: " + " | ".join(recent))
     L.append("(full state: CoreAiWorkspaces/ + Cockpit http://127.0.0.1:8777 — this digest replaces manual AI-CONTEXT reads)")

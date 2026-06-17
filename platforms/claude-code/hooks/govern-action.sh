@@ -35,6 +35,11 @@ run_gate() {
 }
 
 CLI="${ENGINE_DIR:-$SCRIPT_DIR/../../..}/engine/cli.py"
+COUNTERS="${ENGINE_DIR:-$SCRIPT_DIR/../../..}/engine/counters.py"  # BL-11: bypass-path observability
+
+bump_bypass() {  # BL-11: count a bypass-path hit. FAIL-SAFE — never blocks the action if it errors.
+  python "$COUNTERS" bump "$1" --root "$(pwd)" >/dev/null 2>&1 || true
+}
 
 hold_for_approval() {  # risky-but-not-forbidden (L2) -> Decision Inbox; human decision is CAUSAL:
   # approved (unconsumed) -> allow ONCE · pending -> keep blocked, NO duplicate · rejected -> blocked
@@ -45,6 +50,7 @@ hold_for_approval() {  # risky-but-not-forbidden (L2) -> Decision Inbox; human d
   state=$(python "$CLI" approval-state "$1" "$R" --scope "$2" --root "$(pwd)" 2>/dev/null | tail -1)
   case "$state" in
     approved)
+      bump_bypass inbox_approved  # BL-11 (panel/contrarian): held-then-approved = a real git-risk-gate bypass
       echo "✅ APPROVED in Decision Inbox — allowing this action once (approval consumed, audited)." >&2
       exit 0 ;;
     pending)
@@ -65,7 +71,7 @@ hold_for_approval() {  # risky-but-not-forbidden (L2) -> Decision Inbox; human d
 # bypass ได้เฉพาะ dev-freeze + risky-hold เท่านั้น — secret/placeholder/MASTER freeze ยัง HARD เสมอ
 BYPASS=0
 ALLOW_ONCE="$(pwd)/engine/.govern-allow-once"
-if [ -f "$ALLOW_ONCE" ]; then BYPASS=1; rm -f "$ALLOW_ONCE"; fi
+if [ -f "$ALLOW_ONCE" ]; then BYPASS=1; rm -f "$ALLOW_ONCE"; bump_bypass consume_once; fi  # BL-11
 
 # strip quoted strings (commit messages ฯลฯ) ก่อน match — กัน false-positive จากคำใน -m "..."
 CMD_NOQ=$(printf '%s' "$cmd" | sed 's/"[^"]*"//g; s/'"'"'[^'"'"']*'"'"'//g')
@@ -92,6 +98,8 @@ if [ -f "$(pwd)/engine/.dev-direct-freeze" ] && [ "$BYPASS" != "1" ]; then
         echo "⛔ DEV DIRECT FREEZE: ห้าม commit โค้ดตรงบน dev — แตก feature/<id> ก่อน (doc-only ผ่านได้)" >&2
         echo "   bypass มีคำสั่ง user: touch engine/.govern-allow-once แล้วรันใหม่" >&2
         exit 2
+      elif [ "$CURB" = "dev" ] && [ -z "$CODE_STAGED" ]; then
+        bump_bypass doc_exempt  # BL-11: a doc-only commit on dev that the freeze let through
       fi ;;
   esac
 fi
