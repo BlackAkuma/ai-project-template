@@ -11,6 +11,23 @@ deep_context: exploration/master-plan.md
 
 # Work Log Index — ai-project-template
 
+## 2026-06-17 — loop: BL-11 IMPLEMENTED + panel-reworked → merged dev (8c6447c)
+
+- **BL-11 bypass-path counters shipped** (engine/counters.py, merged dev no-ff `8c6447c`). Pure observability per M-A3 verdict (instrument, don't tune): counts how often each sanctioned bypass fires so a low decision-inbox hold-count is disambiguated (near-zero=calibrated · high=hold-count hides friction). NO new gate, NO threshold. Reuses FU-2 _FileLock + FU-8 _atomic_write → atomic/lock-serialized; session_view = per-session delta + cumulative via a "seen" marker.
+- **BL-11 build panel (Workflow 3-lens 2/3 + marketing + mandatory dissent) = 3/3 pass-or-conditional** (technical PASS · strategic PASS_CONDITIONAL · contrarian PASS_CONDITIONAL). Every lens read the actual source, not the summary.
+  - **technical (PASS):** both original bump sites on genuine bypass paths, no double-count/miss; concurrency = proven FU-2/FU-8; 19/19 module tests. **dissent:** fire-and-forget bump means a broken counters.py silently under-counts → reads as "calibrated" = the exact false-negative the feature kills.
+  - **strategic (PASS_CONDITIONAL):** serves purpose, local-only/gitignored = correct per-checkout health gauge, respects instrument-don't-tune, zero scope-creep. **conditions:** add liveness signal; note local-only scope. **dissent:** silent under-count defeats the instrument's whole purpose.
+  - **contrarian (PASS_CONDITIONAL):** the "exactly TWO bypass paths" claim is FALSE — found **inbox_approved** (hold→approve→exit 0, HIGH: a real git-risk-gate bypass that inversely correlates with hold-count, uncounted) + govern-docs GOVERN_USER_ORDER + validate-commit SKIP_DOC_SYNC. Also: no e2e test (module tests prove the meter spins, not that the .sh wired it). **dissent:** as a coarse gauge covering the 2 highest-frequency paths it's a clean, well-tested foundation; gaps are scope not defect.
+  - **marketing (advisory):** SHIP, position as "calibration gauge" NOT "audit evidence/proof" (local+fire-and-forget ≠ tamper-proof). Real trend (ISO-42001/EU-AI-Act → evidence-producing controls) but bypass-observability is closer to table-stakes; differentiator = the *combination* (closed enumerated bypass set + self-reported calibration). Fast-follow = make it exportable/append-only. **dissent:** risk of governance-assurance theater — buyer (CISO) doesn't exist until 2nd-project/organic-hold gates clear; today's defensible value is purely internal honesty.
+- **build-on-majority (not merge-on-bare-pass):** resolved every convergent condition BEFORE merge, each proven by a green test:
+  1. **liveness** (all 3 lenses) → `counters.health()` + `digest.py` renders "⚠️ INSTRUMENT BROKEN … do NOT read a low hold-count as calibrated" when the counter is unreadable (loud on READ side; hook stays fail-safe-never-block). tests: health live/absent/corrupt + digest loud-on-broken.
+  2. **inbox_approved gap** (contrarian #1) → `bump_bypass inbox_approved` at the approved-exit + e2e assertion.
+  3. **"exactly TWO" honesty** (contrarian #2) → docstring enumerates known-uncounted (govern-docs/validate-commit) as accepted **BL-11b** scope; chose the "correct the docstring" branch of the OR-condition (instrumenting other hooks = deferred fast-follow).
+  4. **e2e wiring** (contrarian #3) → 3 assertions in test_hook_govern.py prove the `.sh` actually increments the counter (doc_exempt/consume_once/inbox_approved), so the wired sites can't silently rot.
+- **DEFERRED → BL-11b** (marketing+contrarian dissent agree "do NOT gate the ship"): instrument other-hook escapes; make signal exportable/append-only for org-level audit evidence. Registered in backlog-v3.
+- **evidence:** test_counters.py **26/26** (bump/read/session_view delta+reset, health, digest-liveness, 16×10 in-process + 12 cross-process atomic) + test_hook_govern.py **37/37** (incl. 3 BL-11 e2e) + full engine suite **35/35** green.
+- **status:** tracked backlog ว่าง. G1-SELF still locked. MASTER + DEV-DIRECT FREEZE active. Remaining = B-entry conditions (user picks 2nd repo) + deferred Option-D gates (user) + FU-7b + BL-11b.
+
 ## 2026-06-17 — loop: M-A3 panel verdict (G1) + BL-11 — dogfood week complete
 
 - **A7 dogfood week ครบ** (2026-06-10 → 2026-06-17, 7/7 วัน): evidence จริงบน repo นี้ = 90 commits, 34/34 engine suites green, 6 sessions auto-logged (writeback=G3), 3 risky-git ops ถูก gate hold ใน Decision Inbox (DI-0001..3, OPEN, ไม่ auto-execute=G2), hooks เปิด end-to-end ทั้งสัปดาห์ (govern-action/govern-docs/Stop/SessionStart-digest/SessionEnd-writeback/OBS-1 reinject), ทุก merge ผ่าน panel 2/3.

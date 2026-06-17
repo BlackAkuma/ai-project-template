@@ -3,10 +3,9 @@ doc: backlog-v3 (SINGLE ACTIVE ROADMAP — supersedes backlog-v2)
 updated: 2026-06-12
 rule: นี่คือที่เดียวที่ track ทุกอย่าง — ผลวิจัย/panel ทุกรอบถูกแปลงเป็น item ที่มี id+status+source แล้ว
 status_legend: ✅done · 🔄now · 🟢next · ⏸️deferred(มี gate) · ❌killed
-now: [BL-11-counters]  # G1-SELF LOCKED 2026-06-17 (M-A3 3/3 PASS_CONDITIONAL, user Option A). A7 self-dogfood DONE; A7-literal 2nd-project = B-entry cond
-done_recent: [DEV-FP]
-done_recent: [DEV-FP, FU-1..8, OBS-1, RD-1..4] — tracked backlog ว่างหมด
-next: [] — เหลือแต่ที่รอเวลา/รอ user: A7 dogfood(ถึง 2026-06-17), M-A3 verdict, deferred Option-D gates(user), FU-7b log-rotation, B*(M-A3)
+now: []  # BL-11 DONE+merged 2026-06-17 (panel 3/3, all convergent conditions resolved). tracked backlog ว่าง
+done_recent: [BL-11-counters, DEV-FP, FU-1..8, OBS-1, RD-1..4] — tracked backlog ว่างหมด
+next: [] — เหลือแต่ที่รอเวลา/รอ user: A7-literal 2nd-project(user เลือก repo), deferred Option-D gates(user), FU-7b log-rotation, BL-11b(fast-follow), B*(B-entry cond)
 rd_status: DONE 2026-06-16 — RD-1..4 dedup merged (no new gates). deferred-by-user: Option-D gates (adr-proposed, scope-change, risk-tier-dispatch) รอวัดผล token/compliance ก่อนตัดสิน
 phase_b_prereqs: CLEARED (FU-2 inbox-lock + FU-6 audit-lock + FU-7 lasthash-cache + FU-8 state-atomic) — เหลือ FU-7b log-rotation (bound worst-case) ก่อน sustained Phase-B write
 deferred_until_M-A3: [B1,B2,B3,B4,B5,B6,B7,B8]
@@ -38,7 +37,7 @@ freeze: MASTER (no master update until user order) · DEV-DIRECT (feature work -
 |----|-----|-------|--------|
 | ~~A7~~ ✅(self) | dogfood week บน **repo นี้** ครบ 7/7 (2026-06-10..17): 90 commits, 34/34 suites, 6 sessions auto-logged, 3 risky-git holds, hooks end-to-end | self-dogfood DONE | A7-literal "+1 โปรเจ็กต์จริง" → ⏸️ B-entry cond |
 | ~~M-A3~~ ✅ | panel verdict **3/3 PASS_CONDITIONAL** → **G1-SELF LOCKED 2026-06-17** (user Option A). ขอบเขต = BRD-v2 §2 (repo นี้, ไม่ป้อนมือ). ห้าม inflate เป็น A7-DONE/public claim | LOCKED | — |
-| **BL-11** | ✅verdict=CONFIRM CALIBRATED (no threshold change). action = **bypass-path counters (observability)** | 🔄 building (feature branch, user-approved) | panel review |
+| ~~BL-11~~ ✅ | bypass-path counters (observability, no threshold). 3 wired sites (consume_once/doc_exempt/inbox_approved) + liveness (digest LOUD on broken instrument) + e2e wiring tests. **panel 3/3** → built on majority: resolved all convergent conditions (inbox_approved gap, liveness, "exactly-TWO" honesty, e2e test) before merge | ✅ merged dev 8c6447c (26 counter + 37 hook + 35/35 suites) | DONE |
 
 > **G1-SELF lock note:** panel จับ caveat ตรง — DI-0001..3 = synthetic gitguard self-test probes (ไม่ใช่ organic risky op) + ยัง OPEN → approve→execute loop ยังไม่ปิด. ⇒ A7-literal 2nd-project + cloud-path + ≥1 organic hold + 1 end-to-end inbox-approve = **B-entry conditions** (encoded ใน B5/B7), **ไม่ใช่ G1 blocker**. Phase-B ยังไม่ปลดทั้งก้อน — G1 authorize เฉพาะ item ที่ prereq เคลียร์เอง (FU-2/6/7/8 done).
 
@@ -53,6 +52,7 @@ freeze: MASTER (no master update until user order) · DEV-DIRECT (feature work -
 | ~~FU-6~~ ✅ | audit-log concurrency: append_event ครอบ _FileLock + fsync + torn-tail self-heal — ปิด hash-chain fork. panel 3/3. **Phase B audit prereq เคลียร์** | FU-2 panel | done |
 | ~~FU-7~~ ✅ | append_event O(n²) → in-process last-hash cache (size+mtime key; external write=miss→FU-6 read+heal). panel 3/3 | FU-6 panel | done |
 | **FU-7b** | log rotation (bound worst-case miss-path read; multi-segment verify_chain) — ก่อน sustained Phase-B | FU-7 panel | engine (deferred) |
+| **BL-11b** | bypass-counter fast-follow: instrument other-hook escapes (govern-docs GOVERN_USER_ORDER, validate-commit SKIP_DOC_SYNC) + make signal **exportable/append-only** (org-level audit evidence, ISO-42001/EU-AI-Act lean) | BL-11 panel (contrarian #2 + marketing rec) | engine (deferred, "do NOT gate ship") |
 | ~~FU-8~~ ✅ | store.save/writeback atomic+serialized (tmp+fsync+os.replace, store ล็อก) — ปิด torn/last-writer-wins. panel 3/3 | FU-6 panel | done |
 | ~~FU-4~~ ✅ | dangerous-git classifier (engine/gitguard): tokenized+quote-aware(shlex)+segmented+subcommand-parsed, fail-CLOSED hook. ปิด flag-order/refspec-force/ws/=value/branch-combo/quote-wrap/cross-cmd. panel round1 FAIL→fix→round2 3/3 | P0 re-review + FU-3 panel | done |
 | ~~FU-5~~ ✅ | was-configured sticky marker + commit-deletion guard (ลบ testcmd หลังตั้ง=fail-closed regression; commit ลบ=blocked; de-config ต้อง bypass=auditable) — panel 3/3 | P1 re-review | done |

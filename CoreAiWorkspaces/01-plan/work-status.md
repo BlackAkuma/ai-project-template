@@ -1,10 +1,10 @@
 <!-- AI-CONTEXT
 phase: G1-SELF LOCKED 2026-06-17 (M-A3 panel 3/3 PASS_CONDITIONAL, user Option A) — Phase A "usable" proven on THIS repo (self-dogfood). A7-literal 2nd-project + cloud-path = B-entry condition (NOT G1 blocker, NOT done)
-active_task: BL-11 bypass-counter instrumentation (user-approved, feature branch) — observability not new gate. backlog-v3 tracked items ว่างหมด — FU-1..8 + OBS-1 + RD-1..4 merged dev
+active_task: none — BL-11 DONE+merged dev 8c6447c (panel 3/3, all convergent conditions resolved: liveness/inbox_approved/honesty/e2e). backlog-v3 tracked items ว่างหมด — FU-1..8 + OBS-1 + RD-1..4 + BL-11 merged dev
 blocker: none · MASTER FREEZE active (user rule 2026-06-11: no master updates until official order — enforced in govern hook)
 active_branch: dev
 last_updated: 2026-06-17
-backlog_v3: FU-1..8 done (concurrency/governance hardening, Phase-B prereqs CLEARED) · RD-1..4 done (rule-diet dedup, no new gates) · OBS-1 done (re-inject obligations). deferred: FU-7b log-rotation, Option-D gates (user decision), B* (M-A3)
+backlog_v3: FU-1..8 done (concurrency/governance hardening, Phase-B prereqs CLEARED) · RD-1..4 done (rule-diet dedup, no new gates) · OBS-1 done (re-inject obligations) · BL-11 done (bypass-path counters, observability). deferred: FU-7b log-rotation, BL-11b (instrument other-hook escapes + exportable ledger), Option-D gates (user decision), B* (B-entry cond)
 git_mode: branch-separated
 git_dev_branch: dev
 git_prod_branch: master
@@ -15,7 +15,7 @@ read_more:
   plan: exploration/master-plan.md
   decisions: CoreAiWorkspaces/07-decisions/README.md (ADR-006..009 Accepted)
   adr_panel: CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md §7 (Scenario O)
-next_action: G1-SELF locked (Option A). NOW: BL-11 bypass-counter instrumentation (feature branch, panel-reviewed). THEN B-entry conditions ก่อนปลด Phase-B: 2nd-repo week (init_repo บนโปรเจ็กต์จริงของ user ≥1สัปดาห์) + cloud-path exercise + ≥1 organic hold + 1 end-to-end inbox approve. USER decisions pending: (1) Option-D gates? วัดผล token/compliance ก่อน (2) เลือก repo จริงสำหรับ 2nd-repo week. B* ยังไม่ปลด (R3 — G1 authorize เฉพาะ item ที่ prereq เคลียร์เอง). FU-7b (log rotation) = engine, ทำได้เมื่อต้องการ
+next_action: G1-SELF locked (Option A). BL-11 DONE (merged dev). tracked backlog ว่าง — เหลือแต่ที่รอ user/รอเวลา. B-entry conditions ก่อนปลด Phase-B: 2nd-repo week (init_repo บนโปรเจ็กต์จริงของ user ≥1สัปดาห์) + cloud-path exercise + ≥1 organic hold + 1 end-to-end inbox approve. USER decisions pending: (1) Option-D gates? วัดผล token/compliance ก่อน (2) เลือก repo จริงสำหรับ 2nd-repo week. B* ยังไม่ปลด (R3). engine-side optional: FU-7b (log rotation), BL-11b (instrument other-hook escapes + exportable ledger)
 auto_session: 22 commit(s) @ 63f0e53 | latest: 63f0e53 log: FU-7 + FU-8 DONE (panel 3/3 each) — tracked backlog-v3 empty; Phase-B prereqs
 -->
 
