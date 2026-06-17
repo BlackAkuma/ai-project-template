@@ -15,8 +15,8 @@ read_more:
   plan: exploration/master-plan.md
   decisions: CoreAiWorkspaces/07-decisions/README.md (ADR-006..009 Accepted)
   adr_panel: CoreAiWorkspaces/04-way-of-work/ai-decision-protocol.md §7 (Scenario O)
-next_action: G1-SELF locked (Option A). BL-11 DONE (merged dev). tracked backlog ว่าง — เหลือแต่ที่รอ user/รอเวลา. B-entry conditions ก่อนปลด Phase-B: 2nd-repo week (init_repo บนโปรเจ็กต์จริงของ user ≥1สัปดาห์) + cloud-path exercise + ≥1 organic hold + 1 end-to-end inbox approve. USER decisions pending: (1) Option-D gates? วัดผล token/compliance ก่อน (2) เลือก repo จริงสำหรับ 2nd-repo week. B* ยังไม่ปลด (R3). engine-side optional: FU-7b (log rotation), BL-11b (instrument other-hook escapes + exportable ledger)
-auto_session: 22 commit(s) @ 63f0e53 | latest: 63f0e53 log: FU-7 + FU-8 DONE (panel 3/3 each) — tracked backlog-v3 empty; Phase-B prereqs
+next_action: G1-SELF locked (Option A). BL-11 DONE (merged dev). tracked backlog ว่าง — เหลือแต่ที่รอ user/รอเวลา. B-entry conditions ก่อนปลด Phase-B: 2nd-repo week (init_repo บนโปรเจ็กต์จริงของ user ≥1สัปดาห์) + cloud-path exercise + ≥1 organic hold + 1 end-to-end inbox approve. **USER-LOCK 2026-06-17: A7-literal 2nd-repo = คงกฎ(จำเป็น) แต่เลื่อน — trigger ใหม่ = co-test ร่วมกับ real-frontend project ใน integration scale; REMARK ต้องรวม engine governance ในเทสใหญ่นั้นด้วย.** USER decisions pending: (1) Option-D gates? วัดผล token/compliance ก่อน. B* ยังไม่ปลด (R3). engine-side optional: FU-7b (log rotation), BL-11b (instrument other-hook escapes + exportable ledger)
+auto_session: 5 commit(s) @ 6227687 | latest: 6227687 log: BL-11 DONE+merged (panel 3/3, build-on-majority) — work-status/backlog-v3/wor
 -->
 
 # Work Status — ai-project-template

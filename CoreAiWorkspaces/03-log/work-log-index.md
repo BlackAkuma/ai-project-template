@@ -11,6 +11,17 @@ deep_context: exploration/master-plan.md
 
 # Work Log Index — ai-project-template
 
+## 2026-06-17 — USER DECISION + LOCK: A7-literal 2nd-repo gate → defer & co-test at frontend scale
+
+- **คำตัดสินของ user (ตรง, ไม่ผ่าน panel — เพราะ user ตัดสินเองชัด ไม่ใช่เคส "ยังไม่รู้จะไปทางไหน"):**
+  - กฎ A7-literal (เอา engine ไปทดสอบบนโปรเจ็กต์จริงตัวที่ 2 ≥1 สัปดาห์) = **ยังจำเป็น คงไว้ ไม่ลบ** ("ฝังนะกฎจำเป็น").
+  - **เลื่อนออกไป — ไม่ใช่ตอนนี้** ("แต่ไม่ใช่ตอนนี้").
+  - **เงื่อนไขปรับใหม่ (refined trigger):** ให้เอาไปทดสอบ *ร่วมกับ* โปรเจ็กต์ที่ **มีหน้าจอ/frontend ใช้งานจริง** ("งานที่มีการใช้งานหน้าจริง") แล้วรันทดสอบ **ในภาพที่ใหญ่ขึ้น / integration scale** ("ในภาพที่ใหญกว่านี้") — ไม่ใช่ทดสอบ engine เดี่ยวๆ บน repo เปล่า.
+  - **REMARK ที่ต้องค้างไว้:** เมื่อถึงรอบเทสใหญ่นั้น ต้อง **รวม engine governance ตัวนี้เข้าไปเทสด้วย** ("ตอนเทสตรงนี้ต้องเทสด้วย") — กันลืมว่ามี gate นี้ค้างอยู่.
+- **เหตุผล (rationale ที่ user ให้):** การพิสูจน์ "ใช้ได้จริง" ที่มีคุณค่าจริง = เอาไปอยู่ในบริบทที่ใหญ่และมีผู้ใช้จริงผ่านหน้าจอ ไม่ใช่ทดสอบ engine แยกส่วนบน repo สังเคราะห์ → ผล realistic กว่า + ได้ทดสอบ integration ไปพร้อมกัน. การทดสอบตอนนี้ (ยังไม่มี project frontend จริงให้เกาะ) จะให้ข้อมูลด้อยกว่า.
+- **ผลต่อ roadmap:** B-entry condition เดิม "2nd-repo week (user เลือก repo)" → **ปรับ trigger** เป็น "co-test ตอนมี real-frontend project ใน integration scale" + คง weight = ยังเป็น gate ของ Phase-B (ไม่ปลด Phase-B จนกว่าจะผ่าน). encoded ใน backlog-v3 + work-status.
+- **status:** LOCKED. tracked backlog ยังว่าง. ไม่มี action ที่ผมหยิบทำต่อเองได้ตอนนี้ (engine-side optional FU-7b/BL-11b ยัง deferred). MASTER + DEV-DIRECT FREEZE active.
+
 ## 2026-06-17 — loop: BL-11 IMPLEMENTED + panel-reworked → merged dev (8c6447c)
 
 - **BL-11 bypass-path counters shipped** (engine/counters.py, merged dev no-ff `8c6447c`). Pure observability per M-A3 verdict (instrument, don't tune): counts how often each sanctioned bypass fires so a low decision-inbox hold-count is disambiguated (near-zero=calibrated · high=hold-count hides friction). NO new gate, NO threshold. Reuses FU-2 _FileLock + FU-8 _atomic_write → atomic/lock-serialized; session_view = per-session delta + cumulative via a "seen" marker.

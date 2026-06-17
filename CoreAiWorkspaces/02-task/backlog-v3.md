@@ -5,7 +5,7 @@ rule: นี่คือที่เดียวที่ track ทุกอย�
 status_legend: ✅done · 🔄now · 🟢next · ⏸️deferred(มี gate) · ❌killed
 now: []  # BL-11 DONE+merged 2026-06-17 (panel 3/3, all convergent conditions resolved). tracked backlog ว่าง
 done_recent: [BL-11-counters, DEV-FP, FU-1..8, OBS-1, RD-1..4] — tracked backlog ว่างหมด
-next: [] — เหลือแต่ที่รอเวลา/รอ user: A7-literal 2nd-project(user เลือก repo), deferred Option-D gates(user), FU-7b log-rotation, BL-11b(fast-follow), B*(B-entry cond)
+next: [] — เหลือแต่ที่รอเวลา/รอ user: A7-literal 2nd-project (USER-LOCK 2026-06-17: คงกฎ+เลื่อน → trigger=co-test ตอนมี real-frontend project ใน integration scale; REMARK ต้องรวม engine governance ในเทสใหญ่นั้น), deferred Option-D gates(user), FU-7b log-rotation, BL-11b(fast-follow), B*(B-entry cond)
 rd_status: DONE 2026-06-16 — RD-1..4 dedup merged (no new gates). deferred-by-user: Option-D gates (adr-proposed, scope-change, risk-tier-dispatch) รอวัดผล token/compliance ก่อนตัดสิน
 phase_b_prereqs: CLEARED (FU-2 inbox-lock + FU-6 audit-lock + FU-7 lasthash-cache + FU-8 state-atomic) — เหลือ FU-7b log-rotation (bound worst-case) ก่อน sustained Phase-B write
 deferred_until_M-A3: [B1,B2,B3,B4,B5,B6,B7,B8]
@@ -35,7 +35,7 @@ freeze: MASTER (no master update until user order) · DEV-DIRECT (feature work -
 
 | id | งาน | สถานะ | รออะไร |
 |----|-----|-------|--------|
-| ~~A7~~ ✅(self) | dogfood week บน **repo นี้** ครบ 7/7 (2026-06-10..17): 90 commits, 34/34 suites, 6 sessions auto-logged, 3 risky-git holds, hooks end-to-end | self-dogfood DONE | A7-literal "+1 โปรเจ็กต์จริง" → ⏸️ B-entry cond |
+| ~~A7~~ ✅(self) | dogfood week บน **repo นี้** ครบ 7/7 (2026-06-10..17): 90 commits, 34/34 suites, 6 sessions auto-logged, 3 risky-git holds, hooks end-to-end | self-dogfood DONE | A7-literal "+1 โปรเจ็กต์จริง" → ⏸️ B-entry cond · **USER-LOCK 2026-06-17:** คงกฎ(จำเป็น), เลื่อน, trigger ใหม่ = co-test ร่วมกับ real-frontend project ใน integration scale + **REMARK: ตอนเทสใหญ่นั้นต้องรวม engine governance เข้าไปเทสด้วย** |
 | ~~M-A3~~ ✅ | panel verdict **3/3 PASS_CONDITIONAL** → **G1-SELF LOCKED 2026-06-17** (user Option A). ขอบเขต = BRD-v2 §2 (repo นี้, ไม่ป้อนมือ). ห้าม inflate เป็น A7-DONE/public claim | LOCKED | — |
 | ~~BL-11~~ ✅ | bypass-path counters (observability, no threshold). 3 wired sites (consume_once/doc_exempt/inbox_approved) + liveness (digest LOUD on broken instrument) + e2e wiring tests. **panel 3/3** → built on majority: resolved all convergent conditions (inbox_approved gap, liveness, "exactly-TWO" honesty, e2e test) before merge | ✅ merged dev 8c6447c (26 counter + 37 hook + 35/35 suites) | DONE |
 
